@@ -13,6 +13,52 @@ import {
 const deployer = StrKey.encodeContract(new Uint8Array(32));
 const passphrase = NetworkConfig.TestNet().networkPassphrase;
 
+Deno.test("cancellation after a batch stops both searches, and C salts never wrap", async () => {
+  for (const kind of ["account", "contract"] as const) {
+    const controller = new AbortController();
+    let checked = 0;
+    const options = {
+      suffix: "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567",
+      batchSize: 2,
+      maxAttempts: 100,
+      signal: controller.signal,
+      onProgress: (value: { checked: number }) => {
+        checked = value.checked;
+        controller.abort();
+      },
+    };
+    await assertRejects(
+      () =>
+        kind === "account" ? farmAccount(options) : farmContract({
+          ...options,
+          deployer,
+          networkPassphrase: passphrase,
+        }),
+      Error,
+      "cancelled",
+    );
+    assertEquals(checked, 2);
+  }
+  const salt = new Uint8Array(32).fill(255);
+  const address = deriveContractAddress(passphrase, deployer, salt);
+  let last = 0;
+  assertEquals(
+    await farmContract({
+      suffix: address.endsWith("A") ? "B" : "A",
+      deployer,
+      networkPassphrase: passphrase,
+      startSalt: salt,
+      maxAttempts: 10,
+      onProgress: (p) => {
+        last = p.checked;
+      },
+    }),
+    undefined,
+  );
+  assertEquals(last, 1);
+  assertEquals(salt, new Uint8Array(32).fill(255));
+});
+
 Deno.test("derivation validates inputs and separates Stellar networks", () => {
   const source = StrKey.encodeEd25519PublicKey(new Uint8Array(32));
   const derived = deriveContractAddress(passphrase, source, new Uint8Array(32));

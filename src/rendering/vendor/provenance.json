@@ -1,0 +1,18 @@
+{
+  "mono": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmmono/DMMono-Medium.ttf",
+    "sha256": "fd327daf461db87b44a87def475d251bf03b997f7c07d9680592d75dbbfaad0b"
+  },
+  "rally": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/barlowcondensed/BarlowCondensed-Medium.ttf",
+    "sha256": "262bd143292ce479ee0cd09a42b47ab173fca8e9c6eb5ed0b5c8a845bc371d17"
+  },
+  "coach": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/apache/yellowtail/Yellowtail-Regular.ttf",
+    "sha256": "3e06841b13000975f3cc38aa84e326e601a4378a4c52d50b5e9fee3598c5d236"
+  },
+  "slab": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/alfaslabone/AlfaSlabOne-Regular.ttf",
+    "sha256": "28664afa698a3393bd5a29eec750230a0645c5301d62200e5f2d3a027fb2299d"
+  }
+}

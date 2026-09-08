@@ -6,6 +6,7 @@ export type VanityErrorCode =
   | "VNTY_INVALID_SUFFIX"
   | "VNTY_INVALID_OPTION"
   | "VNTY_ABORTED"
+  | "VNTY_INCOMPATIBLE_CONTRACT"
   | "VNTY_RENDER_FAILED";
 
 /** A caller-correctable SDK error. Secret material is never attached as metadata. */

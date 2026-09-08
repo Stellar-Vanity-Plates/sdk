@@ -1,0 +1,259 @@
+{
+  "contractId": "CB5H3JWPREDFG565JDIXIHLSHIWCOLL4DOY4VY2YRVW7BBGAHUDEPLOY",
+  "networkPassphrase": "Test SDF Network ; September 2015",
+  "wasmHash": "92c8bae41d128cc404bbea7cd809a38dedba4c74f7d35b6acb5e9035765d64ec",
+  "entries": [
+    "AAAABAAAAAAAAAAAAAAAGFZhbml0eVBsYXRlRGVwbG95ZXJFcnJvcgAAAAcAAAAAAAAADFJiYWNOb3RGb3VuZAAAC7kAAAAAAAAAC05mdE5vdEZvdW5kAAAAC7oAAAAAAAAADU5mdEFscmVhZHlTZXQAAAAAAAu8AAAAAAAAAApJbnZhbGlkTmZ0AAAAAAu9AAAAAAAAAA1Ob3RUb2tlbk93bmVyAAAAAAALvgAAAAAAAAAUQ2xhaW1BZGRyZXNzTWlzbWF0Y2gAAAu/AAAAAAAAABZBZGRyZXNzQWxyZWFkeURlcGxveWVkAAAAAAvA",
+    "AAAABQAAAAAAAAAAAAAACU5mdExpbmtlZAAAAAAAAAEAAAAKbmZ0X2xpbmtlZAAAAAAAAgAAAAAAAAAIb3BlcmF0b3IAAAATAAAAAQAAAAAAAAADbmZ0AAAAABMAAAABAAAAAg==",
+    "AAAABQAAAAAAAAAAAAAAEENvbnRyYWN0RGVwbG95ZWQAAAABAAAAEWNvbnRyYWN0X2RlcGxveWVkAAAAAAAAAwAAAAAAAAAFb3duZXIAAAAAAAATAAAAAQAAAAAAAAAIdG9rZW5faWQAAAAEAAAAAQAAAAAAAAAQY29udHJhY3RfYWRkcmVzcwAAABMAAAAAAAAAAg==",
+    "AAAAAAAAA7RCdXJucyBhIHZhbml0eSBwbGF0ZSBORlQgYW5kIGRlcGxveXMgaXRzIGNsYWltZWQgY29udHJhY3QgYWRkcmVzcy4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KKiBgdG9rZW5faWRgIC0gVmFuaXR5IHBsYXRlIE5GVCBwcm92aW5nIGNvbnRyb2wgb2YgdGhlIGNsYWltZWQgYWRkcmVzcy4KKiBgd2FzbV9oYXNoYCAtIEluc3RhbGxlZCBXYXNtIGhhc2ggdXNlZCBmb3IgdGhlIG5ldyBjb250cmFjdC4KKiBgY29uc3RydWN0b3JfYXJnc2AgLSBBcmd1bWVudHMgZm9yd2FyZGVkIHRvIHRoZSBkZXBsb3llZCBjb250cmFjdCBjb25zdHJ1Y3Rvci4KKiBgb3BlcmF0b3JgIC0gTkZUIG93bmVyIGF1dGhvcml6aW5nIHRoZSByZWRlbXB0aW9uIGFuZCBkZXBsb3ltZW50LgoKIyBSZXR1cm5zCgpUaGUgYWRkcmVzcyBvZiB0aGUgZGVwbG95ZWQgY29udHJhY3QuCgojIEVycm9ycwoKKiBGYWlscyB3aGVuIGBvcGVyYXRvcmAgZG9lcyBub3QgYXV0aG9yaXplIHRoZSBpbnZvY2F0aW9uLgoqIEZhaWxzIHdpdGggYFZhbml0eVBsYXRlRGVwbG95ZXJFcnJvcjo6TmZ0Tm90Rm91bmRgIHdoZW4gbm8gTkZUIGlzIGxpbmtlZC4KKiBGYWlscyB3aXRoIGBWYW5pdHlQbGF0ZURlcGxveWVyRXJyb3I6Ok5vdFRva2VuT3duZXJgIHdoZW4gYG9wZXJhdG9yYCBkb2VzIG5vdCBvd24gaXQuCiogRmFpbHMgd2l0aCBgVmFuaXR5UGxhdGVEZXBsb3llckVycm9yOjpDbGFpbUFkZHJlc3NNaXNtYXRjaGAgZm9yIGFuIGludmFsaWQgY2xhaW0gb3IgaW5kZXguCiogRmFpbHMgd2l0aCBgVmFuaXR5UGxhdGVEZXBsb3llckVycm9yOjpBZGRyZXNzQWxyZWFkeURlcGxveWVkYCB3aGVuIG9jY3VwaWVkLgoqIFByb3BhZ2F0ZXMgTkZUIGVycm9ycyBvciBkZXBsb3ltZW50IGVycm9ycyBmb3IgaW52YWxpZCBXYXNtIG9yIGNvbnN0cnVjdG9yIGFyZ3VtZW50cy4AAAAGZGVwbG95AAAAAAAEAAAAAAAAAAh0b2tlbl9pZAAAAAQAAAAAAAAACXdhc21faGFzaAAAAAAAA+4AAAAgAAAAAAAAABBjb25zdHJ1Y3Rvcl9hcmdzAAAD6gAAAAAAAAAAAAAACG9wZXJhdG9yAAAAEwAAAAEAAAAT",
+    "AAAAAAAAAPVSZXR1cm5zIHRoZSBORlQgY29udHJhY3QgbGlua2VkIHRvIHRoZSBkZXBsb3llci4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KCiMgUmV0dXJucwoKVGhlIGxpbmtlZCB2YW5pdHkgcGxhdGUgTkZUIGNvbnRyYWN0IGFkZHJlc3MuCgojIEVycm9ycwoKRmFpbHMgd2l0aCBgVmFuaXR5UGxhdGVEZXBsb3llckVycm9yOjpOZnROb3RGb3VuZGAgd2hlbiBubyBORlQgaXMgbGlua2VkLgAAAAAAAAdnZXRfbmZ0AAAAAAAAAAABAAAAEw==",
+    "AAAAAAAAAjVMaW5rcyB0aGUgc2luZ2xlIE5GVCBjb250cmFjdCB3aG9zZSBjbGFpbXMgbWF5IGJlIHJlZGVlbWVkIHRocm91Z2ggdGhpcyBkZXBsb3llci4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KKiBgbmZ0YCAtIFZhbml0eSBwbGF0ZSBORlQgY29udHJhY3QgdG8gbGluay4KKiBgb3BlcmF0b3JgIC0gUkJBQyBhZG1pbmlzdHJhdG9yIGF1dGhvcml6aW5nIHRoZSBsaW5rLgoKIyBFcnJvcnMKCiogRmFpbHMgd2l0aCBgVmFuaXR5UGxhdGVEZXBsb3llckVycm9yOjpSYmFjTm90Rm91bmRgIHdoZW4gUkJBQyBpcyB1bmF2YWlsYWJsZS4KKiBGYWlscyB3aXRoIGBWYW5pdHlQbGF0ZURlcGxveWVyRXJyb3I6Ok5mdEFscmVhZHlTZXRgIGFmdGVyIGFuIE5GVCBoYXMgYmVlbiBsaW5rZWQuCiogRmFpbHMgd2l0aCBgVmFuaXR5UGxhdGVEZXBsb3llckVycm9yOjpJbnZhbGlkTmZ0YCBmb3IgYSBub24tV2FzbSBvciBtaXNtYXRjaGVkIE5GVC4KKiBQcm9wYWdhdGVzIGF1dGhvcml6YXRpb24gYW5kIHJvbGUgZXJyb3JzIGZyb20gdGhlIFJCQUMgY29udHJhY3QuAAAAAAAAB3NldF9uZnQAAAAAAgAAAAAAAAADbmZ0AAAAABMAAAAAAAAACG9wZXJhdG9yAAAAEwAAAAA=",
+    "AAAAAAAAAgFSZXBsYWNlcyB0aGUgZGVwbG95ZXIgaW1wbGVtZW50YXRpb24gd2l0aCBpbnN0YWxsZWQgV2FzbS4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KKiBgbmV3X3dhc21faGFzaGAgLSBJbnN0YWxsZWQgV2FzbSBoYXNoIHNlbGVjdGVkIGFzIHRoZSBuZXcgaW1wbGVtZW50YXRpb24uCiogYG9wZXJhdG9yYCAtIFJCQUMgdXBncmFkZXIgYXV0aG9yaXppbmcgdGhlIHVwZ3JhZGUuCgojIEVycm9ycwoKKiBGYWlscyB3aGVuIGBvcGVyYXRvcmAgZG9lcyBub3QgYXV0aG9yaXplIHRoZSBpbnZvY2F0aW9uLgoqIEZhaWxzIHdpdGggYFZhbml0eVBsYXRlRGVwbG95ZXJFcnJvcjo6UmJhY05vdEZvdW5kYCB3aGVuIFJCQUMgaXMgdW5hdmFpbGFibGUuCiogUHJvcGFnYXRlcyByb2xlIGVycm9ycyBmcm9tIHRoZSBSQkFDIGNvbnRyYWN0LgoqIEZhaWxzIHdoZW4gYG5ld193YXNtX2hhc2hgIGRvZXMgbm90IHJlZmVyZW5jZSBpbnN0YWxsZWQgY29udHJhY3QgV2FzbS4AAAAAAAAHdXBncmFkZQAAAAACAAAAAAAAAA1uZXdfd2FzbV9oYXNoAAAAAAAD7gAAACAAAAAAAAAACG9wZXJhdG9yAAAAEwAAAAA=",
+    "AAAAAAAAAPBSZXR1cm5zIHRoZSBSQkFDIGNvbnRyYWN0IHVzZWQgYnkgdGhlIGRlcGxveWVyLgoKIyBBcmd1bWVudHMKCiogYGVgIC0gQ29udHJhY3QgZXhlY3V0aW9uIGVudmlyb25tZW50LgoKIyBSZXR1cm5zCgpUaGUgY29uZmlndXJlZCBSQkFDIGNvbnRyYWN0IGFkZHJlc3MuCgojIEVycm9ycwoKRmFpbHMgd2l0aCBgVmFuaXR5UGxhdGVEZXBsb3llckVycm9yOjpSYmFjTm90Rm91bmRgIHdoZW4gUkJBQyBpcyB1bmF2YWlsYWJsZS4AAAAIZ2V0X3JiYWMAAAAAAAAAAQAAABM=",
+    "AAAAAAAAAS5Jbml0aWFsaXplcyB0aGUgZGVwbG95ZXIgd2l0aCBpdHMgc2hhcmVkIFJCQUMgY29udHJhY3QuCgojIEFyZ3VtZW50cwoKKiBgZWAgLSBDb250cmFjdCBleGVjdXRpb24gZW52aXJvbm1lbnQuCiogYHJiYWNgIC0gUkJBQyBjb250cmFjdCB1c2VkIGZvciBhZG1pbmlzdHJhdGl2ZSBjaGVja3MuCiogYG9wZXJhdG9yYCAtIFJCQUMgYWRtaW5pc3RyYXRvciBhdXRob3JpemluZyBjb25zdHJ1Y3Rpb24uCgojIEVycm9ycwoKUHJvcGFnYXRlcyBhdXRob3JpemF0aW9uIGFuZCByb2xlIGVycm9ycyBmcm9tIHRoZSBSQkFDIGNvbnRyYWN0LgAAAAAADV9fY29uc3RydWN0b3IAAAAAAAACAAAAAAAAAARyYmFjAAAAEwAAAAAAAAAIb3BlcmF0b3IAAAATAAAAAA==",
+    "AAAAAAAAAS9EZXJpdmVzIHRoZSBjb250cmFjdCBhZGRyZXNzIHRoaXMgZGVwbG95ZXIgd291bGQgY3JlYXRlIGZyb20gYSBzYWx0LgoKIyBBcmd1bWVudHMKCiogYGVgIC0gQ29udHJhY3QgZXhlY3V0aW9uIGVudmlyb25tZW50LgoqIGBzYWx0YCAtIERldGVybWluaXN0aWMgMzItYnl0ZSBkZXBsb3ltZW50IHNhbHQuCgojIFJldHVybnMKClRoZSBjb250cmFjdCBhZGRyZXNzIGRlcml2ZWQgZnJvbSB0aGlzIGRlcGxveWVyIGFuZCBgc2FsdGAuCgojIEVycm9ycwoKVGhpcyBmdW5jdGlvbiBlbWl0cyBubyBjb250cmFjdC1kZWZpbmVkIGVycm9ycy4AAAAAFWdldF9wcmVkaWN0ZWRfYWRkcmVzcwAAAAAAAAEAAAAAAAAABHNhbHQAAAPuAAAAIAAAAAEAAAAT"
+  ],
+  "schema": [
+    {
+      "udt_error_enum_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "VanityPlateDeployerError",
+        "cases": [
+          {
+            "doc": "",
+            "name": "RbacNotFound",
+            "value": 3001
+          },
+          {
+            "doc": "",
+            "name": "NftNotFound",
+            "value": 3002
+          },
+          {
+            "doc": "",
+            "name": "NftAlreadySet",
+            "value": 3004
+          },
+          {
+            "doc": "",
+            "name": "InvalidNft",
+            "value": 3005
+          },
+          {
+            "doc": "",
+            "name": "NotTokenOwner",
+            "value": 3006
+          },
+          {
+            "doc": "",
+            "name": "ClaimAddressMismatch",
+            "value": 3007
+          },
+          {
+            "doc": "",
+            "name": "AddressAlreadyDeployed",
+            "value": 3008
+          }
+        ]
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "NftLinked",
+        "prefix_topics": [
+          "nft_linked"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "nft",
+            "type": "address",
+            "location": "topic_list"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "ContractDeployed",
+        "prefix_topics": [
+          "contract_deployed"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "owner",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "token_id",
+            "type": "u32",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address",
+            "location": "data"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Burns a vanity plate NFT and deploys its claimed contract address.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `token_id` - Vanity plate NFT proving control of the claimed address.\\n* `wasm_hash` - Installed Wasm hash used for the new contract.\\n* `constructor_args` - Arguments forwarded to the deployed contract constructor.\\n* `operator` - NFT owner authorizing the redemption and deployment.\\n\\n# Returns\\n\\nThe address of the deployed contract.\\n\\n# Errors\\n\\n* Fails when `operator` does not authorize the invocation.\\n* Fails with `VanityPlateDeployerError::NftNotFound` when no NFT is linked.\\n* Fails with `VanityPlateDeployerError::NotTokenOwner` when `operator` does not own it.\\n* Fails with `VanityPlateDeployerError::ClaimAddressMismatch` for an invalid claim or index.\\n* Fails with `VanityPlateDeployerError::AddressAlreadyDeployed` when occupied.\\n* Propagates NFT errors or deployment errors for invalid Wasm or constructor arguments.",
+        "name": "deploy",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "token_id",
+            "type": "u32"
+          },
+          {
+            "doc": "",
+            "name": "wasm_hash",
+            "type": {
+              "bytes_n": {
+                "n": 32
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "constructor_args",
+            "type": {
+              "vec": {
+                "element_type": "val"
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": [
+          "address"
+        ]
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Returns the NFT contract linked to the deployer.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n\\n# Returns\\n\\nThe linked vanity plate NFT contract address.\\n\\n# Errors\\n\\nFails with `VanityPlateDeployerError::NftNotFound` when no NFT is linked.",
+        "name": "get_nft",
+        "inputs": [],
+        "outputs": [
+          "address"
+        ]
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Links the single NFT contract whose claims may be redeemed through this deployer.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `nft` - Vanity plate NFT contract to link.\\n* `operator` - RBAC administrator authorizing the link.\\n\\n# Errors\\n\\n* Fails with `VanityPlateDeployerError::RbacNotFound` when RBAC is unavailable.\\n* Fails with `VanityPlateDeployerError::NftAlreadySet` after an NFT has been linked.\\n* Fails with `VanityPlateDeployerError::InvalidNft` for a non-Wasm or mismatched NFT.\\n* Propagates authorization and role errors from the RBAC contract.",
+        "name": "set_nft",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "nft",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Replaces the deployer implementation with installed Wasm.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `new_wasm_hash` - Installed Wasm hash selected as the new implementation.\\n* `operator` - RBAC upgrader authorizing the upgrade.\\n\\n# Errors\\n\\n* Fails when `operator` does not authorize the invocation.\\n* Fails with `VanityPlateDeployerError::RbacNotFound` when RBAC is unavailable.\\n* Propagates role errors from the RBAC contract.\\n* Fails when `new_wasm_hash` does not reference installed contract Wasm.",
+        "name": "upgrade",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "new_wasm_hash",
+            "type": {
+              "bytes_n": {
+                "n": 32
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Returns the RBAC contract used by the deployer.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n\\n# Returns\\n\\nThe configured RBAC contract address.\\n\\n# Errors\\n\\nFails with `VanityPlateDeployerError::RbacNotFound` when RBAC is unavailable.",
+        "name": "get_rbac",
+        "inputs": [],
+        "outputs": [
+          "address"
+        ]
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Initializes the deployer with its shared RBAC contract.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `rbac` - RBAC contract used for administrative checks.\\n* `operator` - RBAC administrator authorizing construction.\\n\\n# Errors\\n\\nPropagates authorization and role errors from the RBAC contract.",
+        "name": "__constructor",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "rbac",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Derives the contract address this deployer would create from a salt.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `salt` - Deterministic 32-byte deployment salt.\\n\\n# Returns\\n\\nThe contract address derived from this deployer and `salt`.\\n\\n# Errors\\n\\nThis function emits no contract-defined errors.",
+        "name": "get_predicted_address",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "salt",
+            "type": {
+              "bytes_n": {
+                "n": 32
+              }
+            }
+          }
+        ],
+        "outputs": [
+          "address"
+        ]
+      }
+    }
+  ]
+}

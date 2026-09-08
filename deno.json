@@ -1,20 +1,77 @@
 {
   "name": "@vanity-plates/sdk",
   "version": "0.1.0",
-  "exports": { ".": "./mod.ts", "./farming": "./src/farming/mod.ts" },
+  "exports": {
+    ".": "./mod.ts",
+    "./farming": "./src/farming/mod.ts",
+    "./accounts": "./src/accounts/mod.ts",
+    "./contracts": "./src/contracts/mod.ts",
+    "./rendering": "./src/rendering/mod.ts",
+    "./png": "./src/rendering/png.ts",
+    "./web": "./src/web/mod.ts",
+    "./react": "./src/react/mod.tsx"
+  },
   "imports": {
     "@colibri/core": "jsr:@colibri/core@1.0.0",
     "@colibri/identicon": "jsr:@colibri/identicon@1.0.0",
-    "@std/assert": "jsr:@std/assert@1.0.14"
+    "@std/assert": "jsr:@std/assert@1.0.14",
+    "opentype.js": "npm:opentype.js@2.0.0",
+    "@types/opentype.js": "npm:@types/opentype.js@1.3.8",
+    "@resvg/resvg-wasm": "npm:@resvg/resvg-wasm@2.6.2",
+    "react": "npm:react@18.3.1",
+    "react/jsx-runtime": "npm:react@18.3.1/jsx-runtime",
+    "@types/react": "npm:@types/react@18.3.18",
+    "@stellar/stellar-sdk": "npm:@stellar/stellar-sdk@17.0.1",
+    "react-dom/server": "npm:react-dom@18.3.1/server",
+    "@types/react-dom/server": "npm:@types/react-dom@18.3.5/server"
   },
   "compilerOptions": {
     "strict": true,
-    "lib": ["deno.ns", "dom", "dom.iterable", "esnext"]
+    "lib": [
+      "deno.ns",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": [
+      "@types/react"
+    ]
   },
   "tasks": {
-    "check": "deno fmt --check && deno lint && deno check mod.ts src/farming/mod.ts",
-    "test": "deno test tests/",
-    "docs": "deno doc --lint mod.ts src/farming/mod.ts"
+    "check": "deno fmt --check && deno lint && deno check mod.ts src/*/mod.* src/rendering/png.ts examples/*.ts tools/*.ts",
+    "test": "deno test --allow-env=NODE_ENV tests/",
+    "docs": "deno doc --lint mod.ts src/accounts/mod.ts src/farming/mod.ts src/contracts/mod.ts src/rendering/mod.ts src/rendering/png.ts src/web/mod.ts src/react/mod.tsx",
+    "generate": "deno run --allow-read=src/contracts/specs --allow-write=src/contracts/generated tools/generate-clients.ts && deno fmt src/contracts/generated",
+    "build:preview": "deno bundle --platform browser --minify --code-splitting --outdir dist examples/browser.ts",
+    "preview": "deno task build:preview && deno run --allow-net=127.0.0.1:4192 --allow-read=examples/index.html,dist tools/serve-preview.ts",
+    "test:live": "deno run --allow-net=soroban-testnet.stellar.org examples/read-protocol.ts",
+    "example:export": "deno run --allow-write=output examples/export.ts",
+    "example:farm": "deno run examples/farm.ts"
   },
-  "publish": { "include": ["mod.ts", "src/", "README.md", "deno.json"] }
+  "publish": {
+    "include": [
+      "mod.ts",
+      "src/",
+      "README.md",
+      "deno.json",
+      "THIRD_PARTY_NOTICES.md"
+    ]
+  },
+  "fmt": {
+    "exclude": [
+      "src/rendering/vendor/"
+    ]
+  },
+  "lint": {
+    "exclude": [
+      "src/rendering/vendor/"
+    ]
+  },
+  "exclude": [
+    "dist/",
+    "output/",
+    "node_modules/"
+  ]
 }

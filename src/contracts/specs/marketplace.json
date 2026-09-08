@@ -1,0 +1,878 @@
+{
+  "contractId": "CDUISVGPI4SRUFOXC3IN6NWQCE4K3OHZ4ORNBZW7IXHIFWANTNMARKET",
+  "networkPassphrase": "Test SDF Network ; September 2015",
+  "wasmHash": "5fbc4bcc867e4782407b3bb3ce5c48152bca4e9cd47b6ea7a21111b7b7b2c7c9",
+  "entries": [
+    "AAAAAQAAAAAAAAAAAAAAB0xpc3RpbmcAAAAABgAAAAAAAAAQY29udHJhY3RfYWRkcmVzcwAAABMAAAAAAAAAB2ZlZV9icHMAAAAABAAAAAAAAAAFcHJpY2UAAAAAAAALAAAAAAAAAAZzZWxsZXIAAAAAABMAAAAAAAAACHRva2VuX2lkAAAABAAAAAAAAAAEd29yZAAAABA=",
+    "AAAAAQAAAAAAAAAAAAAAD1NlbGxlclNhbGVzUGFnZQAAAAADAAAAAAAAAAtuZXh0X2N1cnNvcgAAAAPoAAAAEwAAAAAAAAAFc2FsZXMAAAAAAAPqAAAH0AAAAAdMaXN0aW5nAAAAAAAAAAALdG90YWxfY291bnQAAAAABA==",
+    "AAAAAQAAAAAAAAAAAAAAEU1hcmtldHBsYWNlQ29uZmlnAAAAAAAABQAAAAAAAAADbmZ0AAAAABMAAAAAAAAAEHByb3RvY29sX2ZlZV9icHMAAAAEAAAAAAAAAARyYmFjAAAAEwAAAAAAAAAQc2V0dGxlbWVudF9hc3NldAAAABMAAAAAAAAACHRyZWFzdXJ5AAAAEw==",
+    "AAAABAAAAAAAAAAAAAAAEE1hcmtldHBsYWNlRXJyb3IAAAAUAAAAAAAAAA5Db25maWdOb3RGb3VuZAAAAAATiQAAAAAAAAASSW52YWxpZFByb3RvY29sRmVlAAAAABOKAAAAAAAAAAxJbnZhbGlkUHJpY2UAABOLAAAAAAAAABFTYWxlQWxyZWFkeUV4aXN0cwAAAAAAE4wAAAAAAAAADFNhbGVOb3RGb3VuZAAAE40AAAAAAAAAD0luY29ycmVjdFNlbGxlcgAAABOOAAAAAAAAAA5JbmNvcnJlY3RPd25lcgAAAAATjwAAAAAAAAAUQ2xhaW1BZGRyZXNzTWlzbWF0Y2gAABOQAAAAAAAAAAxQcmljZUNoYW5nZWQAABORAAAAAAAAAAxTZWxmUHVyY2hhc2UAABOSAAAAAAAAABNTZWxsZXJJbmRleE5vdEZvdW5kAAAAE5MAAAAAAAAAFFNlbGxlckluZGV4Q29ycnVwdGVkAAATlAAAAAAAAAAQSW52YWxpZFBhZ2VMaW1pdAAAE5UAAAAAAAAADUludmFsaWRDdXJzb3IAAAAAABOWAAAAAAAAABJBcml0aG1ldGljT3ZlcmZsb3cAAAAAE5cAAAAAAAAAD0ludmFsaWRUcmVhc3VyeQAAABOYAAAAAAAAABpJbnZhbGlkU2V0dGxlbWVudFJlY2lwaWVudAAAAAATmQAAAAAAAAAWSW52YWxpZFNldHRsZW1lbnRBc3NldAAAAAATmgAAAAAAAAAKSW52YWxpZE5mdAAAAAATmwAAAAAAAAANSW52YWxpZEVzY3JvdwAAAAAAE5w=",
+    "AAAABQAAAAAAAAAAAAAAClNhbGVQbGFjZWQAAAAAAAEAAAALc2FsZV9wbGFjZWQAAAAABgAAAAAAAAAQY29udHJhY3RfYWRkcmVzcwAAABMAAAABAAAAAAAAAAZzZWxsZXIAAAAAABMAAAABAAAAAAAAAAh0b2tlbl9pZAAAAAQAAAAAAAAAAAAAAAR3b3JkAAAAEAAAAAAAAAAAAAAABXByaWNlAAAAAAAACwAAAAAAAAAAAAAAB2ZlZV9icHMAAAAABAAAAAAAAAAC",
+    "AAAABQAAAAAAAAAAAAAADVNhbGVDYW5jZWxsZWQAAAAAAAABAAAADnNhbGVfY2FuY2VsbGVkAAAAAAAGAAAAAAAAABBjb250cmFjdF9hZGRyZXNzAAAAEwAAAAEAAAAAAAAABnNlbGxlcgAAAAAAEwAAAAEAAAAAAAAACHRva2VuX2lkAAAABAAAAAAAAAAAAAAABHdvcmQAAAAQAAAAAAAAAAAAAAAFcHJpY2UAAAAAAAALAAAAAAAAAAAAAAAHZmVlX2JwcwAAAAAEAAAAAAAAAAI=",
+    "AAAABQAAAAAAAAAAAAAADVNhbGVDb21wbGV0ZWQAAAAAAAABAAAADnNhbGVfY29tcGxldGVkAAAAAAAMAAAAAAAAABBjb250cmFjdF9hZGRyZXNzAAAAEwAAAAEAAAAAAAAABnNlbGxlcgAAAAAAEwAAAAEAAAAAAAAABWJ1eWVyAAAAAAAAEwAAAAEAAAAAAAAACHRva2VuX2lkAAAABAAAAAAAAAAAAAAABHdvcmQAAAAQAAAAAAAAAAAAAAAFcHJpY2UAAAAAAAALAAAAAAAAAAAAAAAHZmVlX2JwcwAAAAAEAAAAAAAAAAAAAAAMcHJvdG9jb2xfZmVlAAAACwAAAAAAAAAAAAAAD3NlbGxlcl9wcm9jZWVkcwAAAAALAAAAAAAAAAAAAAATZmVlX2Fzc2V0X2NvbGxlY3RlZAAAAAALAAAAAAAAAAAAAAARZmVlX3NoYXJlc19idXJuZWQAAAAAAAALAAAAAAAAAAAAAAAQZmVlX3NoYXJlc192YWx1ZQAAAAsAAAAAAAAAAg==",
+    "AAAABQAAAAAAAAAAAAAAD1RyZWFzdXJ5Q2hhbmdlZAAAAAABAAAAEHRyZWFzdXJ5X2NoYW5nZWQAAAADAAAAAAAAAAhvcGVyYXRvcgAAABMAAAABAAAAAAAAABFwcmV2aW91c190cmVhc3VyeQAAAAAAABMAAAAAAAAAAAAAAAxuZXdfdHJlYXN1cnkAAAATAAAAAAAAAAI=",
+    "AAAABQAAAAAAAAAAAAAAElByb3RvY29sRmVlQ2hhbmdlZAAAAAAAAQAAABRwcm90b2NvbF9mZWVfY2hhbmdlZAAAAAMAAAAAAAAACG9wZXJhdG9yAAAAEwAAAAEAAAAAAAAAEHByZXZpb3VzX2ZlZV9icHMAAAAEAAAAAAAAAAAAAAALbmV3X2ZlZV9icHMAAAAABAAAAAAAAAAC",
+    "AAAABQAAAAAAAAAAAAAAFUltcGxlbWVudGF0aW9uQ2hhbmdlZAAAAAAAAAEAAAAWaW1wbGVtZW50YXRpb25fY2hhbmdlZAAAAAAAAgAAAAAAAAAIb3BlcmF0b3IAAAATAAAAAQAAAAAAAAANbmV3X3dhc21faGFzaAAAAAAAA+4AAAAgAAAAAAAAAAI=",
+    "AAAAAAAABABQdXJjaGFzZXMgYSBsaXN0ZWQgTkZUIHVzaW5nIHRoZSBtYXJrZXRwbGFjZSBzZXR0bGVtZW50IGFzc2V0LgoKIyBBcmd1bWVudHMKCiogYGVgIC0gQ29udHJhY3QgZXhlY3V0aW9uIGVudmlyb25tZW50LgoqIGBidXllcmAgLSBBZGRyZXNzIHBheWluZyBmb3IgYW5kIHJlY2VpdmluZyB0aGUgTkZULgoqIGBjb250cmFjdF9hZGRyZXNzYCAtIFZhbml0eSBjb250cmFjdCBhZGRyZXNzIGlkZW50aWZ5aW5nIHRoZSBzYWxlLgoqIGBleHBlY3RlZF9wcmljZWAgLSBQcmljZSB0aGUgYnV5ZXIgZXhwZWN0cywgcHJvdGVjdGluZyBhZ2FpbnN0IHN0YWxlIHRyYW5zYWN0aW9uIGRhdGEuCgojIEVycm9ycwoKKiBGYWlscyB3aGVuIHRoZSBtYXJrZXRwbGFjZSBpcyBwYXVzZWQgb3IgYGJ1eWVyYCBkb2VzIG5vdCBhdXRob3JpemUgdGhlIGludm9jYXRpb24uCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6U2FsZU5vdEZvdW5kYCB3aGVuIG5vIHNhbGUgZXhpc3RzLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OlNlbGZQdXJjaGFzZWAgd2hlbiB0aGUgc2VsbGVyIGlzIHRoZSBidXllci4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpQcmljZUNoYW5nZWRgIHdoZW4gdGhlIGxpc3RpbmcgcHJpY2UgZGlmZmVycy4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpDb25maWdOb3RGb3VuZGAgd2hlbiBjb25maWd1cmF0aW9uIGlzIHVuYXZhaWxhYmxlLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OlNlbGxlckluZGV4Tm90Rm91bmRgIG9yCmBNYXJrZXRwbGFjZUVycm9yOjpTZWxsZXJJbmRleENvcnJ1cHRlZGAgd2hlbiBpbmRleCBzdG9yYWdlIGlzIGluY29uc2lzdGVudC4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpBcml0aG1ldGljT3ZlcmZsb3dgIHdoZW4gZmVlIGNhbGN1bGF0aW9ucyBvdmVyZmxvdy4KKiBQcm9wYWdhdGVzIHNldHRsZW1lbnQtYXNzZXQsIHRyZWFzdXJ5LCBzdHJhdGVneSwgY2FzaGJhY2ssIGFuZCBORlQgdHJhbnNmZXIgAAAAA2J1eQAAAAADAAAAAAAAAAVidXllcgAAAAAAABMAAAAAAAAAEGNvbnRyYWN0X2FkZHJlc3MAAAATAAAAAAAAAA5leHBlY3RlZF9wcmljZQAAAAAACwAAAAA=",
+    "AAAAAAAAAaNQYXVzZXMgbmV3IHNhbGUgcGxhY2VtZW50IGFuZCBwdXJjaGFzZXMgd2hpbGUgcHJlc2VydmluZyBjYW5jZWxsYXRpb24uCgojIEFyZ3VtZW50cwoKKiBgZWAgLSBDb250cmFjdCBleGVjdXRpb24gZW52aXJvbm1lbnQuCiogYG9wZXJhdG9yYCAtIFJCQUMgYWRtaW5pc3RyYXRvciBhdXRob3JpemluZyB0aGUgcGF1c2UuCgojIEVycm9ycwoKKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpDb25maWdOb3RGb3VuZGAgd2hlbiBjb25maWd1cmF0aW9uIGlzIHVuYXZhaWxhYmxlLgoqIFByb3BhZ2F0ZXMgYXV0aG9yaXphdGlvbiBhbmQgcm9sZSBlcnJvcnMgZnJvbSB0aGUgUkJBQyBjb250cmFjdC4KKiBQcm9wYWdhdGVzIHBhdXNhYmxlIGVycm9ycyB3aGVuIHRoZSByZXF1ZXN0ZWQgc3RhdGUgdHJhbnNpdGlvbiBpcyBpbnZhbGlkLgAAAAAFcGF1c2UAAAAAAAABAAAAAAAAAAhvcGVyYXRvcgAAABMAAAAA",
+    "AAAAAAAAAZNSZXN0b3JlcyBzYWxlIHBsYWNlbWVudCBhbmQgcHVyY2hhc2VzIGFmdGVyIGEgcGF1c2UuCgojIEFyZ3VtZW50cwoKKiBgZWAgLSBDb250cmFjdCBleGVjdXRpb24gZW52aXJvbm1lbnQuCiogYG9wZXJhdG9yYCAtIFJCQUMgYWRtaW5pc3RyYXRvciBhdXRob3JpemluZyB0aGUgdW5wYXVzZS4KCiMgRXJyb3JzCgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkNvbmZpZ05vdEZvdW5kYCB3aGVuIGNvbmZpZ3VyYXRpb24gaXMgdW5hdmFpbGFibGUuCiogUHJvcGFnYXRlcyBhdXRob3JpemF0aW9uIGFuZCByb2xlIGVycm9ycyBmcm9tIHRoZSBSQkFDIGNvbnRyYWN0LgoqIFByb3BhZ2F0ZXMgcGF1c2FibGUgZXJyb3JzIHdoZW4gdGhlIHJlcXVlc3RlZCBzdGF0ZSB0cmFuc2l0aW9uIGlzIGludmFsaWQuAAAAAAd1bnBhdXNlAAAAAAEAAAAAAAAACG9wZXJhdG9yAAAAEwAAAAA=",
+    "AAAAAAAAAgdSZXBsYWNlcyB0aGUgbWFya2V0cGxhY2UgaW1wbGVtZW50YXRpb24gd2l0aCBpbnN0YWxsZWQgV2FzbS4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KKiBgbmV3X3dhc21faGFzaGAgLSBJbnN0YWxsZWQgV2FzbSBoYXNoIHNlbGVjdGVkIGFzIHRoZSBuZXcgaW1wbGVtZW50YXRpb24uCiogYG9wZXJhdG9yYCAtIFJCQUMgdXBncmFkZXIgYXV0aG9yaXppbmcgdGhlIHVwZ3JhZGUuCgojIEVycm9ycwoKKiBGYWlscyB3aGVuIGBvcGVyYXRvcmAgZG9lcyBub3QgYXV0aG9yaXplIHRoZSBpbnZvY2F0aW9uLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkNvbmZpZ05vdEZvdW5kYCB3aGVuIGNvbmZpZ3VyYXRpb24gaXMgdW5hdmFpbGFibGUuCiogUHJvcGFnYXRlcyByb2xlIGVycm9ycyBmcm9tIHRoZSBSQkFDIGNvbnRyYWN0LgoqIEZhaWxzIHdoZW4gYG5ld193YXNtX2hhc2hgIGRvZXMgbm90IHJlZmVyZW5jZSBpbnN0YWxsZWQgY29udHJhY3QgV2FzbS4AAAAAB3VwZ3JhZGUAAAAAAgAAAAAAAAANbmV3X3dhc21faGFzaAAAAAAAA+4AAAAgAAAAAAAAAAhvcGVyYXRvcgAAABMAAAAA",
+    "AAAAAAAAARRSZXR1cm5zIHRoZSBjdXJyZW50IG1hcmtldHBsYWNlIGNvbmZpZ3VyYXRpb24uCgojIEFyZ3VtZW50cwoKKiBgZWAgLSBDb250cmFjdCBleGVjdXRpb24gZW52aXJvbm1lbnQuCgojIFJldHVybnMKClRoZSBjb25maWd1cmVkIGNvbnRyYWN0cywgc2V0dGxlbWVudCBhc3NldCwgdHJlYXN1cnksIGFuZCBwcm90b2NvbCBmZWUuCgojIEVycm9ycwoKRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6Q29uZmlnTm90Rm91bmRgIHdoZW4gY29uZmlndXJhdGlvbiBpcyB1bmF2YWlsYWJsZS4AAAAKZ2V0X2NvbmZpZwAAAAAAAAAAAAEAAAfQAAAAEU1hcmtldHBsYWNlQ29uZmlnAAAA",
+    "AAAAAAAAAQ9SZXR1cm5zIHdoZXRoZXIgc2FsZSBwbGFjZW1lbnQgYW5kIHB1cmNoYXNlIGFyZSBwYXVzZWQuCgojIEFyZ3VtZW50cwoKKiBgZWAgLSBDb250cmFjdCBleGVjdXRpb24gZW52aXJvbm1lbnQuCgojIFJldHVybnMKCmB0cnVlYCB3aGVuIHRoZSBtYXJrZXRwbGFjZSBpcyBwYXVzZWQ7IG90aGVyd2lzZSBgZmFsc2VgLgoKIyBFcnJvcnMKCkZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkNvbmZpZ05vdEZvdW5kYCB3aGVuIGNvbmZpZ3VyYXRpb24gaXMgdW5hdmFpbGFibGUuAAAAAApnZXRfcGF1c2VkAAAAAAAAAAAAAQAAAAE=",
+    "AAAAAAAAArxDYW5jZWxzIGEgc2FsZSBhbmQgcmV0dXJucyB0aGUgZXNjcm93ZWQgTkZUIHRvIGl0cyBzZWxsZXIuCgojIEFyZ3VtZW50cwoKKiBgZWAgLSBDb250cmFjdCBleGVjdXRpb24gZW52aXJvbm1lbnQuCiogYGNvbnRyYWN0X2FkZHJlc3NgIC0gVmFuaXR5IGNvbnRyYWN0IGFkZHJlc3MgaWRlbnRpZnlpbmcgdGhlIHNhbGUuCiogYG9wZXJhdG9yYCAtIFNlbGxlciBhdXRob3JpemluZyBjYW5jZWxsYXRpb24uCgojIEVycm9ycwoKKiBGYWlscyB3aGVuIGBvcGVyYXRvcmAgZG9lcyBub3QgYXV0aG9yaXplIHRoZSBpbnZvY2F0aW9uLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OlNhbGVOb3RGb3VuZGAgd2hlbiBubyBzYWxlIGV4aXN0cy4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpJbmNvcnJlY3RTZWxsZXJgIHdoZW4gYG9wZXJhdG9yYCBpcyBub3QgdGhlIHNlbGxlci4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpDb25maWdOb3RGb3VuZGAgd2hlbiBjb25maWd1cmF0aW9uIGlzIHVuYXZhaWxhYmxlLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OlNlbGxlckluZGV4Tm90Rm91bmRgIG9yCmBNYXJrZXRwbGFjZUVycm9yOjpTZWxsZXJJbmRleENvcnJ1cHRlZGAgd2hlbiBpbmRleCBzdG9yYWdlIGlzIGluY29uc2lzdGVudC4KKiBQcm9wYWdhdGVzIE5GVCB0cmFuc2ZlciBlcnJvcnMuAAAAC2NhbmNlbF9zYWxlAAAAAAIAAAAAAAAAEGNvbnRyYWN0X2FkZHJlc3MAAAATAAAAAAAAAAhvcGVyYXRvcgAAABMAAAAA",
+    "AAAAAAAAAgRSZXR1cm5zIHRoZSBhY3RpdmUgc2FsZSBmb3IgYSB2YW5pdHkgY29udHJhY3QgYWRkcmVzcywgaWYgb25lIGV4aXN0cy4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KKiBgY29udHJhY3RfYWRkcmVzc2AgLSBWYW5pdHkgY29udHJhY3QgYWRkcmVzcyB1c2VkIGFzIHRoZSBsaXN0aW5nIGtleS4KCiMgUmV0dXJucwoKVGhlIGFjdGl2ZSBsaXN0aW5nLCBvciBgTm9uZWAgd2hlbiB0aGUgYWRkcmVzcyBpcyBub3QgZm9yIHNhbGUuCgojIEVycm9ycwoKKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpTZWxsZXJJbmRleE5vdEZvdW5kYCB3aGVuIGFuIGFjdGl2ZSBsaXN0aW5nIGhhcwpsb3N0IGl0cyBzZWxsZXIgaW5kZXguCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6U2FsZU5vdEZvdW5kYCBvcgpgTWFya2V0cGxhY2VFcnJvcjo6U2VsbGVySW5kZXhDb3JydXB0ZWRgIHdoZW4gYWRqYWNlbnQgaW5kZXggcmVjb3JkcyBhcmUgaW52YWxpZC4AAAALZ2V0X2xpc3RpbmcAAAAAAQAAAAAAAAAQY29udHJhY3RfYWRkcmVzcwAAABMAAAABAAAD6AAAB9AAAAAHTGlzdGluZwA=",
+    "AAAAAAAAAYNDaGFuZ2VzIHRoZSB0cmVhc3VyeSB0aGF0IHJlY2VpdmVzIHByb3RvY29sIGZlZXMgZnJvbSBmdXR1cmUgcHVyY2hhc2VzLgoKIyBBcmd1bWVudHMKCiogYGVgIC0gQ29udHJhY3QgZXhlY3V0aW9uIGVudmlyb25tZW50LgoqIGB0cmVhc3VyeWAgLSBOZXcgcHJvdG9jb2wgZmVlIHJlY2lwaWVudC4KKiBgb3BlcmF0b3JgIC0gUkJBQyBhZG1pbmlzdHJhdG9yIGF1dGhvcml6aW5nIHRoZSB1cGRhdGUuCgojIEVycm9ycwoKKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpDb25maWdOb3RGb3VuZGAgd2hlbiBjb25maWd1cmF0aW9uIGlzIHVuYXZhaWxhYmxlLgoqIFByb3BhZ2F0ZXMgYXV0aG9yaXphdGlvbiBhbmQgcm9sZSBlcnJvcnMgZnJvbSB0aGUgUkJBQyBjb250cmFjdC4AAAAADHNldF90cmVhc3VyeQAAAAIAAAAAAAAACHRyZWFzdXJ5AAAAEwAAAAAAAAAIb3BlcmF0b3IAAAATAAAAAA==",
+    "AAAAAAAAAydJbml0aWFsaXplcyBhIG1hcmtldHBsYWNlIGZvciBvbmUgTkZUIGNvbGxlY3Rpb24gYW5kIHNldHRsZW1lbnQgYXNzZXQuCgojIEFyZ3VtZW50cwoKKiBgZWAgLSBDb250cmFjdCBleGVjdXRpb24gZW52aXJvbm1lbnQuCiogYGNvbmZpZ2AgLSBSQkFDLCBORlQsIHNldHRsZW1lbnQgYXNzZXQsIHRyZWFzdXJ5LCBhbmQgcHJvdG9jb2wgZmVlIGNvbmZpZ3VyYXRpb24uCiogYG9wZXJhdG9yYCAtIFJCQUMgYWRtaW5pc3RyYXRvciBhdXRob3JpemluZyBjb25zdHJ1Y3Rpb24uCgojIEVycm9ycwoKKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpJbnZhbGlkUHJvdG9jb2xGZWVgIHdoZW4gdGhlIGZlZSBleGNlZWRzIHRoZSBtYXhpbXVtLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkludmFsaWRTZXR0bGVtZW50QXNzZXRgIHdoZW4gc2V0dGxlbWVudCBpcyBub3QgYQpkZXBsb3llZCBTdGVsbGFyIEFzc2V0IENvbnRyYWN0LgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkludmFsaWRUcmVhc3VyeWAgd2hlbiB0aGUgdHJlYXN1cnkgaXMgbm90IGEgV2FzbQpjb250cmFjdCBjb25maWd1cmVkIGZvciB0aGUgbWFya2V0cGxhY2Ugc2V0dGxlbWVudCBhc3NldC4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpJbnZhbGlkTmZ0YCB3aGVuIHRoZSBORlQgaXMgbm90IGEgV2FzbSBjb250cmFjdApnb3Zlcm5lZCBieSB0aGUgY29uZmlndXJlZCBSQkFDIGNvbnRyYWN0LgoqIFByb3BhZ2F0ZXMgYXV0aG9yaXphdGlvbiBhbmQgcm9sZSBlcnJvcnMgZnJvbSB0aGUgUkJBQyBjb250cmFjdC4AAAAADV9fY29uc3RydWN0b3IAAAAAAAACAAAAAAAAAAZjb25maWcAAAAAB9AAAAARTWFya2V0cGxhY2VDb25maWcAAAAAAAAAAAAACG9wZXJhdG9yAAAAEwAAAAA=",
+    "AAAAAAAABABUcmFuc2ZlcnMgYW4gTkZUIGludG8gZXNjcm93IGFuZCBvcGVucyBhIHNhbGUgYXQgYSBmaXhlZCBwcmljZS4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KKiBgc2VsbGVyYCAtIEN1cnJlbnQgTkZUIG93bmVyIG9wZW5pbmcgdGhlIHNhbGUuCiogYGNvbnRyYWN0X2FkZHJlc3NgIC0gVmFuaXR5IGNvbnRyYWN0IGFkZHJlc3MgcmVwcmVzZW50ZWQgYnkgdGhlIE5GVC4KKiBgcHJpY2VgIC0gUG9zaXRpdmUgc2V0dGxlbWVudC1hc3NldCBhbW91bnQgcmVxdWVzdGVkIGZyb20gYSBidXllci4KCiMgRXJyb3JzCgoqIEZhaWxzIHdoZW4gdGhlIG1hcmtldHBsYWNlIGlzIHBhdXNlZCBvciBgc2VsbGVyYCBkb2VzIG5vdCBhdXRob3JpemUgdGhlIGludm9jYXRpb24uCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6SW52YWxpZFByaWNlYCB3aGVuIGBwcmljZWAgaXMgbm90IHBvc2l0aXZlLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OlNhbGVBbHJlYWR5RXhpc3RzYCB3aGVuIHRoZSBhZGRyZXNzIGlzIGFscmVhZHkgbGlzdGVkLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkNvbmZpZ05vdEZvdW5kYCB3aGVuIGNvbmZpZ3VyYXRpb24gaXMgdW5hdmFpbGFibGUuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6SW5jb3JyZWN0T3duZXJgIHdoZW4gYHNlbGxlcmAgZG9lcyBub3Qgb3duIHRoZSBORlQuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6Q2xhaW1BZGRyZXNzTWlzbWF0Y2hgIGZvciBhbiBpbmNvbnNpc3RlbnQgTkZUIGNsYWltLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkludmFsaWRTZXR0bGVtZW50UmVjaXBpZW50YCB3aGVuIHRoZSBzZWxsZXIgaXMgbm90CmF1dGhvcml6ZWQgdG8gcmVjZWl2ZSB0aGUgc2V0dGxlbWVudCBhc3NldC4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpTYWxlTm90Rm91bmRgIG9yCmBNYXJrZXRwbGFjZUVycm9yOjpTZWxsZXJJbmRlAAAADnBsYWNlX2Zvcl9zYWxlAAAAAAADAAAAAAAAAAZzZWxsZXIAAAAAABMAAAAAAAAAEGNvbnRyYWN0X2FkZHJlc3MAAAATAAAAAAAAAAVwcmljZQAAAAAAAAsAAAAA",
+    "AAAAAAAABABQdXJjaGFzZXMgYSBsaXN0ZWQgTkZUIHdoaWxlIGNvdmVyaW5nIHBhcnQgb2YgdGhlIHByb3RvY29sIGZlZSB3aXRoIFZOVFkgc2hhcmVzLgoKIyBBcmd1bWVudHMKCiogYGVgIC0gQ29udHJhY3QgZXhlY3V0aW9uIGVudmlyb25tZW50LgoqIGBidXllcmAgLSBBZGRyZXNzIHBheWluZyBmb3IgYW5kIHJlY2VpdmluZyB0aGUgTkZULgoqIGBjb250cmFjdF9hZGRyZXNzYCAtIFZhbml0eSBjb250cmFjdCBhZGRyZXNzIGlkZW50aWZ5aW5nIHRoZSBzYWxlLgoqIGBleHBlY3RlZF9wcmljZWAgLSBQcmljZSB0aGUgYnV5ZXIgZXhwZWN0cywgcHJvdGVjdGluZyBhZ2FpbnN0IHN0YWxlIHRyYW5zYWN0aW9uIGRhdGEuCiogYGZlZV9zaGFyZXNgIC0gVk5UWSBzaGFyZXMgYnVybmVkIHRvd2FyZCB0aGUgcHJvdG9jb2wtZmVlIHBvcnRpb24gb2YgdGhlIHByaWNlLgoKIyBFcnJvcnMKCiogRmFpbHMgd2hlbiB0aGUgbWFya2V0cGxhY2UgaXMgcGF1c2VkIG9yIGBidXllcmAgZG9lcyBub3QgYXV0aG9yaXplIHRoZSBpbnZvY2F0aW9uLgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OlNhbGVOb3RGb3VuZGAgd2hlbiBubyBzYWxlIGV4aXN0cy4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpTZWxmUHVyY2hhc2VgIHdoZW4gdGhlIHNlbGxlciBpcyB0aGUgYnV5ZXIuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6UHJpY2VDaGFuZ2VkYCB3aGVuIHRoZSBsaXN0aW5nIHByaWNlIGRpZmZlcnMuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6Q29uZmlnTm90Rm91bmRgIHdoZW4gY29uZmlndXJhdGlvbiBpcyB1bmF2YWlsYWJsZS4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpTZWxsZXJJbmRleE5vdEZvdW5kYCBvcgpgTWFya2V0cGxhY2VFcnJvcjo6U2VsbGVySW5kZXhDb3JydXB0ZWRgIHdoZW4gaW5kZXggc3RvcmFnZSBpcyBpbmNvbnNpc3RlbnQuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6QXJpdGhtZXRpY092ZXJmbG93YCB3aGVuIGZlZSBjAAAAD2J1eV93aXRoX3NoYXJlcwAAAAAEAAAAAAAAAAVidXllcgAAAAAAABMAAAAAAAAAEGNvbnRyYWN0X2FkZHJlc3MAAAATAAAAAAAAAA5leHBlY3RlZF9wcmljZQAAAAAACwAAAAAAAAAKZmVlX3NoYXJlcwAAAAAACwAAAAA=",
+    "AAAAAAAAAl1DaGFuZ2VzIHRoZSBmZWUgc25hcHNob3R0ZWQgaW50byBzdWJzZXF1ZW50bHkgb3BlbmVkIHNhbGVzLgoKIyBBcmd1bWVudHMKCiogYGVgIC0gQ29udHJhY3QgZXhlY3V0aW9uIGVudmlyb25tZW50LgoqIGBmZWVfYnBzYCAtIE5ldyBwcm90b2NvbCBmZWUgaW4gYmFzaXMgcG9pbnRzLgoqIGBvcGVyYXRvcmAgLSBSQkFDIGFkbWluaXN0cmF0b3IgYXV0aG9yaXppbmcgdGhlIHVwZGF0ZS4KCiMgRXJyb3JzCgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkNvbmZpZ05vdEZvdW5kYCB3aGVuIGNvbmZpZ3VyYXRpb24gaXMgdW5hdmFpbGFibGUuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6SW52YWxpZFRyZWFzdXJ5YCB3aGVuIHRoZSB0cmVhc3VyeSBpcyBub3QgYSBXYXNtCmNvbnRyYWN0IGNvbmZpZ3VyZWQgZm9yIHRoZSBtYXJrZXRwbGFjZSBzZXR0bGVtZW50IGFzc2V0LgoqIEZhaWxzIHdpdGggYE1hcmtldHBsYWNlRXJyb3I6OkludmFsaWRQcm90b2NvbEZlZWAgd2hlbiB0aGUgZmVlIGV4Y2VlZHMgdGhlIG1heGltdW0uCiogUHJvcGFnYXRlcyBhdXRob3JpemF0aW9uIGFuZCByb2xlIGVycm9ycyBmcm9tIHRoZSBSQkFDIGNvbnRyYWN0LgAAAAAAABBzZXRfcHJvdG9jb2xfZmVlAAAAAgAAAAAAAAAHZmVlX2JwcwAAAAAEAAAAAAAAAAhvcGVyYXRvcgAAABMAAAAA",
+    "AAAAAAAAAsJSZXR1cm5zIG9uZSBjdXJzb3ItYmFzZWQgcGFnZSBvZiBhY3RpdmUgc2FsZXMgb3BlbmVkIGJ5IGEgc2VsbGVyLgoKIyBBcmd1bWVudHMKCiogYGVgIC0gQ29udHJhY3QgZXhlY3V0aW9uIGVudmlyb25tZW50LgoqIGBzZWxsZXJgIC0gU2VsbGVyIHdob3NlIGFjdGl2ZSBzYWxlcyBhcmUgcmVxdWVzdGVkLgoqIGBjdXJzb3JgIC0gT3B0aW9uYWwgbGlzdGluZyBhZGRyZXNzIGZyb20gd2hpY2ggdHJhdmVyc2FsIGJlZ2lucy4KKiBgbGltaXRgIC0gTnVtYmVyIG9mIHNhbGVzIHJlcXVlc3RlZCwgZnJvbSAxIHRocm91Z2ggdGhlIG1heGltdW0gcGFnZSBzaXplLgoKIyBSZXR1cm5zCgpUaGUgcmVxdWVzdGVkIHNhbGVzLCBuZXh0IGN1cnNvciwgYW5kIHNlbGxlcidzIHRvdGFsIGFjdGl2ZS1zYWxlIGNvdW50LgoKIyBFcnJvcnMKCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6SW52YWxpZFBhZ2VMaW1pdGAgZm9yIGFuIHVuc3VwcG9ydGVkIGBsaW1pdGAuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6SW52YWxpZEN1cnNvcmAgd2hlbiB0aGUgY3Vyc29yIGlzIG5vdCB2YWxpZCBmb3IgYHNlbGxlcmAuCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6U2FsZU5vdEZvdW5kYCBvcgpgTWFya2V0cGxhY2VFcnJvcjo6U2VsbGVySW5kZXhDb3JydXB0ZWRgIHdoZW4gaW5kZXggc3RvcmFnZSBpcyBpbmNvbnNpc3RlbnQuAAAAAAATZ2V0X3NhbGVzX2J5X3NlbGxlcgAAAAADAAAAAAAAAAZzZWxsZXIAAAAAABMAAAAAAAAABmN1cnNvcgAAAAAD6AAAABMAAAAAAAAABWxpbWl0AAAAAAAABAAAAAEAAAfQAAAAD1NlbGxlclNhbGVzUGFnZQA=",
+    "AAAAAAAAAa9SZXR1cm5zIHRoZSBudW1iZXIgb2YgYWN0aXZlIHNhbGVzIG9wZW5lZCBieSBhIHNlbGxlci4KCiMgQXJndW1lbnRzCgoqIGBlYCAtIENvbnRyYWN0IGV4ZWN1dGlvbiBlbnZpcm9ubWVudC4KKiBgc2VsbGVyYCAtIFNlbGxlciB3aG9zZSBhY3RpdmUtc2FsZSBjb3VudCBpcyByZXF1ZXN0ZWQuCgojIFJldHVybnMKClRoZSBzZWxsZXIncyBhY3RpdmUtc2FsZSBjb3VudCwgb3IgemVybyB3aGVuIHRoZSBzZWxsZXIgaGFzIG5vIHNhbGVzLgoKIyBFcnJvcnMKCiogRmFpbHMgd2l0aCBgTWFya2V0cGxhY2VFcnJvcjo6U2FsZU5vdEZvdW5kYCB3aGVuIHRoZSBpbmRleGVkIGhlYWQgaXMgbWlzc2luZy4KKiBGYWlscyB3aXRoIGBNYXJrZXRwbGFjZUVycm9yOjpTZWxsZXJJbmRleENvcnJ1cHRlZGAgd2hlbiBzZWxsZXIgaW5kZXggc3RvcmFnZSBpcyBpbnZhbGlkLgAAAAAVZ2V0X3NlbGxlcl9zYWxlX2NvdW50AAAAAAAAAQAAAAAAAAAGc2VsbGVyAAAAAAATAAAAAQAAAAQ=",
+    "AAAABQAAACpFdmVudCBlbWl0dGVkIHdoZW4gdGhlIGNvbnRyYWN0IGlzIHBhdXNlZC4AAAAAAAAAAAAGUGF1c2VkAAAAAAABAAAABnBhdXNlZAAAAAAAAAAAAAI=",
+    "AAAABQAAACxFdmVudCBlbWl0dGVkIHdoZW4gdGhlIGNvbnRyYWN0IGlzIHVucGF1c2VkLgAAAAAAAAAIVW5wYXVzZWQAAAABAAAACHVucGF1c2VkAAAAAAAAAAI=",
+    "AAAABAAAAAAAAAAAAAAADVBhdXNhYmxlRXJyb3IAAAAAAAACAAAANFRoZSBvcGVyYXRpb24gZmFpbGVkIGJlY2F1c2UgdGhlIGNvbnRyYWN0IGlzIHBhdXNlZC4AAAANRW5mb3JjZWRQYXVzZQAAAAAAA+gAAAA4VGhlIG9wZXJhdGlvbiBmYWlsZWQgYmVjYXVzZSB0aGUgY29udHJhY3QgaXMgbm90IHBhdXNlZC4AAAANRXhwZWN0ZWRQYXVzZQAAAAAAA+k="
+  ],
+  "schema": [
+    {
+      "udt_struct_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "Listing",
+        "fields": [
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "fee_bps",
+            "type": "u32"
+          },
+          {
+            "doc": "",
+            "name": "price",
+            "type": "i128"
+          },
+          {
+            "doc": "",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "token_id",
+            "type": "u32"
+          },
+          {
+            "doc": "",
+            "name": "word",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "udt_struct_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "SellerSalesPage",
+        "fields": [
+          {
+            "doc": "",
+            "name": "next_cursor",
+            "type": {
+              "option": {
+                "value_type": "address"
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "sales",
+            "type": {
+              "vec": {
+                "element_type": {
+                  "udt": {
+                    "name": "Listing"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "total_count",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "udt_struct_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "MarketplaceConfig",
+        "fields": [
+          {
+            "doc": "",
+            "name": "nft",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "protocol_fee_bps",
+            "type": "u32"
+          },
+          {
+            "doc": "",
+            "name": "rbac",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "settlement_asset",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "treasury",
+            "type": "address"
+          }
+        ]
+      }
+    },
+    {
+      "udt_error_enum_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "MarketplaceError",
+        "cases": [
+          {
+            "doc": "",
+            "name": "ConfigNotFound",
+            "value": 5001
+          },
+          {
+            "doc": "",
+            "name": "InvalidProtocolFee",
+            "value": 5002
+          },
+          {
+            "doc": "",
+            "name": "InvalidPrice",
+            "value": 5003
+          },
+          {
+            "doc": "",
+            "name": "SaleAlreadyExists",
+            "value": 5004
+          },
+          {
+            "doc": "",
+            "name": "SaleNotFound",
+            "value": 5005
+          },
+          {
+            "doc": "",
+            "name": "IncorrectSeller",
+            "value": 5006
+          },
+          {
+            "doc": "",
+            "name": "IncorrectOwner",
+            "value": 5007
+          },
+          {
+            "doc": "",
+            "name": "ClaimAddressMismatch",
+            "value": 5008
+          },
+          {
+            "doc": "",
+            "name": "PriceChanged",
+            "value": 5009
+          },
+          {
+            "doc": "",
+            "name": "SelfPurchase",
+            "value": 5010
+          },
+          {
+            "doc": "",
+            "name": "SellerIndexNotFound",
+            "value": 5011
+          },
+          {
+            "doc": "",
+            "name": "SellerIndexCorrupted",
+            "value": 5012
+          },
+          {
+            "doc": "",
+            "name": "InvalidPageLimit",
+            "value": 5013
+          },
+          {
+            "doc": "",
+            "name": "InvalidCursor",
+            "value": 5014
+          },
+          {
+            "doc": "",
+            "name": "ArithmeticOverflow",
+            "value": 5015
+          },
+          {
+            "doc": "",
+            "name": "InvalidTreasury",
+            "value": 5016
+          },
+          {
+            "doc": "",
+            "name": "InvalidSettlementRecipient",
+            "value": 5017
+          },
+          {
+            "doc": "",
+            "name": "InvalidSettlementAsset",
+            "value": 5018
+          },
+          {
+            "doc": "",
+            "name": "InvalidNft",
+            "value": 5019
+          },
+          {
+            "doc": "",
+            "name": "InvalidEscrow",
+            "value": 5020
+          }
+        ]
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "SalePlaced",
+        "prefix_topics": [
+          "sale_placed"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "seller",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "token_id",
+            "type": "u32",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "word",
+            "type": "string",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "price",
+            "type": "i128",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "fee_bps",
+            "type": "u32",
+            "location": "data"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "SaleCancelled",
+        "prefix_topics": [
+          "sale_cancelled"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "seller",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "token_id",
+            "type": "u32",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "word",
+            "type": "string",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "price",
+            "type": "i128",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "fee_bps",
+            "type": "u32",
+            "location": "data"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "SaleCompleted",
+        "prefix_topics": [
+          "sale_completed"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "seller",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "buyer",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "token_id",
+            "type": "u32",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "word",
+            "type": "string",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "price",
+            "type": "i128",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "fee_bps",
+            "type": "u32",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "protocol_fee",
+            "type": "i128",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "seller_proceeds",
+            "type": "i128",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "fee_asset_collected",
+            "type": "i128",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "fee_shares_burned",
+            "type": "i128",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "fee_shares_value",
+            "type": "i128",
+            "location": "data"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "TreasuryChanged",
+        "prefix_topics": [
+          "treasury_changed"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "previous_treasury",
+            "type": "address",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "new_treasury",
+            "type": "address",
+            "location": "data"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "ProtocolFeeChanged",
+        "prefix_topics": [
+          "protocol_fee_changed"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "previous_fee_bps",
+            "type": "u32",
+            "location": "data"
+          },
+          {
+            "doc": "",
+            "name": "new_fee_bps",
+            "type": "u32",
+            "location": "data"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "ImplementationChanged",
+        "prefix_topics": [
+          "implementation_changed"
+        ],
+        "params": [
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address",
+            "location": "topic_list"
+          },
+          {
+            "doc": "",
+            "name": "new_wasm_hash",
+            "type": {
+              "bytes_n": {
+                "n": 32
+              }
+            },
+            "location": "data"
+          }
+        ],
+        "data_format": "map"
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Purchases a listed NFT using the marketplace settlement asset.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `buyer` - Address paying for and receiving the NFT.\\n* `contract_address` - Vanity contract address identifying the sale.\\n* `expected_price` - Price the buyer expects, protecting against stale transaction data.\\n\\n# Errors\\n\\n* Fails when the marketplace is paused or `buyer` does not authorize the invocation.\\n* Fails with `MarketplaceError::SaleNotFound` when no sale exists.\\n* Fails with `MarketplaceError::SelfPurchase` when the seller is the buyer.\\n* Fails with `MarketplaceError::PriceChanged` when the listing price differs.\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Fails with `MarketplaceError::SellerIndexNotFound` or\\n`MarketplaceError::SellerIndexCorrupted` when index storage is inconsistent.\\n* Fails with `MarketplaceError::ArithmeticOverflow` when fee calculations overflow.\\n* Propagates settlement-asset, treasury, strategy, cashback, and NFT transfer ",
+        "name": "buy",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "buyer",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "expected_price",
+            "type": "i128"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Pauses new sale placement and purchases while preserving cancellation.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `operator` - RBAC administrator authorizing the pause.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Propagates authorization and role errors from the RBAC contract.\\n* Propagates pausable errors when the requested state transition is invalid.",
+        "name": "pause",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Restores sale placement and purchases after a pause.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `operator` - RBAC administrator authorizing the unpause.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Propagates authorization and role errors from the RBAC contract.\\n* Propagates pausable errors when the requested state transition is invalid.",
+        "name": "unpause",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Replaces the marketplace implementation with installed Wasm.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `new_wasm_hash` - Installed Wasm hash selected as the new implementation.\\n* `operator` - RBAC upgrader authorizing the upgrade.\\n\\n# Errors\\n\\n* Fails when `operator` does not authorize the invocation.\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Propagates role errors from the RBAC contract.\\n* Fails when `new_wasm_hash` does not reference installed contract Wasm.",
+        "name": "upgrade",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "new_wasm_hash",
+            "type": {
+              "bytes_n": {
+                "n": 32
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Returns the current marketplace configuration.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n\\n# Returns\\n\\nThe configured contracts, settlement asset, treasury, and protocol fee.\\n\\n# Errors\\n\\nFails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.",
+        "name": "get_config",
+        "inputs": [],
+        "outputs": [
+          {
+            "udt": {
+              "name": "MarketplaceConfig"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Returns whether sale placement and purchase are paused.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n\\n# Returns\\n\\n`true` when the marketplace is paused; otherwise `false`.\\n\\n# Errors\\n\\nFails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.",
+        "name": "get_paused",
+        "inputs": [],
+        "outputs": [
+          "bool"
+        ]
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Cancels a sale and returns the escrowed NFT to its seller.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `contract_address` - Vanity contract address identifying the sale.\\n* `operator` - Seller authorizing cancellation.\\n\\n# Errors\\n\\n* Fails when `operator` does not authorize the invocation.\\n* Fails with `MarketplaceError::SaleNotFound` when no sale exists.\\n* Fails with `MarketplaceError::IncorrectSeller` when `operator` is not the seller.\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Fails with `MarketplaceError::SellerIndexNotFound` or\\n`MarketplaceError::SellerIndexCorrupted` when index storage is inconsistent.\\n* Propagates NFT transfer errors.",
+        "name": "cancel_sale",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Returns the active sale for a vanity contract address, if one exists.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `contract_address` - Vanity contract address used as the listing key.\\n\\n# Returns\\n\\nThe active listing, or `None` when the address is not for sale.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::SellerIndexNotFound` when an active listing has\\nlost its seller index.\\n* Fails with `MarketplaceError::SaleNotFound` or\\n`MarketplaceError::SellerIndexCorrupted` when adjacent index records are invalid.",
+        "name": "get_listing",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "option": {
+              "value_type": {
+                "udt": {
+                  "name": "Listing"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Changes the treasury that receives protocol fees from future purchases.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `treasury` - New protocol fee recipient.\\n* `operator` - RBAC administrator authorizing the update.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Propagates authorization and role errors from the RBAC contract.",
+        "name": "set_treasury",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "treasury",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Initializes a marketplace for one NFT collection and settlement asset.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `config` - RBAC, NFT, settlement asset, treasury, and protocol fee configuration.\\n* `operator` - RBAC administrator authorizing construction.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::InvalidProtocolFee` when the fee exceeds the maximum.\\n* Fails with `MarketplaceError::InvalidSettlementAsset` when settlement is not a\\ndeployed Stellar Asset Contract.\\n* Fails with `MarketplaceError::InvalidTreasury` when the treasury is not a Wasm\\ncontract configured for the marketplace settlement asset.\\n* Fails with `MarketplaceError::InvalidNft` when the NFT is not a Wasm contract\\ngoverned by the configured RBAC contract.\\n* Propagates authorization and role errors from the RBAC contract.",
+        "name": "__constructor",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "config",
+            "type": {
+              "udt": {
+                "name": "MarketplaceConfig"
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Transfers an NFT into escrow and opens a sale at a fixed price.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `seller` - Current NFT owner opening the sale.\\n* `contract_address` - Vanity contract address represented by the NFT.\\n* `price` - Positive settlement-asset amount requested from a buyer.\\n\\n# Errors\\n\\n* Fails when the marketplace is paused or `seller` does not authorize the invocation.\\n* Fails with `MarketplaceError::InvalidPrice` when `price` is not positive.\\n* Fails with `MarketplaceError::SaleAlreadyExists` when the address is already listed.\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Fails with `MarketplaceError::IncorrectOwner` when `seller` does not own the NFT.\\n* Fails with `MarketplaceError::ClaimAddressMismatch` for an inconsistent NFT claim.\\n* Fails with `MarketplaceError::InvalidSettlementRecipient` when the seller is not\\nauthorized to receive the settlement asset.\\n* Fails with `MarketplaceError::SaleNotFound` or\\n`MarketplaceError::SellerInde",
+        "name": "place_for_sale",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "price",
+            "type": "i128"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Purchases a listed NFT while covering part of the protocol fee with VNTY shares.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `buyer` - Address paying for and receiving the NFT.\\n* `contract_address` - Vanity contract address identifying the sale.\\n* `expected_price` - Price the buyer expects, protecting against stale transaction data.\\n* `fee_shares` - VNTY shares burned toward the protocol-fee portion of the price.\\n\\n# Errors\\n\\n* Fails when the marketplace is paused or `buyer` does not authorize the invocation.\\n* Fails with `MarketplaceError::SaleNotFound` when no sale exists.\\n* Fails with `MarketplaceError::SelfPurchase` when the seller is the buyer.\\n* Fails with `MarketplaceError::PriceChanged` when the listing price differs.\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Fails with `MarketplaceError::SellerIndexNotFound` or\\n`MarketplaceError::SellerIndexCorrupted` when index storage is inconsistent.\\n* Fails with `MarketplaceError::ArithmeticOverflow` when fee c",
+        "name": "buy_with_shares",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "buyer",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "contract_address",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "expected_price",
+            "type": "i128"
+          },
+          {
+            "doc": "",
+            "name": "fee_shares",
+            "type": "i128"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Changes the fee snapshotted into subsequently opened sales.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `fee_bps` - New protocol fee in basis points.\\n* `operator` - RBAC administrator authorizing the update.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::ConfigNotFound` when configuration is unavailable.\\n* Fails with `MarketplaceError::InvalidTreasury` when the treasury is not a Wasm\\ncontract configured for the marketplace settlement asset.\\n* Fails with `MarketplaceError::InvalidProtocolFee` when the fee exceeds the maximum.\\n* Propagates authorization and role errors from the RBAC contract.",
+        "name": "set_protocol_fee",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "fee_bps",
+            "type": "u32"
+          },
+          {
+            "doc": "",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "outputs": []
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Returns one cursor-based page of active sales opened by a seller.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `seller` - Seller whose active sales are requested.\\n* `cursor` - Optional listing address from which traversal begins.\\n* `limit` - Number of sales requested, from 1 through the maximum page size.\\n\\n# Returns\\n\\nThe requested sales, next cursor, and seller's total active-sale count.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::InvalidPageLimit` for an unsupported `limit`.\\n* Fails with `MarketplaceError::InvalidCursor` when the cursor is not valid for `seller`.\\n* Fails with `MarketplaceError::SaleNotFound` or\\n`MarketplaceError::SellerIndexCorrupted` when index storage is inconsistent.",
+        "name": "get_sales_by_seller",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "doc": "",
+            "name": "cursor",
+            "type": {
+              "option": {
+                "value_type": "address"
+              }
+            }
+          },
+          {
+            "doc": "",
+            "name": "limit",
+            "type": "u32"
+          }
+        ],
+        "outputs": [
+          {
+            "udt": {
+              "name": "SellerSalesPage"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "function_v0": {
+        "doc": "Returns the number of active sales opened by a seller.\\n\\n# Arguments\\n\\n* `e` - Contract execution environment.\\n* `seller` - Seller whose active-sale count is requested.\\n\\n# Returns\\n\\nThe seller's active-sale count, or zero when the seller has no sales.\\n\\n# Errors\\n\\n* Fails with `MarketplaceError::SaleNotFound` when the indexed head is missing.\\n* Fails with `MarketplaceError::SellerIndexCorrupted` when seller index storage is invalid.",
+        "name": "get_seller_sale_count",
+        "inputs": [
+          {
+            "doc": "",
+            "name": "seller",
+            "type": "address"
+          }
+        ],
+        "outputs": [
+          "u32"
+        ]
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "Event emitted when the contract is paused.",
+        "lib": "",
+        "name": "Paused",
+        "prefix_topics": [
+          "paused"
+        ],
+        "params": [],
+        "data_format": "map"
+      }
+    },
+    {
+      "event_v0": {
+        "doc": "Event emitted when the contract is unpaused.",
+        "lib": "",
+        "name": "Unpaused",
+        "prefix_topics": [
+          "unpaused"
+        ],
+        "params": [],
+        "data_format": "map"
+      }
+    },
+    {
+      "udt_error_enum_v0": {
+        "doc": "",
+        "lib": "",
+        "name": "PausableError",
+        "cases": [
+          {
+            "doc": "The operation failed because the contract is paused.",
+            "name": "EnforcedPause",
+            "value": 1000
+          },
+          {
+            "doc": "The operation failed because the contract is not paused.",
+            "name": "ExpectedPause",
+            "value": 1001
+          }
+        ]
+      }
+    }
+  ]
+}
