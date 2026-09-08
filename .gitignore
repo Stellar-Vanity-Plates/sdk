@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+coverage/
+dist/
+output/
+.DS_Store
+*.secret
+*.seed

@@ -1,0 +1,20 @@
+{
+  "name": "@vanity-plates/sdk",
+  "version": "0.1.0",
+  "exports": { ".": "./mod.ts", "./farming": "./src/farming/mod.ts" },
+  "imports": {
+    "@colibri/core": "jsr:@colibri/core@1.0.0",
+    "@colibri/identicon": "jsr:@colibri/identicon@1.0.0",
+    "@std/assert": "jsr:@std/assert@1.0.14"
+  },
+  "compilerOptions": {
+    "strict": true,
+    "lib": ["deno.ns", "dom", "dom.iterable", "esnext"]
+  },
+  "tasks": {
+    "check": "deno fmt --check && deno lint && deno check mod.ts src/farming/mod.ts",
+    "test": "deno test tests/",
+    "docs": "deno doc --lint mod.ts src/farming/mod.ts"
+  },
+  "publish": { "include": ["mod.ts", "src/", "README.md", "deno.json"] }
+}
