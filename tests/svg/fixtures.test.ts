@@ -41,7 +41,18 @@ Deno.test("SVG fixture inventory covers every named visual combination and has n
   }
   assertEquals(
     svgFixtures.filter((fixture) => fixture.coverage === "traits").map(
-      (fixture) => fixture.id,
+      (fixture) => {
+        const { kind, finish, lettering, rarity } = createPlateModel(
+          fixture.input,
+        );
+        const derived = `${kind}-${finish}-${lettering}-${rarity}`;
+        assertEquals(
+          derived,
+          fixture.id,
+          "Fixture name must match derived traits",
+        );
+        return derived;
+      },
     ).sort(),
     combinations.sort(),
   );
@@ -62,10 +73,28 @@ Deno.test("SVG fixture inventory covers every named visual combination and has n
       assert(names.includes(`${kind}-${edge}.svg`), `Missing ${kind} ${edge}`);
     }
   }
+  const unconfigured = svgFixtures.filter((fixture) =>
+    fixture.id.endsWith("-unconfigured")
+  );
   assertEquals(
-    svgFixtures.filter((fixture) => fixture.id.endsWith("-unconfigured"))
-      .length,
-    12,
+    unconfigured.map((fixture) => {
+      const { kind, finish, lettering, configured } = createPlateModel(
+        fixture.input,
+      );
+      assertEquals(configured, false);
+      const derived = `${kind}-${finish}-${lettering}-unconfigured`;
+      assertEquals(
+        derived,
+        fixture.id,
+        "Fallback name must match derived traits",
+      );
+      return derived;
+    }).sort(),
+    ["badge", "watermark", "sideband", "pattern"].flatMap((finish) =>
+      ["rally", "coach", "mono"].map((lettering) =>
+        `account-${finish}-${lettering}-unconfigured`
+      )
+    ).sort(),
   );
   for (const length of [0, 5, 56]) {
     assert(names.includes(`account-metadata-${length}.svg`));
