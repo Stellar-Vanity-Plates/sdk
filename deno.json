@@ -59,7 +59,7 @@
     "test:live": "deno run --allow-net=soroban-testnet.stellar.org examples/read-protocol.ts",
     "example:export": "deno run -A examples/export.ts",
     "example:farm": "deno run examples/farm.ts",
-    "generate:styles": "deno run --allow-read=tests/reference/webapp/public --allow-write=src/rendering/vendor tools/generate-plate-styles.ts",
+    "generate:styles": "deno run --allow-env=CI,FORCE_COLOR,NO_COLOR,TERM --allow-read=tests/reference/webapp/public --allow-write=src/rendering/vendor tools/generate-plate-styles.ts",
     "build:test": "deno bundle --platform browser --outdir dist/test tests/browser/consumer.ts",
     "test:browser": "deno task build:test && deno test -A tests/browser/parity.test.ts",
     "check:webapp": "deno run --allow-read --allow-run=git tools/check-webapp.ts"
