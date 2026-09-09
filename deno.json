@@ -67,7 +67,9 @@
     "test:unit": "deno test --allow-read --allow-env=NODE_ENV --ignore=tests/architecture,tests/browser,tests/tooling,tests/consumers,tests/reference tests",
     "test:tooling": "deno test --allow-read --allow-write --allow-run tests/tooling",
     "check:docs": "deno run --allow-read --allow-write --allow-run tools/check-docs.ts",
-    "check:consumers": "deno run --allow-read --allow-write --allow-run tools/check-consumers.ts"
+    "check:consumers": "deno run --allow-read --allow-write --allow-run tools/check-consumers.ts",
+    "test:svg": "deno test --allow-read tests/svg",
+    "fixtures:svg:update": "deno run --allow-read=tests/fixtures/svg --allow-write=tests/fixtures/svg tools/update-svg-fixtures.ts"
   },
   "publish": {
     "include": [
@@ -82,7 +84,8 @@
   "fmt": {
     "exclude": [
       "src/rendering/vendor/",
-      "tests/reference/webapp/"
+      "tests/reference/webapp/",
+      "tests/fixtures/svg/*.svg"
     ]
   },
   "lint": {

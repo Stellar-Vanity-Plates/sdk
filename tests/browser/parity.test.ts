@@ -1,3 +1,8 @@
+import {
+  svgFixtureDirectory,
+  svgFixtureFilename,
+  svgFixtures,
+} from "@tools/quality/svg-fixtures.ts";
 import { assert, assertEquals, assertRejects } from "@std/assert";
 import { chromium, type Page } from "playwright";
 import { Buffer } from "node:buffer";
@@ -362,6 +367,58 @@ Deno.test({
       assertEquals(
         await page.evaluate(() => document.getAnimations().length),
         0,
+      );
+    } finally {
+      await browser.close();
+    }
+  },
+});
+
+Deno.test({
+  name:
+    "saved SVG baselines render like the independent webapp for all 140 visual combinations",
+  sanitizeOps: false,
+  sanitizeResources: false,
+  fn: async () => {
+    const browser = await chromium.launch({
+      channel: "chromium",
+      executablePath: Deno.env.get("VNTY_CHROMIUM"),
+    });
+    try {
+      const page = await browser.newPage({
+        deviceScaleFactor: 1,
+        reducedMotion: "reduce",
+      });
+      const errors: string[] = [];
+      page.on("pageerror", (error) => errors.push(error.message));
+      const cases = svgFixtures.filter((fixture) =>
+        fixture.coverage === "traits"
+      );
+      for (const sample of cases) {
+        const width = sample.options.width ?? 600;
+        await page.setViewportSize({
+          width,
+          height: Math.ceil((width - 64) / 2.9) + 64,
+        });
+        await page.setContent(
+          `<style>${captureFrame}</style>${referenceSvg(sample.input, width)}`,
+        );
+        await ready(page);
+        const expected = await page.screenshot({ omitBackground: true });
+        const saved = await Deno.readTextFile(
+          new URL(svgFixtureFilename(sample), svgFixtureDirectory),
+        );
+        await page.setContent(`<style>${captureFrame}</style>${saved}`);
+        await ready(page);
+        samePixels(
+          await page.screenshot({ omitBackground: true }),
+          expected,
+          `saved SVG ${sample.id}`,
+        );
+      }
+      assertEquals(errors, []);
+      console.log(
+        `${cases.length} saved SVG baselines are pixel-identical to the independent webapp renderer.`,
       );
     } finally {
       await browser.close();

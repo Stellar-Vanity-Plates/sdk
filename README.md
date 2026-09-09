@@ -304,6 +304,7 @@ deno task check          # Format, lint, source and example types
 deno task docs           # Public API docs and checked Markdown examples
 deno task test           # Offline behavior, architecture and tooling regressions
 deno task check:consumers # All public subpaths from isolated publishable sources
+deno task test:svg       # 171 saved SVGs, including every named visual combination
 deno task test:browser   # Exact visual comparisons against the webapp reference
 deno task generate       # Regenerate typed models from checked-in specs
 deno task build:preview  # Browser bundle, including lazy PNG export

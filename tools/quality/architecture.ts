@@ -335,6 +335,8 @@ export async function readRepository(root = "."): Promise<Map<string, string>> {
         ) await read(name);
       } else if (
         entry.isFile &&
+        // Golden SVGs embed fonts but are not executable test modules.
+        (!path.startsWith("tests/") || /\.(?:tsx?|json)$/.test(name)) &&
         (path ||
           [
             "mod.ts",

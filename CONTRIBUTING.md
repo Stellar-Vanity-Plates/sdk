@@ -86,6 +86,45 @@ JSR artifacts, npm packaging or a Node runtime matrix. Add those consumers when
 the corresponding distribution is introduced. ABI models and canonical styles
 must still regenerate without a diff in CI.
 
+## Saved SVG baselines
+
+`tests/fixtures/svg/` holds 171 complete, self-contained SVGs and an explicit
+manifest of public addresses, inputs, options and expected traits. The 140 named
+combinations cover every supported G/C × insignia finish × lettering × rarity
+combination. Another 31 cases cover unconfigured accounts, metadata, short/long
+and normalized labels, width boundaries, animations and custom accessible IDs.
+This is full coverage of the named visual combinations, not every possible
+address, color, width or animation time.
+
+`deno task test:svg` compares freshly generated SVG text with each saved file,
+without normalization or removed fonts/styles. It also checks coverage,
+filenames, and that addresses actually derive the traits claimed in the
+manifest. The same checks run in `test:unit`, `test` and CI. Tests have
+read-only access to fixtures and cannot update their expectations. Failure
+messages identify the case and first changed character without dumping embedded
+font data.
+
+The browser suite also compares all 140 saved visual combinations against the
+independent webapp components, retaining the existing live-renderer and adapter
+comparisons. A baseline created from an incorrect renderer therefore still fails
+webapp parity.
+
+For an intentional design change:
+
+1. Review the source change and the affected SVGs. Keep the webapp reference
+   current using the existing process below.
+2. Edit `tests/fixtures/svg/manifest.json` only when the test inputs or
+   supported variants deliberately change. Do not delete cases to hide failures.
+3. Run `deno task fixtures:svg:update --accept`. This is the only
+   fixture-writing command; it replaces the SVGs from the manifest, never runs
+   in CI, and does not remove orphaned files automatically.
+4. Review the Git diff, then run `test:svg` and `test:browser` before
+   integration.
+
+Keep the embedded fonts and SVG markup intact. The fixture directory is large by
+intent and is excluded from package publication. Its initial source provenance
+is recorded in the manifest; subsequent revisions are tracked in Git.
+
 ## Canonical appearance
 
 The webapp's current Clubhouse G/C plates define the design. Do not redesign or

@@ -1,0 +1,2924 @@
+{
+  "schemaVersion": 1,
+  "initialBaseline": {
+    "sdkCommit": "37a024a9ae3f2778facb8de392cf6d8aa78840a1",
+    "webappCommit": "94876457d26c28635c8fab97bd47abe7338c8b82"
+  },
+  "cases": [
+    {
+      "id": "account-badge-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GAFTAVL2T7COSDRTLB62EAAAA4EAQCAIBAEBIOK6QOUM34QXHRQYMITV",
+        "suffix": "YMITV"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "YMITV"
+      }
+    },
+    {
+      "id": "account-badge-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GALDWYEFVLH7IGJ6MOEK2AAAA4DQQCAIBAEB6RDJR2Z5R7JCI5WJCE5I",
+        "suffix": "JCE5I"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "JCE5I"
+      }
+    },
+    {
+      "id": "account-badge-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GAQUM24QWXNP6JCJN2J3QAAAA4DQOCAIBAECUT3UTG7OGCBNKJ3ZYUHH",
+        "suffix": "ZYUHH"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "ZYUHH"
+      }
+    },
+    {
+      "id": "account-badge-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "KOOAV"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOOAV"
+      }
+    },
+    {
+      "id": "account-badge-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GBGXFF544EDCWUDVTK76IAAAA4DQOBYHA4DVM65AYXVA6NCZP2R4QFEI",
+        "suffix": "4QFEI"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "4QFEI"
+      }
+    },
+    {
+      "id": "account-badge-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GAREO3ERW3NQAJKKN6KLSAABA4EAQCAIBAECWUDVTK76ICJOKN4J2S75",
+        "suffix": "J2S75"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "J2S75"
+      }
+    },
+    {
+      "id": "account-badge-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GAWVE544YHTAWMCVPKP4IAABA4DQQCAIBAEDMW4AUXFO6FBZL2B2RE4T",
+        "suffix": "2RE4T"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "2RE4T"
+      }
+    },
+    {
+      "id": "account-badge-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GA4F3AVHZTYRMO3AQWVM6AABA4DQOCAIBAEECZULWDK7UH2ENGHLHCHK",
+        "suffix": "LHCHK"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "LHCHK"
+      }
+    },
+    {
+      "id": "account-badge-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GBBWRDNS276CCRTLSC25UAABA4DQOBYIBAEEY4MWXPQAKKSPOSM35TPA",
+        "suffix": "35TPA"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "35TPA"
+      }
+    },
+    {
+      "id": "account-badge-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GBSITLWT7AOUEZ4MWHLPWAABA4DQOBYHA4DW3EVX3QASMS3QSW5N6K6C",
+        "suffix": "N6K6C"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "N6K6C"
+      }
+    },
+    {
+      "id": "account-badge-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GA4V5A5IZXZBOPDBQ2V5AAACA4EAQCAIBAEEEZ4MWHLPWICFNKH3IR3Y",
+        "suffix": "3IR3Y"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "3IR3Y"
+      }
+    },
+    {
+      "id": "account-badge-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GBCGTDVT3D6SER3MSG3NWAACA4DQQCAIBAEE24UXXTQQMK2QOWNL7X4X",
+        "suffix": "L7X4X"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "L7X4X"
+      }
+    },
+    {
+      "id": "account-badge-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GBHXJGN64MEC2UTXTTA6MAACA4DQOCAIBAEFQ7NCY7WBCNS3QCS4UI7G",
+        "suffix": "4UI7G"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "4UI7G"
+      }
+    },
+    {
+      "id": "account-badge-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GBNH7JGJ5YJTQXMCU7GPCAACA4DQOBYIBAEGHCFN2L3RYQLGROYNK2NJ",
+        "suffix": "NK2NJ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "NK2NJ"
+      }
+    },
+    {
+      "id": "account-badge-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GB52BRPKB42FS7VDZDWREAACA4DQOBYHA4DYJKOO6MMD2YUHVTI7NILH",
+        "suffix": "7NILH"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "7NILH"
+      }
+    },
+    {
+      "id": "account-watermark-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GA3FXAFFZLXRIOK6QOUM2AIAA4EAQCAIBAED6ZEJV3J7QHKCM6GLDCLO",
+        "suffix": "LDCLO"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "LDCLO"
+      }
+    },
+    {
+      "id": "account-watermark-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GBAWNC5Q2X5B6RDJR2Z5QAIAA4DQQCAIBAEEU34UXHPAGKCNOKL3Y6FH",
+        "suffix": "3Y6FH"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "3Y6FH"
+      }
+    },
+    {
+      "id": "account-watermark-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GBGHDFV34ACSUT3UTG7OGAIAA4DQOCAIBAEFK6U7YTUQ4M2YPWRMPPRV",
+        "suffix": "MPPRV"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "MPPRV"
+      }
+    },
+    {
+      "id": "account-watermark-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GBLXZIOG5MIDKWT7UTE64AIAA4DQOBYIBAEGBBNKZ72BSPTDRCW5FT5H",
+        "suffix": "5FT5H"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "5FT5H"
+      }
+    },
+    {
+      "id": "account-watermark-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GB4J3QXHBQYVM65AYXVA6AIAA4DQOBYHA4DYDJWL6AKTUX4EVHHPH37L",
+        "suffix": "PH37L"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "PH37L"
+      }
+    },
+    {
+      "id": "account-watermark-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GBGXFF544EDCWUDVTK76IAIBA4EAQCAIBAEFM65AYXVA6NCZP2R4QEXZ",
+        "suffix": "4QEXZ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "4QEXZ"
+      }
+    },
+    {
+      "id": "account-watermark-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GBMH3IWH5QITMW4AUXFO6AIBA4DQQCAIBAEGDBVL2D2RUP3ERGXNGQCE",
+        "suffix": "NGQCE"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "NGQCE"
+      }
+    },
+    {
+      "id": "account-watermark-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GBRYRLOS64OECZULWDK7UAIBA4DQOCAIBAEGZENW3MACKSTPSS454TGC",
+        "suffix": "54TGC"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "54TGC"
+      }
+    },
+    {
+      "id": "account-watermark-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GBXJHOG5AITUY4MWXPQAKAIBA4DQOBYIBAEHPHGB4YFTAVL2T7COSMNA",
+        "suffix": "OSMNA"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "OSMNA"
+      }
+    },
+    {
+      "id": "account-watermark-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GCH3JWP6ENEG3EVX3QASMAIBA4DQOBYHA4DZRPPCA4WFC5U3YDSQUOPY",
+        "suffix": "QUOPY"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "QUOPY"
+      }
+    },
+    {
+      "id": "account-watermark-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GBSITLWT7AOUEZ4MWHLPWAICA4EAQCAIBAEG3EVX3QASMS3QSW5N6MQ7",
+        "suffix": "N6MQ7"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "N6MQ7"
+      }
+    },
+    {
+      "id": "account-watermark-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GBXZJOO6AMUE24UXXTQQMAICA4DQQCAIBAEHRHOC44GDCVT3UDC6U2IH",
+        "suffix": "6U2IH"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "6U2IH"
+      }
+    },
+    {
+      "id": "account-watermark-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GB5J7RHJBYZVQ7NCY7WBCAICA4DQOCAIBAEIHKGN6ILTYYMGVPIPLRGM",
+        "suffix": "PLRGM"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "PLRGM"
+      }
+    },
+    {
+      "id": "account-watermark-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GCC2VT7UDE7GHCFN2L3RYAICA4DQOBYIBAEI5M6Y7UREO3ERW3NQAQNK",
+        "suffix": "QAQNK"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "QAQNK"
+      }
+    },
+    {
+      "id": "account-watermark-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GCTMX4AVHJPYJKOO6MMD2AICA4DQOBYHA4D27VHZDZBWRDNS276CC4PA",
+        "suffix": "CC4PA"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "CC4PA"
+      }
+    },
+    {
+      "id": "account-sideband-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GBQYNK6Q6UND6ZEJV3J7QAQAA4EAQCAIBAEGVD5U3H7CGSDNSK35ZL57",
+        "suffix": "5ZL57"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "5ZL57"
+      }
+    },
+    {
+      "id": "account-sideband-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GBWJDNW3AASUU34UXHPAGAQAA4DQQCAIBAEHLGV74QES4U3YTXBOPZQT",
+        "suffix": "OPZQT"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "OPZQT"
+      }
+    },
+    {
+      "id": "account-sideband-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GB3ZZQPGBMYFK6U7YTUQ4AQAA4DQOCAIBAEIBJOK54KDSXUDVDG7FW4L",
+        "suffix": "7FW4L"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "7FW4L"
+      }
+    },
+    {
+      "id": "account-sideband-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GCBKPTHRCY5WBBNKZ72BSAQAA4DQOBYIBAEIXMGV7IPUI2MOWPMP2FFA",
+        "suffix": "P2FFA"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "P2FFA"
+      }
+    },
+    {
+      "id": "account-sideband-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GCR4R3ISG5OIDJWL6AKTUAQAA4DQOBYHA4D2ZUPWDNAGLCVP2T4R4Z76",
+        "suffix": "R4Z76"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "R4Z76"
+      }
+    },
+    {
+      "id": "account-sideband-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GB4J3QXHBQYVM65AYXVA6AQBA4EAQCAIBAEIDJWL6AKTUX4EVHHPHD7R",
+        "suffix": "PHD7R"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "PHD7R"
+      }
+    },
+    {
+      "id": "account-sideband-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GCB2RTPSC46GDBVL2D2RUAQBA4DQQCAIBAEIZMOW7MQEK2UPWTM74SA5",
+        "suffix": "74SA5"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "74SA5"
+      }
+    },
+    {
+      "id": "account-sideband-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GCHLHWH5EJDWZENW3MACKAQBA4DQOCAIBAEJPPHBAYVVA5M2X7SATX26",
+        "suffix": "ATX26"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "ATX26"
+      }
+    },
+    {
+      "id": "account-sideband-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GCM35YYIFVJHPHGB4YFTAAQBA4DQOBYIBAEKFR7MCE3FXAFFZLXRIWDG",
+        "suffix": "RIWDG"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "RIWDG"
+      }
+    },
+    {
+      "id": "account-sideband-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GC5N6BBJJZZZRPPCA4WFCAQBA4DQOBYHA4D4H2ANGJLXZIOG5MIDKQV6",
+        "suffix": "DKQV6"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "DKQV6"
+      }
+    },
+    {
+      "id": "account-sideband-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GCH3JWP6ENEG3EVX3QASMAQCA4EAQCAIBAEJRPPCA4WFC5U3YDSQURSO",
+        "suffix": "QURSO"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "QURSO"
+      }
+    },
+    {
+      "id": "account-sideband-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GCNL7ZAJFZJXRHOC44GDCAQCA4DQQCAIBAEKHSHNCI3VZANGZPYBLQOD",
+        "suffix": "BLQOD"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "BLQOD"
+      }
+    },
+    {
+      "id": "account-sideband-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GCS4V3YUHFPIHKGN6ILTYAQCA4DQOCAIBAEK5U7YDVBGPDFR235SALRA",
+        "suffix": "SALRA"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "SALRA"
+      }
+    },
+    {
+      "id": "account-sideband-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GCYNL6Q7IRUY5M6Y7UREOAQCA4DQOBYIBAELTXQDFBGXFF544EDCWRJO",
+        "suffix": "CWRJO"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "CWRJO"
+      }
+    },
+    {
+      "id": "account-sideband-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GDI7MG2AMWFK7VHZDZBWQAQCA4DQOBYHA4D5V7ZEJFXJHOG5AITUYHYO",
+        "suffix": "UYHYO"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "UYHYO"
+      }
+    },
+    {
+      "id": "account-pattern-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GCGLDVX3EBCWVD5U3H7CGAYAA4EAQCAIBAEJLOW7AQUU444YXXRAOFA4",
+        "suffix": "AOFA4"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "AOFA4"
+      }
+    },
+    {
+      "id": "account-pattern-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GCL3ZYIGFNIHLGV74QES4AYAA4DQQCAIBAEKBRPKB42FS7VDZDWRE3ON",
+        "suffix": "RE3ON"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "RE3ON"
+      }
+    },
+    {
+      "id": "account-pattern-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GCRMP3ARGZNYBJOK54KDSAYAA4DQOCAIBAEKXUHVDI7WJCNO2P4B3PKF",
+        "suffix": "B3PKF"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "B3PKF"
+      }
+    },
+    {
+      "id": "account-pattern-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GCW5F5Y4IFTIXMGV7IPUIAYAA4DQOBYIBAELNWYAEVFG7FFZ3YBSQCMB",
+        "suffix": "SQCMB"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "SQCMB"
+      }
+    },
+    {
+      "id": "account-pattern-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GDHPGGB5MKD2ZUPWDNAGKAYAA4DQOBYHA4D5P7BBIZVZBNO274SESGDD",
+        "suffix": "ESGDD"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "ESGDD"
+      }
+    },
+    {
+      "id": "account-pattern-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GCR4R3ISG5OIDJWL6AKTUAYBA4EAQCAIBAEKZUPWDNAGLCVP2T4R4YMP",
+        "suffix": "R4YMP"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "R4YMP"
+      }
+    },
+    {
+      "id": "account-pattern-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GCXNH6A5IJTYZMOW7MQEKAYBA4DQQCAIBAELPXABEZFXBFN234CCTRNN",
+        "suffix": "CTRNN"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "CTRNN"
+      }
+    },
+    {
+      "id": "account-pattern-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GC454AZIJVZJPPHBAYVVAAYBA4DQOCAIBAEMFZYMGFLHXIGF5IHTJLTM",
+        "suffix": "TJLTM"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "TJLTM"
+      }
+    },
+    {
+      "id": "account-pattern-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GDCOSDRTLB62FR7MCE3FWAYBA4DQOBYIBAEM34QXHRQYNK6Q6UND6WRJ",
+        "suffix": "D6WRJ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "D6WRJ"
+      }
+    },
+    {
+      "id": "account-pattern-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GDSQUL2UPGPMH2ANGJLXYAYBA4DQOBYHA4D64EZYLWBKPTHRCY5WBZDP",
+        "suffix": "WBZDP"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "WBZDP"
+      }
+    },
+    {
+      "id": "account-pattern-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GC5N6BBJJZZZRPPCA4WFCAYCA4EAQCAIBAEMH2ANGJLXZIOG5MIDKW3D",
+        "suffix": "DKW3D"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "DKW3D"
+      }
+    },
+    {
+      "id": "account-pattern-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GDC6UDZULF7KHSHNCI3VYAYCA4DQQCAIBAEM54YYHVRIPLGR6YNUBVDS",
+        "suffix": "UBVDS"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "UBVDS"
+      }
+    },
+    {
+      "id": "account-pattern-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GDIPKGR7MSE25U7YDVBGOAYCA4DQOCAIBAENT7RDJBWZFN64AETEWBI5",
+        "suffix": "EWBI5"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "EWBI5"
+      }
+    },
+    {
+      "id": "account-pattern-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GDNQAJKKN6KLTXQDFBGXEAYCA4DQOBYIBAEOICJOKN4J3QXHBQYVMHTZ",
+        "suffix": "VMHTZ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "VMHTZ"
+      }
+    },
+    {
+      "id": "account-pattern-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GD6CCRTLSC25V7ZEJFXJGAYCA4DQOBYHA4DQKKSPOSM35YYIFVJHPE64",
+        "suffix": "HPE64"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "HPE64"
+      }
+    },
+    {
+      "id": "contract-badge-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CAFTAVL2T4DQQCAIBAEAQAHMCEAFXAFFZLXRIOK6QOUM34QXHRQYNVN6",
+        "suffix": "YNVN6"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "YNVN6"
+      }
+    },
+    {
+      "id": "contract-badge-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CALDWYEFVIDQOCAIBAEAQAHXDQAGNC5Q2X5B6RDJR2Z5R7JCI5WJDYX3",
+        "suffix": "JDYX3"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "JDYX3"
+      }
+    },
+    {
+      "id": "contract-badge-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CAQUM24QWUDQOBYIBAEAQAACE4AHDFV34ACSUT3UTG7OGCBNKJ3ZZ5JL",
+        "suffix": "ZZ5JL"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "ZZ5JL"
+      }
+    },
+    {
+      "id": "contract-badge-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "KOU7P"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOU7P"
+      }
+    },
+    {
+      "id": "contract-badge-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CBGXFF544EDQOBYHA4DQOABOKMAJ3QXHBQYVM65AYXVA6NCZP2R4QV5V",
+        "suffix": "4QV5V"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "4QV5V"
+      }
+    },
+    {
+      "id": "contract-badge-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CAREO3ERWYDQQCAIBAEAQAIDFAAHFF544EDCWUDVTK76ICJOKN4J3UF4",
+        "suffix": "J3UF4"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "J3UF4"
+      }
+    },
+    {
+      "id": "contract-badge-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CAWVE544YEDQOCAIBAEAQAIOGMAH3IWH5QITMW4AUXFO6FBZL2B2RSMG",
+        "suffix": "2RSMG"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "2RSMG"
+      }
+    },
+    {
+      "id": "contract-badge-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CA4F3AVHZQDQOBYIBAEAQAIZHYAIRLOS64OECZULWDK7UH2ENGHLHDUJ",
+        "suffix": "LHDUJ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "LHDUJ"
+      }
+    },
+    {
+      "id": "contract-badge-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CBBWRDNS24DQOBYHBAEAQAJEJEAJHOG5AITUY4MWXPQAKKSPOSM35S4W",
+        "suffix": "35S4W"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "35S4W"
+      }
+    },
+    {
+      "id": "contract-badge-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CBSITLWT7ADQOBYHA4DQOAKFNIALJWP6ENEG3EVX3QASMS3QSW5N6MMX",
+        "suffix": "N6MMX"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "N6MMX"
+      }
+    },
+    {
+      "id": "contract-badge-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CA4V5A5IZUDQQCAIBAEAQAQ2H4AITLWT7AOUEZ4MWHLPWICFNKH3I65O",
+        "suffix": "3I65O"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "3I65O"
+      }
+    },
+    {
+      "id": "contract-badge-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CBCGTDVT3ADQOCAIBAEAQARFJIAJJOO6AMUE24UXXTQQMK2QOWNL7WXX",
+        "suffix": "L7WXX"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "L7WXX"
+      }
+    },
+    {
+      "id": "contract-badge-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CBHXJGN64MDQOBYIBAEAQARQKUAJ7RHJBYZVQ7NCY7WBCNS3QCS4VTY6",
+        "suffix": "4VTY6"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "4VTY6"
+      }
+    },
+    {
+      "id": "contract-badge-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CBNH7JGJ5YDQOBYHBAEAQAR3MAAKVT7UDE7GHCFN2L3RYQLGROYNLZMM",
+        "suffix": "NLZMM"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "NLZMM"
+      }
+    },
+    {
+      "id": "contract-badge-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CB52BRPKB4DQOBYHA4DQOAS4QEAMX4AVHJPYJKOO6MMD2YUHVTI7NV4J",
+        "suffix": "7NV4J"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "7NV4J"
+      }
+    },
+    {
+      "id": "contract-badge-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CBIHLGV74QDQQCAIBAEAQAZRKYAKBRPKB42FS7VDZDWREN24QGTMXWUK",
+        "suffix": "MXWUK"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "MXWUK"
+      }
+    },
+    {
+      "id": "contract-badge-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CBNYBJOK54DQOCAIBAEAQAZ4MEAKXUHVDI7WJCNO2P4B2QTHRSY5MNFA",
+        "suffix": "5MNFA"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "5MNFA"
+      }
+    },
+    {
+      "id": "contract-badge-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CBTIXMGV7IDQOBYIBAEAQA2HNQALNWYAEVFG7FFZ3YBSQTLSS66ODL3C",
+        "suffix": "ODL3C"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "ODL3C"
+      }
+    },
+    {
+      "id": "contract-badge-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CBYZNO7AAUDQOBYHBAEAQA2SO4AMDZQLGBKXVH6E5EHDGWD5ULD6Z6TE",
+        "suffix": "6Z6TE"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "6Z6TE"
+      }
+    },
+    {
+      "id": "contract-badge-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CCJLPXABEYDQOBYHA4DQOA3TTAAOEBZMKF3JXQHFBIXVI6M6YPUA2R2Y",
+        "suffix": "A2R2Y"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "A2R2Y"
+      }
+    },
+    {
+      "id": "contract-watermark-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CA3FXAFFZIDQQCAIBAEAQAAXHQAYNK6Q6UND6ZEJV3J7QHKCM6GLD3E5",
+        "suffix": "LD3E5"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "LD3E5"
+      }
+    },
+    {
+      "id": "contract-watermark-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CBAWNC5Q2UDQOCAIBAEAQABCI4AZDNW3AASUU34UXHPAGKCNOKL3YBMK",
+        "suffix": "3YBMK"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "3YBMK"
+      }
+    },
+    {
+      "id": "contract-watermark-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CBGHDFV34ADQOBYIBAEAQABNKIAZZQPGBMYFK6U7YTUQ4M2YPWRMO33G",
+        "suffix": "MO33G"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "MO33G"
+      }
+    },
+    {
+      "id": "contract-watermark-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CBLXZIOG5MDQOBYHBAEAQABYLUA2PTHRCY5WBBNKZ72BSPTDRCW5FFIT",
+        "suffix": "5FFIT"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "5FFIT"
+      }
+    },
+    {
+      "id": "contract-watermark-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CB4J3QXHBQDQOBYHA4DQOACZPYA4R3ISG5OIDJWL6AKTUX4EVHHPHX7G",
+        "suffix": "PHX7G"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "PHX7G"
+      }
+    },
+    {
+      "id": "contract-watermark-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CBGXFF544EDQQCAIBAEAQAJOKMAZ3QXHBQYVM65AYXVA6NCZP2R4QR4E",
+        "suffix": "4QR4E"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "4QR4E"
+      }
+    },
+    {
+      "id": "contract-watermark-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CBMH3IWH5QDQOCAIBAEAQAJZLYA2RTPSC46GDBVL2D2RUP3ERGXNGNTQ",
+        "suffix": "NGNTQ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "NGNTQ"
+      }
+    },
+    {
+      "id": "contract-watermark-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CBRYRLOS64DQOBYIBAEAQAKENEA3HWH5EJDWZENW3MACKSTPSS455D6H",
+        "suffix": "55D6H"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "55D6H"
+      }
+    },
+    {
+      "id": "contract-watermark-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CBXJHOG5AIDQOBYHBAEAQAKPOQA35YYIFVJHPHGB4YFTAVL2T7COTKQD",
+        "suffix": "OTKQD"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "OTKQD"
+      }
+    },
+    {
+      "id": "contract-watermark-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CCH3JWP6EMDQOBYHA4DQOALQSUA56BBJJZZZRPPCA4WFC5U3YDSQVSGZ",
+        "suffix": "QVSGZ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "QVSGZ"
+      }
+    },
+    {
+      "id": "contract-watermark-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CBSITLWT7ADQQCAIBAEAQASFNIA3JWP6ENEG3EVX3QASMS3QSW5N6R6N",
+        "suffix": "N6R6N"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "N6R6N"
+      }
+    },
+    {
+      "id": "contract-watermark-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CBXZJOO6AMDQOCAIBAEAQASQOUA37ZAJFZJXRHOC44GDCVT3UDC6UEHX",
+        "suffix": "6UEHX"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "6UEHX"
+      }
+    },
+    {
+      "id": "contract-watermark-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CB5J7RHJBYDQOBYIBAEAQAS3QAA4V3YUHFPIHKGN6ILTYYMGVPIPKLKN",
+        "suffix": "PKLKN"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "PKLKN"
+      }
+    },
+    {
+      "id": "contract-watermark-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CCC2VT7UDEDQOBYHBAEAQATGRMA5L6Q7IRUY5M6Y7UREO3ERW3NQA4K5",
+        "suffix": "QA4K5"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "QA4K5"
+      }
+    },
+    {
+      "id": "contract-watermark-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CCTMX4AVHIDQOBYHA4DQOAUHVQA7MG2AMWFK7VHZDZBWRDNS276CD6LM",
+        "suffix": "CD6LM"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "CD6LM"
+      }
+    },
+    {
+      "id": "contract-watermark-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CB52BRPKB4DQQCAIBAEAQA24QEA4X4AVHJPYJKOO6MMD2YUHVTI7NR5Y",
+        "suffix": "7NR5Y"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "7NR5Y"
+      }
+    },
+    {
+      "id": "contract-watermark-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CCDKXUHVDIDQOCAIBAEAQA3HRQA5N6ZAIVVI7NGZ7YRUQ3MSW7OADD3D",
+        "suffix": "ADD3D"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "ADD3D"
+      }
+    },
+    {
+      "id": "contract-watermark-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CCI3NWYAEUDQOBYIBAEAQA3SS4A6CBRLKB2ZVP7EBEXFG6E5YLTQYZNV",
+        "suffix": "QYZNV"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "QYZNV"
+      }
+    },
+    {
+      "id": "contract-watermark-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CCOMDZQLGADQOBYHBAEAQA35UIA6YEJWLOAKLSXPCQ4V5A5IZXZBOKNL",
+        "suffix": "BOKNL"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "BOKNL"
+      }
+    },
+    {
+      "id": "contract-watermark-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CC66EBZMKEDQOBYHA4DQOA46YMAQ2MSXPSQ4N2YQGVNH7JGJ5YJTQ2FX",
+        "suffix": "TQ2FX"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "TQ2FX"
+      }
+    },
+    {
+      "id": "contract-sideband-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CBQYNK6Q6UDQQCAIBAEAQACCM4BLDVX3EBCWVD5U3H7CGSDNSK35YSPH",
+        "suffix": "5YSPH"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "5YSPH"
+      }
+    },
+    {
+      "id": "contract-sideband-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CBWJDNW3AADQOCAIBAEAQACNOIBLZYIGFNIHLGV74QES4U3YTXBOOWWX",
+        "suffix": "OOWWX"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "OOWWX"
+      }
+    },
+    {
+      "id": "contract-sideband-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CB3ZZQPGBMDQOBYIBAEAQACYPUBMP3ARGZNYBJOK54KDSXUDVDG7E4P6",
+        "suffix": "7E4P6"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "7E4P6"
+      }
+    },
+    {
+      "id": "contract-sideband-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CCBKPTHRCYDQOBYHBAEAQADDRABNF5Y4IFTIXMGV7IPUI2MOWPMP26TP",
+        "suffix": "P26TP"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "P26TP"
+      }
+    },
+    {
+      "id": "contract-sideband-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CCR4R3ISG4DQOBYHA4DQOAEEVEBPGGB5MKD2ZUPWDNAGLCVP2T4R4Y57",
+        "suffix": "R4Y57"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "R4Y57"
+      }
+    },
+    {
+      "id": "contract-sideband-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CB4J3QXHBQDQQCAIBAEAQAKZPYBMR3ISG5OIDJWL6AKTUX4EVHHPGC7W",
+        "suffix": "PGC7W"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "PGC7W"
+      }
+    },
+    {
+      "id": "contract-sideband-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CCB2RTPSC4DQOCAIBAEAQALEREBNH6A5IJTYZMOW7MQEK2UPWTM75ZSC",
+        "suffix": "75ZSC"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "75ZSC"
+      }
+    },
+    {
+      "id": "contract-sideband-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CCHLHWH5EIDQOBYIBAEAQALPSQBN4AZIJVZJPPHBAYVVA5M2X7SATNBA",
+        "suffix": "ATNBA"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "ATNBA"
+      }
+    },
+    {
+      "id": "contract-sideband-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CCM35YYIFUDQOBYHBAEAQAL2T4BOSDRTLB62FR7MCE3FXAFFZLXRJLIW",
+        "suffix": "RJLIW"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "RJLIW"
+      }
+    },
+    {
+      "id": "contract-sideband-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CC5N6BBJJYDQOBYHA4DQOAM3YABAUL2UPGPMH2ANGJLXZIOG5MIDK6FB",
+        "suffix": "DK6FB"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "DK6FB"
+      }
+    },
+    {
+      "id": "contract-sideband-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CCH3JWP6EMDQQCAIBAEAQATQSUBN6BBJJZZZRPPCA4WFC5U3YDSQU6VC",
+        "suffix": "QU6VC"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "QU6VC"
+      }
+    },
+    {
+      "id": "contract-sideband-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CCNL7ZAJFYDQOCAIBAEAQAT3UABOUDZULF7KHSHNCI3VZANGZPYBL4QR",
+        "suffix": "BL4QR"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "BL4QR"
+      }
+    },
+    {
+      "id": "contract-sideband-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CCS4V3YUHEDQOBYIBAEAQAUGVMBPKGR7MSE25U7YDVBGPDFR235SBNIC",
+        "suffix": "SBNIC"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "SBNIC"
+      }
+    },
+    {
+      "id": "contract-sideband-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CCYNL6Q7IQDQOBYHBAEAQAURWYBAAJKKN6KLTXQDFBGXFF544EDCWKPI",
+        "suffix": "CWKPI"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "CWKPI"
+      }
+    },
+    {
+      "id": "contract-sideband-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CDI7MG2AMUDQOBYHA4DQOAVS24BCCRTLSC25V7ZEJFXJHOG5AITUZZU2",
+        "suffix": "UZZU2"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "UZZU2"
+      }
+    },
+    {
+      "id": "contract-sideband-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CCTMX4AVHIDQQCAIBAEAQA4HVQBPMG2AMWFK7VHZDZBWRDNS276CCLL4",
+        "suffix": "CCLL4"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "CCLL4"
+      }
+    },
+    {
+      "id": "contract-sideband-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CCY5N6ZAIUDQOCAIBAEAQA4SW4BACJSLOCK3VXYEFFHHHGF54IDSZCOF",
+        "suffix": "SZCOF"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "SZCOF"
+      }
+    },
+    {
+      "id": "contract-sideband-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CC6OCBRLKADQOBYIBAEAQA45YIBAYMKWPOQML2QPGRMX5I6I5UJDO2HC",
+        "suffix": "DO2HC"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "DO2HC"
+      }
+    },
+    {
+      "id": "contract-sideband-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CDD6YEJWLMDQOBYHBAEAQA5IZUBBOPDBQ2V5B5I2H5SITLWT7AOUEJH2",
+        "suffix": "UEJH2"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "UEJH2"
+      }
+    },
+    {
+      "id": "contract-sideband-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CDUA2MSXPQDQOBYHA4DQOA6J5YBDQXMCU7GPCFR3MCC2VT7UDE7GGZ65",
+        "suffix": "GGZ65"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "GGZ65"
+      }
+    },
+    {
+      "id": "contract-pattern-mono-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CCGLDVX3EADQQCAIBAEAQADNSIB5YAJGJNYJLOW7AQUU444YXXRAPAHB",
+        "suffix": "APAHB"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": true,
+        "label": "APAHB"
+      }
+    },
+    {
+      "id": "contract-pattern-mono-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CCL3ZYIGFMDQOCAIBAEAQADYTUB6ODBRKZ52BRPKB42FS7VDZDWREUVM",
+        "suffix": "REUVM"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "registered",
+        "configured": true,
+        "label": "REUVM"
+      }
+    },
+    {
+      "id": "contract-pattern-mono-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CCRMP3ARGYDQOBYIBAEAQAEDVAB7EFZ4MGDKXUHVDI7WJCNO2P4B3WQV",
+        "suffix": "B3WQV"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": true,
+        "label": "B3WQV"
+      }
+    },
+    {
+      "id": "contract-pattern-mono-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CCW5F5Y4IEDQOBYHBAEAQAEOWMB72ISHNSI3NWYAEVFG7FFZ3YBSQGSE",
+        "suffix": "SQGSE"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "SQGSE"
+      }
+    },
+    {
+      "id": "contract-pattern-mono-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CDHPGGB5MIDQOBYHA4DQOAFP2QBR4Q3IRWZNP7BBIZVZBNO274SESNUZ",
+        "suffix": "ESNUZ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": true,
+        "label": "ESNUZ"
+      }
+    },
+    {
+      "id": "contract-pattern-rally-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CCR4R3ISG4DQQCAIBAEAQAMEVEB7GGB5MKD2ZUPWDNAGLCVP2T4R444O",
+        "suffix": "R444O"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": true,
+        "label": "R444O"
+      }
+    },
+    {
+      "id": "contract-pattern-rally-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CCXNH6A5IIDQOCAIBAEAQAMPWQB74I2INWJLPXABEZFXBFN234CCTKFK",
+        "suffix": "CTKFK"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": true,
+        "label": "CTKFK"
+      }
+    },
+    {
+      "id": "contract-pattern-rally-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CC454AZIJUDQOBYIBAEAQAM2X4BQSLSTPCO4FZYMGFLHXIGF5IHTIF3M",
+        "suffix": "TIF3M"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": true,
+        "label": "TIF3M"
+      }
+    },
+    {
+      "id": "contract-pattern-rally-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CDCOSDRTLADQOBYHBAEAQANFZIBRIOK6QOUM34QXHRQYNK6Q6UND6326",
+        "suffix": "D6326"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "D6326"
+      }
+    },
+    {
+      "id": "contract-pattern-rally-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CDSQUL2UPEDQOBYHA4DQOAOG5MBTKWT7UTE64EZYLWBKPTHRCY5WAQQ6",
+        "suffix": "WAQQ6"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "pole",
+        "configured": true,
+        "label": "WAQQ6"
+      }
+    },
+    {
+      "id": "contract-pattern-coach-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CC5N6BBJJYDQQCAIBAEAQAU3YABQUL2UPGPMH2ANGJLXZIOG5MIDKDX3",
+        "suffix": "DKDX3"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
+        "configured": true,
+        "label": "DKDX3"
+      }
+    },
+    {
+      "id": "contract-pattern-coach-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CDC6UDZULEDQOCAIBAEAQAVGZMBRKOS7QSU454YYHVRIPLGR6YNUA3JW",
+        "suffix": "UA3JW"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "UA3JW"
+      }
+    },
+    {
+      "id": "contract-pattern-coach-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CDIPKGR7MQDQOBYIBAEAQAVR2YBSARLKR62NT7RDJBWZFN64AETEXUBD",
+        "suffix": "EXUBD"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": true,
+        "label": "EXUBD"
+      }
+    },
+    {
+      "id": "contract-pattern-coach-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CDNQAJKKN4DQOBYHBAEAQAV44EBSWUDVTK76ICJOKN4J3QXHBQYVNZ3C",
+        "suffix": "VNZ3C"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "VNZ3C"
+      }
+    },
+    {
+      "id": "contract-pattern-coach-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CD6CCRTLSADQOBYHA4DQOAW5AIBUY4MWXPQAKKSPOSM35YYIFVJHOJTK",
+        "suffix": "HOJTK"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": true,
+        "label": "HOJTK"
+      }
+    },
+    {
+      "id": "contract-pattern-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "CDI7MG2AMUDQQCAIBAEAQA5S24BSCRTLSC25V7ZEJFXJHOG5AITUZ5VL",
+        "suffix": "UZ5VL"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "UZ5VL"
+      }
+    },
+    {
+      "id": "contract-pattern-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "CDOACJSLOADQOCAIBAEAQA554IBSYULWTPAOKCRPKR4Z5Q7IBUZFPBM6",
+        "suffix": "FPBM6"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "FPBM6"
+      }
+    },
+    {
+      "id": "contract-pattern-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "CDTQYMKWPMDQOBYIBAEAQA6I5UBTOXEBU3F7AFJ2L6CKTTXTDA6WEZM7",
+        "suffix": "WEZM7"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "WEZM7"
+      }
+    },
+    {
+      "id": "contract-pattern-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "CDZBOPDBQYDQOBYHBAEAQA6T7ABUEZ4MWHLPWICFNKH3JWP6ENEG3WDD",
+        "suffix": "G3WDD"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "G3WDD"
+      }
+    },
+    {
+      "id": "contract-pattern-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "CAJTQXMCU4DQOBYHA4DQOA7UDEBWHCFN2L3RYQLGROYNL6Q7IRUY57WZ",
+        "suffix": "Y57WZ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "Y57WZ"
+      }
+    },
+    {
+      "id": "account-badge-rally-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GAFTAVL2T7COSDRTLB62EAAAA4EAQCAIBAEBIOK6QOUM34QXHRQYMITV"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "standard",
+        "configured": false,
+        "label": "GAFTAV…QYMITV"
+      }
+    },
+    {
+      "id": "account-badge-coach-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWVE544YHTAWMCVPKP4IAABA4DQQCAIBAEDMW4AUXFO6FBZL2B2RE4T"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": false,
+        "label": "GAWVE5…B2RE4T"
+      }
+    },
+    {
+      "id": "account-badge-mono-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GBHXJGN64MEC2UTXTTA6MAACA4DQOCAIBAEFQ7NCY7WBCNS3QCS4UI7G"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "foil",
+        "configured": false,
+        "label": "GBHXJG…S4UI7G"
+      }
+    },
+    {
+      "id": "account-watermark-rally-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GBAWNC5Q2X5B6RDJR2Z5QAIAA4DQQCAIBAEEU34UXHPAGKCNOKL3Y6FH"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "rally",
+        "rarity": "registered",
+        "configured": false,
+        "label": "GBAWNC…L3Y6FH"
+      }
+    },
+    {
+      "id": "account-watermark-coach-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GBRYRLOS64OECZULWDK7UAIBA4DQOCAIBAEGZENW3MACKSTPSS454TGC"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "coach",
+        "rarity": "foil",
+        "configured": false,
+        "label": "GBRYRL…454TGC"
+      }
+    },
+    {
+      "id": "account-watermark-mono-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GCC2VT7UDE7GHCFN2L3RYAICA4DQOBYIBAEI5M6Y7UREO3ERW3NQAQNK"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": false,
+        "label": "GCC2VT…NQAQNK"
+      }
+    },
+    {
+      "id": "account-sideband-rally-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GB3ZZQPGBMYFK6U7YTUQ4AQAA4DQOCAIBAEIBJOK54KDSXUDVDG7FW4L"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "rally",
+        "rarity": "foil",
+        "configured": false,
+        "label": "GB3ZZQ…G7FW4L"
+      }
+    },
+    {
+      "id": "account-sideband-coach-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GCM35YYIFVJHPHGB4YFTAAQBA4DQOBYIBAEKFR7MCE3FXAFFZLXRIWDG"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "aurora",
+        "configured": false,
+        "label": "GCM35Y…XRIWDG"
+      }
+    },
+    {
+      "id": "account-sideband-mono-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GDI7MG2AMWFK7VHZDZBWQAQCA4DQOBYHA4D5V7ZEJFXJHOG5AITUYHYO"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "mono",
+        "rarity": "pole",
+        "configured": false,
+        "label": "GDI7MG…TUYHYO"
+      }
+    },
+    {
+      "id": "account-pattern-rally-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GCW5F5Y4IFTIXMGV7IPUIAYAA4DQOBYIBAELNWYAEVFG7FFZ3YBSQCMB"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": false,
+        "label": "GCW5F5…BSQCMB"
+      }
+    },
+    {
+      "id": "account-pattern-coach-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GDSQUL2UPGPMH2ANGJLXYAYBA4DQOBYHA4D64EZYLWBKPTHRCY5WBZDP"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "pole",
+        "configured": false,
+        "label": "GDSQUL…5WBZDP"
+      }
+    },
+    {
+      "id": "account-pattern-mono-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GC5N6BBJJZZZRPPCA4WFCAYCA4EAQCAIBAEMH2ANGJLXZIOG5MIDKW3D"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "mono",
+        "rarity": "standard",
+        "configured": false,
+        "label": "GC5N6B…IDKW3D"
+      }
+    },
+    {
+      "id": "account-suffix-1",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "V"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "V"
+      }
+    },
+    {
+      "id": "account-suffix-55",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "AWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "AWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV"
+      }
+    },
+    {
+      "id": "account-lowercase-suffix",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "kooav"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOOAV"
+      }
+    },
+    {
+      "id": "account-width-120",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "KOOAV"
+      },
+      "options": {
+        "width": 120
+      },
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOOAV"
+      }
+    },
+    {
+      "id": "account-width-320",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "KOOAV"
+      },
+      "options": {
+        "width": 320
+      },
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOOAV"
+      }
+    },
+    {
+      "id": "account-width-4096",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "KOOAV"
+      },
+      "options": {
+        "width": 4096
+      },
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOOAV"
+      }
+    },
+    {
+      "id": "account-animated",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "KOOAV"
+      },
+      "options": {
+        "animated": true
+      },
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOOAV"
+      }
+    },
+    {
+      "id": "account-custom-id",
+      "coverage": "edge",
+      "input": {
+        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "suffix": "KOOAV"
+      },
+      "options": {
+        "idPrefix": "fixture-account"
+      },
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "rally",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOOAV"
+      }
+    },
+    {
+      "id": "contract-suffix-1",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "P"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "P"
+      }
+    },
+    {
+      "id": "contract-suffix-55",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "AWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "AWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P"
+      }
+    },
+    {
+      "id": "contract-lowercase-suffix",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "kou7p"
+      },
+      "options": {},
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOU7P"
+      }
+    },
+    {
+      "id": "contract-width-120",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "KOU7P"
+      },
+      "options": {
+        "width": 120
+      },
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOU7P"
+      }
+    },
+    {
+      "id": "contract-width-320",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "KOU7P"
+      },
+      "options": {
+        "width": 320
+      },
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOU7P"
+      }
+    },
+    {
+      "id": "contract-width-4096",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "KOU7P"
+      },
+      "options": {
+        "width": 4096
+      },
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOU7P"
+      }
+    },
+    {
+      "id": "contract-animated",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "KOU7P"
+      },
+      "options": {
+        "animated": true
+      },
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOU7P"
+      }
+    },
+    {
+      "id": "contract-custom-id",
+      "coverage": "edge",
+      "input": {
+        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "suffix": "KOU7P"
+      },
+      "options": {
+        "idPrefix": "fixture-contract"
+      },
+      "expected": {
+        "kind": "contract",
+        "finish": "badge",
+        "lettering": "mono",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "KOU7P"
+      }
+    },
+    {
+      "id": "account-metadata-5",
+      "coverage": "edge",
+      "input": {
+        "address": "GCB2RTPSC46GDBVL2D2RUAQBA4DQQCAIBAEIZMOW7MQEK2UPWTM74SA5",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": true,
+        "label": "74SA5"
+      }
+    },
+    {
+      "id": "account-metadata-0",
+      "coverage": "edge",
+      "input": {
+        "address": "GCB2RTPSC46GDBVL2D2RUAQBA4DQQCAIBAEIZMOW7MQEK2UPWTM74SA5",
+        "suffixLength": 0
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": false,
+        "label": "GCB2RT…M74SA5"
+      }
+    },
+    {
+      "id": "account-metadata-56",
+      "coverage": "edge",
+      "input": {
+        "address": "GCB2RTPSC46GDBVL2D2RUAQBA4DQQCAIBAEIZMOW7MQEK2UPWTM74SA5",
+        "suffixLength": 56
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "coach",
+        "rarity": "registered",
+        "configured": false,
+        "label": "GCB2RT…M74SA5"
+      }
+    }
+  ]
+}
