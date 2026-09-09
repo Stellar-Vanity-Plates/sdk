@@ -89,7 +89,13 @@ try {
       .join("\n"),
   );
   for (
-    const args of [["check", "public.ts", "entrypoints.ts"], [
+    // A type-only graph can omit runtime packages behind @deno-types (for
+    // example React's scheduler). Warm the actual runtime graph before going offline.
+    const args of [["cache", "public.ts", "entrypoints.ts"], [
+      "check",
+      "public.ts",
+      "entrypoints.ts",
+    ], [
       "run",
       "--cached-only",
       "--deny-net",
