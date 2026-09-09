@@ -21,7 +21,7 @@ export interface ServerPngOptions extends PngOptions {
 }
 /**
  * Exports the canonical resting plate using local Chromium in Deno or Node.
- * Install Chromium with `deno run -A npm:playwright@1.61.0/cli install chromium`.
+ * Install Chromium with `deno run -A npm:playwright@1.61.0 install chromium`.
  * Requires local process/filesystem permissions and browser loopback communication.
  * No application backend, remote assets, wallet or ledger access is used.
  * Pass a caller-owned browser for batch exports; each temporary page is closed.

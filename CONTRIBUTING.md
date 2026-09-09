@@ -15,7 +15,7 @@ transactions.
 
 Run `deno task check`, `deno task docs`, `deno task test` and
 `deno task test:browser`. The last command needs local Chromium installed using
-`deno run -A npm:playwright@1.61.0/cli install chromium`.
+`deno run -A npm:playwright@1.61.0 install chromium`.
 
 ## Canonical appearance
 

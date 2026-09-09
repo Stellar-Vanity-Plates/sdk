@@ -23,6 +23,6 @@ jobs:
         run: |
           deno task generate:styles
           git diff --exit-code -- src/rendering/vendor/plate-styles.ts
-      - run: deno run -A npm:playwright@1.61.0/cli install --with-deps chromium
+      - run: deno run -A npm:playwright@1.61.0 install --with-deps chromium
       - run: deno task test:browser
       - run: deno task build:preview

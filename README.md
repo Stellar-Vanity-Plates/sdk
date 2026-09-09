@@ -207,7 +207,7 @@ The `@/rendering/png.ts` entrypoint uses browser Canvas locally. Deno/Node
 consumers use the separate server entrypoint, backed by local Chromium:
 
 ```sh
-deno run -A npm:playwright@1.61.0/cli install chromium
+deno run -A npm:playwright@1.61.0 install chromium
 deno task example:export
 ```
 
