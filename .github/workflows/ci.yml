@@ -25,4 +25,12 @@ jobs:
           git diff --exit-code -- src/rendering/vendor/plate-styles.ts
       - run: deno run -A npm:playwright@1.61.0 install --with-deps chromium
       - run: deno task test:browser
+      - name: Attach failing visual comparisons
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: visual-parity-failures
+          path: output/parity/
+          if-no-files-found: ignore
+          retention-days: 7
       - run: deno task build:preview

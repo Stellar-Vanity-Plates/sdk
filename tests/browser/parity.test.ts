@@ -15,6 +15,10 @@ import { Plate } from "@/react/mod.tsx";
 import { createElement } from "react";
 // @deno-types="@types/react-dom/server"
 import { renderToStaticMarkup } from "react-dom/server";
+// Give component and image captures the same clipped image frame. Chromium's
+// fractional shadow rasterization otherwise depends on the surrounding viewport.
+const captureFrame =
+  `html,body{margin:0;min-width:0;min-height:0;width:100vw;height:100vh;overflow:hidden;background:transparent!important}svg{display:block}`;
 const fixture = await Deno.readTextFile("dist/test/consumer.js");
 async function ready(page: Page) {
   await page.evaluate(async () => {
@@ -27,17 +31,35 @@ function samePixels(actual: Uint8Array, expected: Uint8Array, label: string) {
     b = PNG.sync.read(Buffer.from(expected));
   assertEquals([a.width, a.height], [b.width, b.height], label);
   let changed = 0;
+  const firstDifferences: unknown[] = [];
   for (let i = 0; i < a.data.length; i += 4) {
     if (
       a.data.subarray(i, i + 4).some((value: number, j: number) =>
         value !== b.data[i + j]
       )
-    ) changed++;
+    ) {
+      changed++;
+      if (firstDifferences.length < 12) {
+        firstDifferences.push({
+          x: i / 4 % a.width,
+          y: Math.floor(i / 4 / a.width),
+          actual: Array.from(a.data.subarray(i, i + 4)),
+          expected: Array.from(b.data.subarray(i, i + 4)),
+        });
+      }
+    }
   }
   if (changed) {
+    console.error(label, firstDifferences);
     Deno.mkdirSync("output/parity", { recursive: true });
-    Deno.writeFileSync("output/parity/actual.png", actual);
-    Deno.writeFileSync("output/parity/expected.png", expected);
+    Deno.writeFileSync(
+      `output/parity/${label.replace(/[^a-zA-Z0-9-]/g, "_")}-actual.png`,
+      actual,
+    );
+    Deno.writeFileSync(
+      `output/parity/${label.replace(/[^a-zA-Z0-9-]/g, "_")}-expected.png`,
+      expected,
+    );
   }
   assertEquals(
     changed,
@@ -103,12 +125,14 @@ Deno.test({
         for (const [index, input] of fixtures().entries()) {
           const height = Math.round(width / 2.9);
           await page.setViewportSize({ width, height });
-          await page.setContent(referencePage(input, width));
+          await page.setContent(
+            referencePage(input, width) + `<style>${captureFrame}</style>`,
+          );
           await ready(page);
           const expected = await page.screenshot({ omitBackground: true });
           for (const mode of ["html", "svg"]) {
             await page.setContent(
-              `<style>body{margin:0;background:transparent}svg{display:block}</style>${
+              `<style>${captureFrame}</style>${
                 mode === "html"
                   ? renderPlateHtml(input)
                   : renderPlateSvg(input, { width })
@@ -124,7 +148,7 @@ Deno.test({
           }
           if (index % 29 === 0) {
             await page.setContent(
-              `<style>body{margin:0;background:transparent}</style>${
+              `<style>${captureFrame}</style>${
                 renderToStaticMarkup(createElement(Plate, input))
               }`,
             );
@@ -136,7 +160,7 @@ Deno.test({
             );
             comparisons++;
             await page.setContent(
-              "<style>body{margin:0;background:transparent}</style>",
+              `<style>${captureFrame}</style>`,
             );
             await page.addScriptTag({ content: fixture, type: "module" });
             await page.waitForFunction(() =>
@@ -227,8 +251,9 @@ Deno.test({
         for (const reference of [true, false]) {
           await page.setContent(
             reference
-              ? referencePage(input, 600, true)
-              : `<style>body{margin:0;background:transparent}</style>${
+              ? referencePage(input, 600, true) +
+                `<style>${captureFrame}</style>`
+              : `<style>${captureFrame}</style>${
                 renderPlateHtml(input, { animated: true })
               }`,
           );

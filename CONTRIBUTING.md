@@ -49,7 +49,10 @@ on the same browser/platform. They cover G/C, every finish, lettering and
 rarity, long/short labels, unconfigured accounts, two widths and all rendering
 adapters. Cross-engine antialiasing is not a reason to change the design:
 compare each adapter with the reference using the same engine, dimensions and
-motion state.
+motion state. Captures use the same fixed, clipped image frame so that
+fractional outer shadows have identical clipping bounds. A failure records the
+differing coordinates and attaches both images to CI; no pixel tolerance is
+allowed.
 
 Package 0.1.0 is still unpublished. Do not publish or choose project licensing
 as a side effect of development. Third-party font licenses remain included.
