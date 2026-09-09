@@ -1,10 +1,11 @@
-import { plateWidth } from "@/rendering/svg.ts";
+import { plateImageFrame, plateWidth } from "@/rendering/svg.ts";
 /** Browser PNG export using the canonical HTML/CSS-backed SVG. @module */
 import { type PlateInput, renderPlateSvg } from "@/rendering/mod.ts";
 import { VanityError } from "@/errors.ts";
 /** PNG export dimensions. */
 export interface PngOptions {
-  /** Output width, 120–4096 pixels; default 1200. */ width?: number;
+  /** Output width including a 32px transparent shadow margin, 120–4096 pixels; default 1200. */ width?:
+    number;
 }
 /**
  * Renders the canonical plate to PNG in a browser, entirely locally.
@@ -29,7 +30,7 @@ export async function renderPlatePng(
     await image.decode();
     const canvas = document.createElement("canvas");
     canvas.width = width;
-    canvas.height = Math.round(width / 2.9);
+    canvas.height = plateImageFrame(width).height;
     const context = canvas.getContext("2d");
     if (!context) throw new Error("Canvas is unavailable");
     context.drawImage(image, 0, 0);

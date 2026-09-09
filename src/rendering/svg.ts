@@ -4,7 +4,8 @@ import { escapeMarkup, renderPlateHtml } from "@/rendering/html.ts";
 import { VanityError } from "@/errors.ts";
 /** SVG output settings. */
 export interface SvgOptions {
-  /** Intrinsic width in pixels, 120–4096. Defaults to 600. */ width?: number;
+  /** Intrinsic width in pixels, 120–4096. Includes a 32px transparent margin for the shadow. Defaults to 600. */ width?:
+    number;
   /** Enables the app's hover effects when SVG is inline. Defaults to false. */ animated?:
     boolean;
   /** Unique accessible title prefix. Defaults to the full address. */ idPrefix?:
@@ -19,6 +20,22 @@ export function plateWidth(width: number): number {
     );
   }
   return width;
+}
+/** Image bounds preserving the entire canonical plate shadow. */
+export function plateImageFrame(width: number): {
+  width: number;
+  height: number;
+  plateWidth: number;
+  padding: number;
+} {
+  plateWidth(width);
+  const padding = 32;
+  return {
+    width,
+    height: Math.ceil((width - padding * 2) / 2.9) + padding * 2,
+    plateWidth: width - padding * 2,
+    padding,
+  };
 }
 /**
  * Exports a self-contained SVG using the same HTML/CSS as the web application.
@@ -39,12 +56,12 @@ export function renderPlateSvg(
       "SVG ID prefixes must start with a letter and contain only letters, digits, hyphens or underscores (128 characters maximum).",
     );
   }
-  const height = Math.round(width / 2.9);
+  const { height, plateWidth: innerWidth, padding } = plateImageFrame(width);
   const html = renderPlateHtml(input, { animated: options.animated }).replace(
     /<style>([\s\S]*?)<\/style>/g,
     (_match, css: string) => `<style>/*<![CDATA[*/${css}/*]]>*/</style>`,
   );
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="${id}-title" data-kind="${model.kind}" data-rarity="${model.rarity}" data-finish="${model.finish}"><title id="${id}-title">${
     escapeMarkup(model.label)
-  } · Stellar ${model.kind} plate · ${model.address}</title><foreignObject width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px">${html}</div></foreignObject></svg>`;
+  } · Stellar ${model.kind} plate · ${model.address}</title><foreignObject width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${innerWidth}px;margin:${padding}px">${html}</div></foreignObject></svg>`;
 }

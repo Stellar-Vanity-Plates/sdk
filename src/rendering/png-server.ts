@@ -1,4 +1,4 @@
-import { plateWidth } from "@/rendering/svg.ts";
+import { plateImageFrame, plateWidth } from "@/rendering/svg.ts";
 /** Optional Deno/Node Chromium exporter. Never imported by browser or core entrypoints. @module */
 import { type Browser, chromium } from "playwright";
 import type { PngBrowser } from "@/rendering/browser-types.ts";
@@ -40,7 +40,7 @@ export async function renderPlatePng(
         executablePath: options.executablePath,
       }));
     const context = await browser.newContext({
-      viewport: { width, height: Math.round(width / 2.9) },
+      viewport: { width, height: plateImageFrame(width).height },
       deviceScaleFactor: 1,
       reducedMotion: "reduce",
     });

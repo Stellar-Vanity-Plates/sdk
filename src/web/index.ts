@@ -37,7 +37,7 @@ export function registerVanityPlate(
     private update(): void {
       const address = this.getAttribute("address");
       this.root.innerHTML =
-        "<style>:host{display:block;width:100%;contain:content}.vnty-plate-root{width:100%;}p{font:14px system-ui;color:#566456;border:1px solid #d9ddcf;border-radius:8px;padding:20px}</style>";
+        "<style>:host{display:block;width:100%}.vnty-plate-root{width:100%;}p{font:14px system-ui;color:#566456;border:1px solid #d9ddcf;border-radius:8px;padding:20px}</style>";
       if (!address) {
         this.root.innerHTML += "<p>Choose a plate to display.</p>";
         return;

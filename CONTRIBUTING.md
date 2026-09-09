@@ -45,14 +45,18 @@ webapp repository. The explicit source check catches changes after that
 snapshot.
 
 Visual tests require zero differing pixels against the original app components,
-on the same browser/platform. They cover G/C, every finish, lettering and
-rarity, long/short labels, unconfigured accounts, two widths and all rendering
-adapters. Cross-engine antialiasing is not a reason to change the design:
-compare each adapter with the reference using the same engine, dimensions and
-motion state. Captures use the same fixed, clipped image frame so that
-fractional outer shadows have identical clipping bounds. A failure records the
-differing coordinates and attaches both images to CI; no pixel tolerance is
-allowed.
+using the same browser, platform and rendering path. They cover G/C, every
+finish, lettering and rarity, long/short labels, unconfigured accounts, two
+widths and all adapters. Compare DOM with DOM, SVG with independently wrapped
+original app markup, and Canvas with that same reference SVG drawn through
+Canvas. Browser rasterization can differ slightly between those paths even when
+the artwork is identical; this is not a reason to change the design or permit
+pixel tolerance.
+
+Captures include a 32px transparent margin to verify the complete outer shadow.
+The independent SVG fixture uses all original styles and components, without
+calling SDK rendering helpers. A failure records differing coordinates and
+attaches both images to CI.
 
 Package 0.1.0 is still unpublished. Do not publish or choose project licensing
 as a side effect of development. Third-party font licenses remain included.

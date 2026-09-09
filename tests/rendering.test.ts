@@ -30,6 +30,8 @@ Deno.test("plate traits preserve the application byte rules for both address typ
 Deno.test("SVG is deterministic, accessible, bounded and contains no external assets or malformed paths", () => {
   const svg = renderPlateSvg(plate);
   assertEquals(svg, renderPlateSvg(plate));
+  assert(svg.includes('width="600" height="249"'));
+  assert(svg.includes('style="width:536px;margin:32px"'));
   assert(svg.includes(plate.address));
   assert(!/NaN|Infinity|<script|<image|<text|href=/.test(svg));
   assertThrows(() => renderPlateSvg({ ...plate, suffix: "<script>" }));

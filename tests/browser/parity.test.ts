@@ -4,7 +4,7 @@ import { Buffer } from "node:buffer";
 // @deno-types="@types/pngjs"
 import { PNG } from "pngjs";
 import { StrKey } from "@colibri/core";
-import { referencePage } from "@tests/reference/render.tsx";
+import { referencePage, referenceSvg } from "@tests/reference/render.tsx";
 import {
   type PlateInput,
   renderPlateHtml,
@@ -19,6 +19,9 @@ import { renderToStaticMarkup } from "react-dom/server";
 // fractional shadow rasterization otherwise depends on the surrounding viewport.
 const captureFrame =
   `html,body{margin:0;min-width:0;min-height:0;width:100vw;height:100vh;overflow:hidden;background:transparent!important}svg{display:block}`;
+function componentPage(markup: string, width: number): string {
+  return `<style>${captureFrame}</style><div id="sdk-capture" style="width:${width}px;margin:32px">${markup}</div>`;
+}
 const fixture = await Deno.readTextFile("dist/test/consumer.js");
 async function ready(page: Page) {
   await page.evaluate(async () => {
@@ -122,46 +125,64 @@ Deno.test({
       page.on("pageerror", (error) => errors.push(error.message));
       let comparisons = 0;
       for (const width of [320, 600]) {
+        const componentSize = {
+          width: width + 64,
+          height: Math.ceil(width / 2.9) + 64,
+        };
+        const imageSize = { width, height: Math.ceil((width - 64) / 2.9) + 64 };
         for (const [index, input] of fixtures().entries()) {
-          const height = Math.round(width / 2.9);
-          await page.setViewportSize({ width, height });
+          await page.setViewportSize(componentSize);
           await page.setContent(
-            referencePage(input, width) + `<style>${captureFrame}</style>`,
+            referencePage(input, width) +
+              `<style>${captureFrame}#capture{margin:32px}</style>`,
           );
           await ready(page);
-          const expected = await page.screenshot({ omitBackground: true });
-          for (const mode of ["html", "svg"]) {
-            await page.setContent(
-              `<style>${captureFrame}</style>${
-                mode === "html"
-                  ? renderPlateHtml(input)
-                  : renderPlateSvg(input, { width })
-              }`,
-            );
-            await ready(page);
-            samePixels(
-              await page.screenshot({ omitBackground: true }),
-              expected,
-              `${mode} width=${width} case=${index}`,
-            );
-            comparisons++;
-          }
+          const expectedComponent = await page.screenshot({
+            omitBackground: true,
+          });
+          await page.setContent(componentPage(renderPlateHtml(input), width));
+          await ready(page);
+          samePixels(
+            await page.screenshot({ omitBackground: true }),
+            expectedComponent,
+            `HTML width=${width} case=${index}`,
+          );
+          comparisons++;
+
+          await page.setViewportSize(imageSize);
+          const referenceImage = referenceSvg(input, width);
+          await page.setContent(
+            `<style>${captureFrame}</style>${referenceImage}`,
+          );
+          await ready(page);
+          const expectedImage = await page.screenshot({ omitBackground: true });
+          await page.setContent(
+            `<style>${captureFrame}</style>${renderPlateSvg(input, { width })}`,
+          );
+          await ready(page);
+          samePixels(
+            await page.screenshot({ omitBackground: true }),
+            expectedImage,
+            `SVG width=${width} case=${index}`,
+          );
+          comparisons++;
+
           if (index % 29 === 0) {
+            await page.setViewportSize(componentSize);
             await page.setContent(
-              `<style>${captureFrame}</style>${
-                renderToStaticMarkup(createElement(Plate, input))
-              }`,
+              componentPage(
+                renderToStaticMarkup(createElement(Plate, input)),
+                width,
+              ),
             );
             await ready(page);
             samePixels(
               await page.screenshot({ omitBackground: true }),
-              expected,
+              expectedComponent,
               `React width=${width} case=${index}`,
             );
             comparisons++;
-            await page.setContent(
-              `<style>${captureFrame}</style>`,
-            );
+            await page.setContent(componentPage("", width));
             await page.addScriptTag({ content: fixture, type: "module" });
             await page.waitForFunction(() =>
               customElements.get("vanity-plate")
@@ -170,7 +191,7 @@ Deno.test({
               const plate = document.createElement("vanity-plate");
               plate.setAttribute("address", input.address);
               if (input.suffix) plate.setAttribute("suffix", input.suffix);
-              document.body.append(plate);
+              document.querySelector("#sdk-capture")!.append(plate);
             }, input);
             await ready(page);
             await page.locator("vanity-plate img").evaluate(async (image) => {
@@ -178,10 +199,29 @@ Deno.test({
             });
             samePixels(
               await page.screenshot({ omitBackground: true }),
-              expected,
+              expectedComponent,
               `web width=${width} case=${index}`,
             );
             comparisons++;
+
+            // Transport the original app through the same browser Canvas path.
+            // This leaves the full scene comparison strict without confusing
+            // native DOM and Canvas antialiasing with a design difference.
+            const referencePng = await page.evaluate(async (svg) => {
+              const image = new Image();
+              image.src = `data:image/svg+xml;charset=utf-8,${
+                encodeURIComponent(svg)
+              }`;
+              await image.decode();
+              const canvas = document.createElement("canvas");
+              canvas.width = image.width;
+              canvas.height = image.height;
+              canvas.getContext("2d")!.drawImage(image, 0, 0);
+              const blob = await new Promise<Blob>((resolve) =>
+                canvas.toBlob((value) => resolve(value!))
+              );
+              return Array.from(new Uint8Array(await blob.arrayBuffer()));
+            }, referenceImage);
             const png = await page.evaluate(async (input) => {
               const api = (globalThis as unknown as {
                 sdkTest: {
@@ -197,13 +237,13 @@ Deno.test({
             }, { plate: input, width });
             samePixels(
               new Uint8Array(png),
-              expected,
+              new Uint8Array(referencePng),
               `browser PNG width=${width} case=${index}`,
             );
             comparisons++;
             samePixels(
               await renderPlatePng(input, { width, browser }),
-              expected,
+              expectedImage,
               `server PNG width=${width} case=${index}`,
             );
             comparisons++;
@@ -238,7 +278,7 @@ Deno.test({
       });
     try {
       const page = await browser.newPage({
-        viewport: { width: 600, height: 207 },
+        viewport: { width: 664, height: 271 },
         deviceScaleFactor: 1,
         reducedMotion: "no-preference",
       });
@@ -252,10 +292,8 @@ Deno.test({
           await page.setContent(
             reference
               ? referencePage(input, 600, true) +
-                `<style>${captureFrame}</style>`
-              : `<style>${captureFrame}</style>${
-                renderPlateHtml(input, { animated: true })
-              }`,
+                `<style>${captureFrame}#capture{margin:32px}</style>`
+              : componentPage(renderPlateHtml(input, { animated: true }), 600),
           );
           await ready(page);
           await page.locator(".contract-plate,.account-plate").hover();

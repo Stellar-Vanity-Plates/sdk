@@ -193,9 +193,12 @@ added.
 
 Contract plates require a matching suffix. Account plates accept a suffix or
 `suffixLength`, with the app's first-six/last-six fallback when unconfigured.
-Width is bounded to 120–4096 pixels; output height is `round(width / 2.9)`. The
-full address stays accessible and visible; appearance does not prove ownership.
-Use unique `idPrefix` values for repeated inline SVGs.
+Export width is bounded to 120–4096 pixels and includes a 32px transparent
+margin on each side, preserving the complete shadow. The plate itself keeps the
+app's 2.9 aspect ratio; image height is `ceil((width - 64) / 2.9) + 64`.
+Web/React components fill their container and allow the shadow to extend
+naturally. The full address stays accessible and visible; appearance does not
+prove ownership. Use unique `idPrefix` values for repeated inline SVGs.
 
 **Export change from the first preview:** SVG now embeds the canonical HTML/CSS
 using `foreignObject`, including all fonts and identicons. It is self-contained
