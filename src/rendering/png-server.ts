@@ -8,10 +8,11 @@ export type {
   PngPage,
   PngRoute,
 } from "@/rendering/browser-types.ts";
-import { type PlateInput, renderPlateSvg } from "@/rendering/mod.ts";
-import type { PngOptions } from "@/rendering/png.ts";
+import type { PlateInput } from "@/rendering/model.ts";
+import { renderPlateSvg } from "@/rendering/svg.ts";
+import type { PngOptions } from "@/rendering/png-options.ts";
 import { VanityError } from "@/errors.ts";
-export type { PngOptions } from "@/rendering/png.ts";
+export type { PngOptions } from "@/rendering/png-options.ts";
 /** Local Chromium launch options. No hosted rendering service is used. */
 export interface ServerPngOptions extends PngOptions {
   /** Optional existing browser owned by the caller; it is never closed here. */ browser?:

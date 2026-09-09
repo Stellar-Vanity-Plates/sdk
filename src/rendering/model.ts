@@ -1,5 +1,5 @@
 import { StrKey } from "@colibri/core";
-import { accountDisplay } from "@/accounts/mod.ts";
+import { accountDisplay } from "@/accounts/index.ts";
 import { normalizeSuffix, type PlateKind, plateKind } from "@/validation.ts";
 import { VanityError } from "@/errors.ts";
 

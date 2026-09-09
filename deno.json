@@ -50,9 +50,9 @@
     ]
   },
   "tasks": {
-    "check": "deno fmt --check && deno lint && deno run --allow-run tools/check-exports.ts check && deno check examples/*.ts tools/*.ts tools/lint/*.ts",
-    "test": "deno test --allow-read --allow-env=NODE_ENV tests/*.test.ts tests/*.test.tsx",
-    "docs": "deno run --allow-run tools/check-exports.ts docs",
+    "check": "deno fmt --check && deno lint && deno run --allow-run tools/check-exports.ts check && deno check examples/*.ts tools/*.ts tools/lint/*.ts tools/quality/*.ts",
+    "test": "deno task test:architecture && deno task test:unit && deno task test:tooling",
+    "docs": "deno run --allow-run tools/check-exports.ts docs && deno task check:docs",
     "generate": "deno run --allow-read=src/contracts/specs --allow-write=src/contracts/generated tools/generate-clients.ts && deno fmt src/contracts/generated",
     "build:preview": "deno bundle --platform browser --minify --code-splitting --outdir dist examples/browser.ts",
     "preview": "deno task build:preview && deno run --allow-net=127.0.0.1:4192 --allow-read=examples/index.html,dist tools/serve-preview.ts",
@@ -62,7 +62,12 @@
     "generate:styles": "deno run --allow-env=CI,FORCE_COLOR,NO_COLOR,TERM --allow-read=tests/reference/webapp/public --allow-write=src/rendering/vendor tools/generate-plate-styles.ts",
     "build:test": "deno bundle --platform browser --outdir dist/test tests/browser/consumer.ts",
     "test:browser": "deno task build:test && deno test -A tests/browser/parity.test.ts",
-    "check:webapp": "deno run --allow-read --allow-run=git tools/check-webapp.ts"
+    "check:webapp": "deno run --allow-read --allow-run=git tools/check-webapp.ts",
+    "test:architecture": "deno test --allow-read tests/architecture",
+    "test:unit": "deno test --allow-read --allow-env=NODE_ENV --ignore=tests/architecture,tests/browser,tests/tooling,tests/consumers,tests/reference tests",
+    "test:tooling": "deno test --allow-read --allow-write --allow-run tests/tooling",
+    "check:docs": "deno run --allow-read --allow-write --allow-run tools/check-docs.ts",
+    "check:consumers": "deno run --allow-read --allow-write --allow-run tools/check-consumers.ts"
   },
   "publish": {
     "include": [

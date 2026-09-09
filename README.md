@@ -8,7 +8,7 @@ package name is `@vanity-plates/sdk`; it has **not been published** to JSR or
 npm. Use Deno **2.9.6**, the verified runtime.
 
 ```sh
-git clone --branch feat/sdk-visual-parity https://github.com/Stellar-Vanity-Plates/sdk.git
+git clone --branch main https://github.com/Stellar-Vanity-Plates/sdk.git
 cd sdk
 deno task test
 deno task preview
@@ -36,6 +36,8 @@ package is published. Do not add an unpublished JSR specifier.
 These are also declared as future package subpaths in `deno.json`.
 
 ## Local farming
+
+<!-- deno-check -->
 
 ```ts
 import { farmAccount, farmContract } from "@/farming/mod.ts";
@@ -78,6 +80,8 @@ attempt; JavaScript strings cannot be reliably zeroized.
 
 ## Account configuration
 
+<!-- deno-check -->
+
 ```ts
 import { NetworkConfig } from "@colibri/core";
 import { loadAccountConfiguration } from "@/accounts/mod.ts";
@@ -101,6 +105,8 @@ uses first six characters, ellipsis, last six, while retaining the full address.
 `encodeSuffixLength` prepares bytes without submitting a ManageData write.
 
 ## Contract clients
+
+<!-- deno-check -->
 
 ```ts
 import { NetworkConfig } from "@colibri/core";
@@ -144,6 +150,8 @@ not persist, and methods requiring authorization can still fail. `invoke()` uses
 Colibri's simulate/sign/submit pipeline and returns its **transaction receipt**,
 not the decoded simulation result:
 
+<!-- deno-check -->
+
 ```ts
 import type { TransactionConfig } from "@colibri/core";
 import type { NftClient } from "@/contracts/mod.ts";
@@ -171,6 +179,8 @@ The public Testnet specs and Wasm hashes were captured on **2026-09-08** under
 supply explicit addresses for another deployment.
 
 ## SVG and PNG
+
+<!-- deno-check -->
 
 ```ts
 import { renderPlateSvg } from "@/rendering/mod.ts";
@@ -214,6 +224,8 @@ deno run -A npm:playwright@1.61.0 install chromium
 deno task example:export
 ```
 
+<!-- deno-check -->
+
 ```ts
 import { renderPlatePng } from "@/rendering/png-server.ts";
 const png = await renderPlatePng({
@@ -236,6 +248,8 @@ core/farming/browser bundles.
 
 ## Web and React
 
+<!-- deno-check -->
+
 ```ts
 import { registerVanityPlate } from "@/web/mod.ts";
 registerVanityPlate(); // Call in the browser; importing is SSR-safe.
@@ -255,6 +269,8 @@ reactively. Invalid input displays a fallback and dispatches `plate-error`.
 floating, stripe gleam and rarity foil shifts) and honors reduced motion. With
 the attribute absent, the plate stays still even on hover. Embedded fonts are
 registered once in the document because shadow roots cannot own font faces.
+
+<!-- deno-check -->
 
 ```tsx
 import { Plate } from "@/react/mod.tsx";
@@ -278,14 +294,16 @@ bundled fonts. React 18 is the first verified adapter target. Deno SSR with
 React requires `--allow-env=NODE_ENV`; no other environment access is needed.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for aliases, module boundaries and the
-mandatory webapp-source comparison before a rendering release.
+quality gates, isolated consumer checks and the mandatory webapp-source
+comparison before a rendering release.
 
 ## Verification and development
 
 ```sh
 deno task check          # Format, lint, source and example types
-deno task docs           # Public API documentation lint
-deno task test           # Offline behavior, architecture and trait-parity tests
+deno task docs           # Public API docs and checked Markdown examples
+deno task test           # Offline behavior, architecture and tooling regressions
+deno task check:consumers # All public subpaths from isolated publishable sources
 deno task test:browser   # Exact visual comparisons against the webapp reference
 deno task generate       # Regenerate typed models from checked-in specs
 deno task build:preview  # Browser bundle, including lazy PNG export

@@ -1,12 +1,10 @@
 import { plateImageFrame, plateWidth } from "@/rendering/svg.ts";
 /** Browser PNG export using the canonical HTML/CSS-backed SVG. @module */
-import { type PlateInput, renderPlateSvg } from "@/rendering/mod.ts";
+import type { PlateInput } from "@/rendering/model.ts";
+import { renderPlateSvg } from "@/rendering/svg.ts";
 import { VanityError } from "@/errors.ts";
-/** PNG export dimensions. */
-export interface PngOptions {
-  /** Output width including a 32px transparent shadow margin, 120–4096 pixels; default 1200. */ width?:
-    number;
-}
+import type { PngOptions } from "@/rendering/png-options.ts";
+export type { PngOptions } from "@/rendering/png-options.ts";
 /**
  * Renders the canonical plate to PNG in a browser, entirely locally.
  * For Deno/Node without a DOM, import the same function from ./png/server.
@@ -32,12 +30,16 @@ export async function renderPlatePng(
     canvas.width = width;
     canvas.height = plateImageFrame(width).height;
     const context = canvas.getContext("2d");
-    if (!context) throw new Error("Canvas is unavailable");
+    if (!context) {
+      throw new VanityError("VNTY_RENDER_FAILED", "Canvas is unavailable");
+    }
     context.drawImage(image, 0, 0);
     const blob = await new Promise<Blob>((resolve, reject) =>
       canvas.toBlob(
         (value) =>
-          value ? resolve(value) : reject(new Error("PNG encoding failed")),
+          value ? resolve(value) : reject(
+            new VanityError("VNTY_RENDER_FAILED", "PNG encoding failed"),
+          ),
         "image/png",
       )
     );

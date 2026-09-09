@@ -1,5 +1,5 @@
 /** Framework-independent, animated web component. Safe to import during SSR. @module */
-import { renderPlateHtml } from "@/rendering/mod.ts";
+import { renderPlateHtml } from "@/rendering/html.ts";
 import { webFonts } from "@/rendering/vendor/web-fonts.ts";
 
 /**

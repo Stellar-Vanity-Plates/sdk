@@ -1,6 +1,7 @@
 /** Optional React adapter; excluded from backend and SVG entrypoints. @module */
 import { type CSSProperties, type ReactElement, useMemo } from "react";
-import { type PlateInput, renderPlateHtml } from "@/rendering/mod.ts";
+import type { PlateInput } from "@/rendering/model.ts";
+import { renderPlateHtml } from "@/rendering/html.ts";
 
 /** React plate component properties. */
 export interface PlateProps extends PlateInput {
