@@ -1,6 +1,6 @@
 import { assert, assertEquals, assertRejects, assertThrows } from "@std/assert";
 import { NetworkConfig, StrKey } from "@colibri/core";
-import { abbreviateAddress, normalizeSuffix, validatePlate } from "../mod.ts";
+import { abbreviateAddress, normalizeSuffix, validatePlate } from "@sdk";
 import {
   deriveContractAddress,
   farmAccount,
@@ -8,7 +8,7 @@ import {
   hexToSalt,
   verifyAccountFarmResult,
   verifyContractFarmResult,
-} from "../src/farming/mod.ts";
+} from "@/farming/mod.ts";
 
 const deployer = StrKey.encodeContract(new Uint8Array(32));
 const passphrase = NetworkConfig.TestNet().networkPassphrase;

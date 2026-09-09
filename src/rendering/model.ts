@@ -1,7 +1,7 @@
 import { StrKey } from "@colibri/core";
-import { accountDisplay } from "../accounts/mod.ts";
-import { normalizeSuffix, type PlateKind, plateKind } from "../validation.ts";
-import { VanityError } from "../errors.ts";
+import { accountDisplay } from "@/accounts/mod.ts";
+import { normalizeSuffix, type PlateKind, plateKind } from "@/validation.ts";
+import { VanityError } from "@/errors.ts";
 
 /** Plate rarity derived from address bytes, matching the web application's rules. */
 export type PlateRarity =
@@ -32,14 +32,14 @@ export interface PlateModel {
   /** Matching prefix length used to derive rarity. */ rarityRun: number;
   /** Seven-symbol rarity fingerprint. */ raritySignature: string;
   /** Address-derived artwork treatment. */ finish: PlateFinish;
-  /** Outline font selected by the address. */ lettering:
+  /** Font family selected by the address. */ lettering:
     | "mono"
     | "rally"
     | "coach"
     | "slab";
   /** Address-derived text ink, in portable hexadecimal form. */ ink: string;
   /** Identicon stripe color. */ band: string;
-  /** Background line pattern for contract plates. */ pattern:
+  /** Legacy contract pattern selector; the canonical Clubhouse finish suppresses it. */ pattern:
     | "pinstripe"
     | "microdot"
     | "diagonal"

@@ -13,7 +13,7 @@ import {
   encodeSuffixLength,
   loadAccountConfiguration,
   parseSuffixLength,
-} from "../src/accounts/mod.ts";
+} from "@/accounts/mod.ts";
 const address = StrKey.encodeEd25519PublicKey(
   new Uint8Array(32),
 ) as `G${string}`;

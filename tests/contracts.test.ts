@@ -6,9 +6,9 @@ import {
   assertCompatibleSpec,
   createProtocolClients,
   NftClient,
-} from "../src/contracts/mod.ts";
-import config from "../examples/testnet.json" with { type: "json" };
-import nft from "../src/contracts/specs/nft.json" with { type: "json" };
+} from "@/contracts/mod.ts";
+import config from "@examples/testnet.json" with { type: "json" };
+import nft from "@/contracts/specs/nft.json" with { type: "json" };
 const network = NetworkConfig.TestNet();
 Deno.test("contract ABI checks reject missing methods and changed signatures", () => {
   const spec = new Spec(nft.entries);

@@ -1,17 +1,17 @@
 import { assertEquals } from "@std/assert";
 import { Spec } from "@stellar/stellar-sdk/contract";
 import { xdr } from "@stellar/stellar-sdk";
-import nft from "../src/contracts/specs/nft.json" with { type: "json" };
-import deployer from "../src/contracts/specs/deployer.json" with {
+import nft from "@/contracts/specs/nft.json" with { type: "json" };
+import deployer from "@/contracts/specs/deployer.json" with {
   type: "json",
 };
-import marketplace from "../src/contracts/specs/marketplace.json" with {
+import marketplace from "@/contracts/specs/marketplace.json" with {
   type: "json",
 };
-import treasury from "../src/contracts/specs/treasury.json" with {
+import treasury from "@/contracts/specs/treasury.json" with {
   type: "json",
 };
-import rbac from "../src/contracts/specs/rbac.json" with { type: "json" };
+import rbac from "@/contracts/specs/rbac.json" with { type: "json" };
 type AbiType = string | {
   udt?: { name: string };
   bytes_n?: { n: number };

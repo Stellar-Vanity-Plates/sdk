@@ -1,6 +1,6 @@
 /** Local search example. Does not print the private seed or deployment salt. */
-import { farmAccount, farmContract } from "../src/farming/mod.ts";
-import config from "./testnet.json" with { type: "json" };
+import { farmAccount, farmContract } from "@/farming/mod.ts";
+import config from "@examples/testnet.json" with { type: "json" };
 const account = await farmAccount({ suffix: "A", maxAttempts: 4096 });
 console.log(
   account

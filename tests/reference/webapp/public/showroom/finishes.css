@@ -1,0 +1,457 @@
+[data-pattern-treatment="pinstripe"] {
+  --finish-pattern: repeating-linear-gradient(
+    90deg,
+    transparent 0 calc(var(--finish-scale) - 1px),
+    var(--finish-line) 0 var(--finish-scale)
+  );
+}
+[data-pattern-treatment="pinstripe-custom"] {
+  --finish-pattern: repeating-linear-gradient(
+    90deg,
+    transparent 0 13px,
+    var(--finish-line) 13px 14px,
+    transparent 14px 17px,
+    var(--finish-line) 17px 18px,
+    transparent 18px 29px
+  );
+}
+[data-pattern-treatment="microdot"] {
+  --finish-pattern: radial-gradient(
+    circle,
+    var(--finish-line) 0 1px,
+    transparent 1.4px
+  );
+  --finish-size: var(--finish-scale) var(--finish-scale);
+}
+[data-pattern-treatment="microdot-custom"] {
+  --finish-pattern:
+    radial-gradient(
+    ellipse at 25% 25%,
+    var(--finish-line) 0 1px,
+    transparent 1.4px
+  ), radial-gradient(
+    ellipse at 75% 60%,
+    var(--finish-line) 0 1.5px,
+    transparent 2px
+  );
+  --finish-size: 11px 13px, 17px 19px;
+}
+[data-pattern-treatment="diagonal"] {
+  --finish-pattern: repeating-linear-gradient(
+    135deg,
+    transparent 0 10px,
+    var(--finish-line) 10px 11px
+  );
+}
+[data-pattern-treatment="diagonal-custom"] {
+  --finish-pattern:
+    linear-gradient(135deg, var(--finish-line) 25%, transparent 25%),
+    linear-gradient(225deg, var(--finish-line) 25%, transparent 25%),
+    linear-gradient(45deg, var(--finish-line) 25%, transparent 25%),
+    linear-gradient(315deg, var(--finish-line) 25%, transparent 25%);
+  --finish-size: 16px 32px;
+  --finish-position: 0 0, 0 0, 8px 0, 8px 0;
+}
+[data-pattern-treatment="crosshatch"] {
+  --finish-pattern:
+    repeating-linear-gradient(
+    45deg,
+    transparent 0 12px,
+    var(--finish-line) 12px 13px
+  ), repeating-linear-gradient(
+    -45deg,
+    transparent 0 12px,
+    var(--finish-line) 12px 13px
+  );
+}
+[data-pattern-treatment="crosshatch-custom"] {
+  --finish-pattern:
+    repeating-linear-gradient(
+    60deg,
+    transparent 0 15px,
+    var(--finish-line) 15px 16px,
+    transparent 16px 18px,
+    var(--finish-line) 18px 19px,
+    transparent 19px 34px
+  ), repeating-linear-gradient(
+    -60deg,
+    transparent 0 15px,
+    var(--finish-line) 15px 16px,
+    transparent 16px 18px,
+    var(--finish-line) 18px 19px,
+    transparent 19px 34px
+  );
+}
+[data-pattern-treatment="horizontal"] {
+  --finish-pattern: repeating-linear-gradient(
+    0deg,
+    transparent 0 calc(var(--finish-scale) - 1px),
+    var(--finish-line) 0 var(--finish-scale)
+  );
+}
+[data-pattern-treatment="horizontal-custom"] {
+  --finish-pattern: repeating-linear-gradient(
+    0deg,
+    transparent 0 13px,
+    var(--finish-line) 13px 14px,
+    transparent 14px 18px,
+    var(--finish-line) 18px 20px,
+    transparent 20px 23px,
+    var(--finish-line) 23px 24px,
+    transparent 24px 38px
+  );
+}
+[data-pattern-treatment="guilloche"] {
+  --finish-pattern:
+    repeating-radial-gradient(
+    ellipse at 25% 50%,
+    transparent 0 17px,
+    var(--finish-line) 17px 18px
+  ), repeating-radial-gradient(
+    ellipse at 75% 50%,
+    transparent 0 21px,
+    var(--finish-line) 21px 22px
+  );
+}
+[data-pattern-treatment="guilloche-custom"] {
+  --finish-pattern: repeating-radial-gradient(
+    circle at 50% 50%,
+    transparent 0 3px,
+    var(--finish-line) 3px 4px,
+    transparent 4px 7px
+  );
+  --finish-size: 28px 28px;
+}
+.plate-stage .contract-plate, .pattern-chip {
+  background-image: var(--finish-pattern);
+  background-size: var(--finish-size, auto);
+  background-position: var(--finish-position, 0 0);
+}
+[data-lettering="registration"] {
+  --finish-font: "DM Mono", monospace;
+  --finish-weight: 500;
+}
+[data-lettering="rally"] {
+  --finish-font: "Barlow Condensed", sans-serif;
+  --finish-weight: 600;
+  --finish-style: italic;
+}
+[data-lettering="coach"] {
+  --finish-font: "Yellowtail", cursive;
+  --finish-weight: 400;
+}
+[data-lettering="slab"] {
+  --finish-font: "Alfa Slab One", serif;
+  --finish-weight: 400;
+}
+.plate-stage .contract-plate strong b, .finish-lettering {
+  font-family: var(--finish-font);
+  font-weight: var(--finish-weight);
+  font-style: var(--finish-style, normal);
+  color: var(--finish-ink);
+  text-shadow: 0 1px #fff, 0 -0.5px #182c2c55;
+}
+.plate-stage .contract-plate strong {
+  line-height: 0;
+}
+.plate-stage .contract-plate strong b {
+  display: block;
+  font-size: min(var(--finish-type-size, 10cqw), var(--finish-word-limit));
+  line-height: 1.2;
+  letter-spacing: var(--finish-tracking, 0.045em);
+}
+[data-lettering="rally"] {
+  --finish-type-size: 12cqw;
+  --finish-tracking: 0.075em;
+}
+[data-lettering="slab"] {
+  --finish-type-size: 9cqw;
+  --finish-tracking: 0.025em;
+}
+[data-lettering="coach"] {
+  --finish-tracking: 0.015em;
+}
+.plate-stage[data-lettering="coach"] .contract-plate strong {
+  letter-spacing: 0.015em;
+  padding-inline: 0.12em;
+}
+.plate-stage[data-lettering="slab"] .contract-plate strong {
+  letter-spacing: 0.025em;
+  font-size: 9cqw;
+}
+.plate-stage[data-lettering="rally"] .contract-plate strong {
+  font-size: 12cqw;
+  letter-spacing: 0.075em;
+  font-style: italic;
+}
+[data-paint="lacquer"] {
+  --letter-paint: linear-gradient(
+    175deg,
+    var(--finish-ink) 15%,
+    color-mix(in srgb, var(--finish-ink) 65%, white) 44%,
+    var(--finish-ink) 48%,
+    color-mix(in srgb, var(--finish-ink) 70%, black) 86%
+  );
+}
+[data-paint="metallic"] {
+  --letter-paint: linear-gradient(
+    180deg,
+    var(--finish-ink) 8%,
+    color-mix(in srgb, var(--finish-ink) 60%, white) 28%,
+    var(--finish-ink) 33% 49%,
+    color-mix(in srgb, var(--finish-ink) 45%, white) 50% 54%,
+    var(--finish-ink) 58% 78%,
+    color-mix(in srgb, var(--finish-ink) 65%, white) 91%
+  );
+}
+[data-paint="pearl"] {
+  --letter-paint: linear-gradient(
+    125deg,
+    var(--finish-ink) 16%,
+    color-mix(in srgb, var(--finish-ink) 65%, #e0afd9) 35%,
+    var(--finish-ink) 50%,
+    color-mix(in srgb, var(--finish-ink) 60%, #bbdce1) 64%,
+    var(--finish-ink) 85%
+  );
+}
+@supports (background-clip: text) {
+  .plate-stage[data-paint="lacquer"] .contract-plate strong b,
+  .plate-stage[data-paint="metallic"] .contract-plate strong b,
+  .plate-stage[data-paint="pearl"] .contract-plate strong b,
+  .swatch-paint[data-paint="lacquer"] .finish-lettering,
+  .swatch-paint[data-paint="metallic"] .finish-lettering,
+  .swatch-paint[data-paint="pearl"] .finish-lettering {
+    background: var(--letter-paint);
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(0 1px #fff);
+  }
+}
+.plate-stage[data-paint="pinlined"] .contract-plate strong b,
+.swatch-paint[data-paint="pinlined"] .finish-lettering {
+  -webkit-text-stroke: 0.45px #fdf9e9;
+  paint-order: stroke fill;
+  text-shadow: 1px 1px var(--finish-ink), 2px 2px #b4a57a;
+}
+.plate-rarity-standard {
+  --edition-sheen: linear-gradient(170deg, #ffffff44, transparent 46%);
+}
+.plate-rarity-registered {
+  --edition-border: #8a948c;
+  border-color: #8a948c;
+  --edition-sheen: linear-gradient(
+    175deg,
+    #bac9bd35,
+    transparent 45%,
+    #9eafa52b
+  );
+  box-shadow:
+    inset 0 0 0 2px #fffdf3,
+    inset 0 0 0 4px #87978b,
+    inset 0 0 0 6px #fffdf3,
+    inset 0 0 0 7px #a7b1a3,
+    0 3px 0 #929f8c,
+    0 10px 22px -16px #263e3766;
+}
+.plate-rarity-foil {
+  --edition-border: #9ba9aa;
+  border-color: #9ba9aa;
+  --edition-sheen: linear-gradient(
+    125deg,
+    #b7c5d253 5%,
+    transparent 28%,
+    #fff 29%,
+    #dae4dc75 33%,
+    transparent 38%,
+    #dac1d557 65%,
+    #a8c8d558
+  );
+}
+.plate-rarity-aurora {
+  --edition-border: #a499b7;
+  border-color: #a499b7;
+  --edition-sheen: linear-gradient(
+    115deg,
+    #eed6ef92,
+    #ade4d973 28%,
+    #f7e6b49c 49%,
+    #e7b7d47a 69%,
+    #b3ccea99 90%
+  );
+}
+.plate-rarity-pole {
+  --edition-border: #a48a4e;
+  border-color: #a48a4e;
+  --edition-sheen: linear-gradient(
+    130deg,
+    #c8a76a44,
+    transparent 32%,
+    #fff9e0a8 52%,
+    #b8a87d44 90%
+  );
+  box-shadow:
+    inset 0 0 0 2px #fcf6e2,
+    inset 0 0 0 4px #7e723e,
+    inset 0 0 0 6px #fcf6e2,
+    0 3px 0 #a48a4e,
+    0 10px 22px -16px #263e3766;
+}
+.plate-stage .contract-plate[class*="plate-rarity-"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--edition-sheen);
+}
+.plate-rarity-aurora::before {
+  background-size: 200% 100%;
+  animation: pearl-reflection 14s ease-in-out infinite alternate;
+}
+@keyframes pearl-reflection {
+  to {
+    background-position: 100% 50%;
+  }
+}
+.plate-rarity-pole::after {
+  content: "";
+  position: absolute;
+  inset: auto 8% 5%;
+  height: 4%;
+  background: repeating-conic-gradient(#82734388 0 25%, transparent 0 50%) 0 0 /
+    10px 10px;
+  mask-image: linear-gradient(90deg, #000, transparent 34% 66%, #000);
+  pointer-events: none;
+}
+.trait-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(145px, 100%), 1fr));
+  gap: 10px;
+}
+.trait-grid > div {
+  min-width: 0;
+}
+.trait-swatch {
+  display: grid;
+  place-items: center;
+  position: relative;
+  height: 66px;
+  width: 100%;
+  margin-bottom: 14px;
+  color: var(--finish-ink);
+  background: #faf8ef;
+  border: 1px solid #d9d8ca;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.finish-lettering {
+  font-size: 37px;
+  line-height: 1.25;
+  padding: 0 4px;
+}
+.paint-chip {
+  width: 54px;
+  height: 40px;
+  border: 1px solid #fff;
+  border-radius: 45% 45% 35% 35%;
+  background:
+    linear-gradient(155deg, #ffffff55, transparent 48% 62%, #00000016),
+    var(--finish-ink);
+  box-shadow:
+    0 3px 0 color-mix(in srgb, var(--finish-ink) 70%, black),
+    0 5px 10px #0002;
+  transform: rotate(-7deg);
+}
+.pattern-chip {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.rarity-chip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  width: 76px;
+  height: 44px;
+  font: 500 23px "DM Mono", monospace;
+  background-color: #fffdf5;
+  border: 2px solid var(--edition-border, #b5ac87);
+  border-radius: 5px;
+}
+.rarity-chip::before {
+  z-index: -1;
+}
+.finish-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 4px 0 20px;
+  border-bottom: 3px double var(--brass);
+}
+.finish-index a {
+  font: 11px var(--mono);
+  text-transform: uppercase;
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.finish-collection {
+  padding-top: 48px;
+  scroll-margin-top: 24px;
+}
+.finish-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px 20px;
+}
+.finish-specimen {
+  min-width: 0;
+}
+.finish-specimen-art {
+  padding: 26px 12px;
+  background: var(--warm);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.finish-specimen-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0 0;
+}
+.finish-specimen-caption h3 {
+  margin: 0;
+  font-size: 17px;
+}
+.finish-specimen .traits-disclosure {
+  margin: 8px 0 0;
+}
+.finish-specimen .trait-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 980px) {
+  .finish-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .finish-grid {
+    grid-template-columns: 1fr;
+  }
+  .trait-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .trait-grid > div {
+    padding: 10px;
+  }
+}
+@media (forced-colors: active) {
+  .plate-stage .contract-plate strong b, .finish-lettering {
+    color: CanvasText;
+    background: none;
+    text-shadow: none;
+    filter: none;
+    -webkit-text-stroke: 0;
+  }
+}

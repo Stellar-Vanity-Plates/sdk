@@ -1,20 +1,22 @@
 # Third-party assets
 
-`src/rendering/vendor/` contains unmodified binary assets encoded as Base64 for
-portable rendering.
+The canonical webapp fonts are embedded unmodified in
+`src/rendering/vendor/web-fonts.ts`. Family, weight/style, source URL and
+SHA-256 provenance are captured in `web-fonts-provenance.json`.
 
-| Asset                          | Source                              | License file in vendor/          |
-| ------------------------------ | ----------------------------------- | -------------------------------- |
-| DM Mono Medium                 | Google Fonts, `ofl/dmmono`          | `mono-LICENSE.txt`, SIL OFL 1.1  |
-| Barlow Condensed Medium        | Google Fonts, `ofl/barlowcondensed` | `rally-LICENSE.txt`, SIL OFL 1.1 |
-| Yellowtail Regular             | Google Fonts, `apache/yellowtail`   | `coach-LICENSE.txt`, Apache 2.0  |
-| Alfa Slab One Regular          | Google Fonts, `ofl/alfaslabone`     | `slab-LICENSE.txt`, SIL OFL 1.1  |
-| resvg-js 2.6.2 `index_bg.wasm` | npm `@resvg/resvg-wasm@2.6.2`       | `resvg-LICENSE.txt`, MPL 2.0     |
+| Family           | Weights/styles          | License file in vendor/         |
+| ---------------- | ----------------------- | ------------------------------- |
+| DM Mono          | 400 and 500             | mono-LICENSE.txt (SIL OFL 1.1)  |
+| Barlow Condensed | 500, 600 and 600 italic | rally-LICENSE.txt (SIL OFL 1.1) |
+| Yellowtail       | 400                     | coach-LICENSE.txt (Apache 2.0)  |
+| Alfa Slab One    | 400                     | slab-LICENSE.txt (SIL OFL 1.1)  |
 
-Font URLs and SHA-256 hashes are in `src/rendering/vendor/provenance.json`. Font
-copyright notices are preserved in the license files.
+Font copyright notices are preserved in those files. The fonts use the same
+families and weights as the webapp's Google Fonts stylesheet. Runtime rendering
+makes no font requests.
 
-The unmodified resvg Wasm's corresponding source and build instructions are at
-<https://github.com/yisibl/resvg-js/tree/v2.6.2>. MPL 2.0 and upstream notices
-govern that component independently of this SDK. Colibri, OpenType.js, React and
-Stellar SDK dependencies retain their own notices and licenses.
+The no-relative-imports lint rule follows Colibri's MIT-licensed rule from
+`fazzatti/colibri` at ff21cb807ce9afc918d4d2e9dea7e5a70f55dcbc. Colibri, React,
+Playwright and Stellar SDK dependencies retain their own licenses. The webapp
+rendering fixtures belong to the same Vanity Plates project and are excluded
+from package publication.

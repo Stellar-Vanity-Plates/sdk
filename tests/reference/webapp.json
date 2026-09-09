@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/Stellar-Vanity-Plates/webapp",
+  "commit": "94876457d26c28635c8fab97bd47abe7338c8b82",
+  "files": {
+    "src/browser/contract-plates/ContractPlate.tsx": "0c620d70c858d3f3b2d9471a02b6d34d5e24d625e1b34b93ebe38705b03509d4",
+    "src/browser/contract-plates/plate-traits.ts": "11db55cf698dd88d6ee7075cf789d2ac6df8ff4b8549bc7f12cc066a19b59c4a",
+    "src/browser/contract-plates/plate-finishes.ts": "d73b1e95444f533032e4c115ea7a19a3d37efd24ab447b9150bc3e56e0cd21ed",
+    "src/browser/account-plates/AccountPlate.tsx": "936f6a430c99284f2e5f03cb144146131984fdfd05cbd536f6e852e9e553b264",
+    "src/browser/account-plates/plate-appearance.ts": "56f3a40c114f84340663f582db20f6391e668f8bef27bc0f6d446cdc0447ba27",
+    "src/browser/ui/PlateInsignia.tsx": "8d70d970c387537aa27d306527659b36ee2037df888448c34edb518b7baf2541",
+    "src/browser/design-system/ClubhouseTheme.tsx": "69806789297aff2e7086d1c0d25bbe7e267148abb28d4f3847654042a81e7d5c",
+    "src/domain/account-plate-rarity.ts": "1a3cd9e535fb879856e3b7e53eb8172bcf44602d24670785080c738b51344c90",
+    "src/domain/contract-plate-traits.ts": "9f88eaf698621828d90af84ed182ecb181db2ecc6b2769b1baaca1f90de4c95c",
+    "public/styles.css": "c7d196fc4e81cf390c4dd0698ec63c95f6d2f383593a2979a271fd92b05fae1a",
+    "public/clubhouse.css": "6e75f312e38033069adaf5f2d5eaac6f00214b77035717a90d1d329bf18b3a62",
+    "public/showroom/plates.css": "e0082053c505d22f6c0e580b22a1a806a3c15645930b7c24c7315bce523a6536",
+    "public/showroom/finishes.css": "a78c92d045cc80c550c8ae181fa9cc1fec4a087a86e49fa8514ff3b24b4021db",
+    "public/account-plates.css": "7dda70bebd298095cd20ba3f5eca9b9b32b6d9a083789f75f3103eda1d347a52",
+    "src/browser/design-system/clubhouse-styles.ts": "5119bcff520f02f688ce8d5cd6a5d5b173d3cf8a949f68e88d5f78888d52d279",
+    "src/browser/design-system/clubhouse-themes.ts": "8b551581c9e25b007a77ef0b0894042c0e9a0b1574dce445538b8e6a60bffe00",
+    "public/index.html": "c4408a6fb3c76eb5208e1b58d3ceb817233a55b8426429ceefad17c5c9a17c59"
+  }
+}

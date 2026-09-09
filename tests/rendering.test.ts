@@ -1,9 +1,9 @@
-import { assert, assertEquals, assertThrows } from "@std/assert";
+import { assert, assertEquals, assertRejects, assertThrows } from "@std/assert";
 import { StrKey } from "@colibri/core";
-import { createPlateModel, renderPlateSvg } from "../src/rendering/mod.ts";
-import { renderPlatePng } from "../src/rendering/png.ts";
-import { registerVanityPlate } from "../src/web/mod.ts";
-import config from "../examples/testnet.json" with { type: "json" };
+import { createPlateModel, renderPlateSvg } from "@/rendering/mod.ts";
+import { renderPlatePng } from "@/rendering/png.ts";
+import { registerVanityPlate } from "@/web/mod.ts";
+import config from "@examples/testnet.json" with { type: "json" };
 const plate = { address: config.contracts.nft, suffix: "PLATES" };
 Deno.test("plate traits preserve the application byte rules for both address types", () => {
   for (const kind of ["account", "contract"] as const) {
@@ -31,7 +31,7 @@ Deno.test("SVG is deterministic, accessible, bounded and contains no external as
   const svg = renderPlateSvg(plate);
   assertEquals(svg, renderPlateSvg(plate));
   assert(svg.includes(plate.address));
-  assert(!/NaN|Infinity|<script|<foreignObject|<image|<text|href=/.test(svg));
+  assert(!/NaN|Infinity|<script|<image|<text|href=/.test(svg));
   assertThrows(() => renderPlateSvg({ ...plate, suffix: "<script>" }));
   assertThrows(() =>
     renderPlateSvg(plate, { idPrefix: 'x" onload="alert(1)' })
@@ -50,28 +50,16 @@ Deno.test("SVG is deterministic, accessible, bounded and contains no external as
       .includes("prefers-reduced-motion"),
   );
   assert(
-    !renderPlateSvg({ address, suffix: address.slice(-4) }).includes(
-      "@keyframes",
+    renderPlateSvg({ address, suffix: address.slice(-4) }).includes(
+      'data-animated="false"',
     ),
   );
   assertEquals(typeof registerVanityPlate, "function"); // SSR import does not access HTMLElement.
 });
-Deno.test("portable PNG exports render repeatedly with the requested dimensions", async () => {
-  for (const width of [300, 1200]) {
-    const png = await renderPlatePng(plate, { width });
-    assertEquals(Array.from(png.slice(0, 8)), [
-      137,
-      80,
-      78,
-      71,
-      13,
-      10,
-      26,
-      10,
-    ]);
-    const view = new DataView(png.buffer, png.byteOffset, png.byteLength);
-    assertEquals(view.getUint32(16), width);
-    assertEquals(view.getUint32(20), Math.round(width / 2.9));
-    assert(png.length > 3000);
-  }
+Deno.test("browser PNG fails explicitly without a DOM", async () => {
+  await assertRejects(
+    () => renderPlatePng(plate),
+    Error,
+    "browser DOM is required",
+  );
 });

@@ -3,10 +3,10 @@ import {
   createPlateModel,
   type PlateInput,
   renderPlateSvg,
-} from "../src/rendering/mod.ts";
-import { registerVanityPlate } from "../src/web/mod.ts";
-import { farmContract } from "../src/farming/mod.ts";
-import config from "./testnet.json" with { type: "json" };
+} from "@/rendering/mod.ts";
+import { registerVanityPlate } from "@/web/mod.ts";
+import { farmContract } from "@/farming/mod.ts";
+import config from "@examples/testnet.json" with { type: "json" };
 registerVanityPlate();
 const select = document.querySelector<HTMLSelectElement>("#sample")!;
 const host = document.querySelector("#featured")!;
@@ -48,6 +48,26 @@ function show(): void {
     `${model.kind} / ${model.finish} / ${model.lettering} / ${model.rarity}`;
   status.textContent = "Ready · rendered locally";
 }
+document.querySelector("#apply-custom")!.addEventListener("click", () => {
+  const error = document.querySelector("#custom-error")!;
+  try {
+    const address = document.querySelector<HTMLInputElement>("#custom-address")!
+      .value.trim();
+    const suffix = document.querySelector<HTMLInputElement>("#custom-suffix")!
+      .value.trim().toUpperCase();
+    const input = { address, ...(suffix ? { suffix } : {}) };
+    createPlateModel(input);
+    const index = fixtures.push(input) - 1;
+    select.add(
+      new Option(`Your address · ${address.slice(-6)}`, String(index)),
+    );
+    select.value = String(index);
+    show();
+    error.textContent = "";
+  } catch (cause) {
+    error.textContent = cause instanceof Error ? cause.message : String(cause);
+  }
+});
 select.addEventListener("change", show);
 show();
 function download(bytes: BlobPart, type: string, name: string): void {
@@ -70,7 +90,7 @@ document.querySelector("#svg")!.addEventListener(
 document.querySelector("#png")!.addEventListener("click", async () => {
   try {
     status.textContent = "Rendering PNG…";
-    const { renderPlatePng } = await import("../src/rendering/png.ts");
+    const { renderPlatePng } = await import("@/rendering/png.ts");
     const png = await renderPlatePng(fixtures[Number(select.value)], {
       width: 1600,
     });

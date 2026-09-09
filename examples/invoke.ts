@@ -1,10 +1,10 @@
 /** Explicit write example: importing this file does not submit anything. */
 import type { NetworkConfig, TransactionConfig } from "@colibri/core";
-import { NftClient } from "../src/contracts/mod.ts";
+import { NftClient } from "@/contracts/mod.ts";
 import {
   type ContractFarmResult,
   verifyContractFarmResult,
-} from "../src/farming/mod.ts";
+} from "@/farming/mod.ts";
 
 /** Reserve an already-farmed address. The configured signer pays the contract's current fee. */
 export async function reserveFarmedPlate(

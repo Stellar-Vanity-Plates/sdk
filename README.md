@@ -8,37 +8,38 @@ package name is `@vanity-plates/sdk`; it has **not been published** to JSR or
 npm. Use Deno **2.9.6**, the verified runtime.
 
 ```sh
-git clone --branch feat/initial-sdk https://github.com/Stellar-Vanity-Plates/sdk.git
+git clone --branch feat/sdk-visual-parity https://github.com/Stellar-Vanity-Plates/sdk.git
 cd sdk
 deno task test
 deno task preview
 ```
 
 Open <http://127.0.0.1:4192/> for responsive plates, animations, SVG/PNG
-downloads and local farming. Imports below assume an example at the repository
-root. An external Deno application can map these local sources until a package
-is published. Do not add an unpublished JSR specifier.
+downloads and local farming. Imports below use the repository aliases in
+`deno.json`. An external Deno application can map these local sources until a
+package is published. Do not add an unpublished JSR specifier.
 
 ## Entry points
 
-| Source                 | Includes                                                             |
-| ---------------------- | -------------------------------------------------------------------- |
-| `mod.ts`               | G/C checksum validation, suffix validation, abbreviation, SDK errors |
-| `src/farming/mod.ts`   | Local G keypair and C deployment-salt farming                        |
-| `src/accounts/mod.ts`  | RPC ManageData reads, strict parsing, standard fallback              |
-| `src/contracts/mod.ts` | Five typed contract clients and all ABI record types                 |
-| `src/rendering/mod.ts` | Deterministic appearance and portable SVG generation                 |
-| `src/rendering/png.ts` | PNG export with bundled WebAssembly                                  |
-| `src/web/mod.ts`       | Framework-independent `<vanity-plate>` registration                  |
-| `src/react/mod.tsx`    | Optional React `Plate` component with SSR support                    |
+| Source                        | Includes                                                             |
+| ----------------------------- | -------------------------------------------------------------------- |
+| `mod.ts`                      | G/C checksum validation, suffix validation, abbreviation, SDK errors |
+| `src/farming/mod.ts`          | Local G keypair and C deployment-salt farming                        |
+| `src/accounts/mod.ts`         | RPC ManageData reads, strict parsing, standard fallback              |
+| `src/contracts/mod.ts`        | Five typed contract clients and all ABI record types                 |
+| `src/rendering/mod.ts`        | Canonical HTML/CSS and browser-compatible SVG export                 |
+| `src/rendering/png.ts`        | Local browser PNG export                                             |
+| `src/rendering/png-server.ts` | Optional local Chromium PNG export for Deno/Node                     |
+| `src/web/mod.ts`              | Framework-independent `<vanity-plate>` registration                  |
+| `src/react/mod.tsx`           | Optional React `Plate` component with SSR support                    |
 
 These are also declared as future package subpaths in `deno.json`.
 
 ## Local farming
 
 ```ts
-import { farmAccount, farmContract } from "./src/farming/mod.ts";
-import deployment from "./examples/testnet.json" with { type: "json" };
+import { farmAccount, farmContract } from "@/farming/mod.ts";
+import deployment from "@examples/testnet.json" with { type: "json" };
 
 const account = await farmAccount({
   suffix: "A",
@@ -79,7 +80,7 @@ attempt; JavaScript strings cannot be reliably zeroized.
 
 ```ts
 import { NetworkConfig } from "@colibri/core";
-import { loadAccountConfiguration } from "./src/accounts/mod.ts";
+import { loadAccountConfiguration } from "@/accounts/mod.ts";
 
 const display = await loadAccountConfiguration(
   "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF",
@@ -103,8 +104,8 @@ uses first six characters, ellipsis, last six, while retaining the full address.
 
 ```ts
 import { NetworkConfig } from "@colibri/core";
-import { createProtocolClients } from "./src/contracts/mod.ts";
-import deployment from "./examples/testnet.json" with { type: "json" };
+import { createProtocolClients } from "@/contracts/mod.ts";
+import deployment from "@examples/testnet.json" with { type: "json" };
 
 const network = NetworkConfig.CustomNet({
   networkPassphrase: deployment.networkPassphrase,
@@ -145,7 +146,7 @@ not the decoded simulation result:
 
 ```ts
 import type { TransactionConfig } from "@colibri/core";
-import type { NftClient } from "./src/contracts/mod.ts";
+import type { NftClient } from "@/contracts/mod.ts";
 
 export async function mintReservedPlate(
   nft: NftClient,
@@ -172,8 +173,8 @@ supply explicit addresses for another deployment.
 ## SVG and PNG
 
 ```ts
-import { renderPlateSvg } from "./src/rendering/mod.ts";
-import { renderPlatePng } from "./src/rendering/png.ts";
+import { renderPlateSvg } from "@/rendering/mod.ts";
+import { renderPlatePng } from "@/rendering/png.ts";
 
 const plate = {
   address: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
@@ -183,28 +184,57 @@ const svg = renderPlateSvg(plate, { width: 600 });
 const png = await renderPlatePng(plate, { width: 1600 });
 ```
 
-The renderer preserves the application's address-byte selection rules for
-rarity, lettering, ink, insignia and pattern, using Colibri identicons and the
-same font families. This is a portable vector implementation; lighting and
-textures need not be pixel-identical to the application. Contract plates require
-a matching suffix. Account plates accept a suffix or `suffixLength`, with the
-standard unconfigured fallback.
+The renderer uses the webapp's canonical Clubhouse composition: font weights,
+letter spacing, badge/stripe geometry, screws, metal rim, foil lettering and
+identicon masks. The same G or C address and suffix produces the same plate in
+HTML, web/React, SVG and PNG. Legacy patterns are still available in the trait
+model but are not painted when the app suppresses them. No rarity footer is
+added.
 
-SVG uses outlined fonts and embedded vector artwork, with no external assets,
-DOM or filesystem. Width is bounded to 120–4096 pixels. The accessible title and
-visible lower line retain the full address; appearance does not prove ownership.
-For repeated inline SVGs, provide unique `idPrefix` values. The web and React
-adapters handle isolation themselves.
+Contract plates require a matching suffix. Account plates accept a suffix or
+`suffixLength`, with the app's first-six/last-six fallback when unconfigured.
+Width is bounded to 120–4096 pixels; output height is `round(width / 2.9)`. The
+full address stays accessible and visible; appearance does not prove ownership.
+Use unique `idPrefix` values for repeated inline SVGs.
 
-PNG returns `Uint8Array` using bundled resvg Wasm, without Canvas or native
-installation. Import it lazily to avoid loading the roughly 3.2 MB Base64 Wasm
-source in your initial frontend graph. A restrictive browser CSP must permit
-Wasm execution and the inline styles used by animation.
+**Export change from the first preview:** SVG now embeds the canonical HTML/CSS
+using `foreignObject`, including all fonts and identicons. It is self-contained
+and generated without a DOM or network, but requires a modern browser renderer.
+It is not an outlined-vector SVG for resvg, Illustrator or SVG-only image
+services. Use PNG for consumers that do not support HTML-backed SVG.
+
+The `@/rendering/png.ts` entrypoint uses browser Canvas locally. Deno/Node
+consumers use the separate server entrypoint, backed by local Chromium:
+
+```sh
+deno run -A npm:playwright@1.61.0/cli install chromium
+deno task example:export
+```
+
+```ts
+import { renderPlatePng } from "@/rendering/png-server.ts";
+const png = await renderPlatePng({
+  address: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
+  suffix: "PLATES",
+}, { width: 1600 });
+```
+
+The server adapter needs process/filesystem permissions and local browser
+communication. It blocks external page requests; it never contacts our backend.
+Pass an existing Playwright `browser` for batch exports, or an `executablePath`
+for a separately installed Chromium. Caller-owned browsers remain open;
+temporary contexts always close. Calling the browser exporter without a DOM
+fails explicitly. There is no silent fallback to a different-looking plate.
+
+PNG is the resting frame. Browser fonts and image data are embedded, so a custom
+CSP needs inline styles plus `data:` in `font-src` and `img-src`. No Wasm
+execution is needed. React and headless Chromium stay outside
+core/farming/browser bundles.
 
 ## Web and React
 
 ```ts
-import { registerVanityPlate } from "./src/web/mod.ts";
+import { registerVanityPlate } from "@/web/mod.ts";
 registerVanityPlate(); // Call in the browser; importing is SSR-safe.
 ```
 
@@ -218,11 +248,13 @@ registerVanityPlate(); // Call in the browser; importing is SSR-safe.
 
 Set host width in CSS; the component keeps its aspect ratio. Attributes update
 reactively. Invalid input displays a fallback and dispatches `plate-error`.
-`animated` enables gentle rare-plate sheen and honors reduced motion; standard
-and registered plates stay static.
+`animated` enables the app’s hover interactions (badge breathing, watermark
+floating, stripe gleam and rarity foil shifts) and honors reduced motion. With
+the attribute absent, the plate stays still even on hover. Embedded fonts are
+registered once in the document because shadow roots cannot own font faces.
 
 ```tsx
-import { Plate } from "./src/react/mod.tsx";
+import { Plate } from "@/react/mod.tsx";
 
 export function AccountBadge({ address }: { address: string }) {
   return (
@@ -236,20 +268,24 @@ export function AccountBadge({ address }: { address: string }) {
 }
 ```
 
-React uses the shared renderer and unique SVG IDs. Invalid React props throw;
-use your application's error boundary. React and PNG are optional entry points;
-core validation/farming imports exclude them and bundled fonts. React 18 is the
-first verified adapter target. Deno SSR with React requires
-`--allow-env=NODE_ENV`; no other environment access is needed.
+React uses the same canonical HTML/CSS renderer with accessible labels. Invalid
+React props throw; use your application's error boundary. React and server PNG
+are optional entry points; core validation/farming imports exclude them and
+bundled fonts. React 18 is the first verified adapter target. Deno SSR with
+React requires `--allow-env=NODE_ENV`; no other environment access is needed.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for aliases, module boundaries and the
+mandatory webapp-source comparison before a rendering release.
 
 ## Verification and development
 
 ```sh
 deno task check          # Format, lint, source and example types
 deno task docs           # Public API documentation lint
-deno task test           # Offline tests; no runtime network/filesystem permission
+deno task test           # Offline behavior, architecture and trait-parity tests
+deno task test:browser   # Exact visual comparisons against the webapp reference
 deno task generate       # Regenerate typed models from checked-in specs
-deno task build:preview  # Browser bundle, including lazy PNG chunks
+deno task build:preview  # Browser bundle, including lazy PNG export
 deno task test:live      # Explicit read-only Testnet checks for all five contracts
 deno task example:export # Write output/plate.svg and output/plate.png
 deno task example:farm   # Local searches without logging seeds or salts
@@ -257,8 +293,8 @@ deno task example:farm   # Local searches without logging seeds or salts
 
 Deno's experimental bundler reports upstream Stellar SDK side-effect metadata
 warnings; the browser consumer is verified directly. Deno doc reports an
-upstream React `global.d.ts` resolution warning; TypeScript and an SSR consumer
-test verify the adapter separately.
+upstream React `global.d.ts` and Playwright `electron` resolution warnings;
+TypeScript and an SSR consumer test verify the adapter separately.
 
 First-version boundaries: no registry publication, Mainnet write test, wallet
 UI, GPU/worker pool or NFT indexer. Treasury's vault integration methods are

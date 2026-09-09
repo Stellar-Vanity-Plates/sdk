@@ -1,0 +1,749 @@
+.account-plate-container {
+  container-type: inline-size;
+  width: 100%;
+  min-width: 0;
+}
+
+.account-identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  vertical-align: middle;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.account-identity-plate {
+  display: block;
+  flex: 0 0 110px;
+  width: 110px;
+}
+
+.account-identity .account-plate-container,
+.account-identity .account-plate {
+  display: block;
+}
+
+.account-identity .account-plate {
+  border-width: 2px;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px #f9f8f0, inset 0 0 0 2px #718679, 0 2px 0 #bdb7a1;
+}
+
+.account-identity .account-plate-label,
+.account-identity .account-plate-address {
+  display: none;
+}
+
+.account-identity .account-identity-plate .account-plate .account-plate-word {
+  margin: 0;
+  font-size: min(16cqw, var(--account-word-limit));
+}
+
+.account-identity-address {
+  overflow-wrap: anywhere;
+}
+
+.account-identity.is-unregistered .account-identity-plate {
+  flex-basis: 154px;
+  width: 154px;
+}
+
+.account-identity.is-unregistered
+  .account-identity-plate
+  .account-plate
+  .account-plate-word {
+  font-size: 7cqw;
+}
+
+.account-plate-customizer {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  color: var(--ink, #26332e);
+  background: var(--paper-bright, #fcfbf6);
+  border: 1px solid var(--line, #dcded3);
+  border-top: 3px solid var(--green, #173f35);
+  border-radius: 12px;
+  box-shadow: 0 24px 80px #132b3540, inset 0 2px #b5ac87;
+}
+
+.account-plate-customizer::backdrop {
+  background: #122e2870;
+  backdrop-filter: blur(5px);
+}
+
+.plate-customizer-content {
+  padding: clamp(22px, 5vw, 36px);
+}
+
+.plate-customizer-content header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.plate-customizer-content h2 {
+  margin: 6px 0 0;
+  font: 600 30px/1.1 var(--heading-font, "Barlow Condensed", sans-serif);
+  letter-spacing: -0.025em;
+}
+
+.plate-customizer-eyebrow {
+  margin: 0;
+  color: var(--green, #173f35);
+  font: 10px/1.4 var(--mono, "DM Mono", monospace);
+  letter-spacing: 0.12em;
+}
+
+.plate-customizer-description {
+  margin: 18px 0 24px;
+  color: var(--ink-soft, #727e74);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.plate-customizer-stage {
+  padding: 28px 20px;
+  margin-bottom: 28px;
+  border: 1px solid var(--line, #dcded3);
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 40%,
+      #b5ac870c 40% 43%,
+      transparent 43% 46%,
+      #b5ac870c 46% 50%,
+      transparent 50%
+    ),
+    var(--green-wash, #edf0e7);
+}
+
+.plate-customizer-content form {
+  display: grid;
+  gap: 14px;
+}
+
+.plate-customizer-slider-label, .plate-customizer-range {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plate-customizer-slider-label output {
+  min-width: 36px;
+  padding: 4px 8px;
+  border: 1px solid var(--line, #dcded3);
+  border-radius: 4px;
+  font-family: var(--mono, monospace);
+  text-align: center;
+}
+
+.plate-customizer-content input[type="range"] {
+  width: 100%;
+  min-height: 32px;
+  padding: 0;
+  accent-color: var(--green, #173f35);
+  cursor: pointer;
+}
+
+.plate-customizer-range {
+  margin-top: -14px;
+  color: var(--ink-soft, #727e74);
+  font-size: 11px;
+}
+
+.plate-customizer-note {
+  margin: 0;
+  color: var(--ink-soft, #727e74);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.plate-customizer-note code {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.account-plate-customizer .wallet-fee-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-block: 1px solid var(--line, #dcded3);
+  font-size: 13px;
+}
+
+.account-plate-customizer .wallet-fee-summary-amount {
+  display: grid;
+  gap: 5px;
+  text-align: right;
+}
+
+.account-plate-customizer .is-sufficient, .plate-customizer-success {
+  color: var(--green, #173f35);
+}
+
+.account-plate-customizer .is-insufficient, .plate-customizer-error {
+  color: var(--red, #a13e34);
+}
+
+.plate-customizer-error, .plate-customizer-success {
+  margin: 0;
+  font-size: 13px;
+}
+
+.account-farm-activation {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line, #dcded3);
+}
+
+.account-plate {
+  --account-ink: #214538;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2.9;
+  overflow: hidden;
+  border: 3px solid #b5ac87;
+  border-radius: 10px;
+  background: #fdfcf6;
+  box-shadow:
+    inset 0 0 0 2px #f9f8f0,
+    inset 0 0 0 3.5px #718679,
+    0 3px 0 #bdb7a1,
+    0 12px 20px -14px #2b352f77;
+  isolation: isolate;
+}
+
+.account-plate-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4% 7%;
+  z-index: 2;
+}
+
+.account-plate-label {
+  font: 400 1.8cqw/1.3 "DM Mono", monospace;
+  letter-spacing: 0.2em;
+  color: #53675b;
+  white-space: nowrap;
+}
+
+.account-plate .account-plate-word {
+  display: block;
+  font:
+    600 min(12.5cqw, var(--account-word-limit))/1.1 "Barlow Condensed",
+    sans-serif;
+  letter-spacing: 0.055em;
+  color: var(--account-ink);
+  text-shadow: 0 1px #fff, 0 -1px #1a362f26;
+  margin-top: 2.2cqw;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.account-plate-address {
+  font: 400 1.47cqw/1.4 "DM Mono", monospace;
+  letter-spacing: 0.035em;
+  color: #526158;
+  white-space: nowrap;
+  margin-top: 2.3cqw;
+}
+
+.account-plate .plate-screw {
+  width: 1.5cqw;
+  height: 1.5cqw;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 25%,
+    #fff 0%,
+    #d5d9d0 22%,
+    #8c968a 55%,
+    #bcc3b8 68%,
+    #798574 100%
+  );
+  box-shadow: 0 1px 2px #26382a42;
+}
+
+.account-plate-identicon {
+  position: absolute;
+  z-index: 1;
+}
+
+.account-plate-identicon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.account-identicon-shape {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.plate-insignia[data-insignia-finish="badge"] .account-plate-identicon {
+  left: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  width: 11.5cqw;
+  height: 11.5cqw;
+  aspect-ratio: 1;
+  border: 1px solid #b1a780;
+  border-radius: 50%;
+  padding: 0.7cqw;
+  background: var(--account-badge);
+  box-shadow: 0 0 0 2px #fbfaf3, inset 0 0 0 1px #fff;
+  overflow: hidden;
+}
+
+.plate-insignia[data-insignia-finish="badge"]::after {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 73%;
+  border-top: 1px solid #c4b79140;
+}
+
+.plate-insignia[data-insignia-finish="watermark"] .account-plate-identicon {
+  right: 1%;
+  top: -24%;
+  width: 51%;
+  aspect-ratio: 1;
+  opacity: 0.12;
+}
+
+.plate-insignia[data-insignia-finish="sideband"]::before {
+  content: "";
+  position: absolute;
+  inset: 3px auto 3px 3px;
+  width: 17%;
+  border-radius: 5px 0 0 5px;
+  background: linear-gradient(
+    100deg,
+    var(--account-band),
+    var(--account-band-highlight) 50%,
+    var(--account-band)
+  );
+  border-right: 2px solid #b4a57a;
+}
+
+.plate-insignia[data-insignia-finish="sideband"]::after {
+  content: "";
+  position: absolute;
+  inset: 3px auto 3px 3px;
+  width: 17%;
+  border-radius: 5px 0 0 5px;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    #ffffff80 50%,
+    transparent 65%
+  );
+  background-size: 300% 100%;
+  background-position: 120% 50%;
+  opacity: 0;
+}
+
+.plate-insignia[data-insignia-finish="sideband"] .account-plate-identicon {
+  left: 4.3%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 11.8%;
+  aspect-ratio: 1;
+  background: var(--account-badge);
+  padding: 0.35cqw;
+  border: 1px solid #baae85;
+  border-radius: 2px;
+}
+
+.account-plate:is(
+  [data-account-finish="badge"],
+  [data-account-finish="sideband"]
+)
+  .account-plate-face {
+  left: 17%;
+  padding-inline: 4%;
+}
+
+.account-plate:is(
+  [data-account-finish="badge"],
+  [data-account-finish="sideband"]
+)
+  .account-plate-label {
+  font-size: 1.55cqw;
+}
+
+.account-plate:is(
+  [data-account-finish="badge"],
+  [data-account-finish="sideband"]
+)
+  .account-plate-address {
+  font-size: 1.22cqw;
+  letter-spacing: 0;
+}
+
+.plate-insignia[data-insignia-finish="pattern"]::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background-image: var(--account-icon);
+  background-size: 13cqw 13cqw;
+  opacity: 0.09;
+}
+
+.plate-insignia[data-insignia-finish="pattern"] .account-plate-identicon {
+  display: none;
+}
+
+.account-plate:is(
+  [data-account-finish="watermark"],
+  [data-account-finish="pattern"]
+)
+  .account-plate-word {
+  text-shadow: 1px 1px #fff, 0 0 8px #fdfcf6;
+}
+
+.account-plate[data-account-finish="pattern"] .account-plate-label {
+  background: #fdfcf6b0;
+  padding: 0 1cqw;
+}
+
+.account-plate[data-account-lettering="script"] .account-plate-word {
+  font-family: "Yellowtail", "Brush Script MT", cursive;
+  font-weight: 400;
+  font-size: min(12cqw, var(--account-word-limit));
+  letter-spacing: 0.005em;
+  transform: rotate(-3deg);
+}
+
+.account-plate[data-account-lettering="mono"] .account-plate-word {
+  font-family: "DM Mono", monospace;
+  font-weight: 500;
+  font-size: min(10cqw, var(--account-word-limit));
+}
+
+.account-plate.is-compact {
+  border-width: 2px;
+  border-radius: 6px;
+}
+
+.account-plate[data-account-rarity="registered"],
+:is(.contract-plate, .rarity-chip)[data-shared-rarity="registered"] {
+  border-color: #899e9a;
+}
+.account-plate[data-account-rarity="foil"],
+:is(.contract-plate, .rarity-chip)[data-shared-rarity="foil"],
+.plate-insignia[data-insignia-rarity="foil"] {
+  --account-foil: linear-gradient(
+    120deg,
+    #668b91,
+    #b0a0c8 25%,
+    #edebf3 43%,
+    #7b939f 60%,
+    #cda8b9 78%,
+    #74838e
+  );
+  border-color: #b0bbc6;
+}
+.account-plate[data-account-rarity="aurora"],
+:is(.contract-plate, .rarity-chip)[data-shared-rarity="aurora"],
+.plate-insignia[data-insignia-rarity="aurora"] {
+  --account-foil: linear-gradient(
+    125deg,
+    #287d92,
+    #bc5ea9 22%,
+    #4bd6bb 41%,
+    #d4c2f0 58%,
+    #7756bb 76%,
+    #2e8292
+  );
+  border-color: #b5a8ca;
+}
+.account-plate[data-account-rarity="pole"],
+:is(.contract-plate, .rarity-chip)[data-shared-rarity="pole"],
+.plate-insignia[data-insignia-rarity="pole"] {
+  --account-foil: linear-gradient(
+    115deg,
+    #826222,
+    #ddba52 22%,
+    #fff0b9 38%,
+    #946624 53%,
+    #eacb77 69%,
+    #aa7628 86%,
+    #5e482a
+  );
+  border-color: #ba9448;
+}
+.plate-insignia:is(
+  [data-insignia-rarity="foil"],
+  [data-insignia-rarity="aurora"],
+  [data-insignia-rarity="pole"]
+)
+  .account-identicon-shape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--account-foil);
+  background-size: 200% 100%;
+  mask-image: var(--account-icon);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+}
+.account-plate:is(
+  [data-account-rarity="foil"],
+  [data-account-rarity="aurora"],
+  [data-account-rarity="pole"]
+)
+  .account-plate-word,
+:is(.contract-plate, .rarity-chip):is(
+  [data-shared-rarity="foil"],
+  [data-shared-rarity="aurora"],
+  [data-shared-rarity="pole"]
+)
+  .plate-rarity-word {
+  padding-inline: 0.25em;
+  margin-inline: -0.25em;
+  background-image: var(--account-foil);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: brightness(0.58) drop-shadow(0 1px 0 #ffffffc0);
+}
+.account-plate-lustre {
+  position: absolute;
+  inset: 4px;
+  border-radius: 5px;
+  pointer-events: none;
+  background-image: var(--account-foil, none);
+  background-size: 200% 100%;
+  opacity: 0.13;
+}
+.plate-insignia[data-insignia-rarity="aurora"] .account-plate-lustre {
+  background-image: none;
+  opacity: 1;
+  box-shadow: inset 0 0 5px #bba5dd55;
+}
+.plate-insignia[data-insignia-rarity="aurora"] .account-plate-lustre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--account-foil);
+  background-size: 200% 100%;
+  opacity: 0.13;
+}
+.plate-insignia[data-insignia-rarity="aurora"] .account-plate-lustre::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background-image: linear-gradient(
+    115deg,
+    #7394be,
+    #72dcca 20%,
+    #bf85c8 35%,
+    #ffffff 43%,
+    #e4d9ff 47%,
+    #79c8cb 60%,
+    #d3a0d4 80%,
+    #7394be
+  );
+  background-size: 250% 100%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.plate-insignia[data-insignia-finish="watermark"]:is(
+  [data-insignia-rarity="foil"],
+  [data-insignia-rarity="aurora"],
+  [data-insignia-rarity="pole"]
+)
+  .account-plate-identicon {
+  opacity: 0.3;
+}
+.plate-insignia[data-insignia-finish="pattern"]:is(
+  [data-insignia-rarity="foil"],
+  [data-insignia-rarity="aurora"],
+  [data-insignia-rarity="pole"]
+)::before {
+  background-image: var(--account-foil);
+  background-size: 200% 100%;
+  mask-image: var(--account-icon);
+  mask-size: 13cqw 13cqw;
+  mask-repeat: repeat;
+  opacity: 0.35;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :is(.account-plate, .contract-plate):hover
+    .plate-insignia[data-insignia-finish="watermark"]
+    .account-plate-identicon {
+    animation: account-watermark-float 3s ease-in-out infinite;
+  }
+  :is(.account-plate, .contract-plate):hover
+    .plate-insignia[data-insignia-finish="badge"]
+    .account-plate-identicon {
+    animation: account-badge-breathe 2.4s ease-in-out infinite;
+  }
+  :is(.account-plate, .contract-plate):hover
+    .plate-insignia[data-insignia-finish="sideband"]::after {
+    animation: account-band-gleam 5.5s ease-in-out infinite;
+  }
+  :is(.account-plate, .contract-plate):hover .account-identicon-shape::after,
+  .account-plate:hover .account-plate-word,
+  .contract-plate:hover .plate-rarity-word,
+  :is(.account-plate, .contract-plate):hover .account-plate-lustre,
+  :is(.account-plate, .contract-plate):hover
+    .plate-insignia[data-insignia-rarity="aurora"]
+    .account-plate-lustre::before,
+  :is(.account-plate, .contract-plate):hover
+    .plate-insignia[data-insignia-rarity="aurora"]
+    .account-plate-lustre::after,
+  :is(.account-plate, .contract-plate):hover
+    .plate-insignia[data-insignia-finish="pattern"]::before {
+    animation: account-foil-shift 3s ease-in-out infinite alternate;
+  }
+}
+@keyframes account-watermark-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(12%);
+  }
+}
+@keyframes account-badge-breathe {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.14);
+  }
+}
+@keyframes account-band-gleam {
+  0%, 55%, 100% {
+    background-position: 120% 50%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.7;
+  }
+  40% {
+    background-position: -20% 50%;
+    opacity: 0;
+  }
+}
+@keyframes account-foil-shift {
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+.account-rarity-heading {
+  margin-top: 48px;
+}
+
+.plate-insignia {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  container-type: inline-size;
+}
+
+.contract-plate[data-plate-insignia] > :is(small, strong, code),
+.contract-plate[data-plate-insignia] .contract-plate-picker-identity {
+  z-index: 2;
+}
+
+.contract-plate[data-shared-rarity] {
+  background-image: none;
+}
+
+.contract-plate[data-shared-rarity]::before,
+.contract-plate[data-shared-rarity]::after {
+  content: none;
+}
+
+.contract-plate:is(
+  [data-plate-insignia="badge"],
+  [data-plate-insignia="sideband"]
+) {
+  padding-left: 21%;
+  padding-right: 4%;
+}
+
+.contract-plate:is(
+  [data-plate-insignia="badge"],
+  [data-plate-insignia="sideband"]
+)
+  > small {
+  font-size: 1.6cqw;
+}
+
+.contract-plate:is(
+  [data-plate-insignia="badge"],
+  [data-plate-insignia="sideband"]
+)
+  > code {
+  font-size: 1.42cqw;
+  letter-spacing: 0;
+}
+
+.contract-plate:is(
+  [data-plate-insignia="badge"],
+  [data-plate-insignia="sideband"]
+)
+  strong
+  b {
+  font-size: min(var(--finish-type-size, 10cqw), var(--insignia-word-limit));
+}
+
+.swatch-insignia {
+  position: relative;
+  width: 84px;
+  height: 36px;
+  overflow: hidden;
+  border: 1px solid var(--line, #dcded3);
+  border-radius: 5px;
+  background: #fdfcf6;
+}
+
+.swatch-insignia
+  .plate-insignia[data-insignia-finish="badge"]
+  .account-plate-identicon {
+  width: 23cqw;
+  height: 23cqw;
+  left: calc(50% - 11.5cqw);
+}

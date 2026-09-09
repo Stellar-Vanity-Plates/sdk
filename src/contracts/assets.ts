@@ -3,9 +3,9 @@ import {
   type NetworkConfig,
   SEP41TokenContract,
 } from "@colibri/core";
-import { isPlateAddress } from "../validation.ts";
-import { VanityError } from "../errors.ts";
-import type { TreasuryConfig } from "./generated/treasury.ts";
+import { isPlateAddress } from "@/validation.ts";
+import { VanityError } from "@/errors.ts";
+import type { TreasuryConfig } from "@/contracts/generated/treasury.ts";
 
 /** Colibri clients for assets and the third-party vault selected by the treasury. */
 export interface TreasuryAssetClients {

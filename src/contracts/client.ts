@@ -6,8 +6,8 @@ import {
 import { Spec as NativeSpec } from "@stellar/stellar-sdk/contract";
 /** Native Stellar ABI specification accepted by compatibility checks. */
 export type Spec = NativeSpec;
-import { isPlateAddress } from "../validation.ts";
-import { VanityError } from "../errors.ts";
+import { isPlateAddress } from "@/validation.ts";
+import { VanityError } from "@/errors.ts";
 
 /** Connection and Colibri pipeline extensions for a single protocol contract. */
 export interface ClientOptions {

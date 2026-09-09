@@ -3,9 +3,9 @@ import { NetworkConfig } from "@colibri/core";
 import {
   createProtocolClients,
   createTreasuryAssetClients,
-} from "../src/contracts/mod.ts";
-import { deriveContractAddress } from "../src/farming/mod.ts";
-import config from "./testnet.json" with { type: "json" };
+} from "@/contracts/mod.ts";
+import { deriveContractAddress } from "@/farming/mod.ts";
+import config from "@examples/testnet.json" with { type: "json" };
 const network = NetworkConfig.CustomNet({
   networkPassphrase: config.networkPassphrase,
   rpcUrl: config.rpcUrl,

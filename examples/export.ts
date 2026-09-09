@@ -1,7 +1,7 @@
 /** Export locally. Only output/ is written; no network request is made. */
-import { renderPlateSvg } from "../src/rendering/mod.ts";
-import { renderPlatePng } from "../src/rendering/png.ts";
-import config from "./testnet.json" with { type: "json" };
+import { renderPlateSvg } from "@/rendering/mod.ts";
+import { renderPlatePng } from "@/rendering/png-server.ts";
+import config from "@examples/testnet.json" with { type: "json" };
 const plate = { address: config.contracts.nft, suffix: "PLATES" };
 await Deno.mkdir("output", { recursive: true });
 await Deno.writeTextFile("output/plate.svg", renderPlateSvg(plate));

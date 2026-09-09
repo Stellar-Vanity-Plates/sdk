@@ -1,13 +1,17 @@
 /** Typed clients for the deployed Vanity Plates protocol. @module */
-export { createTreasuryAssetClients } from "./assets.ts";
-export type { TreasuryAssetClients } from "./assets.ts";
+export { createTreasuryAssetClients } from "@/contracts/assets.ts";
+export type { TreasuryAssetClients } from "@/contracts/assets.ts";
 import type { NetworkConfig } from "@colibri/core";
-import { type ClientOptions, ProtocolClient } from "./client.ts";
-export { assertCompatibleSpec, ProtocolClient } from "./client.ts";
-export type { ClientOptions, InvocationOptions, Spec } from "./client.ts";
-import nftSpec from "./specs/nft.json" with { type: "json" };
-import type { NftMethods } from "./generated/nft.ts";
-export type * from "./generated/nft.ts";
+import { type ClientOptions, ProtocolClient } from "@/contracts/client.ts";
+export { assertCompatibleSpec, ProtocolClient } from "@/contracts/client.ts";
+export type {
+  ClientOptions,
+  InvocationOptions,
+  Spec,
+} from "@/contracts/client.ts";
+import nftSpec from "@/contracts/specs/nft.json" with { type: "json" };
+import type { NftMethods } from "@/contracts/generated/nft.ts";
+export type * from "@/contracts/generated/nft.ts";
 /** Typed Colibri client for the nft contract. */
 export class NftClient extends ProtocolClient<NftMethods> {
   /** Creates a client without issuing any network request. */
@@ -15,9 +19,11 @@ export class NftClient extends ProtocolClient<NftMethods> {
     super(options, nftSpec.entries);
   }
 }
-import deployerSpec from "./specs/deployer.json" with { type: "json" };
-import type { DeployerMethods } from "./generated/deployer.ts";
-export type * from "./generated/deployer.ts";
+import deployerSpec from "@/contracts/specs/deployer.json" with {
+  type: "json",
+};
+import type { DeployerMethods } from "@/contracts/generated/deployer.ts";
+export type * from "@/contracts/generated/deployer.ts";
 /** Typed Colibri client for the deployer contract. */
 export class DeployerClient extends ProtocolClient<DeployerMethods> {
   /** Creates a client without issuing any network request. */
@@ -25,9 +31,11 @@ export class DeployerClient extends ProtocolClient<DeployerMethods> {
     super(options, deployerSpec.entries);
   }
 }
-import marketplaceSpec from "./specs/marketplace.json" with { type: "json" };
-import type { MarketplaceMethods } from "./generated/marketplace.ts";
-export type * from "./generated/marketplace.ts";
+import marketplaceSpec from "@/contracts/specs/marketplace.json" with {
+  type: "json",
+};
+import type { MarketplaceMethods } from "@/contracts/generated/marketplace.ts";
+export type * from "@/contracts/generated/marketplace.ts";
 /** Typed Colibri client for the marketplace contract. */
 export class MarketplaceClient extends ProtocolClient<MarketplaceMethods> {
   /** Creates a client without issuing any network request. */
@@ -35,9 +43,11 @@ export class MarketplaceClient extends ProtocolClient<MarketplaceMethods> {
     super(options, marketplaceSpec.entries);
   }
 }
-import treasurySpec from "./specs/treasury.json" with { type: "json" };
-import type { TreasuryMethods } from "./generated/treasury.ts";
-export type * from "./generated/treasury.ts";
+import treasurySpec from "@/contracts/specs/treasury.json" with {
+  type: "json",
+};
+import type { TreasuryMethods } from "@/contracts/generated/treasury.ts";
+export type * from "@/contracts/generated/treasury.ts";
 /** Typed Colibri client for the treasury contract. */
 export class TreasuryClient extends ProtocolClient<TreasuryMethods> {
   /** Creates a client without issuing any network request. */
@@ -45,9 +55,9 @@ export class TreasuryClient extends ProtocolClient<TreasuryMethods> {
     super(options, treasurySpec.entries);
   }
 }
-import rbacSpec from "./specs/rbac.json" with { type: "json" };
-import type { RbacMethods } from "./generated/rbac.ts";
-export type * from "./generated/rbac.ts";
+import rbacSpec from "@/contracts/specs/rbac.json" with { type: "json" };
+import type { RbacMethods } from "@/contracts/generated/rbac.ts";
+export type * from "@/contracts/generated/rbac.ts";
 /** Typed Colibri client for the rbac contract. */
 export class RbacClient extends ProtocolClient<RbacMethods> {
   /** Creates a client without issuing any network request. */

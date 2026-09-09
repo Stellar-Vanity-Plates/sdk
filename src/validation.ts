@@ -1,5 +1,5 @@
 import { StrKey } from "@colibri/core";
-import { VanityError } from "./errors.ts";
+import { VanityError } from "@/errors.ts";
 
 /** The two supported Stellar address types. */
 export type PlateKind = "account" | "contract";

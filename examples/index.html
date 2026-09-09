@@ -160,6 +160,25 @@
       overflow-wrap: anywhere;
       min-height: 42px;
     }
+    .custom-preview {
+      position: relative;
+      margin-top: 16px;
+    }
+    .custom-preview summary {
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+    .custom-preview input {
+      display: block;
+      width: 100%;
+      max-width: 640px;
+      margin-bottom: 14px;
+      font-family: monospace;
+    }
+    #custom-error {
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
     footer {
       margin-top: 55px;
       padding-top: 20px;
@@ -201,13 +220,18 @@
       <section class="workspace">
         <div
           class="controls"><div><label for="sample">Preview a plate</label><select id="sample"></select></div><span id="traits"></span></div>
+        <details
+          class="custom-preview"><summary>Preview your own address</summary>
+<label for="custom-address">Full G or C address</label><input id="custom-address" maxlength="56" autocomplete="off" spellcheck="false" />
+<label for="custom-suffix">Claimed ending · leave empty for an unconfigured G account</label><input id="custom-suffix" maxlength="55" autocomplete="off" spellcheck="false" />
+<button id="apply-custom">Preview address</button><p id="custom-error" role="status"></p></details>
         <div id="featured"></div>
         <div
           class="actions"><div><button id="svg">Download SVG ↗</button> <button id="png" class="primary">Download PNG ↗</button></div><span id="status" role="status">Loading SDK…</span></div>
       </section>
       <section>
         <h2>Identity in every detail.</h2>
-        <p>Address-derived lettering, insignias and rarity. These unfunded display fixtures show the animated finishes; motion follows your device preferences.</p>
+        <p>Address-derived lettering, insignias and rarity. These unfunded display fixtures use the same design as the web app. Hover to see the finishes move; motion follows your device preferences.</p>
         <div id="gallery"></div>
       </section>
       <section><h2>Find an ending. Locally.</h2><p>Search up to 20,000 salts against the Testnet protocol deployer. This demonstration makes no network requests and does not reserve or deploy an address.</p><label for="suffix">Desired ending · A–Z and 2–7</label><div class="controls" style="justify-content:flex-start"><input id="suffix" value="A" maxlength="55"><button id="farm" class="primary">Start search</button><button id="stop">Stop</button></div><div id="farm-status" role="status">Try a single character first.</div></section>
