@@ -17,6 +17,6 @@ makes no font requests.
 
 The no-relative-imports lint rule follows Colibri's MIT-licensed rule from
 `fazzatti/colibri` at ff21cb807ce9afc918d4d2e9dea7e5a70f55dcbc. Colibri, React,
-Playwright and Stellar SDK dependencies retain their own licenses. The webapp
-rendering fixtures belong to the same Vanity Plates project and are excluded
-from package publication.
+TanStack Query, Playwright and Stellar SDK dependencies retain their own
+licenses. The webapp rendering fixtures belong to the same Vanity Plates project
+and are excluded from package publication.

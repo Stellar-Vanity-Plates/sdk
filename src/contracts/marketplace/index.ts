@@ -291,6 +291,35 @@ export class Marketplace extends Contract {
   };
 
   /**
+   * Purchases a listing using a fixed fee credit and bounded VNTY input.
+   *
+   * # Arguments
+   * * `e` - Execution environment.
+   * * `buyer` - Authorizes payment and receives the NFT.
+   * * `contract_address` - Listed vanity address.
+   * * `expected_price` - Expected fee-inclusive listing price.
+   * * `payment` - Expected protocol fee, exact credit, maximum VNTY, and
+   * exclusive Unix deadline.
+   *
+   * # Errors
+   * Propagates all buy validation, escrow, settlement, and NFT transfer
+   * errors;
+   * Treasury additionally rejects expired payments, changed fees, exceeded
+   * limits,
+   * unavailable NAV, invalid shares, or failed maximum transfer/refund.
+   * Failure is atomic.
+   */
+  readonly buyWithLimit: MarketplaceMethod<"buy_with_limit"> = {
+    read: (methodArgs) =>
+      this.read({ method: ContractMethods.BuyWithLimit, methodArgs }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.BuyWithLimit,
+      }),
+  };
+
+  /**
    * Transfers an NFT into escrow and opens a sale at a fixed price.
    *
    * # Arguments
@@ -461,6 +490,38 @@ export class Marketplace extends Contract {
       this.invoke({
         ...args,
         method: ContractMethods.GetSellerSaleCount,
+      }),
+  };
+
+  /**
+   * Switches Testnet settlement after a matching Treasury migration.
+   *
+   * Requires Admin authorization, the Testnet network and a paused
+   * marketplace.
+   * Existing listings keep their prices, fees and escrow and settle in the new
+   * currency without relisting. Rejects non-SAC or incompatible assets.
+   *
+   * # Arguments
+   * * `e` - Contract environment.
+   * * `asset` - New settlement Stellar Asset Contract matching the Treasury.
+   * * `operator` - Authorized administrator.
+   *
+   * # Errors
+   * Rejects other networks, missing authorization, unpaused state, or an
+   * unchanged, incompatible or non-SAC settlement asset.
+   */
+  readonly migrateTestnetSettlement: MarketplaceMethod<
+    "migrate_testnet_settlement"
+  > = {
+    read: (methodArgs) =>
+      this.read({
+        method: ContractMethods.MigrateTestnetSettlement,
+        methodArgs,
+      }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.MigrateTestnetSettlement,
       }),
   };
 

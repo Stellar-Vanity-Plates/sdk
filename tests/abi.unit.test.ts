@@ -29,7 +29,7 @@ type Entry = {
   };
   udt_enum_v0?: { name: string; cases: { value: number }[] };
 };
-Deno.test("all 111 embedded callable methods encode representative values with the native ABI", () => {
+Deno.test("all 120 embedded callable methods encode representative values with the native ABI", () => {
   let count = 0;
   for (
     const spec of [
@@ -99,5 +99,5 @@ Deno.test("all 111 embedded callable methods encode representative values with t
       count++;
     }
   }
-  assertEquals(count, 111);
+  assertEquals(count, 120);
 });

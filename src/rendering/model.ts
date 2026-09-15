@@ -1,4 +1,4 @@
-import { StrKey } from "@colibri/core";
+import { StrKey } from "@colibri/core/strkey";
 import { parseSuffixLength } from "@/accounts/index.ts";
 import { abbreviateAddress, type PlateKind, plateKind } from "@/validation.ts";
 

@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/Stellar-Vanity-Plates/webapp",
+  "commit": "62277ed607707bc80155fa16de3fe1489d517805",
+  "reviewedAt": "2026-09-15",
+  "sdkVersion": "0.1.0",
+  "purpose": "SDK-backed consumer integration snapshot; not the independent artwork baseline.",
+  "files": {
+    "deno.json": "cfb0dc01581719dd6aaea1ac76a1bfe5bc95d8d82073828738799a5cc9a6fec7",
+    "scripts/build-sdk-styles.ts": "d267a07ddd02b6e716c8e356870cae18ce1f0c0e9f240eec4bdfa61199854656",
+    "public/sdk-plate-layout.css": "ab831c2d5e1234d95e57aee12720641738caa2d269d7a3a6611ee8d95cab4f64",
+    "src/components/atoms/sdk-plate.tsx": "93525c0d77e12510e09ea875e87276d8a8e46edc660b4fee4760f2045ce0ff7c",
+    "src/components/molecules/account-plate.tsx": "454cb9ae4ffd9594676f8307c3b0ac503b9fdde75db874982b597d4a1fa1f5af",
+    "src/components/molecules/contract-plate.tsx": "d12d70bd510084566b1b17903d5d8f38325876f002684720e24aba1ea70e9b29",
+    "src/browser/ui/sdk-plate-markup.ts": "290f45f3b4b0b174f29275e1796bd03c273423aad91233f75d61c4692f4fa439",
+    "src/browser/account-plates/plate-appearance.ts": "f3c4e1f48a8f0f82077c056050d6e18d7a1d414f98f0f7f5c4fd7cc7fd1fec4b",
+    "src/browser/contract-plates/plate-finishes.ts": "8591ab631444c000ffa56dded8ab1d8de98d0c220d209d1c4f38cdd963e480b4",
+    "src/browser/contract-plates/plate-traits.ts": "b1129d90186b043b688055bdbc271f39a8edacef508d60462fa7d8e18eda37e8",
+    "src/browser/ui/plate-insignia.tsx": "1ec9eccc7d39da9aafc3787e5ff89e2bf4d453e81d79d724d7b133c1310653c2",
+    "src/components/atoms/plate-insignia.tsx": "b18b62fdc00a1a83adfb0736ff7d457c5f191ea533d530177723f4ebb3a951be",
+    "src/domain/account-plate-rarity.ts": "4053b5a0960a8aa0411beed71a102c3509edaef9151b90ef1cc873c6ed7e0563",
+    "src/domain/contract-plate-traits.ts": "03dec20e74c40ca1718a5994a51ba6ef245822d84ca03a39b29551c790ac0765"
+  }
+}

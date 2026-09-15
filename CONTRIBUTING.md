@@ -199,9 +199,9 @@ is recorded in the manifest; subsequent revisions are tracked in Git.
 ## Canonical appearance
 
 The webapp's current Clubhouse G/C plates define the design. Do not redesign or
-approximate a plate in an adapter. `renderPlateHtml` owns the markup, with
-extracted app CSS and embedded canonical fonts. SVG wraps that composition in
-foreignObject; both PNG paths render that same composition in a browser. Keep
+approximate a plate in an adapter. `renderResolvedPlateHtml` owns the markup,
+with extracted app CSS and embedded canonical fonts. SVG wraps that composition
+in foreignObject; both PNG paths render that same composition in a browser. Keep
 the model pure.
 
 The independent app components and original styles under
@@ -213,15 +213,21 @@ SDK test pass.
 Before releasing a rendering change, fetch the webapp's staging ref, then run:
 
 ```sh
-deno task check:webapp /path/to/webapp origin/staging
+deno task check:webapp /path/to/webapp origin/staging --consumer
 ```
 
-If sources changed, review the app changes, deliberately refresh the reference,
-regenerate with `deno task generate:styles`, and rerun parity tests. The check
-fails on any changed source; it never silently updates golden expectations. CI
-compares against the pinned reference without requiring access to the private
-webapp repository. The explicit source check catches changes after that
-snapshot.
+Staging now consumes SDK 0.1.0 for its real-address artwork. The `--consumer`
+check pins those adapter, trait and stylesheet-build inputs in
+`tests/reference/webapp-consumer.json`. A hash change requires reviewing the
+consumer integration; it cannot regenerate visual expectations. Without that
+flag, the command retains the original independent-source comparison against
+`webapp.json` (supply its original commit as the ref).
+
+Keep the frozen pre-SDK components for independent pixel comparisons. Replacing
+them with today's SDK-backed wrappers would make the test compare the SDK to
+itself. A deliberate future artwork change requires a separately reviewed,
+independent design reference and a complete parity run. Neither command updates
+fixtures automatically; both fail on missing or changed inputs.
 
 Visual tests require zero differing pixels against the original app components,
 using the same browser, platform and rendering path. They cover G/C, every
@@ -255,7 +261,8 @@ publication. Pull requests, feature branches and manual dispatch only run
 checks. To release:
 
 1. Set `version` in `deno.json` to the intended unpublished version and review
-   the public API and release changes. The first staging version is `0.1.0`.
+   the public API and release changes. The next candidate is `0.2.0`; include
+   migration notes for React style installation.
 2. Run `deno task check:publish` locally and merge the reviewed change to `main`
    after CI passes. JSR must link `@vanity-plates/sdk` to this GitHub
    repository.
@@ -275,3 +282,26 @@ version.
 
 The workflow gates publication. Required checks for merging are configured
 separately in GitHub branch protection or repository rulesets.
+
+## Consumer performance
+
+`deno task check:bundles` imports symbols through the targets of the public
+export map, builds complete single-file minified browser bundles with Deno
+2.9.6, and checks both raw and gzip level-9 limits. The resulting
+`output/bundle-sizes.json` excludes external source maps. Budgets live in
+`tools/quality/bundles.ts`; do not raise them without measuring and documenting
+why a public capability requires the increase. Shared asset size is reported
+separately and is not included in the resolved-renderer number.
+
+Keep `/rendering/local` free of font assets, RPC clients and browser
+registration side effects. TanStack Query is allowed only in the React layer.
+Address-based `Plate` rendering must reuse `usePlate`, which owns neither
+transport nor a handwritten cache. Test synchronous cache hits, in-flight
+deduplication, explicit-data precedence, network/collection isolation,
+refresh/failure behavior and per-request SSR. New examples must install CSS
+once. Public contract snapshots live in
+`tests/fixtures/contract-specs/<name>.json`, with dated provenance in
+`tests/fixtures/protocol-specs.json`. Regeneration reads these snapshots without
+fetching a moving deployment or importing the old generated bindings as its own
+source of truth. Raw snapshots and provenance are development fixtures; only the
+generated runtime specifications are published.

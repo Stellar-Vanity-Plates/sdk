@@ -781,6 +781,36 @@ export type GetCatalogConfigInput = Record<string, never>;
 export type GetCatalogConfigOutput = CatalogConfig;
 
 /**
+ * Reserves a vanity address using a fixed fee credit and bounded VNTY
+ * payment.
+ *
+ * # Arguments
+ * * `e` - Execution environment.
+ * * `recipient` - Receives the reserved NFT and pays unless a payer is
+ * specified.
+ * * `contract_address` - Undeployed vanity address to reserve.
+ * * `suffix` - Validated plate ending.
+ * * `payment` - Expected fee, exact credit, maximum VNTY, and exclusive Unix
+ * deadline.
+ *
+ * # Errors
+ * Propagates reservation validation, occupied-address, authorization, and
+ * catalog errors.
+ * Treasury rejects expired payments, changed fees, exceeded limits,
+ * unavailable NAV,
+ * invalid shares, or failed maximum transfer/refund. Failure is atomic.
+ */
+export type ReserveWithLimitInput = {
+  recipient: SorobanType.Input.Address;
+  contract_address: SorobanType.Input.Address;
+  suffix: SorobanType.Input.String;
+  payment: VntyPaymentLimitArgs;
+};
+
+/** Decoded return value of reserve_with_limit. */
+export type ReserveWithLimitOutput = null;
+
+/**
  * Returns the newest token ever minted for a vanity contract address.
  *
  * Unlike `get_token_id`, this historical lookup also succeeds when the
@@ -992,6 +1022,38 @@ export type MigrateCatalogConfigInput = {
 export type MigrateCatalogConfigOutput = null;
 
 /**
+ * Reserves a vanity address using a fixed fee credit and bounded VNTY
+ * payment.
+ *
+ * # Arguments
+ * * `e` - Execution environment.
+ * * `payer` - Authorizes and pays the fee.
+ * * `recipient` - Receives the reserved NFT and pays unless a payer is
+ * specified.
+ * * `contract_address` - Undeployed vanity address to reserve.
+ * * `suffix` - Validated plate ending.
+ * * `payment` - Expected fee, exact credit, maximum VNTY, and exclusive Unix
+ * deadline.
+ *
+ * # Errors
+ * Propagates reservation validation, occupied-address, authorization, and
+ * catalog errors.
+ * Treasury rejects expired payments, changed fees, exceeded limits,
+ * unavailable NAV,
+ * invalid shares, or failed maximum transfer/refund. Failure is atomic.
+ */
+export type ReserveForWithLimitInput = {
+  payer: SorobanType.Input.Address;
+  recipient: SorobanType.Input.Address;
+  contract_address: SorobanType.Input.Address;
+  suffix: SorobanType.Input.String;
+  payment: VntyPaymentLimitArgs;
+};
+
+/** Decoded return value of reserve_for_with_limit. */
+export type ReserveForWithLimitOutput = null;
+
+/**
  * Reserves for another recipient while burning the payer's reward shares
  * toward the fee.
  *
@@ -1069,6 +1131,41 @@ export type SetReservationDurationInput = {
 
 /** Decoded return value of set_reservation_duration. */
 export type SetReservationDurationOutput = null;
+
+/**
+ * Reserves a vanity address using a fixed fee credit and bounded VNTY
+ * payment.
+ *
+ * # Arguments
+ * * `e` - Execution environment.
+ * * `recipient` - Receives the reserved NFT and pays unless a payer is
+ * specified.
+ * * `contract_address` - Undeployed vanity address to reserve.
+ * * `suffix` - Validated plate ending.
+ * * `catalog_price` - Administrator-approved premium, paid separately in the
+ * fee asset.
+ * * `payment` - Expected fee, exact credit, maximum VNTY, and exclusive Unix
+ * deadline.
+ * * `operator` - RBAC administrator coauthorizing the catalog price.
+ *
+ * # Errors
+ * Propagates reservation validation, occupied-address, authorization, and
+ * catalog errors.
+ * Treasury rejects expired payments, changed fees, exceeded limits,
+ * unavailable NAV,
+ * invalid shares, or failed maximum transfer/refund. Failure is atomic.
+ */
+export type ReserveCatalogWithLimitInput = {
+  recipient: SorobanType.Input.Address;
+  contract_address: SorobanType.Input.Address;
+  suffix: SorobanType.Input.String;
+  catalog_price: SorobanType.Input.I128;
+  payment: VntyPaymentLimitArgs;
+  operator: SorobanType.Input.Address;
+};
+
+/** Decoded return value of reserve_catalog_with_limit. */
+export type ReserveCatalogWithLimitOutput = null;
 
 /**
  * Reserves a catalog address while burning reward shares toward the protocol
@@ -1219,6 +1316,10 @@ export type NftMethodMap = {
     input: GetCatalogConfigInput;
     output: GetCatalogConfigOutput;
   };
+  reserve_with_limit: {
+    input: ReserveWithLimitInput;
+    output: ReserveWithLimitOutput;
+  };
   get_latest_token_id: {
     input: GetLatestTokenIdInput;
     output: GetLatestTokenIdOutput;
@@ -1251,6 +1352,10 @@ export type NftMethodMap = {
     input: MigrateCatalogConfigInput;
     output: MigrateCatalogConfigOutput;
   };
+  reserve_for_with_limit: {
+    input: ReserveForWithLimitInput;
+    output: ReserveForWithLimitOutput;
+  };
   reserve_for_with_shares: {
     input: ReserveForWithSharesInput;
     output: ReserveForWithSharesOutput;
@@ -1262,6 +1367,10 @@ export type NftMethodMap = {
   set_reservation_duration: {
     input: SetReservationDurationInput;
     output: SetReservationDurationOutput;
+  };
+  reserve_catalog_with_limit: {
+    input: ReserveCatalogWithLimitInput;
+    output: ReserveCatalogWithLimitOutput;
   };
   reserve_catalog_with_shares: {
     input: ReserveCatalogWithSharesInput;
@@ -1440,6 +1549,37 @@ export const VanityClaimStatus: SorobanType.Factory<VanityClaimStatus> =
     .Custom.fromSpec<VanityClaimStatus>(
       () => NftSpec,
       "VanityClaimStatus",
+    );
+
+/**
+ * Signed fee coverage intent. All amounts use their token's atomic units.
+ */
+export type VntyPaymentLimit = SorobanType.Custom<{
+  kind: "struct";
+  fields: {
+    /** Exclusive execution deadline in Unix seconds. */
+    deadline: SorobanType.U64;
+    /** Expected complete protocol fee; prevents an unapproved cash increase. */
+    fee_amount: SorobanType.I128;
+    /** Exact fee-asset credit purchased by burning VNTY. */
+    fee_credit: SorobanType.I128;
+    /**
+     * Maximum VNTY transferred temporarily, with unused shares refunded
+     * atomically.
+     */
+    max_shares: SorobanType.I128;
+  };
+}>;
+
+/** Raw or validated values accepted by the VntyPaymentLimit factory. */
+export type VntyPaymentLimitArgs = SorobanType.Input.Custom<VntyPaymentLimit>;
+
+/** Validate, encode and decode VntyPaymentLimit using its contract declaration. */
+export const VntyPaymentLimit: SorobanType.Factory<VntyPaymentLimit> =
+  SorobanType
+    .Custom.fromSpec<VntyPaymentLimit>(
+      () => NftSpec,
+      "VntyPaymentLimit",
     );
 
 // -----------------------------------------------------------------------------

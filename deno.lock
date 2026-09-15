@@ -18,6 +18,7 @@
     "npm:@alperlabs/crap4ts@0.2.1": "0.2.1",
     "npm:@stellar/stellar-sdk@17.0.1": "17.0.1",
     "npm:@stellar/stellar-sdk@^17.0.1": "17.0.1",
+    "npm:@tanstack/react-query@5.102.8": "5.102.8_react@18.3.1",
     "npm:@types/pngjs@6.0.5": "6.0.5",
     "npm:@types/react-dom@18.3.5": "18.3.5_@types+react@18.3.18",
     "npm:@types/react-test-renderer@18.3.1": "18.3.1",
@@ -139,6 +140,16 @@
         "uint8array-extras"
       ],
       "bin": true
+    },
+    "@tanstack/query-core@5.102.8": {
+      "integrity": "sha512-ZNjkJ33CqvPNec/6lZBnHqLc3EVGPZ9ySLhYahU9TcuRFdmwXewuj0c4hwSWcGHqEUwcSrKeZ+oGcvPBqXcQcg=="
+    },
+    "@tanstack/react-query@5.102.8_react@18.3.1": {
+      "integrity": "sha512-TYBea4OuXWD7MhaSHq069TWbFe7rcwWN6kzT7JF0OKi1K6c1gTv2IzD6A6ExJsCMozdkqBWeuIUZmu4KQg0O5A==",
+      "dependencies": [
+        "@tanstack/query-core",
+        "react"
+      ]
     },
     "@types/json-schema@7.0.15": {
       "integrity": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="
@@ -519,6 +530,7 @@
       "jsr:@std/testing@1.0.19",
       "npm:@alperlabs/crap4ts@0.2.1",
       "npm:@stellar/stellar-sdk@17.0.1",
+      "npm:@tanstack/react-query@5.102.8",
       "npm:@types/pngjs@6.0.5",
       "npm:@types/react-dom@18.3.5",
       "npm:@types/react-test-renderer@18.3.1",

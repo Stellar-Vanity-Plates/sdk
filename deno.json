@@ -1,6 +1,6 @@
 {
   "name": "@vanity-plates/sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "exports": {
     ".": "./index.ts",
@@ -17,7 +17,10 @@
     "./contracts/marketplace": "./src/contracts/marketplace/index.ts",
     "./contracts/treasury": "./src/contracts/treasury/index.ts",
     "./contracts/rbac": "./src/contracts/rbac/index.ts",
-    "./colibri": "./src/colibri.ts"
+    "./colibri": "./src/colibri.ts",
+    "./rendering/local": "./src/rendering/local/index.ts",
+    "./rendering/styles": "./src/rendering/styles/index.ts",
+    "./react/styles": "./src/react/styles/index.tsx"
   },
   "imports": {
     "@colibri/core": "jsr:@colibri/core@1.1.1",
@@ -48,7 +51,11 @@
     "typescript": "npm:typescript@5.9.3",
     "react-test-renderer": "npm:react-test-renderer@18.3.1",
     "@types/react-test-renderer": "npm:@types/react-test-renderer@18.3.1",
-    "happy-dom": "npm:happy-dom@20.14.5"
+    "happy-dom": "npm:happy-dom@20.14.5",
+    "@colibri/core/strkey": "jsr:@colibri/core@1.1.1/strkey",
+    "@colibri/core/errors": "jsr:@colibri/core@1.1.1/errors",
+    "@colibri/identicon/svg": "jsr:@colibri/identicon@1.1.0/svg",
+    "@tanstack/react-query": "npm:@tanstack/react-query@5.102.8"
   },
   "compilerOptions": {
     "strict": true,
@@ -69,7 +76,7 @@
     "check": "deno fmt --check && deno lint && deno run --allow-run tools/check-exports.ts check && deno check examples/*.ts tools/*.ts tools/lint/*.ts tools/quality/*.ts",
     "test": "deno task test:architecture && deno task test:unit && deno task test:integration && deno task test:tooling",
     "docs": "deno run --allow-run tools/check-exports.ts docs && deno task check:docs",
-    "generate": "deno run --allow-read=src/contracts --allow-write=src/contracts --allow-run tools/generate-clients.ts",
+    "generate": "deno run --allow-read=src/contracts,tests/fixtures/contract-specs --allow-write=src/contracts --allow-run tools/generate-clients.ts",
     "build:preview": "deno bundle --platform browser --minify --code-splitting --outdir dist examples/browser.ts",
     "preview": "deno task build:preview && deno run --allow-net=127.0.0.1:4192 --allow-read=examples/index.html,dist tools/serve-preview.ts",
     "test:live": "deno run --allow-net=soroban-testnet.stellar.org examples/read-protocol.ts",
@@ -86,7 +93,7 @@
     "check:consumers": "deno run --allow-read --allow-write --allow-run tools/check-consumers.ts",
     "test:svg": "deno test --allow-read tests/svg",
     "fixtures:svg:update": "deno run --allow-read=tests/fixtures/svg --allow-write=tests/fixtures/svg tools/update-svg-fixtures.ts",
-    "check:generated": "deno run --allow-read=src/contracts --allow-run tools/generate-clients.ts --check",
+    "check:generated": "deno run --allow-read=src/contracts,tests/fixtures/contract-specs --allow-run tools/generate-clients.ts --check",
     "test:unit:coverage": "deno test --allow-read --allow-env --allow-sys --ignore=tests/architecture,tests/browser,tests/integration,tests/tooling,tests/consumers,tests/reference --coverage=coverage/unit --clean --coverage-raw-data-only tests",
     "coverage:report": "deno coverage --lcov --exclude='tests/|tools/' --output=coverage/lcov.info coverage/unit coverage/integration-rpc coverage/integration-browser && deno coverage --html --exclude='tests/|tools/' coverage/unit coverage/integration-rpc coverage/integration-browser",
     "check:coverage": "deno run --allow-read --allow-env tools/check-coverage.ts",
@@ -101,7 +108,8 @@
     "coverage:unit:report": "deno coverage --lcov --exclude='tests/|tools/' --output=coverage/unit.lcov coverage/unit",
     "check:publish": "deno publish --dry-run --allow-dirty --frozen-lockfile",
     "release:plan": "deno run --allow-read=deno.json --allow-run=git --allow-net=jsr.io --allow-env=GITHUB_OUTPUT --allow-write tools/plan-release.ts",
-    "check:consumers:published": "deno run --allow-read --allow-write --allow-run tools/check-consumers.ts --published"
+    "check:consumers:published": "deno run --allow-read --allow-write --allow-run tools/check-consumers.ts --published",
+    "check:bundles": "deno run --allow-read --allow-write --allow-run tools/check-bundles.ts"
   },
   "publish": {
     "include": [

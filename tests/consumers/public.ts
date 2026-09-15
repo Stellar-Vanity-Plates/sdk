@@ -1,3 +1,9 @@
+import {
+  createPlateAppearance,
+  renderResolvedPlateHtml,
+} from "@consumer/sdk/rendering/local";
+import { plateSharedCss } from "@consumer/sdk/rendering/styles";
+import { PlateStyles } from "@consumer/sdk/react/styles";
 // Preserved consumer of public subpaths. Aliases are generated from exports in
 // the isolated fixture config, never from repository-private source shortcuts.
 import {
@@ -32,7 +38,13 @@ import {
 import { renderPlatePng as browserPng } from "@consumer/sdk/png";
 import { renderPlatePng as serverPng } from "@consumer/sdk/png/server";
 import { registerVanityPlate } from "@consumer/sdk/web";
-import { Plate } from "@consumer/sdk/react";
+import {
+  createPlateQueryClient,
+  Plate,
+  plateQueryOptions,
+  usePlate,
+  VanityProvider,
+} from "@consumer/sdk/react";
 import { Nft } from "@consumer/sdk/contracts/nft";
 import {
   ColibriError,
@@ -188,3 +200,45 @@ function countOnlyInputs() {
   Plate({ address, suffix: "ABC" });
 }
 void countOnlyInputs;
+
+const localHtml = renderResolvedPlateHtml(plate, {
+  inline: true,
+  variant: "compact",
+});
+ensure(
+  localHtml.startsWith("<span") && !localHtml.includes("<div"),
+  "Inline markup is not phrasing content.",
+);
+ensure(!localHtml.includes("@font-face"), "Local renderer embeds assets.");
+ensure(
+  createPlateAppearance(address).identiconUrl.startsWith("data:image/svg+xml,"),
+  "Missing canonical insignia.",
+);
+const shared = renderToStaticMarkup(createElement(PlateStyles));
+ensure(shared.includes(plateSharedCss), "SSR corrupts the shared stylesheet.");
+ensure(
+  !renderToStaticMarkup(createElement(Plate, { data: plate })).includes(
+    "@font-face",
+  ),
+  "React duplicates fonts.",
+);
+
+const queryClient = createPlateQueryClient();
+await queryClient.fetchQuery(plateQueryOptions(plate));
+function HookConsumer() {
+  const result = usePlate({ data: plate });
+  ensure(
+    result.status === "success" &&
+      result.data?.suffixLength === plate.suffixLength,
+    "Explicit hook data is not synchronous.",
+  );
+  return createElement(Plate, { data: result.data });
+}
+const queryMarkup = renderToStaticMarkup(
+  createElement(VanityProvider, { queryClient }, createElement(HookConsumer)),
+);
+ensure(
+  queryMarkup.includes(address.slice(-3)),
+  "Provider/hook public consumer failed.",
+);
+queryClient.clear();

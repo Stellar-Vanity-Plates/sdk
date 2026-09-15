@@ -60,6 +60,20 @@ Deno.test("architecture: deliberately invalid packages fail with actionable rule
     rule: string;
   }[] = [
     {
+      name: "core excludes the React query framework",
+      file: "src/validation.ts",
+      source:
+        'import { QueryClient } from "@tanstack/react-query"; export { QueryClient };',
+      rule: "external-boundary",
+    },
+    {
+      name: "image rendering excludes the React query framework",
+      file: "src/rendering/test.ts",
+      source:
+        'import { QueryClient } from "@tanstack/react-query"; export { QueryClient };',
+      rule: "external-boundary",
+    },
+    {
       name: "shared Colibri module rejects optional dependencies",
       file: "src/colibri.ts",
       source: 'export { chromium } from "playwright";',

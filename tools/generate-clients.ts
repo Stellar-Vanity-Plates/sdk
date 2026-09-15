@@ -1,26 +1,18 @@
 // Colibri owns ABI interpretation and client generation. Each contract owns its
 // binding files; shared Colibri exports live in the SDK-wide colibri module.
 import { generateBindings } from "@colibri/contract-bindings";
-import { NftSpec } from "@/contracts/nft/constants.ts";
-import { DeployerSpec } from "@/contracts/deployer/constants.ts";
-import { MarketplaceSpec } from "@/contracts/marketplace/constants.ts";
-import { TreasurySpec } from "@/contracts/treasury/constants.ts";
-import { RbacSpec } from "@/contracts/rbac/constants.ts";
+import { Spec } from "@colibri/core";
 
 if (Deno.args.some((arg) => arg !== "--check") || Deno.args.length > 1) {
   throw new Error("Usage: generate-clients.ts [--check]");
 }
 const check = Deno.args.includes("--check");
 
-for (
-  const [name, spec] of [
-    ["nft", NftSpec],
-    ["deployer", DeployerSpec],
-    ["marketplace", MarketplaceSpec],
-    ["treasury", TreasurySpec],
-    ["rbac", RbacSpec],
-  ] as const
-) {
+for (const name of ["nft", "deployer", "marketplace", "treasury", "rbac"]) {
+  const entries = JSON.parse(
+    await Deno.readTextFile(`tests/fixtures/contract-specs/${name}.json`),
+  ) as string[];
+  const spec = new Spec(entries);
   const className = name[0].toUpperCase() + name.slice(1);
   const plan = generateBindings(spec, { className });
   const directory = `src/contracts/${name}`;

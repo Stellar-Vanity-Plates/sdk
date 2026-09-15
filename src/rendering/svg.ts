@@ -1,7 +1,7 @@
 import { type PlateInput, resolvePlateInput } from "@/rendering/resolve.ts";
 /** Canonical webapp plate rendering and browser-compatible SVG export. @module */
 import { createPlateModel } from "@/rendering/model.ts";
-import { escapeMarkup, renderResolvedPlateHtml } from "@/rendering/html.ts";
+import { escapeMarkup, renderPlateHtml } from "@/rendering/html.ts";
 import { InvalidPlateWidthError, InvalidSvgIdPrefixError } from "@/errors.ts";
 /** SVG output settings. */
 export interface SvgOptions {
@@ -53,7 +53,7 @@ export async function renderPlateSvg(
   const resolved = await resolvePlateInput(input);
   const model = createPlateModel(resolved);
   const { height, plateWidth: innerWidth, padding } = plateImageFrame(width);
-  const html = renderResolvedPlateHtml(resolved, { animated: options.animated })
+  const html = (await renderPlateHtml(resolved, { animated: options.animated }))
     .replace(
       /<style>([\s\S]*?)<\/style>/g,
       (_match, css: string) => `<style>/*<![CDATA[*/${css}/*]]>*/</style>`,

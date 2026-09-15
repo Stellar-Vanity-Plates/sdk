@@ -1,4 +1,4 @@
-import { StrKey } from "@colibri/core";
+import { StrKey } from "@colibri/core/strkey";
 import { InvalidPlateAddressError, InvalidSuffixError } from "@/errors.ts";
 
 /** The two supported Stellar address types. */

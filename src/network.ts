@@ -1,4 +1,4 @@
-import { NetworkConfig } from "@colibri/core";
+import type { NetworkConfig } from "@colibri/core";
 import {
   ConflictingNetworkSourceError,
   InvalidRpcUrlError,
@@ -45,6 +45,7 @@ export async function resolveNetwork(
     ) {
       throw new RpcNetworkDiscoveryError();
     }
+    const { NetworkConfig } = await import("@colibri/core");
     return NetworkConfig.CustomNet({
       networkPassphrase: body.result.passphrase,
       rpcUrl: options.rpcUrl,

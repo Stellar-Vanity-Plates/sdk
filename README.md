@@ -79,7 +79,9 @@ Set the host width in CSS; the component preserves the plate's aspect ratio. Set
 `nft-contract-id` overrides the collection. A Colibri configuration can also be
 assigned to the element's `networkConfig` property. Pending lookups abbreviate
 and set `aria-busy`; failures dispatch `plate-error` while preserving the
-fallback. Without `animated`, the plate stays still even on hover.
+fallback. Without `animated`, the plate stays still even on hover. Use
+`variant="compact"` or `variant="picker"` and the `inline` attribute for the
+same presentation modes as React. Unknown variant attributes use display.
 
 ### React
 
@@ -91,6 +93,10 @@ animations.
 
 ```tsx
 import { Plate, type PlateProps } from "@vanity-plates/sdk/react";
+import { PlateStyles } from "@vanity-plates/sdk/react/styles";
+
+// Mount once at the document root, including for SSR.
+export const AppPlateStyles = () => <PlateStyles />;
 
 export function AccountBadge(
   props: PlateProps,
@@ -105,14 +111,149 @@ export function AccountBadge(
 }
 ```
 
-`AccountBadge` above is an application example wrapping `Plate`, not another SDK
-component. Pass `rpcUrl` or `networkConfig` to load settings automatically,
-`suffixLength` for a local count, or just `address` for abbreviation. SSR and
-pending lookups abbreviate; offline counts render immediately. Invalid addresses
-and lookup failures reach your application's React error boundary. React 18 is
-the verified adapter target. Deno SSR requires `--allow-env=NODE_ENV`. React and
-headless Chromium are optional entry points and stay outside core validation and
-farming imports.
+`AccountBadge` is an application wrapper around the single SDK `Plate`
+component. Pass `data={{ address, suffixLength }}` to render immediately and
+bypass all network options, or pass an address and let the SDK load and share
+its metadata. `data={{ address }}` explicitly selects the standard abbreviated
+display. The owner's configuration is never inferred from the address itself.
+
+### Shared React state and custom interfaces
+
+`Plate` uses `usePlate` internally. Both use TanStack Query: concurrent
+instances share an in-flight lookup, fresh cached data is available on the first
+render, and stale data remains visible during background refresh. Explicit
+`data` does not overwrite the shared on-chain record. Missing owner metadata is
+a successful, cacheable abbreviated result; RPC failures remain errors.
+
+Use `VanityProvider` to configure a network once. It creates a stable, isolated
+query client, or accepts your existing TanStack `queryClient`. No application
+fetching or plate-state management is required. Without either provider, browser
+components share one lazily created SDK client; pass `networkConfig` or `rpcUrl`
+directly in that case. An enclosing TanStack `QueryClientProvider` is also
+supported. With no network configuration, address/count inputs render locally
+and do not make requests. A component's network override replaces the inherited
+network source; its NFT collection can be overridden independently.
+
+<!-- deno-check -->
+
+```tsx
+import { Plate, usePlate, VanityProvider } from "@vanity-plates/sdk/react";
+import { NetworkConfig } from "@vanity-plates/sdk/colibri";
+
+const network = NetworkConfig.TestNet();
+
+export function Collection({ address }: { address: string }) {
+  return (
+    <VanityProvider network={network}>
+      <Plate address={address} animated />
+      <Plate address={address} variant="compact" />
+      <Plate data={{ address, suffixLength: 6 }} inline />
+      <ConfigurationStatus address={address} />
+    </VanityProvider>
+  );
+}
+
+function ConfigurationStatus({ address }: { address: string }) {
+  const { data, error, isPending, isFetching, refetch } = usePlate({ address });
+  if (isPending) return <span>Loading plate</span>;
+  if (error) return <span role="alert">{error.message}</span>;
+  return (
+    <button
+      disabled={isFetching}
+      onClick={() => {
+        void refetch().catch(() => {});
+      }}
+    >
+      {data?.suffixLength ?? "No ending configured"} · Refresh
+    </button>
+  );
+}
+```
+
+SDK-created clients use a 30-second freshness window and evict inactive browser
+entries after five minutes. Queries refetch on stale mounts, window focus and
+reconnection through TanStack's lifecycle. Automatic retries are disabled;
+`refetch()` rejects on failure. A supplied query client controls its own
+defaults. Cache keys include address, RPC endpoint, network passphrase when
+provided, and NFT collection override. Appearance options do not create
+duplicate lookups. A bare RPC URL is kept in a separate namespace from an
+explicit network config.
+
+For custom UI, `usePlate` returns `data`, `status`, `error`, `isPending`,
+`isFetching` and `refetch`. `Plate` forwards lookup failures to the nearest
+React error boundary. React 18 is the verified adapter target. Deno SSR requires
+`--allow-env=NODE_ENV`. React and TanStack stay outside core validation, farming
+and image-generation entrypoints.
+
+### Server rendering, prefetching and invalidation
+
+Create a client **per server request**, using `createPlateQueryClient()`, and
+pass it to `VanityProvider`. `plateQueryOptions` is the shared key/fetch
+definition for prefetching and TanStack hydration. SSR with explicit or
+prefetched data renders immediately; cold SSR abbreviates without fetching
+during render. Hydrate the same snapshot before the first client render. There
+is no process-wide server singleton. Browser cache sharing is scoped to the
+loaded SDK module instance; separate bundled SDK copies do not automatically
+share a cache.
+
+<!-- deno-check -->
+
+```ts
+import {
+  createPlateQueryClient,
+  plateQueryOptions,
+} from "@vanity-plates/sdk/react";
+import { NetworkConfig } from "@vanity-plates/sdk/colibri";
+
+export async function preparePlate(address: string) {
+  const queryClient = createPlateQueryClient();
+  const input = { address, networkConfig: NetworkConfig.TestNet() };
+  await queryClient.fetchQuery(plateQueryOptions(input));
+  return { queryClient, input }; // Pass this client to VanityProvider for this request.
+}
+```
+
+After changing an ending, invalidate its key on the **same** client used by your
+application, or call the mounted hook's `refetch`. Invalidation refreshes active
+observers. This is separate from submitting a protocol transaction; the SDK
+never automatically resubmits a write. Image exports and the web component
+retain their independent framework-free lookup behavior and do not share React's
+cache.
+
+### Compact plates and inline labels
+
+`Plate` accepts `variant="display"` (the default), `variant="compact"` and
+`variant="picker"`. Compact scales the screws; picker simplifies the heading
+while retaining the full address. `inline` uses phrasing elements suitable for a
+paragraph. Rarity, lettering, colors and insignia remain address-derived.
+
+<!-- deno-check -->
+
+```tsx
+import { Plate } from "@vanity-plates/sdk/react";
+
+export function PlateMention({ address }: { address: string }) {
+  return (
+    <p>
+      Owned by{" "}
+      <Plate
+        data={{ address, suffixLength: 6 }}
+        variant="compact"
+        inline
+        animated
+      />
+    </p>
+  );
+}
+```
+
+Mount `PlateStyles` once for the entire document, or emit the strings from
+`/rendering/styles` into a CSS file at build time and load it once. This avoids
+shipping fonts in both JavaScript and a generated stylesheet. `PlateStyles`
+accepts a CSP `nonce`; a nonce on this tag does not authorize the artwork's
+inline style attributes. The web component shares fonts once per document and
+uses one constructed stylesheet across its shadow roots, with a legacy-browser
+fallback that still excludes duplicate fonts.
 
 ## Render and export plates
 
@@ -147,6 +288,41 @@ requires a modern browser renderer. Use PNG for image consumers that do not
 support HTML-backed SVG. Browser PNG uses local Canvas;
 [server PNG](#server-png) uses local Chromium. PNG captures the resting frame of
 the plate.
+
+### Synchronous HTML and reusable appearance data
+
+`/rendering/local` is entirely offline and excludes fonts, React and ledger
+clients. `renderResolvedPlateHtml` returns markup only; it never adds a style
+tag. Install shared CSS separately. `createPlateAppearance` exposes the exact
+ink, band, highlight, badge colors and SVG identicon used by that renderer, so
+trait selectors and swatches need no independent palette logic.
+
+<!-- deno-check -->
+
+```ts
+import {
+  createPlateAppearance,
+  renderResolvedPlateHtml,
+} from "@vanity-plates/sdk/rendering/local";
+import { plateSharedCss } from "@vanity-plates/sdk/rendering/styles";
+
+const input = {
+  address: "CDBTZHETZ3Q55ZRQERCW4SVR3KCGZSGQ3WWSTJ2GDO4JH3KKNYUPBEAT",
+  suffixLength: 6,
+};
+const html = renderResolvedPlateHtml(input, {
+  variant: "compact",
+  animated: true,
+});
+const palette = createPlateAppearance(input.address);
+// Run at build time; write this once to your application's CSS bundle.
+const css = plateSharedCss;
+```
+
+`plateFontCss` and `plateArtworkCss` are also available separately. Default
+HTML/SVG/PNG exports remain self-contained. Use
+`renderPlateHtml(input, { includeStyles: false })` with host-provided CSS when
+network resolution is desired without repeated embedded assets.
 
 ## Validate addresses and suffixes
 
@@ -246,6 +422,59 @@ A search returns `undefined` if its budget is exhausted; cancellation throws
 `FarmAbortedError` (`VNTY_007`). Longer suffixes require more work. Farming does
 not fund, reserve, mint or deploy. Keep private seeds secure and salts private
 until the reservation is confirmed. The SDK never logs or persists either.
+
+### Resumable contract searches
+
+`farmContractBatch` reports `found`, `paused` (attempt budget), `exhausted` (end
+of the salt partition) or `aborted`. Its checkpoint contains the first unchecked
+salt and preserves the deployer, network, normalized ending and stride.
+`resumeContractFarm` consumes it without repeating checked candidates.
+Cancellation returns a checkpoint; the original `farmContract` still throws on
+cancellation for compatibility. Counts describe the current batch, so sum
+`checked` values when tracking a whole search. A found result also carries a
+continuation when more candidates remain.
+
+<!-- deno-check -->
+
+```ts
+import {
+  createContractFarmPartition,
+  farmContractBatch,
+  resumeContractFarm,
+} from "@vanity-plates/sdk/farming";
+
+export async function findInWorker(
+  deployer: string,
+  networkPassphrase: string,
+  commonStart: Uint8Array,
+  workerIndex: number,
+  workerCount: number,
+) {
+  const partition = createContractFarmPartition(
+    commonStart,
+    workerIndex,
+    workerCount,
+  );
+  const batch = await farmContractBatch({
+    deployer,
+    networkPassphrase,
+    suffix: "PLATES",
+    ...partition,
+    maxAttempts: 1000,
+  });
+  if (batch.status === "paused" && batch.checkpoint) {
+    return await resumeContractFarm(batch.checkpoint, { maxAttempts: 1000 });
+  }
+  return batch;
+}
+```
+
+All workers must use the same start salt and worker count. The SDK rejects
+invalid indices and overflow instead of wrapping. Checkpoints are JSON-safe, but
+contain **private salt material**: persist locally, keep them out of logs, and
+do not send them to a backend. The SDK does not persist checkpoints or create a
+worker pool. Account keypair searches generate independent random candidates and
+do not have deterministic salt checkpoints.
 
 ## Call the protocol
 
@@ -349,6 +578,11 @@ try {
 | `VNTY_025` | `InvalidTreasuryFeeAssetError`        | The treasury fee asset must be a valid C address.             |
 | `VNTY_026` | `InvalidTreasuryVaultError`           | The treasury vault must be a valid C address.                 |
 | `VNTY_027` | `ServerPngCleanupError`               | Local Chromium export resources could not be closed.          |
+| `VNTY_028` | `MissingNftCollectionError`           | No collection configured for this network.                    |
+| `VNTY_029` | `ConflictingNetworkSourceError`       | Both RPC URL and network configuration supplied.              |
+| `VNTY_030` | `InvalidRpcUrlError`                  | RPC URL is not absolute HTTP(S).                              |
+| `VNTY_031` | `RpcNetworkDiscoveryError`            | RPC network discovery failed.                                 |
+| `VNTY_032` | `InvalidFarmPartitionError`           | Invalid or overflowing worker partition.                      |
 
 Codes identify distinct conditions and are not reassigned. The registry maps
 each code to its concrete constructor, for example
@@ -448,6 +682,24 @@ retrying. Declared errors are installed on the generated client's pipelines;
 declared events expose helpers such as
 `nft.contract.events.ClaimWordChanged.toEventFilter()`.
 
+#### Guarded payments and current treasury methods
+
+The captured interfaces include NFT `reserve_with_limit`,
+`reserve_for_with_limit`, `reserve_catalog_with_limit`, Marketplace
+`buy_with_limit`, and Treasury `collect_fee_with_limit` and
+`get_fee_shares_quote`. Their generated camelCase helpers and typed
+`VntyPaymentLimit` factories are available from each contract subpath. Limits
+carry an exclusive `deadline`, expected `fee_amount`, exact `fee_credit` and
+`max_shares`, all in the appropriate atomic units. No convenience method selects
+or signs these values on the caller's behalf.
+
+Treasury also exposes `migrate_defindex_vault` and `VaultMigrationReceipt`;
+Treasury and Marketplace include `migrate_testnet_settlement`. These are
+contract capabilities with their existing authorization requirements, not
+automatic SDK migrations. Error maps were refreshed with the same interfaces.
+Older deployments can fail `ready()` if they lack the required ABI; use an SDK
+release matched to your deployment rather than bypassing compatibility checks.
+
 ### Server PNG
 
 Import the server adapter to render through local Chromium. It supports an
@@ -509,16 +761,19 @@ All features belong to one SDK. Import the subpath for the capability you need:
 | `@vanity-plates/sdk/png`              | Browser PNG export                                                                |
 | `@vanity-plates/sdk/png/server`       | Local Chromium PNG export                                                         |
 | `@vanity-plates/sdk/web`              | `<vanity-plate>` registration                                                     |
-| `@vanity-plates/sdk/react`            | React `Plate` component                                                           |
+| `@vanity-plates/sdk/react`            | `Plate`, `usePlate`, `VanityProvider`, query client/key/options helpers           |
+| `@vanity-plates/sdk/react/styles`     | Shared `PlateStyles` for SSR and browser documents                                |
+| `@vanity-plates/sdk/rendering/local`  | Synchronous HTML, model and appearance data                                       |
+| `@vanity-plates/sdk/rendering/styles` | Build-time font, artwork and variant CSS strings                                  |
 
 ## Repository and development
 
 ### Using the source package
 
-The current version is private source `0.1.0`, with the provisional package name
-`@vanity-plates/sdk`. It is not published to JSR or npm. Deno **2.9.6** is the
-verified runtime; the current dependencies are Colibri Core **1.1.1** and
-Identicon **1.1.0**.
+This branch prepares `@vanity-plates/sdk` **0.2.0**, following the published
+0.1.0 release. Publication happens after the reviewed PR is merged and CI
+passes. Deno **2.9.6** is the verified runtime; the current dependencies are
+Colibri Core **1.1.1** and Identicon **1.1.0**.
 
 For a Deno application with a checkout at `./sdk`, add it as a workspace member
 in the application's `deno.json`:
@@ -531,8 +786,9 @@ in the application's `deno.json`:
 
 The public imports shown above resolve to that local package. They also work
 inside the SDK checkout. Configure your application's React/JSX support when
-using the React adapter. Source integration is currently verified; published
-JSR/npm artifacts and a Node runtime matrix are not yet verified.
+using the React adapter. This checkout validates isolated source-package
+consumers. The release workflow checks the actual JSR artifact after
+publication. A Node runtime matrix is not claimed by these Deno/browser checks.
 
 ### Preview and examples
 
@@ -555,11 +811,13 @@ dedicated `src/contracts/<name>/` directory containing its public `index.ts`,
 `constants.ts` and `types.ts`. The single `src/colibri.ts` module supplies the
 SDK's shared Colibri exports.
 
-`deno task generate` regenerates the three binding files from the spec embedded
-in `constants.ts`; `check:generated` verifies all fifteen files without writing.
-The specs were captured from public Testnet contracts on **2026-09-08**.
-Regeneration does not refresh them from the network. `examples/testnet.json` is
-a dated deployment fixture; supply explicit addresses for your deployment.
+`deno task generate` regenerates the three binding files from the captured
+`tests/fixtures/contract-specs/<name>.json`; `check:generated` verifies all
+fifteen files without writing. The specs were captured from public Testnet
+contracts on **2026-09-15**; public contract IDs and hashes are recorded in
+`tests/fixtures/protocol-specs.json`. Regeneration does not refresh them from
+the network. `examples/testnet.json` is a dated deployment fixture; supply
+explicit addresses for your deployment.
 
 ### Checks and contributing
 
@@ -569,6 +827,7 @@ deno task docs            # Public API docs and checked Markdown examples
 deno task test            # Unit/integration tests, architecture and tooling
 deno task check:consumers # Public imports from isolated publishable sources
 deno task check:generated # Reproduce bindings without writing
+deno task check:bundles   # Raw/gzip budgets for public consumer imports
 deno task test:coverage   # 100% lines/branches/functions; CRAP <= 15
 deno task test:testnet    # Optional read-only public Testnet smoke tests
 ```
@@ -612,3 +871,32 @@ Lookup configuration errors are `MissingNftCollectionError` (`VNTY_028`),
 `ConflictingNetworkSourceError` (`VNTY_029`), `InvalidRpcUrlError` (`VNTY_030`)
 and `RpcNetworkDiscoveryError` (`VNTY_031`). Ledger and contract errors retain
 their original Colibri classes. No lookup signs or submits a transaction.
+
+### Migrating from 0.1.0 to 0.2.0
+
+- React `Plate` no longer embeds CSS/fonts per instance. Mount `PlateStyles`
+  **once**, or install the shared CSS at build time. Existing HTML/SVG/PNG
+  exporters still embed their assets by default.
+- Use `Plate data={...}` for explicit display data and `Plate address={...}`
+  with a network/provider for automatic cached lookup. `usePlate` exposes the
+  same shared state for custom UI. The prerelease-only `ResolvedPlate` and
+  `/react/local` have been removed before publication. `/rendering/local`
+  remains the synchronous, framework-free HTML API.
+- React now uses TanStack Query 5.102.8. Query settings and SSR cache ownership
+  are documented above; legacy address/suffixLength props remain supported, with
+  network metadata taking precedence unless explicit `data` is supplied.
+- Default artwork and all 171 SVG fixtures are preserved. Compact/picker/inline
+  are explicit presentation choices, not changes to address-derived traits.
+- Contract bindings now target the September 15 captured interfaces. Recheck
+  your deployed ABI and regenerated error maps before upgrading consumers.
+- `farmContract` retains its return and cancellation behavior. Opt into the
+  batch/checkpoint API to retain progress on budget exhaustion or cancellation.
+
+Bundle reports measure complete minified browser JavaScript, separately in raw
+and gzip bytes, under pinned Deno 2.9.6. They exclude external source maps and
+shared CSS. Network-aware React and farming still need Colibri's full contract
+or signing graph. The React query function imports the network resolver lazily;
+code splitting can defer network-only chunks, but shared Colibri dependencies
+can still enter the initial bundle. Use `/rendering/local` for plain HTML
+consumers that need no React/query layer. A smaller entry bundle is not proof
+that the total application payload became smaller.

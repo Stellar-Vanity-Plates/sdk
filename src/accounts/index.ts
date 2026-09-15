@@ -1,13 +1,7 @@
 /** RPC-first account configuration and consistent fallback display. @module */
 import { type NetworkOptions, resolveNetwork } from "@/network.ts";
-import {
-  buildAccountLedgerKey,
-  buildDataLedgerKey,
-  LedgerEntries,
-  type NetworkConfig,
-  type RpcLedgerEntriesClient,
-  StrKey,
-} from "@colibri/core";
+import type { NetworkConfig, RpcLedgerEntriesClient } from "@colibri/core";
+import { StrKey } from "@colibri/core/strkey";
 import { abbreviateAddress } from "@/validation.ts";
 import {
   InvalidAccountAddressError,
@@ -97,6 +91,8 @@ export async function loadAccountConfiguration(
 ): Promise<AccountConfiguration> {
   const fallback = accountDisplay(address);
   const accountId = address as `G${string}`;
+  const { LedgerEntries, buildAccountLedgerKey, buildDataLedgerKey } =
+    await import("@colibri/core");
   const reader = new LedgerEntries(
     options.rpc
       ? { rpc: options.rpc }

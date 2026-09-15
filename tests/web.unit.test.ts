@@ -26,6 +26,17 @@ describe("vanity-plate custom element", () => {
     el.setAttribute("address", address);
     el.setAttribute("suffix-length", "3");
     assertEquals(label(el), address.slice(-3));
+    for (const variant of ["compact", "picker", "display", "invalid"]) {
+      el.setAttribute("variant", variant);
+      el.setAttribute("inline", "");
+      const root = el.shadowRoot!.querySelector(".vnty-plate-root")!;
+      assertEquals(
+        root.getAttribute("data-variant"),
+        variant === "invalid" ? "display" : variant,
+      );
+      assertEquals(root.tagName, "SPAN");
+    }
+    el.removeAttribute("inline");
     const errors: unknown[] = [];
     el.addEventListener(
       "plate-error",
@@ -129,4 +140,28 @@ describe("vanity-plate custom element", () => {
     await settle();
     assertEquals(errors, 0);
   });
+});
+
+Deno.test("web elements share constructed artwork and fall back on older browsers without duplicating fonts", async () => {
+  for (const mode of ["native", "absent", "legacy", "no-shadow"] as const) {
+    await using _dom = installDom(mode);
+    const Element = registerVanityPlate();
+    const a = new Element(), b = new Element();
+    for (const el of [a, b]) {
+      el.setAttribute("address", address);
+      document.body.append(el);
+    }
+    assertEquals(
+      document.querySelectorAll("style[data-vanity-plate-fonts]").length,
+      1,
+    );
+    if (mode === "native") {
+      assertStrictEquals(
+        a.shadowRoot!.adoptedStyleSheets[0],
+        b.shadowRoot!.adoptedStyleSheets[0],
+      );
+      assertEquals(a.shadowRoot!.querySelectorAll("style").length, 0);
+    } else assertEquals(a.shadowRoot!.querySelectorAll("style").length, 1);
+    assert(!a.shadowRoot!.innerHTML.includes("@font-face"));
+  }
 });

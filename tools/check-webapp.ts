@@ -1,9 +1,17 @@
 // Compare the pinned rendering inputs with a caller-supplied, fetched webapp ref.
-import manifest from "@tests/reference/webapp.json" with { type: "json" };
-const [checkout, ref = "origin/staging"] = Deno.args;
+import referenceManifest from "@tests/reference/webapp.json" with {
+  type: "json",
+};
+import consumerManifest from "@tests/reference/webapp-consumer.json" with {
+  type: "json",
+};
+const args = Deno.args.filter((arg) => arg !== "--consumer");
+const consumer = Deno.args.includes("--consumer");
+const manifest = consumer ? consumerManifest : referenceManifest;
+const [checkout, ref = "origin/staging"] = args;
 if (!checkout) {
   throw new Error(
-    "Usage: deno task check:webapp /path/to/webapp [fetched-ref]",
+    "Usage: deno task check:webapp /path/to/webapp [fetched-ref] [--consumer]",
   );
 }
 const changed: string[] = [];
@@ -28,7 +36,7 @@ if (changed.length) {
   );
 }
 console.log(
-  `All ${
-    Object.keys(manifest.files).length
-  } canonical rendering inputs match ${ref}.`,
+  `All ${Object.keys(manifest.files).length} ${
+    consumer ? "reviewed SDK consumer inputs" : "independent rendering inputs"
+  } match ${ref}.`,
 );

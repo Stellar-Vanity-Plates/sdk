@@ -1,7 +1,8 @@
+import config from "@examples/testnet.json" with { type: "json" };
 import { describe, it } from "@std/testing/bdd";
 import { assert, assertEquals } from "@std/assert";
 import { NetworkConfig } from "@colibri/core";
-import { NftClient } from "@/contracts/index.ts";
+import { createProtocolClients, NftClient } from "@/contracts/index.ts";
 import { NFT_CONTRACT_DEFAULTS, resolvePlateInput } from "@/rendering/index.ts";
 // Optional public-network suite: only ABI retrieval and unsigned simulation, no funding or submission.
 const networkConfig = NetworkConfig.TestNet();
@@ -27,4 +28,10 @@ describe("deployed Testnet NFT protocol", () => {
       6,
     );
   });
+});
+
+Deno.test("all five captured protocol interfaces match the deployed public network", async () => {
+  const clients = createProtocolClients(networkConfig, config.contracts);
+  for (const client of Object.values(clients)) await client.ready();
+  assert(Object.keys(clients).length === 5);
 });
