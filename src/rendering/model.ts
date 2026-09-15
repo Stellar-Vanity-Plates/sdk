@@ -1,7 +1,6 @@
 import { StrKey } from "@colibri/core";
-import { accountDisplay } from "@/accounts/index.ts";
-import { normalizeSuffix, type PlateKind, plateKind } from "@/validation.ts";
-import { VanityError } from "@/errors.ts";
+import { parseSuffixLength } from "@/accounts/index.ts";
+import { abbreviateAddress, type PlateKind, plateKind } from "@/validation.ts";
 
 /** Plate rarity derived from address bytes, matching the web application's rules. */
 export type PlateRarity =
@@ -12,20 +11,18 @@ export type PlateRarity =
   | "pole";
 /** Shared identity-art treatment. */
 export type PlateFinish = "badge" | "watermark" | "sideband" | "pattern";
-/** Display input. A suffix is mandatory for contract plates. */
-export interface PlateInput {
+/** Resolved or local display data. No network requests are made by createPlateModel. */
+export interface ResolvedPlateInput {
   /** Complete checksum-valid G or C address. */
   address: string;
-  /** Exact ending to display; case is normalized. */
-  suffix?: string;
-  /** Account ManageData suffix length; ignored when an explicit suffix is provided. */
+  /** Number of ending characters to show, 1–55. Missing/invalid counts abbreviate. */
   suffixLength?: number;
 }
 /** Deterministic appearance and identity derived locally from a plate. */
 export interface PlateModel {
   /** Full address, never replaced by its decorative label. */ address: string;
   /** Account or contract identity. */ kind: PlateKind;
-  /** Configured suffix or standard account abbreviation. */ label: string;
+  /** Configured ending or standard address abbreviation. */ label: string;
   /** Whether the label is an explicit or configured suffix. */ configured:
     boolean;
   /** Address-derived rarity. */ rarity: PlateRarity;
@@ -61,30 +58,18 @@ function color(h: number, s: number, l: number): string {
   return `#${channel(0)}${channel(8)}${channel(4)}`;
 }
 /** Builds the same deterministic rarity, lettering and insignia selections as the application. */
-export function createPlateModel(input: PlateInput): PlateModel {
+export function createPlateModel(input: ResolvedPlateInput): PlateModel {
   const kind = plateKind(input.address);
   const bytes = kind === "account"
     ? StrKey.decodeEd25519PublicKey(input.address)
     : StrKey.decodeContract(input.address);
-  let label: string, configured: boolean;
-  if (input.suffix !== undefined) {
-    label = normalizeSuffix(input.suffix);
-    if (!input.address.endsWith(label)) {
-      throw new VanityError(
-        "VNTY_INVALID_SUFFIX",
-        "The plate label must match the ending of its full address.",
-      );
-    }
-    configured = true;
-  } else {
-    if (kind === "contract") {
-      throw new VanityError(
-        "VNTY_INVALID_SUFFIX",
-        "Contract plates require their claimed suffix.",
-      );
-    }
-    ({ label, configured } = accountDisplay(input.address, input.suffixLength));
-  }
+  const count = typeof input.suffixLength === "number"
+    ? parseSuffixLength(String(input.suffixLength))
+    : undefined;
+  const label = count === undefined
+    ? abbreviateAddress(input.address)
+    : input.address.slice(-count);
+  const configured = count !== undefined;
   const offset = kind === "account" ? 14 : 5;
   const symbols = Uint8Array.from(
     bytes.slice(offset, offset + 7),

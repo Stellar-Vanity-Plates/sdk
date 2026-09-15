@@ -1,6 +1,13 @@
 // Preserved consumer of public subpaths. Aliases are generated from exports in
 // the isolated fixture config, never from repository-private source shortcuts.
-import { isPlateAddress, VanityError } from "@consumer/sdk";
+import {
+  BrowserDomUnavailableError,
+  InvalidPlateWidthError,
+  isPlateAddress,
+  VANITY_ERRORS,
+  VanityError,
+  VanityErrorCode,
+} from "@consumer/sdk";
 import {
   accountDisplay,
   encodeSuffixLength,
@@ -14,6 +21,7 @@ import {
 import {
   createProtocolClients,
   NftClient,
+  NftErrors,
   type Spec,
 } from "@consumer/sdk/contracts";
 import {
@@ -25,7 +33,16 @@ import { renderPlatePng as browserPng } from "@consumer/sdk/png";
 import { renderPlatePng as serverPng } from "@consumer/sdk/png/server";
 import { registerVanityPlate } from "@consumer/sdk/web";
 import { Plate } from "@consumer/sdk/react";
-import { ColibriError, Contract, NetworkConfig, StrKey } from "@colibri/core";
+import { Nft } from "@consumer/sdk/contracts/nft";
+import {
+  ColibriError,
+  Contract,
+  LocalSigner,
+  NetworkConfig,
+  SorobanType,
+  StrKey,
+  type TransactionConfig,
+} from "@consumer/sdk/colibri";
 import { Spec as NativeSpec } from "@stellar/stellar-sdk/contract";
 import { createElement } from "react";
 // @deno-types="@types/react-dom/server"
@@ -37,8 +54,13 @@ function ensure(value: unknown, message: string): asserts value {
 const account = StrKey.encodeEd25519PublicKey(new Uint8Array(32));
 const network = NetworkConfig.TestNet();
 const salt = new Uint8Array(32);
+ensure(
+  typeof LocalSigner.fromKeypair === "function",
+  "Shared signer export missing.",
+);
+ensure(SorobanType.U32.from(42).value === 42, "Shared value export missing.");
 const address = deriveContractAddress(network.networkPassphrase, account, salt);
-const plate = { address, suffix: address.slice(-3) };
+const plate = { address, suffixLength: 3 };
 ensure(isPlateAddress(address, "contract"), "Contract derivation failed.");
 ensure(
   parseSuffixLength(encodeSuffixLength(4)) === 4,
@@ -67,25 +89,33 @@ const clients = createProtocolClients(network, {
   rbac: address,
 });
 ensure(
-  clients.nft instanceof NftClient && clients.nft.contract instanceof Contract,
+  clients.nft instanceof NftClient &&
+    clients.nft.contract instanceof Contract &&
+    clients.nft.contract instanceof Nft,
   "Public Colibri identity was duplicated.",
+);
+ensure(
+  Object.keys(NftErrors).length > 0,
+  "Generated contract errors are missing.",
 );
 const spec: Spec = clients.nft.contract.getSpec();
 ensure(spec instanceof NativeSpec, "Native Stellar Spec interop changed.");
 ensure(
-  new VanityError("VNTY_INVALID_OPTION", "example") instanceof ColibriError,
+  new InvalidPlateWidthError() instanceof ColibriError &&
+    VANITY_ERRORS[VanityErrorCode.INVALID_PLATE_WIDTH] ===
+      InvalidPlateWidthError,
   "Colibri error identity changed.",
 );
 ensure(
-  createPlateModel(plate).label === plate.suffix,
+  createPlateModel(plate).label === address.slice(-plate.suffixLength),
   "Public plate model changed.",
 );
 ensure(
-  renderPlateHtml(plate).includes(address),
+  (await renderPlateHtml(plate)).includes(address),
   "Canonical HTML is unavailable.",
 );
 ensure(
-  renderPlateSvg(plate).includes("foreignObject"),
+  (await renderPlateSvg(plate)).includes("foreignObject"),
   "SVG renderer is unavailable.",
 );
 ensure(
@@ -101,7 +131,9 @@ try {
   throw new Error("Browser exporter silently used a server fallback.");
 } catch (error) {
   ensure(
-    error instanceof VanityError && error.code === "VNTY_RENDER_FAILED",
+    error instanceof VanityError &&
+      error instanceof BrowserDomUnavailableError &&
+      error.code === VanityErrorCode.BROWSER_DOM_UNAVAILABLE,
     "Browser exporter lost its explicit DOM boundary.",
   );
 }
@@ -111,6 +143,28 @@ try {
 export function verifyContractTypes(client: NftClient): void {
   const name: Promise<string> = client.read("name", {});
   const mint: Promise<number> = client.read("mint", { salt });
+  const generatedName: Promise<string> = client.contract.name.read();
+  const owner: Promise<string> = client.contract.ownerOf.read({ token_id: 42 });
+  const config: TransactionConfig = {
+    source: account,
+    fee: "100",
+    timeout: 60,
+    signers: [],
+  };
+  const mintReceipt = client.contract.mint.invoke({
+    methodArgs: { salt },
+    config,
+  });
+  const mintedId: Promise<number | undefined> = mintReceipt.then((result) =>
+    result.value
+  );
+  void generatedName;
+  void owner;
+  void mintedId;
+  // @ts-expect-error Generated methods retain exact arguments.
+  client.contract.ownerOf.read({ token_id: "wrong" });
+  // @ts-expect-error Generated invocation requires explicit configuration.
+  client.contract.mint.invoke({ methodArgs: { salt } });
   void name;
   void mint;
   // @ts-expect-error Method names must remain exact.
@@ -123,3 +177,14 @@ export function verifyContractTypes(client: NftClient): void {
 console.log(
   "Isolated public consumer passed: farming, metadata, five clients, native Colibri/Spec identity, SVG, React SSR and adapter boundaries. No ledger access.",
 );
+
+// Compile-time count-only boundary for every display adapter.
+function countOnlyInputs() {
+  // @ts-expect-error Display APIs no longer accept a suffix word.
+  renderPlateHtml({ address, suffix: "ABC" });
+  // @ts-expect-error The same count-only payload applies to SVG.
+  renderPlateSvg({ address, suffix: "ABC" });
+  // @ts-expect-error The React component takes a count, not a word.
+  Plate({ address, suffix: "ABC" });
+}
+void countOnlyInputs;

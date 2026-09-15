@@ -3,8 +3,8 @@ import { NetworkConfig } from "@colibri/core";
 import {
   createProtocolClients,
   createTreasuryAssetClients,
-} from "@/contracts/mod.ts";
-import { deriveContractAddress } from "@/farming/mod.ts";
+} from "@/contracts/index.ts";
+import { deriveContractAddress } from "@/farming/index.ts";
 import config from "@examples/testnet.json" with { type: "json" };
 const network = NetworkConfig.CustomNet({
   networkPassphrase: config.networkPassphrase,

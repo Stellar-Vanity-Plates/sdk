@@ -7,14 +7,15 @@ import {
 } from "@tools/quality/architecture.ts";
 import { inspectModule } from "@tools/quality/syntax.ts";
 
-const manifest: Manifest = { ...config, exports: { ".": "./mod.ts" } };
+const manifest: Manifest = { ...config, exports: { ".": "./index.ts" } };
 const baseline = () =>
   new Map([
     ["deno.json", "{}"],
     ["README.md", "SDK"],
     ["CONTRIBUTING.md", "Contributing"],
     ["THIRD_PARTY_NOTICES.md", "Notices"],
-    ["mod.ts", '/** SDK. @module */\nexport * from "@/validation.ts";'],
+    ["LICENSE", "MIT"],
+    ["index.ts", '/** SDK. @module */\nexport * from "@/validation.ts";'],
     ["src/errors.ts", "export class VanityError {}"],
     [
       "src/validation.ts",
@@ -59,6 +60,18 @@ Deno.test("architecture: deliberately invalid packages fail with actionable rule
     rule: string;
   }[] = [
     {
+      name: "shared Colibri module rejects optional dependencies",
+      file: "src/colibri.ts",
+      source: 'export { chromium } from "playwright";',
+      rule: "external-boundary",
+    },
+    {
+      name: "shared Colibri module stays a reexport",
+      file: "src/colibri.ts",
+      source: "export const example = 1;",
+      rule: "thin-barrels",
+    },
+    {
       name: "side-effect dev imports",
       source: 'import "@tools/check-exports.ts";',
       rule: "private-import",
@@ -100,7 +113,7 @@ Deno.test("architecture: deliberately invalid packages fail with actionable rule
     },
     {
       name: "SDK implementation cannot import public barrels",
-      source: 'import "@/accounts/mod.ts";',
+      source: 'import "@sdk";',
       rule: "internal-barrels",
     },
     {
@@ -117,8 +130,8 @@ Deno.test("architecture: deliberately invalid packages fail with actionable rule
     },
     {
       name: "root entrypoint cannot expose optional React",
-      file: "mod.ts",
-      source: '/** @module */ export * from "@/react/plate.tsx";',
+      file: "index.ts",
+      source: '/** @module */ export * from "@/react/index.tsx";',
       rule: "entrypoint-boundary",
     },
     {
@@ -193,14 +206,26 @@ Deno.test("architecture: deliberately invalid packages fail with actionable rule
       rule: "typed-errors",
     },
     {
+      name: "generic SDK error construction",
+      source:
+        'import { VanityError } from "@/errors.ts"; export function fail() { throw new VanityError(); }',
+      rule: "typed-errors",
+    },
+    {
       name: "barrel implementation",
-      file: "mod.ts",
+      file: "index.ts",
       source: "/** @module */ export const extra = 1;",
       rule: "thin-barrels",
     },
     {
+      name: "redundant mod entrypoint",
+      file: "src/web/mod.ts",
+      source: 'export * from "@/web/index.ts";',
+      rule: "entrypoint-naming",
+    },
+    {
       name: "entrypoint docs",
-      file: "mod.ts",
+      file: "index.ts",
       source: 'export * from "@/errors.ts";',
       rule: "module-docs",
     },

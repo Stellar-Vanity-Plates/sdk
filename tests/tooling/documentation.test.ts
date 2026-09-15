@@ -56,6 +56,16 @@ Deno.test("documentation: actual compiler failures retain a failing status and f
       "<!-- deno-check -->\n```ts\nexport const amount: bigint = 1n;\n```",
     );
     assertEquals((await checkDocumentation(root)).code, 0);
+    await Deno.writeTextFile(`${root}/README.md`, "\n[License](LICENSE)\n", {
+      append: true,
+    });
+    assert(
+      (await checkDocumentation(root)).diagnostics.includes(
+        "Broken local documentation link LICENSE",
+      ),
+    );
+    await Deno.writeTextFile(`${root}/LICENSE`, "MIT License");
+    assertEquals((await checkDocumentation(root)).code, 0);
   } finally {
     await Deno.remove(root, { recursive: true });
   }

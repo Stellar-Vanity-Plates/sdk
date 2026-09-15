@@ -92,7 +92,12 @@ export async function checkDocumentation(
 ): Promise<{ code: number; checked: number; diagnostics: string }> {
   const files = new Map<string, string>();
   for (
-    const name of ["README.md", "CONTRIBUTING.md", "THIRD_PARTY_NOTICES.md"]
+    const name of [
+      "README.md",
+      "CONTRIBUTING.md",
+      "THIRD_PARTY_NOTICES.md",
+      "LICENSE",
+    ]
   ) {
     try {
       files.set(name, await Deno.readTextFile(resolve(root, name)));

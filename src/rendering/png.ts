@@ -1,8 +1,14 @@
 import { plateImageFrame, plateWidth } from "@/rendering/svg.ts";
 /** Browser PNG export using the canonical HTML/CSS-backed SVG. @module */
-import type { PlateInput } from "@/rendering/model.ts";
+import type { PlateInput } from "@/rendering/resolve.ts";
 import { renderPlateSvg } from "@/rendering/svg.ts";
-import { VanityError } from "@/errors.ts";
+import {
+  BrowserDomUnavailableError,
+  BrowserPngRenderError,
+  CanvasContextUnavailableError,
+  PngEncodingError,
+  VanityError,
+} from "@/errors.ts";
 import type { PngOptions } from "@/rendering/png-options.ts";
 export type { PngOptions } from "@/rendering/png-options.ts";
 /**
@@ -15,12 +21,9 @@ export async function renderPlatePng(
   options: PngOptions = {},
 ): Promise<Uint8Array> {
   const width = plateWidth(options.width ?? 1200);
-  const svg = renderPlateSvg(input, { width });
+  const svg = await renderPlateSvg(input, { width });
   if (typeof document === "undefined") {
-    throw new VanityError(
-      "VNTY_RENDER_FAILED",
-      "A browser DOM is required. In Deno/Node, use @vanity-plates/sdk/png/server with local Chromium installed.",
-    );
+    throw new BrowserDomUnavailableError();
   }
   try {
     const image = new Image();
@@ -31,23 +34,21 @@ export async function renderPlatePng(
     canvas.height = plateImageFrame(width).height;
     const context = canvas.getContext("2d");
     if (!context) {
-      throw new VanityError("VNTY_RENDER_FAILED", "Canvas is unavailable");
+      throw new CanvasContextUnavailableError();
     }
     context.drawImage(image, 0, 0);
     const blob = await new Promise<Blob>((resolve, reject) =>
       canvas.toBlob(
         (value) =>
           value ? resolve(value) : reject(
-            new VanityError("VNTY_RENDER_FAILED", "PNG encoding failed"),
+            new PngEncodingError(),
           ),
         "image/png",
       )
     );
     return new Uint8Array(await blob.arrayBuffer());
-  } catch {
-    throw new VanityError(
-      "VNTY_RENDER_FAILED",
-      "The browser could not render the canonical plate PNG.",
-    );
+  } catch (cause) {
+    if (VanityError.is(cause)) throw cause;
+    throw new BrowserPngRenderError(cause);
   }
 }

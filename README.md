@@ -1,90 +1,191 @@
 # Vanity Plates SDK
 
-TypeScript and Deno tools for integrating Vanity Plates into your application.
-Built on **Colibri 1.0.0**, with no dependency on the Vanity Plates backend.
+Display Stellar Vanity Plates in your application, render and export their
+artwork, validate addresses, read display settings, find vanity addresses, and
+call the plate contracts.
 
-This is the first private, source-based version (`0.1.0`). The provisional
-package name is `@vanity-plates/sdk`; it has **not been published** to JSR or
-npm. Use Deno **2.9.6**, the verified runtime.
+The SDK supports **G plates** for Stellar accounts and **C plates** for
+contracts. It provides TypeScript APIs built on Colibri, independently of the
+Vanity Plates backend. Farming runs locally. Display lookup uses your
+RPC/network configuration; transaction signing remains explicit.
 
-```sh
-git clone --branch main https://github.com/Stellar-Vanity-Plates/sdk.git
-cd sdk
-deno task test
-deno task preview
-```
+## What it ships
 
-Open <http://127.0.0.1:4192/> for responsive plates, animations, SVG/PNG
-downloads and local farming. Imports below use the repository aliases in
-`deno.json`. An external Deno application can map these local sources until a
-package is published. Do not add an unpublished JSR specifier.
+| Capability                                                          | Included APIs                                                               |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [Add plates to your UI](#add-plates-to-your-ui)                     | A web component and a React component with SSR support                      |
+| [Render and export plates](#render-and-export-plates)               | Shared plate model, HTML/CSS, SVG and PNG rendering                         |
+| [Validate addresses and suffixes](#validate-addresses-and-suffixes) | G/C checksum validation, suffix normalization and abbreviation              |
+| [Read account display settings](#read-account-display-settings)     | RPC metadata reads, suffix parsing and consistent fallback labels           |
+| [Find vanity addresses](#find-vanity-addresses)                     | Account keypair farming, contract salt farming, derivation and verification |
+| [Call the protocol](#call-the-protocol)                             | Typed NFT, Deployer, Marketplace, Treasury and RBAC clients                 |
 
-## Entry points
+Examples use the SDK's public imports. Install a released version with
+`deno add jsr:@vanity-plates/sdk`. For unreleased changes, see
+[using the source package](#using-the-source-package) to resolve these imports
+from a local checkout in a Deno application.
 
-| Source                        | Includes                                                             |
-| ----------------------------- | -------------------------------------------------------------------- |
-| `mod.ts`                      | G/C checksum validation, suffix validation, abbreviation, SDK errors |
-| `src/farming/mod.ts`          | Local G keypair and C deployment-salt farming                        |
-| `src/accounts/mod.ts`         | RPC ManageData reads, strict parsing, standard fallback              |
-| `src/contracts/mod.ts`        | Five typed contract clients and all ABI record types                 |
-| `src/rendering/mod.ts`        | Canonical HTML/CSS and browser-compatible SVG export                 |
-| `src/rendering/png.ts`        | Local browser PNG export                                             |
-| `src/rendering/png-server.ts` | Optional local Chromium PNG export for Deno/Node                     |
-| `src/web/mod.ts`              | Framework-independent `<vanity-plate>` registration                  |
-| `src/react/mod.tsx`           | Optional React `Plate` component with SSR support                    |
+## Add plates to your UI
 
-These are also declared as future package subpaths in `deno.json`.
+Use the same input rules across the web component, React and image exports:
 
-## Local farming
+| Input                       | Display behavior                                                |
+| --------------------------- | --------------------------------------------------------------- |
+| `rpcUrl` or `networkConfig` | Look up the configured ending on chain.                         |
+| Only `suffixLength`         | Show that many characters from the end of the address, locally. |
+| Neither                     | Use the standard first-six/last-six abbreviation.               |
 
-<!-- deno-check -->
+The count is optional and accepts integers from 1 to 55. Invalid counts also
+abbreviate. Display APIs accept counts, never a custom word. When a network is
+provided, on-chain metadata takes precedence over `suffixLength`; absent or
+invalid metadata abbreviates. Lookup failures remain errors.
 
-```ts
-import { farmAccount, farmContract } from "@/farming/mod.ts";
-import deployment from "@examples/testnet.json" with { type: "json" };
+G addresses use `config.svp.gchar`. C addresses use the NFT collection's
+`get_latest_token_id` and `get_claim`, retaining display information after NFT
+redemption/deployment. This lookup identifies a recorded claim; it does not
+prove current ownership. The SDK selects the collection by network passphrase
+and accepts an `nftContractId` override. Testnet has a bundled collection;
+**Mainnet is a placeholder for now** and needs an override for C-plate lookup.
+Account lookups work on either network without an NFT collection.
 
-const account = await farmAccount({
-  suffix: "A",
-  maxAttempts: 10_000,
-  signal: AbortSignal.timeout(30_000),
-});
-// account?.address is public. account?.secret is its private S seed.
+Provide either `rpcUrl` or `networkConfig`, not both. With a URL, the SDK
+discovers the network via RPC `getNetwork`; it does not infer the network from
+the hostname.
 
-const contract = await farmContract({
-  suffix: "A",
-  networkPassphrase: deployment.networkPassphrase,
-  deployer: deployment.contracts.deployer,
-  maxAttempts: 10_000,
-  onProgress: ({ checked }) => console.log(`${checked} candidates checked`),
-});
-// contract?.salt / contract?.saltHex is the salt required for deployment.
-```
+### Web component
 
-Searches return `undefined` when the attempt budget is exhausted. Cancellation
-throws `VanityError` with code `VNTY_ABORTED`. Work yields between batches
-(default 128); use a Web Worker for sustained frontend farming. Longer suffixes
-cost much more work and a bounded search is not guaranteed to find a match.
-Searches match address endings, not arbitrary positions.
-
-`deriveContractAddress(passphrase, deployer, salt)` reproduces C addresses;
-`verifyAccountFarmResult` and `verifyContractFarmResult` validate results. For
-NFT plates, use the protocol **deployer C address**, not your wallet or NFT
-contract. Changing the deployer or network changes the derived address.
-`startSalt` and positive `stride` support partitioned C searches; salts
-increment as unsigned big-endian 256-bit integers without wraparound.
-
-Farming does not fund accounts, check availability, reserve, mint or deploy.
-Keep seeds private and salts private until a reservation has been confirmed. The
-SDK never logs or persists either. Signer buffers are destroyed after each
-attempt; JavaScript strings cannot be reliably zeroized.
-
-## Account configuration
+Register `<vanity-plate>` in any browser application. It ships reactive
+attributes, accessible address labels, optional hover animations and reduced
+motion support.
 
 <!-- deno-check -->
 
 ```ts
-import { NetworkConfig } from "@colibri/core";
-import { loadAccountConfiguration } from "@/accounts/mod.ts";
+import { registerVanityPlate } from "@vanity-plates/sdk/web";
+
+registerVanityPlate(); // Call in the browser; importing is SSR-safe.
+```
+
+```html
+<vanity-plate
+  address="CDBTZHETZ3Q55ZRQERCW4SVR3KCGZSGQ3WWSTJ2GDO4JH3KKNYUPBEAT"
+  rpc-url="https://soroban-testnet.stellar.org"
+  animated
+></vanity-plate>
+```
+
+Set the host width in CSS; the component preserves the plate's aspect ratio. Set
+`suffix-length="6"` for an offline count, or omit both for abbreviation.
+`nft-contract-id` overrides the collection. A Colibri configuration can also be
+assigned to the element's `networkConfig` property. Pending lookups abbreviate
+and set `aria-busy`; failures dispatch `plate-error` while preserving the
+fallback. Without `animated`, the plate stays still even on hover.
+
+### React
+
+Use the `Plate` component with the same plate inputs and appearance. The React
+adapter supports server rendering, accessible labels and the web renderer's
+animations.
+
+<!-- deno-check -->
+
+```tsx
+import { Plate, type PlateProps } from "@vanity-plates/sdk/react";
+
+export function AccountBadge(
+  props: PlateProps,
+) {
+  return (
+    <Plate
+      {...props}
+      animated
+      style={{ maxWidth: 480 }}
+    />
+  );
+}
+```
+
+`AccountBadge` above is an application example wrapping `Plate`, not another SDK
+component. Pass `rpcUrl` or `networkConfig` to load settings automatically,
+`suffixLength` for a local count, or just `address` for abbreviation. SSR and
+pending lookups abbreviate; offline counts render immediately. Invalid addresses
+and lookup failures reach your application's React error boundary. React 18 is
+the verified adapter target. Deno SSR requires `--allow-env=NODE_ENV`. React and
+headless Chromium are optional entry points and stay outside core validation and
+farming imports.
+
+## Render and export plates
+
+Create the same Clubhouse plate appearance used by the Vanity Plates web app.
+The rendering module ships a shared `createPlateModel`, HTML/CSS through
+`renderPlateHtml` and `plateCss`, and self-contained SVG through
+`renderPlateSvg`. Separate PNG adapters serve browsers and servers.
+
+<!-- deno-check -->
+
+```ts
+import { renderPlateSvg } from "@vanity-plates/sdk/rendering";
+import { renderPlatePng } from "@vanity-plates/sdk/png";
+
+const plate = {
+  address: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
+  suffixLength: 6,
+};
+const svg = await renderPlateSvg(plate, { width: 600 });
+const png = await renderPlatePng(plate, { width: 1600 }); // Run in a browser.
+```
+
+Rendering derives the plate's fonts, identicon, colors, badge and finish from
+the same inputs across HTML, SVG, PNG, web components and React. HTML, SVG and
+both PNG exporters are asynchronous and accept the network/count/fallback rules
+above. `resolvePlateInput` returns count-only data for reuse; `createPlateModel`
+builds a model synchronously from that resolved or local data.
+
+SVG generation works without a DOM; only configured metadata lookup uses the
+network. The SVG embeds HTML/CSS using `foreignObject`, so displaying it
+requires a modern browser renderer. Use PNG for image consumers that do not
+support HTML-backed SVG. Browser PNG uses local Canvas;
+[server PNG](#server-png) uses local Chromium. PNG captures the resting frame of
+the plate.
+
+## Validate addresses and suffixes
+
+Check G/C address checksums, normalize user-entered suffixes and build standard
+abbreviations without a network request. The root module ships `isPlateAddress`,
+`plateKind`, `normalizeSuffix`, `validatePlate`, `abbreviateAddress` and typed
+concrete error classes with numbered codes.
+
+<!-- deno-check -->
+
+```ts
+import {
+  abbreviateAddress,
+  normalizeSuffix,
+  validatePlate,
+} from "@vanity-plates/sdk";
+
+const address = "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES";
+const suffix = normalizeSuffix("plates");
+console.log(validatePlate(address, suffix, "contract")); // true
+console.log(abbreviateAddress(address)); // CC45XY…PLATES
+```
+
+Suffixes use 1–55 Stellar Base32 characters: letters A–Z and digits 2–7.
+Validation checks the address and its ending; it does not establish ownership.
+
+## Read account display settings
+
+Turn an account's on-chain suffix configuration into a display label.
+`loadAccountConfiguration` reads the account and its `config.svp.gchar`
+ManageData entry through Stellar RPC, returning the full address, label, suffix
+length and configuration status. Pass `rpcUrl`, `networkConfig`, or an injected
+`rpc` client to this lower-level account API.
+
+<!-- deno-check -->
+
+```ts
+import { loadAccountConfiguration } from "@vanity-plates/sdk/accounts";
+import { NetworkConfig } from "@vanity-plates/sdk/colibri";
 
 const display = await loadAccountConfiguration(
   "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF",
@@ -93,238 +194,421 @@ const display = await loadAccountConfiguration(
 console.log(display.status, display.label);
 ```
 
-Colibri reads the account and `config.svp.gchar` ManageData entry in one Stellar
-RPC batch. Configuration is decimal UTF-8, integer 1–55. `configured`,
-`unconfigured`, `invalid` and `account-not-found` are distinct states. RPC
-errors reject; they are never disguised as missing configuration.
+The module distinguishes `configured`, `unconfigured`, `invalid` and
+`account-not-found`. Missing or invalid metadata produces the standard
+first-six/last-six abbreviation; RPC errors propagate to the caller.
 
-`accountDisplay(address, suffixLength)` works offline. Invalid/missing metadata
-uses first six characters, ellipsis, last six, while retaining the full address.
-`parseSuffixLength` accepts RPC bytes or decimal text;
-`decodeHorizonSuffixLength` accepts canonical Horizon Base64.
-`encodeSuffixLength` prepares bytes without submitting a ManageData write.
+For offline use, `accountDisplay` builds the same presentation model from a
+known suffix length. `parseSuffixLength`, `decodeHorizonSuffixLength` and
+`encodeSuffixLength` handle RPC bytes, Horizon Base64 and decimal UTF-8
+metadata. Valid lengths are integers from 1 to 55. Encoding prepares data
+without submitting a ManageData write.
 
-## Contract clients
+## Find vanity addresses
+
+Search locally for an address ending in your chosen suffix. `farmAccount`
+returns a G address and its private seed; `farmContract` returns a deterministic
+C address and the salt needed to deploy it. Both searches support attempt
+limits, cancellation and progress callbacks.
 
 <!-- deno-check -->
 
 ```ts
-import { NetworkConfig } from "@colibri/core";
-import { createProtocolClients } from "@/contracts/mod.ts";
-import deployment from "@examples/testnet.json" with { type: "json" };
+import { farmAccount, farmContract } from "@vanity-plates/sdk/farming";
 
-const network = NetworkConfig.CustomNet({
-  networkPassphrase: deployment.networkPassphrase,
-  rpcUrl: deployment.rpcUrl,
+const account = await farmAccount({
+  suffix: "A",
+  maxAttempts: 10_000,
+  signal: AbortSignal.timeout(30_000),
 });
-const clients = createProtocolClients(network, deployment.contracts);
-const economics = await clients.treasury.read("get_config", {});
-const reservation = await clients.nft.read("get_reservation", {
-  contract_address: deployment.contracts.nft,
-});
-console.log(economics, reservation);
+if (account) console.log(account.address); // Keep account.secret private.
+
+export async function findContract(
+  deployer: string,
+  networkPassphrase: string,
+) {
+  return await farmContract({
+    suffix: "A",
+    deployer,
+    networkPassphrase,
+    maxAttempts: 10_000,
+    onProgress: ({ checked }) => console.log(`${checked} candidates checked`),
+  });
+}
 ```
 
-| Client              | Callable methods | Includes                                                           |
-| ------------------- | ---------------: | ------------------------------------------------------------------ |
-| `NftClient`         |               40 | Reservations, minting, claims, ownership, transfers, configuration |
-| `DeployerClient`    |                6 | Address prediction, NFT redemption/deployment, configuration       |
-| `MarketplaceClient` |               14 | Listings, purchases, seller sales, configuration                   |
-| `TreasuryClient`    |               40 | Fees, VNTY accounting, redemption, vault/strategy integrations     |
-| `RbacClient`        |               11 | Roles, administrator handover, upgrades                            |
+The farming module also ships `deriveContractAddress`, `verifyAccountFarmResult`
+and `verifyContractFarmResult` to reproduce and check results. For NFT plates,
+use the protocol's **deployer C address**; the network and deployer are part of
+the derived address.
 
-Names match contract methods exactly. Arguments and decoded read results are
-typed: `bigint` for 64/128/256-bit integers, `Uint8Array` for bytes, `Map` for
-maps, and tagged objects for unions. Options decode to `undefined`. Generic
-Soroban `Val` inputs (such as constructor arguments) require native Stellar SDK
-`xdr.ScVal` values. Keep token amounts as integers.
+A search returns `undefined` if its budget is exhausted; cancellation throws
+`FarmAbortedError` (`VNTY_007`). Longer suffixes require more work. Farming does
+not fund, reserve, mint or deploy. Keep private seeds secure and salts private
+until the reservation is confirmed. The SDK never logs or persists either.
 
-Construction performs no request. The first `read`, `invoke` or `ready()` loads
-and checks the deployed ABI against the bundled specification. Incompatible
-functions/records throw `VNTY_INCOMPATIBLE_CONTRACT`; additional functions are
-allowed. This checks interface compatibility, not deployment trust or contract
-safety. Recreate clients after upgrades; a deployment can change after a read.
+## Call the protocol
 
-`read()` simulates without signing or submitting; simulated ledger changes do
-not persist, and methods requiring authorization can still fail. `invoke()` uses
-Colibri's simulate/sign/submit pipeline and returns its **transaction receipt**,
-not the decoded simulation result:
+Read protocol state and submit explicitly signed operations with typed contract
+clients. Each client ships method arguments, decoded result types and access to
+its Colibri-generated bindings, including custom-type factories, errors and
+events.
+
+| Client              | Operations                                                            |
+| ------------------- | --------------------------------------------------------------------- |
+| `NftClient`         | Reservations, minting, claims, ownership, transfers and configuration |
+| `DeployerClient`    | Address prediction, NFT redemption and deployment                     |
+| `MarketplaceClient` | Listings, purchases and seller sales                                  |
+| `TreasuryClient`    | Fees, VNTY accounting, redemption and vault/strategy integrations     |
+| `RbacClient`        | Roles, administrator handover and upgrades                            |
+
+Create one client for the contract you need, or use `createProtocolClients` to
+configure all five together. This example reads an NFT owner on Testnet using
+the contract address supplied by your application:
 
 <!-- deno-check -->
 
 ```ts
-import type { TransactionConfig } from "@colibri/core";
-import type { NftClient } from "@/contracts/mod.ts";
+import { NftClient } from "@vanity-plates/sdk/contracts";
+import { NetworkConfig } from "@vanity-plates/sdk/colibri";
+
+export async function readPlateOwner(contractId: string, tokenId: number) {
+  const nft = new NftClient({
+    networkConfig: NetworkConfig.TestNet(),
+    contractId,
+  });
+  return await nft.read("owner_of", { token_id: tokenId });
+}
+```
+
+`read()` simulates without signing or submitting. `invoke()` uses Colibri's
+simulate/sign/submit pipeline and requires explicit source, signers, fee and
+timeout configuration. The first call checks the deployed ABI against the
+bundled specification. See [contract integration](#contract-integration) for
+writes, generated helpers and compatibility behavior.
+
+The SDK's `/colibri` export supplies shared `NetworkConfig`, `LocalSigner`,
+`SorobanType`, `ColibriError` and relevant transaction/signer types. Consumers
+can use these original Colibri implementations without declaring another direct
+Colibri dependency.
+
+## Integration details
+
+### SDK errors
+
+Each SDK failure has its own class, numbered code and recovery guidance. Import
+these classes, `VanityErrorCode` and the `VANITY_ERRORS` constructor registry
+from `@vanity-plates/sdk`. Catch a specific class for a particular recovery, or
+use the abstract `VanityError` base to recognize any SDK-owned failure.
+
+<!-- deno-check -->
+
+```ts
+import { InvalidPlateWidthError, VanityErrorCode } from "@vanity-plates/sdk";
+import { renderPlateSvg } from "@vanity-plates/sdk/rendering";
+
+try {
+  await renderPlateSvg({
+    address: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
+    suffixLength: 6,
+  }, { width: 100 });
+} catch (error) {
+  if (error instanceof InvalidPlateWidthError) {
+    console.log(error.code === VanityErrorCode.INVALID_PLATE_WIDTH); // VNTY_015
+    console.log(error.details); // Guidance for choosing a supported width.
+  } else {
+    throw error;
+  }
+}
+```
+
+| Code       | Error class                           | Condition                                                     |
+| ---------- | ------------------------------------- | ------------------------------------------------------------- |
+| `VNTY_001` | `InvalidPlateAddressError`            | Expected a checksum-valid Stellar G or C address.             |
+| `VNTY_002` | `InvalidSuffixError`                  | Invalid vanity suffix.                                        |
+| `VNTY_003` | `InvalidAccountAddressError`          | Account display requires a valid G address.                   |
+| `VNTY_004` | `InvalidSuffixLengthError`            | The displayed suffix length must be an integer from 1 to 55.  |
+| `VNTY_005` | `InvalidAttemptLimitError`            | The attempt limit must be a nonnegative safe integer.         |
+| `VNTY_006` | `InvalidBatchSizeError`               | The batch size must be an integer from 1 to 4096.             |
+| `VNTY_007` | `FarmAbortedError`                    | The address search was cancelled.                             |
+| `VNTY_008` | `MissingNetworkPassphraseError`       | Contract derivation requires a nonempty network passphrase.   |
+| `VNTY_009` | `InvalidDeployerAddressError`         | Contract derivation requires a valid deployer address.        |
+| `VNTY_010` | `InvalidSaltLengthError`              | A deployment salt must be a 32-byte Uint8Array.               |
+| `VNTY_011` | `InvalidSaltStrideError`              | Stride must be between 1 and 2^256 - 1.                       |
+| `VNTY_012` | `InvalidSaltHexError`                 | A salt must contain exactly 64 hexadecimal characters.        |
+| `VNTY_015` | `InvalidPlateWidthError`              | Plate width must be an integer from 120 to 4096.              |
+| `VNTY_016` | `InvalidSvgIdPrefixError`             | Invalid SVG ID prefix.                                        |
+| `VNTY_017` | `BrowserDomUnavailableError`          | A browser DOM is required for browser PNG export.             |
+| `VNTY_018` | `CanvasContextUnavailableError`       | A 2D canvas context is unavailable.                           |
+| `VNTY_019` | `PngEncodingError`                    | The canvas could not encode a PNG.                            |
+| `VNTY_020` | `BrowserPngRenderError`               | The browser could not render the canonical plate PNG.         |
+| `VNTY_021` | `ServerPngRenderError`                | Local Chromium could not export the plate.                    |
+| `VNTY_022` | `IncompatibleContractSpecError`       | The deployed contract interface is incompatible with the SDK. |
+| `VNTY_023` | `InvalidProtocolContractAddressError` | Protocol clients require a valid C address.                   |
+| `VNTY_024` | `InvalidTreasuryShareAssetError`      | The treasury share asset must be a valid C address.           |
+| `VNTY_025` | `InvalidTreasuryFeeAssetError`        | The treasury fee asset must be a valid C address.             |
+| `VNTY_026` | `InvalidTreasuryVaultError`           | The treasury vault must be a valid C address.                 |
+| `VNTY_027` | `ServerPngCleanupError`               | Local Chromium export resources could not be closed.          |
+
+Codes identify distinct conditions and are not reassigned. The registry maps
+each code to its concrete constructor, for example
+`VANITY_ERRORS[VanityErrorCode.INVALID_PLATE_WIDTH] === InvalidPlateWidthError`.
+This replaces the initial source version's broad `VNTY_INVALID_*`,
+`VNTY_ABORTED`, `VNTY_INCOMPATIBLE_CONTRACT` and `VNTY_RENDER_FAILED` codes;
+update existing catch branches to the specific classes or numbered enum values.
+The generic `new VanityError(code, message)` constructor is no longer public.
+
+Errors retain Colibri identity and provide `source`, `message`, `details` and
+`toJSON()`. Rendering failures preserve their underlying `cause` and
+`meta.cause`; server export also retains cleanup failures in
+`meta.cleanupCauses`. Specific canvas and encoding errors pass through
+unchanged. Validation errors do not capture supplied seeds, salts or other raw
+inputs. RPC and contract errors originating in Colibri keep their original
+identity and codes; the generated contract ABI error maps remain unchanged.
+
+### Contract integration
+
+Facade methods use the exact wire names, such as `owner_of`. Arguments and
+results are typed: `bigint` for 64/128/256-bit integers, `Uint8Array` for bytes,
+`Map` for maps and tagged objects for unions. Options decode to `undefined` and
+void results to `null`. Keep token amounts as integers. Arguments also accept
+Colibri wrappers; decoded results are ordinary JavaScript values. Generic
+Soroban `Val` inputs accept native Stellar SDK `xdr.ScVal` or Colibri validated
+values.
+
+Construction makes no request. The first `read`, `invoke` or `ready()` loads and
+checks the deployed ABI. Incompatible functions or records throw
+`IncompatibleContractSpecError` (`VNTY_022`); additional functions are allowed.
+This verifies interface compatibility. Recreate clients after upgrades because a
+deployment can change after a read.
+
+Reads do not persist simulated changes, and methods requiring authorization can
+still fail. Writes return Colibri's transaction receipt. Keep reservation and
+mint explicit so your application can confirm payment and retain the salt:
+
+<!-- deno-check -->
+
+```ts
+import type { NftClient } from "@vanity-plates/sdk/contracts";
+import type { TransactionConfig } from "@vanity-plates/sdk/colibri";
 
 export async function mintReservedPlate(
   nft: NftClient,
   salt: Uint8Array,
   config: TransactionConfig,
 ) {
-  // Supply source, signers, fee strategy and timeout deliberately.
-  // Call only after the reservation transaction has been confirmed.
+  // Call after confirming the reservation; supply source, signers, fee and timeout.
   return await nft.invoke("mint", { salt }, { config });
 }
 ```
 
-See `examples/invoke.ts` for reservation with network/deployer checks. Keep
-reservation and mint explicit so the caller can confirm payment and retain the
-salt. Raw Colibri errors propagate. Advanced integrations can use
-`client.contract` and its owned `readPipe`/`invokePipe`, or supply plugins when
-constructing an individual client. No platform signer is bundled.
+The repository's `examples/invoke.ts` demonstrates reservation with network and
+deployer checks. Colibri errors propagate unchanged. Advanced integrations can
+use `client.contract`, its `readPipe`/`invokePipe`, or constructor plugins.
 
-The public Testnet specs and Wasm hashes were captured on **2026-09-08** under
-`src/contracts/specs/`. They are the inputs to `deno task generate`.
-`examples/testnet.json` is a dated deployment fixture, not a permanent registry;
-supply explicit addresses for another deployment.
+#### Generated method helpers, types and events
 
-## SVG and PNG
+Each facade owns a Colibri-generated client. Complete contract APIs are exposed
+through `/contracts/nft`, `/contracts/deployer`, `/contracts/marketplace`,
+`/contracts/treasury` and `/contracts/rbac`. Each subpath exports its own
+`ContractMethods`, input/output types, factories, errors and events. The direct
+`Nft`, `Deployer`, `Marketplace`, `Treasury` and `Rbac` classes are also
+available for Colibri-style construction.
 
-<!-- deno-check -->
-
-```ts
-import { renderPlateSvg } from "@/rendering/mod.ts";
-import { renderPlatePng } from "@/rendering/png.ts";
-
-const plate = {
-  address: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
-  suffix: "PLATES",
-};
-const svg = renderPlateSvg(plate, { width: 600 });
-const png = await renderPlatePng(plate, { width: 1600 });
-```
-
-The renderer uses the webapp's canonical Clubhouse composition: font weights,
-letter spacing, badge/stripe geometry, screws, metal rim, foil lettering and
-identicon masks. The same G or C address and suffix produces the same plate in
-HTML, web/React, SVG and PNG. Legacy patterns are still available in the trait
-model but are not painted when the app suppresses them. No rarity footer is
-added.
-
-Contract plates require a matching suffix. Account plates accept a suffix or
-`suffixLength`, with the app's first-six/last-six fallback when unconfigured.
-Export width is bounded to 120–4096 pixels and includes a 32px transparent
-margin on each side, preserving the complete shadow. The plate itself keeps the
-app's 2.9 aspect ratio; image height is `ceil((width - 64) / 2.9) + 64`.
-Web/React components fill their container and allow the shadow to extend
-naturally. The full address stays accessible and visible; appearance does not
-prove ownership. Use unique `idPrefix` values for repeated inline SVGs.
-
-**Export change from the first preview:** SVG now embeds the canonical HTML/CSS
-using `foreignObject`, including all fonts and identicons. It is self-contained
-and generated without a DOM or network, but requires a modern browser renderer.
-It is not an outlined-vector SVG for resvg, Illustrator or SVG-only image
-services. Use PNG for consumers that do not support HTML-backed SVG.
-
-The `@/rendering/png.ts` entrypoint uses browser Canvas locally. Deno/Node
-consumers use the separate server entrypoint, backed by local Chromium:
-
-```sh
-deno run -A npm:playwright@1.61.0 install chromium
-deno task example:export
-```
+Generated helpers use camelCase, such as `ownerOf`. Every callable method has
+both `read` and `invoke`, because the spec does not encode mutability.
+Deployer's contract `deploy` method is named `deployMethod` to avoid Core's
+deployment API. Direct generated calls use the embedded spec; call the facade's
+`ready()` first when you need its live compatibility check.
 
 <!-- deno-check -->
 
 ```ts
-import { renderPlatePng } from "@/rendering/png-server.ts";
-const png = await renderPlatePng({
-  address: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
-  suffix: "PLATES",
-}, { width: 1600 });
-```
+import type { NftClient } from "@vanity-plates/sdk/contracts";
+import type { TransactionConfig } from "@vanity-plates/sdk/colibri";
 
-The server adapter needs process/filesystem permissions and local browser
-communication. It blocks external page requests; it never contacts our backend.
-Pass an existing Playwright `browser` for batch exports, or an `executablePath`
-for a separately installed Chromium. Caller-owned browsers remain open;
-temporary contexts always close. Calling the browser exporter without a DOM
-fails explicitly. There is no silent fallback to a different-looking plate.
-
-PNG is the resting frame. Browser fonts and image data are embedded, so a custom
-CSP needs inline styles plus `data:` in `font-src` and `img-src`. No Wasm
-execution is needed. React and headless Chromium stay outside
-core/farming/browser bundles.
-
-## Web and React
-
-<!-- deno-check -->
-
-```ts
-import { registerVanityPlate } from "@/web/mod.ts";
-registerVanityPlate(); // Call in the browser; importing is SSR-safe.
-```
-
-```html
-<vanity-plate
-  address="CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES"
-  suffix="PLATES"
-  animated
-></vanity-plate>
-```
-
-Set host width in CSS; the component keeps its aspect ratio. Attributes update
-reactively. Invalid input displays a fallback and dispatches `plate-error`.
-`animated` enables the app’s hover interactions (badge breathing, watermark
-floating, stripe gleam and rarity foil shifts) and honors reduced motion. With
-the attribute absent, the plate stays still even on hover. Embedded fonts are
-registered once in the document because shadow roots cannot own font faces.
-
-<!-- deno-check -->
-
-```tsx
-import { Plate } from "@/react/mod.tsx";
-
-export function AccountBadge({ address }: { address: string }) {
-  return (
-    <Plate
-      address={address}
-      suffixLength={4}
-      animated
-      style={{ maxWidth: 480 }}
-    />
-  );
+export async function mintWithGeneratedHelper(
+  nft: NftClient,
+  salt: Uint8Array,
+  config: TransactionConfig,
+) {
+  await nft.ready();
+  const result = await nft.contract.mint.invoke({
+    methodArgs: { salt },
+    config,
+  });
+  return { hash: result.hash, minted: result.value };
 }
 ```
 
-React uses the same canonical HTML/CSS renderer with accessible labels. Invalid
-React props throw; use your application's error boundary. React and server PNG
-are optional entry points; core validation/farming imports exclude them and
-bundled fonts. React 18 is the first verified adapter target. Deno SSR with
-React requires `--allow-env=NODE_ENV`; no other environment access is needed.
+Generated invocations add a decoded `value` to the receipt. A successful
+submission followed by a decode failure throws `CONTR_021`, retaining the
+successful receipt at `error.meta.data.result`. Inspect that receipt before
+retrying. Declared errors are installed on the generated client's pipelines;
+declared events expose helpers such as
+`nft.contract.events.ClaimWordChanged.toEventFilter()`.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for aliases, module boundaries and the
-quality gates, isolated consumer checks and the mandatory webapp-source
-comparison before a rendering release.
+### Server PNG
 
-## Verification and development
+Import the server adapter to render through local Chromium. It supports an
+existing Playwright `browser` for batches, or an `executablePath` for a separate
+Chromium installation.
 
-```sh
-deno task check          # Format, lint, source and example types
-deno task docs           # Public API docs and checked Markdown examples
-deno task test           # Offline behavior, architecture and tooling regressions
-deno task check:consumers # All public subpaths from isolated publishable sources
-deno task test:svg       # 171 saved SVGs, including every named visual combination
-deno task test:browser   # Exact visual comparisons against the webapp reference
-deno task generate       # Regenerate typed models from checked-in specs
-deno task build:preview  # Browser bundle, including lazy PNG export
-deno task test:live      # Explicit read-only Testnet checks for all five contracts
-deno task example:export # Write output/plate.svg and output/plate.png
-deno task example:farm   # Local searches without logging seeds or salts
+<!-- deno-check -->
+
+```ts
+import { renderPlatePng } from "@vanity-plates/sdk/png/server";
+
+const png = await renderPlatePng({
+  address: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
+  suffixLength: 6,
+}, { width: 1600 });
 ```
 
-Deno's experimental bundler reports upstream Stellar SDK side-effect metadata
-warnings; the browser consumer is verified directly. Deno doc reports an
-upstream React `global.d.ts` and Playwright `electron` resolution warnings;
-TypeScript and an SSR consumer test verify the adapter separately.
+Install Chromium with `deno run -A npm:playwright@1.61.0 install chromium`. The
+adapter needs process/filesystem permissions and local browser communication. It
+blocks external page requests. Caller-owned browsers remain open; temporary
+contexts close after export. The browser-only exporter fails explicitly without
+a DOM, so choose the adapter for your environment.
 
-First-version boundaries: no registry publication, Mainnet write test, wallet
-UI, GPU/worker pool or NFT indexer. Treasury's vault integration methods are
-included; use Colibri token/contract clients for direct VNTY token or
-third-party vault calls. Fee-bearing writes are tested with execution
-intercepted at the submission boundary and have not been submitted to a live
-network in this implementation. Review these flows before release.
+### Rendering dimensions and browser policy
 
-Project distribution terms remain to be selected before a public release.
-Bundled assets retain their licenses; see
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Exports support widths from 120 to 4096 pixels, with a 32px transparent margin
+on each side for the shadow. The plate keeps a 2.9 aspect ratio; total image
+height is `ceil((width - 64) / 2.9) + 64`. Web/React plates fill their container
+and allow the shadow to extend naturally. Use unique `idPrefix` values for
+repeated inline SVGs.
+
+Fonts and image data are embedded. A custom CSP needs inline styles and `data:`
+in `font-src` and `img-src`; no Wasm execution is needed. The web component
+registers embedded fonts once in the document. Legacy pattern traits remain
+available in the model but are not painted where the app suppresses them.
+
+### Longer farming searches
+
+Searches match address endings and yield between batches of 128 candidates by
+default. Use a Web Worker for sustained frontend farming. Contract searches
+support `startSalt` and positive `stride` for partitioning; salts increment as
+unsigned big-endian 256-bit integers without wrapping. Signer buffers are
+destroyed after each attempt, while JavaScript strings cannot be reliably
+zeroized.
+
+## Public entry points
+
+All features belong to one SDK. Import the subpath for the capability you need:
+
+| Import                                | Exports                                                                           |
+| ------------------------------------- | --------------------------------------------------------------------------------- |
+| `@vanity-plates/sdk`                  | Validation, suffix utilities and SDK errors                                       |
+| `@vanity-plates/sdk/farming`          | Local G keypair and C deployment-salt farming                                     |
+| `@vanity-plates/sdk/accounts`         | Account metadata and display helpers                                              |
+| `@vanity-plates/sdk/contracts`        | Five protocol clients and ABI record types                                        |
+| `@vanity-plates/sdk/contracts/<name>` | Complete generated API for `nft`, `deployer`, `marketplace`, `treasury` or `rbac` |
+| `@vanity-plates/sdk/colibri`          | Shared Colibri configuration, signing, values and types                           |
+| `@vanity-plates/sdk/rendering`        | Plate model, HTML/CSS and SVG                                                     |
+| `@vanity-plates/sdk/png`              | Browser PNG export                                                                |
+| `@vanity-plates/sdk/png/server`       | Local Chromium PNG export                                                         |
+| `@vanity-plates/sdk/web`              | `<vanity-plate>` registration                                                     |
+| `@vanity-plates/sdk/react`            | React `Plate` component                                                           |
+
+## Repository and development
+
+### Using the source package
+
+The current version is private source `0.1.0`, with the provisional package name
+`@vanity-plates/sdk`. It is not published to JSR or npm. Deno **2.9.6** is the
+verified runtime; the current dependencies are Colibri Core **1.1.1** and
+Identicon **1.1.0**.
+
+For a Deno application with a checkout at `./sdk`, add it as a workspace member
+in the application's `deno.json`:
+
+```json
+{
+  "workspace": ["./sdk"]
+}
+```
+
+The public imports shown above resolve to that local package. They also work
+inside the SDK checkout. Configure your application's React/JSX support when
+using the React adapter. Source integration is currently verified; published
+JSR/npm artifacts and a Node runtime matrix are not yet verified.
+
+### Preview and examples
+
+From the SDK checkout:
+
+```sh
+deno task preview        # Build and serve the interactive browser demo
+deno task example:farm   # Local searches without logging seeds or salts
+deno task example:export # Write output/plate.svg and output/plate.png
+```
+
+Open <http://127.0.0.1:4192/> for responsive plates, animations, image downloads
+and local farming. `examples/read-protocol.ts` demonstrates reads across all
+five contracts; `examples/invoke.ts` shows explicit transaction configuration.
+
+### Bindings and deployment fixtures
+
+Bindings are produced by `@colibri/contract-bindings@0.1.0`. Each contract has a
+dedicated `src/contracts/<name>/` directory containing its public `index.ts`,
+`constants.ts` and `types.ts`. The single `src/colibri.ts` module supplies the
+SDK's shared Colibri exports.
+
+`deno task generate` regenerates the three binding files from the spec embedded
+in `constants.ts`; `check:generated` verifies all fifteen files without writing.
+The specs were captured from public Testnet contracts on **2026-09-08**.
+Regeneration does not refresh them from the network. `examples/testnet.json` is
+a dated deployment fixture; supply explicit addresses for your deployment.
+
+### Checks and contributing
+
+```sh
+deno task check           # Format, lint, public API and example types
+deno task docs            # Public API docs and checked Markdown examples
+deno task test            # Unit/integration tests, architecture and tooling
+deno task check:consumers # Public imports from isolated publishable sources
+deno task check:generated # Reproduce bindings without writing
+deno task test:coverage   # 100% lines/branches/functions; CRAP <= 15
+deno task test:testnet    # Optional read-only public Testnet smoke tests
+```
+
+Install Chromium with `deno run -A npm:playwright@1.61.0 install chromium`
+before running the integration or coverage suites. The coverage gate includes
+all shipped runtime code, including generated clients and optional adapters.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for test conventions, module boundaries,
+binding generation, SVG baselines and the mandatory webapp-source comparison
+before a rendering release. Documentation examples are type-checked without
+executing ledger reads or transactions.
+
+Known tooling warnings concern upstream Stellar SDK side-effect metadata and
+React `global.d.ts`/Playwright `electron` documentation resolution. TypeScript,
+browser and SSR consumer checks cover these integrations separately.
+
+### Current scope and distribution
+
+The SDK does not include a wallet UI, NFT indexer or GPU/worker pool. Treasury's
+vault integration methods are included; direct VNTY token and third-party vault
+calls use Colibri token/contract clients. Fee-bearing writes have been tested
+with submission intercepted, without submitting them to a live network in this
+implementation. Validate the signed Testnet flows used by your application
+before enabling them in staging.
+
+The SDK is distributed under the [MIT license](LICENSE). Bundled assets retain
+their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+### Display input migration
+
+The unpublished display API now uses `suffixLength` instead of `suffix`. Update
+web attributes from `suffix="PLATES"` to `suffix-length="6"` for local
+rendering, or supply an RPC/network configuration for lookup. Await
+`renderPlateHtml` and `renderPlateSvg`, as with PNG exports. Farming, suffix
+validation and generated contract ABI fields still use actual suffix strings.
+`VNTY_013` and `VNTY_014` are retired; their obsolete suffix-based error classes
+were removed and those numbers are not reused.
+
+Lookup configuration errors are `MissingNftCollectionError` (`VNTY_028`),
+`ConflictingNetworkSourceError` (`VNTY_029`), `InvalidRpcUrlError` (`VNTY_030`)
+and `RpcNetworkDiscoveryError` (`VNTY_031`). Ledger and contract errors retain
+their original Colibri classes. No lookup signs or submits a transaction.

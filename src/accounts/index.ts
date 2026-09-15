@@ -1,4 +1,5 @@
 /** RPC-first account configuration and consistent fallback display. @module */
+import { type NetworkOptions, resolveNetwork } from "@/network.ts";
 import {
   buildAccountLedgerKey,
   buildDataLedgerKey,
@@ -8,7 +9,10 @@ import {
   StrKey,
 } from "@colibri/core";
 import { abbreviateAddress } from "@/validation.ts";
-import { VanityError } from "@/errors.ts";
+import {
+  InvalidAccountAddressError,
+  InvalidSuffixLengthError,
+} from "@/errors.ts";
 
 /** ManageData key used by the current Vanity Plates application. */
 export const ACCOUNT_SUFFIX_DATA_KEY = "config.svp.gchar";
@@ -58,10 +62,7 @@ export function accountDisplay(
   suffixLength?: number,
 ): AccountDisplay {
   if (!StrKey.isValidEd25519PublicKey(address)) {
-    throw new VanityError(
-      "VNTY_INVALID_ADDRESS",
-      "Account display requires a valid G address.",
-    );
+    throw new InvalidAccountAddressError();
   }
   const count = typeof suffixLength === "number"
     ? parseSuffixLength(String(suffixLength))
@@ -79,10 +80,11 @@ export interface AccountConfiguration extends AccountDisplay {
   /** RPC state: network errors reject and never become a missing configuration. */
   status: "configured" | "unconfigured" | "invalid" | "account-not-found";
 }
-/** Explicit RPC source. Provide one network configuration or an injected RPC client. */
+/** Explicit RPC source: one URL, network configuration, or injected RPC client. */
 export type AccountReadOptions =
-  | { networkConfig: NetworkConfig; rpc?: never }
-  | { rpc: RpcLedgerEntriesClient; networkConfig?: never };
+  | { networkConfig: NetworkConfig; rpc?: never; rpcUrl?: never }
+  | { rpc: RpcLedgerEntriesClient; networkConfig?: never; rpcUrl?: never }
+  | (NetworkOptions & { rpcUrl: string; rpc?: never; networkConfig?: never });
 
 /**
  * Loads the account and ManageData entry through Colibri in one RPC batch.
@@ -95,7 +97,11 @@ export async function loadAccountConfiguration(
 ): Promise<AccountConfiguration> {
   const fallback = accountDisplay(address);
   const accountId = address as `G${string}`;
-  const reader = new LedgerEntries(options);
+  const reader = new LedgerEntries(
+    options.rpc
+      ? { rpc: options.rpc }
+      : { networkConfig: (await resolveNetwork(options))! },
+  );
   const [account, data] = await reader.getMany(
     [
       buildAccountLedgerKey({ accountId }),
@@ -116,10 +122,7 @@ export function encodeSuffixLength(count: number): Uint8Array {
   if (
     typeof count !== "number" || parseSuffixLength(String(count)) === undefined
   ) {
-    throw new VanityError(
-      "VNTY_INVALID_OPTION",
-      "The displayed suffix length must be an integer from 1 to 55.",
-    );
+    throw new InvalidSuffixLengthError();
   }
   return new TextEncoder().encode(String(count));
 }

@@ -13,7 +13,7 @@ if (Deno.args.length !== 1 || Deno.args[0] !== "--accept") {
 }
 let bytes = 0;
 for (const fixture of svgFixtures) {
-  const svg = renderPlateSvg(fixture.input, fixture.options);
+  const svg = await renderPlateSvg(fixture.input, fixture.options);
   await Deno.writeTextFile(
     new URL(svgFixtureFilename(fixture), svgFixtureDirectory),
     svg,

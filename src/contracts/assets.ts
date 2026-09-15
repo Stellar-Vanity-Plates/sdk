@@ -4,8 +4,12 @@ import {
   SEP41TokenContract,
 } from "@colibri/core";
 import { isPlateAddress } from "@/validation.ts";
-import { VanityError } from "@/errors.ts";
-import type { TreasuryConfig } from "@/contracts/generated/treasury.ts";
+import {
+  InvalidTreasuryFeeAssetError,
+  InvalidTreasuryShareAssetError,
+  InvalidTreasuryVaultError,
+} from "@/errors.ts";
+import type { TreasuryConfig } from "@/contracts/types.ts";
 
 /** Colibri clients for assets and the third-party vault selected by the treasury. */
 export interface TreasuryAssetClients {
@@ -22,19 +26,14 @@ export function createTreasuryAssetClients(
   networkConfig: NetworkConfig,
   config: TreasuryConfig,
 ): TreasuryAssetClients {
-  for (
-    const address of [
-      config.share_asset,
-      config.fee_asset,
-      config.defindex_vault,
-    ]
-  ) {
-    if (!isPlateAddress(address, "contract")) {
-      throw new VanityError(
-        "VNTY_INVALID_ADDRESS",
-        "Treasury assets and vault must be valid C addresses.",
-      );
-    }
+  if (!isPlateAddress(config.share_asset, "contract")) {
+    throw new InvalidTreasuryShareAssetError();
+  }
+  if (!isPlateAddress(config.fee_asset, "contract")) {
+    throw new InvalidTreasuryFeeAssetError();
+  }
+  if (!isPlateAddress(config.defindex_vault, "contract")) {
+    throw new InvalidTreasuryVaultError();
   }
   return {
     vnty: new SEP41TokenContract({

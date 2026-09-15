@@ -1,7 +1,8 @@
 /** Reviewed SDK dependency directions; new areas must be classified explicitly. */
 export function layer(path: string): string | undefined {
-  if (path === "mod.ts" || /\/mod\.tsx?$/.test(path)) return "entry";
-  if (/^src\/(errors|validation)\.ts$/.test(path)) return "foundation";
+  if (path === "src/colibri.ts") return "colibri";
+  if (path === "index.ts") return "entry";
+  if (/^src\/(errors|validation|network)\.ts$/.test(path)) return "foundation";
   for (const area of ["accounts", "farming", "contracts", "web", "react"]) {
     if (path.startsWith(`src/${area}/`)) return area;
   }
@@ -10,6 +11,7 @@ export function layer(path: string): string | undefined {
   if (/^src\/rendering\/(png-options|browser-types)\.ts$/.test(path)) {
     return "ports";
   }
+  if (path === "src/rendering/resolve.ts") return "lookup";
   if (path.startsWith("src/rendering/")) return "rendering";
 }
 export const dependencies: Readonly<Record<string, readonly string[]>> = {
@@ -22,24 +24,28 @@ export const dependencies: Readonly<Record<string, readonly string[]>> = {
     "web",
     "react",
   ],
+  colibri: [],
   foundation: ["foundation"],
   accounts: ["accounts", "foundation"],
   farming: ["farming", "foundation"],
   contracts: ["contracts", "foundation"],
-  rendering: ["rendering", "foundation", "accounts"],
+  rendering: ["rendering", "foundation", "accounts", "lookup"],
+  lookup: ["rendering", "accounts", "contracts", "foundation"],
   ports: ["ports"],
-  png: ["rendering", "foundation", "ports"],
-  server: ["rendering", "foundation", "ports"],
-  web: ["web", "rendering"],
-  react: ["react", "rendering"],
+  png: ["rendering", "lookup", "foundation", "ports"],
+  server: ["rendering", "lookup", "foundation", "ports"],
+  web: ["web", "rendering", "lookup"],
+  react: ["react", "rendering", "lookup"],
 };
 export const externals: Readonly<Record<string, readonly string[]>> = {
   entry: [],
+  colibri: ["@colibri/core"],
   foundation: ["@colibri/core"],
   accounts: ["@colibri/core"],
   farming: ["@colibri/core"],
-  contracts: ["@colibri/core", "@stellar/stellar-sdk/contract"],
+  contracts: ["@colibri/core"],
   rendering: ["@colibri/core", "@colibri/identicon"],
+  lookup: ["@colibri/core"],
   ports: [],
   png: [],
   server: ["playwright"],

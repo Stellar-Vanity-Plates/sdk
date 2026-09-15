@@ -1,6 +1,15 @@
 /** Local G-keypair and C-salt search, independent of any platform backend. @module */
 import { calculateContractId, LocalSigner, StrKey } from "@colibri/core";
-import { VanityError } from "@/errors.ts";
+import {
+  FarmAbortedError,
+  InvalidAttemptLimitError,
+  InvalidBatchSizeError,
+  InvalidDeployerAddressError,
+  InvalidSaltHexError,
+  InvalidSaltLengthError,
+  InvalidSaltStrideError,
+  MissingNetworkPassphraseError,
+} from "@/errors.ts";
 import {
   isPlateAddress,
   normalizeSuffix,
@@ -22,7 +31,7 @@ export interface FarmOptions {
   maxAttempts?: number;
   /** Yield to the event loop and report progress after this many candidates; defaults to 128. */
   batchSize?: number;
-  /** Abort the search; cancellation rejects with VNTY_ABORTED. */
+  /** Abort the search; cancellation rejects with FarmAbortedError (VNTY_007). */
   signal?: AbortSignal;
   /** Progress callback, invoked at batch boundaries and completion. */
   onProgress?: (progress: FarmProgress) => void;
@@ -69,21 +78,18 @@ function controls(
   const suffix = normalizeSuffix(options.suffix);
   const max = options.maxAttempts ?? 100_000;
   const batch = options.batchSize ?? 128;
-  if (
-    !Number.isSafeInteger(max) || max < 0 || !Number.isSafeInteger(batch) ||
-    batch < 1 || batch > 4096
-  ) {
-    throw new VanityError(
-      "VNTY_INVALID_OPTION",
-      "Use a nonnegative safe attempt count and a batch size from 1 to 4096.",
-    );
+  if (!Number.isSafeInteger(max) || max < 0) {
+    throw new InvalidAttemptLimitError();
+  }
+  if (!Number.isSafeInteger(batch) || batch < 1 || batch > 4096) {
+    throw new InvalidBatchSizeError();
   }
   checkAbort(options.signal);
   return { suffix, max, batch };
 }
 function checkAbort(signal?: AbortSignal): void {
   if (signal?.aborted) {
-    throw new VanityError("VNTY_ABORTED", "The address search was cancelled.");
+    throw new FarmAbortedError();
   }
 }
 function progress(
@@ -138,14 +144,12 @@ export function deriveContractAddress(
   deployer: string,
   salt: Uint8Array,
 ): string {
-  if (
-    !networkPassphrase?.trim() || !isPlateAddress(deployer) ||
-    !(salt instanceof Uint8Array) || salt.length !== 32
-  ) {
-    throw new VanityError(
-      "VNTY_INVALID_OPTION",
-      "Derivation requires a network passphrase, valid deployer and 32-byte salt.",
-    );
+  if (typeof networkPassphrase !== "string" || !networkPassphrase.trim()) {
+    throw new MissingNetworkPassphraseError();
+  }
+  if (!isPlateAddress(deployer)) throw new InvalidDeployerAddressError();
+  if (!(salt instanceof Uint8Array) || salt.length !== 32) {
+    throw new InvalidSaltLengthError();
   }
   return calculateContractId(networkPassphrase, deployer, salt);
 }
@@ -155,16 +159,19 @@ export async function farmContract(
   options: ContractFarmOptions,
 ): Promise<ContractFarmResult | undefined> {
   const { suffix, max, batch } = controls(options);
+  if (
+    options.startSalt !== undefined &&
+    !(options.startSalt instanceof Uint8Array)
+  ) {
+    throw new InvalidSaltLengthError();
+  }
   const seed = options.startSalt?.slice() ??
     crypto.getRandomValues(new Uint8Array(32));
   deriveContractAddress(options.networkPassphrase, options.deployer, seed);
   const stride = options.stride ?? 1n;
   const maximum = 1n << 256n;
   if (typeof stride !== "bigint" || stride < 1n || stride >= maximum) {
-    throw new VanityError(
-      "VNTY_INVALID_OPTION",
-      "Stride must be between 1 and 2^256 - 1.",
-    );
+    throw new InvalidSaltStrideError();
   }
   let cursor = BigInt(`0x${bytesToHex(seed)}`);
   seed.fill(0);
@@ -204,10 +211,7 @@ export async function farmContract(
 /** Decodes exactly 64 hexadecimal characters into a deployment salt. */
 export function hexToSalt(hex: string): Uint8Array {
   if (typeof hex !== "string" || !/^[0-9a-f]{64}$/i.test(hex)) {
-    throw new VanityError(
-      "VNTY_INVALID_OPTION",
-      "A salt must contain exactly 64 hexadecimal characters.",
-    );
+    throw new InvalidSaltHexError();
   }
   return Uint8Array.from(hex.match(/../g)!, (byte) => parseInt(byte, 16));
 }

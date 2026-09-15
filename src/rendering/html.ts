@@ -1,6 +1,10 @@
+import { type PlateInput, resolvePlateInput } from "@/rendering/resolve.ts";
 import { Identicon } from "@colibri/identicon";
 import { StrKey } from "@colibri/core";
-import { createPlateModel, type PlateInput } from "@/rendering/model.ts";
+import {
+  createPlateModel,
+  type ResolvedPlateInput,
+} from "@/rendering/model.ts";
 import { plateStyles } from "@/rendering/vendor/plate-styles.ts";
 import { webFonts } from "@/rendering/vendor/web-fonts.ts";
 
@@ -29,8 +33,8 @@ export function escapeMarkup(value: string): string {
  * shared by the web component, React adapter and browser SVG/PNG exports.
  * The caller controls width; the plate retains the app's 2.9 aspect ratio.
  */
-export function renderPlateHtml(
-  input: PlateInput,
+export function renderResolvedPlateHtml(
+  input: ResolvedPlateInput,
   options: HtmlOptions = {},
 ): string {
   const model = createPlateModel(input);
@@ -92,4 +96,12 @@ export function renderPlateHtml(
   }<div class="vnty-plate-root" data-animated="${
     options.animated === true
   }">${content}</div>`;
+}
+
+/** Resolves on-chain display data when configured, then renders canonical HTML. */
+export async function renderPlateHtml(
+  input: PlateInput,
+  options: HtmlOptions = {},
+): Promise<string> {
+  return renderResolvedPlateHtml(await resolvePlateInput(input), options);
 }
