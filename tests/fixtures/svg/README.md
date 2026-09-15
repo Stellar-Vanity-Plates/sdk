@@ -5,7 +5,10 @@ its complete fonts, styles, accessible label and artwork. Open a file in a
 modern browser to inspect it; these use the SDK's documented HTML-backed SVG
 format.
 
-`manifest.json` pins 171 public inputs and expected traits:
+`manifest.json` pins 171 count-only display inputs and expected traits.
+Historical fixture IDs are retained (including the former lowercase suffix
+cases); their inputs now use equivalent character counts and all SVG bytes are
+unchanged:
 
 - 60 G plate combinations: 4 finishes × 3 lettering styles × 5 rarities.
 - 80 C plate combinations: 4 finishes × 4 lettering styles × 5 rarities.

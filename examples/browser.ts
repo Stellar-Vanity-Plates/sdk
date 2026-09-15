@@ -3,9 +3,9 @@ import {
   createPlateModel,
   type PlateInput,
   renderPlateSvg,
-} from "@/rendering/mod.ts";
-import { registerVanityPlate } from "@/web/mod.ts";
-import { farmContract } from "@/farming/mod.ts";
+} from "@/rendering/index.ts";
+import { registerVanityPlate } from "@/web/index.ts";
+import { farmContract } from "@/farming/index.ts";
 import config from "@examples/testnet.json" with { type: "json" };
 registerVanityPlate();
 const select = document.querySelector<HTMLSelectElement>("#sample")!;
@@ -13,7 +13,7 @@ const host = document.querySelector("#featured")!;
 const status = document.querySelector<HTMLElement>("#status")!;
 const fixtures: PlateInput[] = [{
   address: config.contracts.nft,
-  suffix: "PLATES",
+  suffixLength: 6,
 }];
 for (let i = 0; i < 4; i++) {
   const bytes = new Uint8Array(32).fill(40 + i);
@@ -23,7 +23,7 @@ for (let i = 0; i < 4; i++) {
   const address = i % 2 === 0
     ? StrKey.encodeContract(bytes)
     : StrKey.encodeEd25519PublicKey(bytes);
-  fixtures.push({ address, ...(i === 3 ? {} : { suffix: address.slice(-5) }) });
+  fixtures.push({ address, ...(i === 3 ? {} : { suffixLength: 5 }) });
 }
 const names = [
   "Protocol · PLATES",
@@ -41,7 +41,9 @@ function show(): void {
   host.replaceChildren();
   const element = document.createElement("vanity-plate");
   element.setAttribute("address", input.address);
-  if (input.suffix) element.setAttribute("suffix", input.suffix);
+  if (input.suffixLength) {
+    element.setAttribute("suffix-length", String(input.suffixLength));
+  }
   element.setAttribute("animated", "");
   host.append(element);
   document.querySelector("#traits")!.textContent =
@@ -53,9 +55,9 @@ document.querySelector("#apply-custom")!.addEventListener("click", () => {
   try {
     const address = document.querySelector<HTMLInputElement>("#custom-address")!
       .value.trim();
-    const suffix = document.querySelector<HTMLInputElement>("#custom-suffix")!
-      .value.trim().toUpperCase();
-    const input = { address, ...(suffix ? { suffix } : {}) };
+    const count =
+      document.querySelector<HTMLInputElement>("#custom-suffix-length")!.value;
+    const input = { address, suffixLength: count ? Number(count) : undefined };
     createPlateModel(input);
     const index = fixtures.push(input) - 1;
     select.add(
@@ -80,9 +82,9 @@ function download(bytes: BlobPart, type: string, name: string): void {
 }
 document.querySelector("#svg")!.addEventListener(
   "click",
-  () =>
+  async () =>
     download(
-      renderPlateSvg(fixtures[Number(select.value)]),
+      await renderPlateSvg(fixtures[Number(select.value)]),
       "image/svg+xml",
       "vanity-plate.svg",
     ),
@@ -105,7 +107,7 @@ for (const input of fixtures.slice(1, 4)) {
   card.className = "sample";
   const plate = document.createElement("vanity-plate");
   plate.setAttribute("address", input.address);
-  plate.setAttribute("suffix", input.suffix!);
+  plate.setAttribute("suffix-length", String(input.suffixLength));
   plate.setAttribute("animated", "");
   card.append(plate);
   document.querySelector("#gallery")!.append(card);

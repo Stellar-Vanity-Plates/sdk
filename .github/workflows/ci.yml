@@ -1,11 +1,19 @@
 name: SDK checks
 on:
   push:
+    branches: ["**"]
   pull_request:
+    branches: [main]
+  workflow_dispatch:
+# Keep main releases serialized, including reruns; never cancel a publication.
+concurrency:
+  group: sdk-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 permissions:
   contents: read
 jobs:
   verify:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -15,19 +23,34 @@ jobs:
       - run: deno task test:architecture
       - run: deno task check
       - run: deno task docs
-      - run: deno task test:unit
+      - run: deno task check:publish
+      - run: deno task test:unit:coverage
+      - run: deno task coverage:unit:report
+      - run: deno task check:crap coverage/unit.lcov
       - run: deno task test:tooling
       - run: deno task check:consumers
-      - name: Verify generated ABI types
-        run: |
-          deno task generate
-          git diff --exit-code -- src/contracts/generated
+      - name: Verify Colibri-generated bindings
+        run: deno task check:generated
       - name: Verify canonical style generation
         run: |
           deno task generate:styles
           git diff --exit-code -- src/rendering/vendor/plate-styles.ts
       - run: deno run -A npm:playwright@1.61.0 install --with-deps chromium
-      - run: deno task test:browser
+      - run: deno task test:integration:coverage
+      - run: deno task coverage:report
+      - run: deno task check:coverage
+      - run: deno task check:crap
+      - name: Attach coverage reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sdk-coverage
+          path: |
+            coverage/lcov.info
+            coverage/unit.lcov
+            coverage/unit/html/
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Attach failing visual comparisons
         if: failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -37,3 +60,55 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
       - run: deno task build:preview
+
+  publish:
+    name: Publish JSR and tag release
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'Stellar-Vanity-Plates/sdk'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Check out the tested commit and release tags
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Set up Deno
+        uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb
+        with:
+          deno-version: v2.9.6
+      - name: Check version and existing release state
+        id: release
+        run: deno task release:plan
+      - name: Publish to JSR with GitHub provenance
+        if: steps.release.outputs.publish == 'true'
+        run: deno publish --frozen-lockfile
+      - name: Tag the successfully published commit
+        if: steps.release.outputs.publish == 'true'
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_COMMIT: ${{ github.sha }}
+        run: |
+          git tag "$RELEASE_TAG" "$RELEASE_COMMIT"
+          git push origin "refs/tags/$RELEASE_TAG"
+      - name: Create or retain the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          PRERELEASE: ${{ steps.release.outputs.prerelease }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release $RELEASE_TAG already exists."
+          else
+            flags=(--latest=true)
+            if [[ "$PRERELEASE" == "true" ]]; then
+              flags=(--prerelease --latest=false)
+            fi
+            gh release create "$RELEASE_TAG" --verify-tag \
+              --title "$RELEASE_TAG" --generate-notes "${flags[@]}"
+          fi
+      - name: Verify the actual published JSR package
+        run: deno task check:consumers:published

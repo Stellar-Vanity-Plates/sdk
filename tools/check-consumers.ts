@@ -5,7 +5,12 @@ import {
   analyzeManifest,
   readRepository,
 } from "@tools/quality/architecture.ts";
-import { packageTargets } from "@tools/quality/policy.ts";
+import { consumerConfiguration } from "@tools/quality/consumers.ts";
+
+if (Deno.args.some((arg) => arg !== "--published")) {
+  throw new Error("Usage: check-consumers.ts [--published]");
+}
+const published = Deno.args.includes("--published");
 
 // Preserve only the dependency-cache location in otherwise empty child environments.
 const cacheInfo = await new Deno.Command(Deno.execPath(), {
@@ -26,10 +31,10 @@ const directory = await Deno.makeTempDir({ prefix: "vanity-sdk-consumer-" });
 const artifact = resolve(directory, "package"),
   consumer = resolve(directory, "consumer");
 try {
-  await Deno.mkdir(artifact);
+  if (!published) await Deno.mkdir(artifact);
   await Deno.mkdir(consumer);
   let copied = 0;
-  for (const [path, source] of files) {
+  for (const [path, source] of published ? [] : files) {
     if (
       !config.publish.include.some((value) =>
         value.endsWith("/")
@@ -42,37 +47,13 @@ try {
     await Deno.writeTextFile(target, source);
     copied++;
   }
-  // Only runtime aliases enter the package scope. No tests, tooling, source
-  // checkout paths or sibling repositories are available to fill missing files.
-  const runtimeImports = Object.fromEntries(
-    Object.entries(config.imports).filter(([key]) =>
-      key === "@/" || key in packageTargets
-    ).map(([key, target]) => [
-      key,
-      target.startsWith("./")
-        ? pathToFileURL(resolve(artifact, target)).href +
-          (target.endsWith("/") ? "/" : "")
-        : target,
-    ]),
+  const consumerConfig = consumerConfiguration(
+    config,
+    published ? undefined : pathToFileURL(artifact).href + "/",
   );
-  const publicImports = Object.fromEntries(
-    Object.entries(config.exports).map((
-      [subpath, target],
-    ) => [
-      `@consumer/sdk${subpath === "." ? "" : subpath.slice(1)}`,
-      pathToFileURL(resolve(artifact, target)).href,
-    ]),
+  const publicImports = Object.keys(consumerConfig.imports).filter((name) =>
+    name.startsWith("@consumer/sdk")
   );
-  const consumerConfig = {
-    compilerOptions: config.compilerOptions,
-    imports: {
-      ...runtimeImports,
-      ...publicImports,
-      "react-dom/server": config.imports["react-dom/server"],
-      "@types/react-dom/server": config.imports["@types/react-dom/server"],
-    },
-    scopes: { [pathToFileURL(artifact).href + "/"]: runtimeImports },
-  };
   await Deno.writeTextFile(
     resolve(consumer, "deno.json"),
     JSON.stringify(consumerConfig, null, 2),
@@ -85,7 +66,7 @@ try {
   // accidentally being omitted by the preserved, behavior-focused consumer.
   await Deno.writeTextFile(
     resolve(consumer, "entrypoints.ts"),
-    Object.keys(publicImports).map((name) => `import ${JSON.stringify(name)};`)
+    publicImports.map((name) => `import ${JSON.stringify(name)};`)
       .join("\n"),
   );
   for (
@@ -131,9 +112,9 @@ try {
     }
   }
   console.log(
-    `${
-      Object.keys(publicImports).length
-    } public entrypoints verified from ${copied} publishable files in an isolated temporary tree. This is a source-package check, not a published JSR/npm artifact.`,
+    published
+      ? `${publicImports.length} public entrypoints verified from JSR ${config.name}@${config.version} in an isolated consumer with no local SDK fallback.`
+      : `${publicImports.length} public entrypoints verified from ${copied} publishable files in an isolated temporary tree. This is a source-package check, not a published JSR/npm artifact.`,
   );
 } finally {
   await Deno.remove(directory, { recursive: true });

@@ -1,17 +1,20 @@
 import { plateImageFrame, plateWidth } from "@/rendering/svg.ts";
 /** Optional Deno/Node Chromium exporter. Never imported by browser or core entrypoints. @module */
 import { type Browser, chromium } from "playwright";
-import type { PngBrowser } from "@/rendering/browser-types.ts";
+import type {
+  PngBrowser,
+  PngBrowserContext,
+} from "@/rendering/browser-types.ts";
 export type {
   PngBrowser,
   PngBrowserContext,
   PngPage,
   PngRoute,
 } from "@/rendering/browser-types.ts";
-import type { PlateInput } from "@/rendering/model.ts";
+import type { PlateInput } from "@/rendering/resolve.ts";
 import { renderPlateSvg } from "@/rendering/svg.ts";
 import type { PngOptions } from "@/rendering/png-options.ts";
-import { VanityError } from "@/errors.ts";
+import { ServerPngCleanupError, ServerPngRenderError } from "@/errors.ts";
 export type { PngOptions } from "@/rendering/png-options.ts";
 /** Local Chromium launch options. No hosted rendering service is used. */
 export interface ServerPngOptions extends PngOptions {
@@ -32,43 +35,50 @@ export async function renderPlatePng(
   options: ServerPngOptions = {},
 ): Promise<Uint8Array> {
   const width = plateWidth(options.width ?? 1200);
-  const svg = renderPlateSvg(input, { width });
+  const svg = await renderPlateSvg(input, { width });
   let ownedBrowser: Browser | undefined;
+  let context: PngBrowserContext | undefined;
+  let result: Uint8Array | undefined;
+  let failure: { cause: unknown } | undefined;
+  const cleanupCauses: unknown[] = [];
   try {
     const browser = options.browser ??
       (ownedBrowser = await chromium.launch({
         channel: "chromium",
         executablePath: options.executablePath,
       }));
-    const context = await browser.newContext({
+    context = await browser.newContext({
       viewport: { width, height: plateImageFrame(width).height },
       deviceScaleFactor: 1,
       reducedMotion: "reduce",
     });
-    try {
-      await context.route("**/*", (route) => route.abort());
-      const page = await context.newPage();
-      await page.setContent(
-        `<style>body{margin:0}svg{display:block}</style>${svg}`,
-      );
-      await page.evaluate(async () => {
-        await document.fonts.ready;
-        await Promise.all(
-          Array.from(document.images, (image) => image.decode()),
-        );
-      });
-      return new Uint8Array(
-        await page.screenshot({ omitBackground: true, animations: "disabled" }),
-      );
-    } finally {
-      await context.close();
-    }
-  } catch {
-    throw new VanityError(
-      "VNTY_RENDER_FAILED",
-      "Local Chromium could not export the plate. Install the pinned Playwright browser or provide an executablePath/browser.",
+    await context.route("**/*", (route) => route.abort());
+    const page = await context.newPage();
+    await page.setContent(
+      `<style>body{margin:0}svg{display:block}</style>${svg}`,
     );
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await Promise.all(
+        Array.from(document.images, (image) => image.decode()),
+      );
+    });
+    result = new Uint8Array(
+      await page.screenshot({ omitBackground: true, animations: "disabled" }),
+    );
+  } catch (cause) {
+    failure = { cause };
   } finally {
-    if (ownedBrowser) await ownedBrowser.close();
+    for (const resource of [context, ownedBrowser]) {
+      if (!resource) continue;
+      try {
+        await resource.close();
+      } catch (cause) {
+        cleanupCauses.push(cause);
+      }
+    }
   }
+  if (failure) throw new ServerPngRenderError(failure.cause, cleanupCauses);
+  if (cleanupCauses.length) throw new ServerPngCleanupError(cleanupCauses);
+  return result!;
 }

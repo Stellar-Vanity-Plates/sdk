@@ -1,145 +1,93 @@
-// Generate public TypeScript models and method maps from checked-in Soroban specs.
-const names = ["nft", "deployer", "marketplace", "treasury", "rbac"];
-type Type = string | { [key: string]: unknown };
-function ts(type: Type): string {
-  if (typeof type === "string") {
-    const primitive: Record<string, string> = {
-      address: "string",
-      muxed_address: "string",
-      string: "string",
-      symbol: "string",
-      bytes: "Uint8Array",
-      bool: "boolean",
-      u32: "number",
-      i32: "number",
-      u64: "bigint",
-      i64: "bigint",
-      u128: "bigint",
-      i128: "bigint",
-      u256: "bigint",
-      i256: "bigint",
-      void: "void",
-      val: "unknown",
-      error: "unknown",
-      timepoint: "bigint",
-      duration: "bigint",
-    };
-    if (!primitive[type]) throw new Error(`Unsupported type ${type}`);
-    return primitive[type];
-  }
-  if ("udt" in type) return (type.udt as { name: string }).name;
-  if ("bytes_n" in type) return "Uint8Array";
-  if ("option" in type) {
-    return `(${
-      ts((type.option as { value_type: Type }).value_type)
-    } | undefined)`;
-  }
-  if ("vec" in type) {
-    return `Array<${ts((type.vec as { element_type: Type }).element_type)}>`;
-  }
-  if ("map" in type) {
-    const value = type.map as { key_type: Type; value_type: Type };
-    return `Map<${ts(value.key_type)}, ${ts(value.value_type)}>`;
-  }
-  if ("tuple" in type) {
-    return `[${
-      (type.tuple as { value_types: Type[] }).value_types.map(ts).join(", ")
-    }]`;
-  }
-  throw new Error(`Unsupported spec type ${JSON.stringify(type)}`);
+// Colibri owns ABI interpretation and client generation. Each contract owns its
+// binding files; shared Colibri exports live in the SDK-wide colibri module.
+import { generateBindings } from "@colibri/contract-bindings";
+import { NftSpec } from "@/contracts/nft/constants.ts";
+import { DeployerSpec } from "@/contracts/deployer/constants.ts";
+import { MarketplaceSpec } from "@/contracts/marketplace/constants.ts";
+import { TreasurySpec } from "@/contracts/treasury/constants.ts";
+import { RbacSpec } from "@/contracts/rbac/constants.ts";
+
+if (Deno.args.some((arg) => arg !== "--check") || Deno.args.length > 1) {
+  throw new Error("Usage: generate-clients.ts [--check]");
 }
-function comment(text: string): string {
-  return (text.split(/\\n|\n/)[0] || "Contract field.").replaceAll("*/", "* /");
-}
-for (const name of names) {
-  const { schema } = JSON.parse(
-    await Deno.readTextFile(`src/contracts/specs/${name}.json`),
-  );
-  const title = name === "nft" ? "Nft" : name[0].toUpperCase() + name.slice(1);
-  const lines = [
-    "/** Generated from the public Soroban specification. Regenerate with tools/generate-clients.ts. @module */",
-  ];
-  for (const entry of schema) {
-    const struct = entry.udt_struct_v0;
-    if (struct) {
-      lines.push(
-        `/** ${
-          comment(struct.doc || struct.name + " contract record.")
-        } */\nexport interface ${struct.name} {`,
+const check = Deno.args.includes("--check");
+
+for (
+  const [name, spec] of [
+    ["nft", NftSpec],
+    ["deployer", DeployerSpec],
+    ["marketplace", MarketplaceSpec],
+    ["treasury", TreasurySpec],
+    ["rbac", RbacSpec],
+  ] as const
+) {
+  const className = name[0].toUpperCase() + name.slice(1);
+  const plan = generateBindings(spec, { className });
+  const directory = `src/contracts/${name}`;
+  if (!check) await Deno.mkdir(directory, { recursive: true });
+  for (const [path, source] of Object.entries(plan.files)) {
+    if (path === "colibri.ts") continue;
+    const local = source.replace(
+      /export (?:type )?\{[^}]*\} from "\.\/colibri\.ts";\n/g,
+      "",
+    );
+    let aliased = local.replace(
+      /from "\.\/(constants|types)\.ts"/g,
+      `from "@/contracts/${name}/$1.ts"`,
+    );
+    // Bindings 0.1.0 emits a value import even when a spec has no UDT factories.
+    // This is the only import-kind adaptation, required by verbatim-module-syntax.
+    if (name === "deployer" && path === "types.ts") {
+      aliased = aliased.replace(
+        "import { SorobanType }",
+        "import type { SorobanType }",
       );
-      for (const field of struct.fields) {
-        lines.push(
-          `/** ${
-            comment(field.doc || field.name.replaceAll("_", " ") + ".")
-          } */\n${field.name}: ${ts(field.type)};`,
+    }
+    const formatter = new Deno.Command(Deno.execPath(), {
+      args: ["fmt", "--ext=ts", "-"],
+      stdin: "piped",
+      stdout: "piped",
+      stderr: "piped",
+    }).spawn();
+    const writer = formatter.stdin.getWriter();
+    await writer.write(new TextEncoder().encode(aliased));
+    await writer.close();
+    const formatted = await formatter.output();
+    if (!formatted.success) {
+      throw new Error(`Formatting failed: ${name}/${path}`);
+    }
+    const content = new TextDecoder().decode(formatted.stdout);
+    const target = `${directory}/${path}`;
+    if (check) {
+      if (await Deno.readTextFile(target) !== content) {
+        throw new Error(
+          `Generated binding differs: ${target}. Run deno task generate.`,
         );
       }
-      lines.push("}");
-    }
-    const union = entry.udt_union_v0;
-    if (union) {
-      const cases = union.cases.map(
-        (
-          item: {
-            void_v0?: { name: string };
-            tuple_v0?: { name: string; type: Type[] };
-          },
-        ) => {
-          if (item.void_v0) {
-            return `{ tag: ${
-              JSON.stringify(item.void_v0.name)
-            }; values?: undefined }`;
-          }
-          if (item.tuple_v0) {
-            return `{ tag: ${JSON.stringify(item.tuple_v0.name)}; values: [${
-              item.tuple_v0.type.map(ts).join(", ")
-            }] }`;
-          }
-          throw new Error("Unknown union case");
-        },
-      );
-      lines.push(
-        `/** ${
-          comment(union.doc || union.name + " contract variants.")
-        } */\nexport type ${union.name} = ${cases.join(" | ")};`,
-      );
-    }
-    const enumeration = entry.udt_enum_v0;
-    if (enumeration) {
-      lines.push(
-        `/** ${
-          comment(enumeration.doc || enumeration.name)
-        } */\nexport type ${enumeration.name} = ${
-          enumeration.cases.map((item: { value: number }) => item.value).join(
-            " | ",
-          )
-        };`,
-      );
-    }
+    } else await Deno.writeTextFile(target, content);
   }
-  lines.push(
-    `/** Exact method arguments and decoded simulation results for the ${name} contract. */\nexport interface ${title}Methods {`,
+  for (const warning of plan.warnings) console.warn(`${name}: ${warning}`);
+  console.log(
+    `${name}: ${check ? "verified" : "generated"} ${
+      Object.keys(plan.files).length - 1
+    } Colibri files`,
   );
-  for (const entry of schema) {
-    const fn = entry.function_v0;
-    if (!fn || fn.name === "__constructor") continue;
-    const args = fn.inputs.map((input: { name: string; type: Type }) =>
-      `${input.name}: ${ts(input.type)}`
-    ).join("; ");
-    const result = fn.outputs.length ? fn.outputs.map(ts).join(" | ") : "void";
-    lines.push(
-      `/** ${
-        comment(fn.doc || fn.name.replaceAll("_", " ") + ".")
-      } */\n${fn.name}: { args: ${
-        args ? `{ ${args} }` : "Record<string, never>"
-      }; result: ${result} };`,
-    );
+}
+if (check) {
+  for (
+    const path of [
+      "src/contracts/generated",
+      ...["nft", "deployer", "marketplace", "treasury", "rbac"].map(
+        (name) => `src/contracts/${name}/colibri.ts`,
+      ),
+    ]
+  ) {
+    try {
+      await Deno.lstat(path);
+    } catch (error) {
+      if (error instanceof Deno.errors.NotFound) continue;
+      throw error;
+    }
+    throw new Error(`Redundant binding layout: ${path}`);
   }
-  lines.push("}");
-  await Deno.mkdir("src/contracts/generated", { recursive: true });
-  await Deno.writeTextFile(
-    `src/contracts/generated/${name}.ts`,
-    lines.join("\n") + "\n",
-  );
-  console.log(`${name} types generated`);
 }

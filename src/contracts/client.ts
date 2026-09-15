@@ -1,13 +1,16 @@
 import {
   Contract,
   type ContractConstructorArgs,
+  Spec as NativeSpec,
   type TransactionConfig,
 } from "@colibri/core";
-import { Spec as NativeSpec } from "@stellar/stellar-sdk/contract";
 /** Native Stellar ABI specification accepted by compatibility checks. */
 export type Spec = NativeSpec;
 import { isPlateAddress } from "@/validation.ts";
-import { VanityError } from "@/errors.ts";
+import {
+  IncompatibleContractSpecError,
+  InvalidProtocolContractAddressError,
+} from "@/errors.ts";
 
 /** Connection and Colibri pipeline extensions for a single protocol contract. */
 export interface ClientOptions {
@@ -42,10 +45,7 @@ export function assertCompatibleSpec(expected: Spec, actual: Spec): void {
   const found = abi(actual.entries);
   for (const [name, shape] of abi(expected.entries)) {
     if (found.get(name) !== shape) {
-      throw new VanityError(
-        "VNTY_INCOMPATIBLE_CONTRACT",
-        `Contract interface differs at ${name}; update the SDK or select a compatible deployment.`,
-      );
+      throw new IncompatibleContractSpecError(name);
     }
   }
 }
@@ -58,6 +58,13 @@ export type InvocationOptions = {
   auth?: Parameters<Contract["invoke"]>[0]["auth"];
 };
 
+/** Adapts canonical Colibri inputs/outputs to the existing SDK method-map names. */
+export type MethodMap<
+  M extends { [K in keyof M]: { input: object; output: unknown } },
+> = {
+  [K in keyof M]: { args: M[K]["input"]; result: M[K]["output"] };
+};
+
 /** A typed facade over Colibri's owned read and invoke pipelines. */
 export class ProtocolClient<
   M extends { [K in keyof M]: { args: object; result: unknown } },
@@ -68,15 +75,17 @@ export class ProtocolClient<
   private initialization?: Promise<void>;
 
   /** Binds an explicit deployment to a captured public specification; performs no network request. */
-  constructor(options: ClientOptions, entries: readonly string[]) {
+  constructor(
+    options: ClientOptions,
+    entries: readonly string[],
+    createContract: (args: ContractConstructorArgs) => Contract = (args) =>
+      new Contract(args),
+  ) {
     if (!isPlateAddress(options.contractId, "contract")) {
-      throw new VanityError(
-        "VNTY_INVALID_ADDRESS",
-        "Contract clients require a valid C address.",
-      );
+      throw new InvalidProtocolContractAddressError();
     }
     this.expected = new NativeSpec([...entries]);
-    this.contract = new Contract({
+    this.contract = createContract({
       networkConfig: options.networkConfig,
       rpc: options.rpc,
       contractConfig: {

@@ -3,32 +3,83 @@
 Use Deno 2.9.6. Internal library imports use `@/`; tests, examples and tooling
 use their configured aliases. Relative imports, re-exports and static dynamic
 imports are rejected by the same lint rule used in Colibri. Use named public
-exports and thin `mod.ts` entrypoints. Keep account reads, farming, contract
-clients, rendering and optional web/React/server adapters separate; architecture
-tests enforce the dependency direction and prohibit cycles or test/tooling
-imports in the library.
+exports and `index.ts`/`index.tsx` as the canonical directory entry points. Put
+a module implementation directly in its index when a wrapper would only forward
+to one file. Keep account reads, farming, contract clients, rendering and
+optional web/React/server adapters separate; architecture tests enforce the
+dependency direction and prohibit cycles or test/tooling imports in the library.
 
 Public APIs need explicit types, JSDoc and an updated runnable example. Use
-`VanityError` codes for SDK validation/rendering failures; preserve Colibri
-errors at contract and RPC boundaries. Rendering/farming never submit
+concrete SDK error classes for validation/rendering failures; preserve Colibri
+errors at contract and RPC boundaries. Each SDK failure has a unique numbered
+`VanityErrorCode` and a concrete subclass of the abstract `VanityError` base in
+`src/errors.ts`. Register its constructor in `VANITY_ERRORS`; do not reuse a
+code for another condition or construct the base directly. Keep messages and
+recovery details in the class, retain rendering causes, and never attach seeds,
+salts or unvalidated input to metadata. Rendering/farming never submit
 transactions.
 
 ## Quality gates
 
-Run these before integration. CI runs architecture first so boundary mistakes
-fail before the slower browser checks.
+Run these before submitting a change. CI runs architecture first so boundary
+mistakes fail before the slower browser checks.
 
 | Command                     | Verifies                                                        |
 | --------------------------- | --------------------------------------------------------------- |
 | `deno task check`           | Formatting, alias lint, public exports, examples and tool types |
-| `deno task test`            | Architecture, offline behavior and tooling regressions          |
+| `deno task test`            | Architecture, unit/integration behavior and tooling regressions |
 | `deno task docs`            | Public API docs and complete Markdown examples                  |
 | `deno task check:consumers` | Every public subpath from an isolated source package            |
+| `deno task check:publish`   | JSR publication validation without uploading a version          |
+| `deno task test:coverage`   | Unit + integration coverage at 100%; CRAP at most 15            |
+| `deno task test:testnet`    | Optional unsigned reads against the public Testnet deployment   |
 | `deno task test:browser`    | Exact webapp appearance and animations across adapters          |
 
 The browser check needs local Chromium installed with
 `deno run -A npm:playwright@1.61.0 install chromium`. For a focused run use
-`test:architecture`, `test:unit`, `test:tooling` or `check:docs`.
+`test:architecture`, `test:unit`, `test:integration:rpc`, `test:tooling` or
+`check:docs`.
+
+### Tests, coverage and complexity
+
+Follow Colibri's test conventions: new suites use `describe`/`it` from
+`@std/testing/bdd`; name isolated tests `*.unit.test.ts` (or `.tsx`), runtime
+integration tests `*.integration.test.ts`, and public Testnet tests
+`*.testnet.integration.test.ts`. All tests restore stubs and release their
+resources. Keep Deno sanitizers enabled for unit and HTTP integration tests; the
+Chromium process boundary uses the existing explicit browser-suite settings.
+
+Unit tests exercise all 111 generated contract methods through real Colibri
+encoding/decoding with intercepted read/invoke pipelines, including transaction
+configuration and receipts. They also cover validation, farming, account/NFT
+lookup, React effects, web-element lifecycle and PNG failures/cleanup. React
+uses its test renderer; web lifecycle tests use an isolated Happy DOM. HTTP
+integration tests exercise actual loopback requests and XDR serialization with
+deterministic ledger/simulation responses. Chromium tests independently check
+rendering, network-driven UI and PNG exports against the webapp reference.
+
+`deno task test:coverage` requires **100% lines, branches and functions** for
+the published SDK. Its inventory includes generated bindings, optional adapters,
+barrels and vendored rendering assets. Only modules containing no executable
+statements have no coverage requirement. Tests, tooling, examples and the
+independent reference application are outside the published implementation.
+Missing source records, rounded-up percentages and coverage-suppression comments
+fail the gate; adding a source file without importing/testing it also fails.
+
+The CRAP gate uses the same `@alperlabs/crap4ts@0.2.1` analyzer as Colibri, with
+a maximum score of **15 per function** and failure for missing attributable
+coverage. CI checks CRAP on unit coverage first and checks both coverage and
+CRAP after the integration suites. Reports are written to `coverage/lcov.info`
+and `coverage/unit/html/index.html` and uploaded as CI artifacts. Each suite
+clears its own profiles; the report merges only the three named current suite
+folders.
+
+Install Chromium before `test`, `test:integration` or `test:coverage`. None of
+those commands need public-network RPC access or submit a Stellar transaction.
+`test:testnet` is a separate opt-in read-only smoke test against the dated NFT
+collection/UPBEAT fixture. It loads the live ABI and simulates reads; a Testnet
+reset or deployment change can invalidate that fixture. Public Testnet is not
+part of the deterministic CI coverage gate.
 
 ### Architecture
 
@@ -48,12 +99,14 @@ inside `deno test`, so run architecture through its test task.
 | Browser/server PNG           | Canonical rendering, core and shared adapter types |
 | Web/React                    | Their own adapter and canonical rendering          |
 
-Public `mod.ts` files only re-export their own area's named APIs. Runtime code
-imports implementation modules directly, avoiding public barrels and cycles. The
-root export remains core-only. Playwright stays in the optional server PNG
-entrypoint; React stays in its adapter. Only reviewed public Colibri exports are
-allowed. New areas or dependency identities require a deliberate policy update,
-with a negative fixture demonstrating the boundary.
+Directory indexes expose their own area's APIs and may contain implementation.
+Aggregate indexes are useful where they combine several modules; do not add a
+second entry file that simply forwards to an index. Runtime imports follow the
+same dependency direction and avoid cycles. The package root only re-exports
+core APIs. Playwright stays in the optional server PNG entrypoint; React stays
+in its adapter. Only reviewed public Colibri exports are allowed. New areas or
+dependency identities require a deliberate policy update, with a negative
+fixture demonstrating the boundary.
 
 Checks inspect all runtime files, including unreachable modules. They reject
 unresolved aliases, missing/unpublished entrypoints, runtime test/tool imports,
@@ -74,17 +127,35 @@ files.
 
 The consumer check copies only `publish.include` into a temporary package tree.
 It derives imports from the manifest's public exports and validates all subpaths
-without repository test/tooling aliases. A preserved consumer exercises local
-farming, metadata, contract construction, Colibri/native Spec identity,
-rendering, React SSR and optional adapter imports. Compile-only assertions also
-protect contract argument/result types and required transaction configuration.
-Runtime checks deny network access and cannot launch a browser or submit
-transactions.
+(including each complete generated contract API) without repository test/tooling
+aliases. A preserved consumer exercises local farming, metadata, contract
+construction, Colibri/native Spec identity, rendering, React SSR and optional
+adapter imports. Compile-only assertions also protect contract argument/result
+types and required transaction configuration. Runtime checks deny network access
+and cannot launch a browser or submit transactions.
 
-This validates the unpublished Deno source package. It does not claim published
-JSR artifacts, npm packaging or a Node runtime matrix. Add those consumers when
-the corresponding distribution is introduced. ABI models and canonical styles
-must still regenerate without a diff in CI.
+The default command validates the unpublished Deno source package. After
+publication, `deno task check:consumers:published` runs the same checks against
+`jsr:@vanity-plates/sdk@<manifest-version>`, with no local SDK files or source
+aliases available as a fallback. Neither command claims npm packaging or a Node
+runtime matrix. Colibri binding files and canonical styles must still reproduce
+in CI. `generate` calls the pinned published `@colibri/contract-bindings`
+renderer using the Spec embedded in each `src/contracts/<name>/constants.ts`. It
+writes only that contract's `index.ts`, `constants.ts` and `types.ts`,
+preserving handwritten files beside them. It omits the redundant `colibri.ts`
+file and convenience reexport blocks; contract implementations continue
+importing directly from `@colibri/core`. Local aliases, a type-only Deployer
+import and Deno formatting are adapted. `check:generated` performs read-only
+byte comparisons and rejects the old layout or repeated Colibri modules. Do not
+hand-edit binding output or maintain another ABI-to-TypeScript mapper.
+Regeneration uses the embedded specs without fetching contract updates from the
+network. The generator stays outside runtime imports.
+
+`src/colibri.ts` is the sole SDK-wide convenience module, exported through
+`@vanity-plates/sdk/colibri`. Keep it a named reexport of relevant public
+Colibri APIs. SDK implementations import from Colibri directly; consumers can
+use the shared SDK subpath without declaring Colibri as another direct
+dependency.
 
 ## Saved SVG baselines
 
@@ -166,5 +237,41 @@ The independent SVG fixture uses all original styles and components, without
 calling SDK rendering helpers. A failure records differing coordinates and
 attaches both images to CI.
 
-Package 0.1.0 is still unpublished. Do not publish or choose project licensing
-as a side effect of development. Third-party font licenses remain included.
+## Releases
+
+The SDK uses the [MIT license](LICENSE). Third-party font licenses and notices
+remain included in the package.
+
+The `SDK checks` workflow runs on branch pushes, pull requests targeting `main`
+and manual dispatch. Every run checks architecture, types, lint, docs, JSR
+publication validity, unit and integration behavior, isolated consumers,
+generated sources, 100% implementation coverage, CRAP at most 15 and the browser
+preview build. Coverage reports and failing visual comparisons are retained as
+workflow artifacts. Public Testnet smoke tests remain opt-in.
+
+A push to `main` in `Stellar-Vanity-Plates/sdk` publishes only after that run's
+`verify` job succeeds. Main runs are serialized without cancelling an active
+publication. Pull requests, feature branches and manual dispatch only run
+checks. To release:
+
+1. Set `version` in `deno.json` to the intended unpublished version and review
+   the public API and release changes. The first staging version is `0.1.0`.
+2. Run `deno task check:publish` locally and merge the reviewed change to `main`
+   after CI passes. JSR must link `@vanity-plates/sdk` to this GitHub
+   repository.
+3. CI publishes using GitHub OIDC and provenance, then creates `sdk-<version>`
+   at the tested commit and a GitHub release with generated notes. No JSR token
+   secret is needed. Prerelease versions create prerelease GitHub releases.
+4. CI runs `check:consumers:published` against the actual published version.
+   Inspect the workflow result before using the release in staging.
+
+Merges that retain an already published version skip publication and retain its
+existing tag. Reruns can create a missing GitHub release or repeat the published
+consumer check. A JSR version without a matching tag fails: recover the original
+publication commit from the successful publish run/provenance and restore its
+exact tag before retrying. A tag without a published version also fails for
+manual review. Never move a version tag to a later commit or republish a
+version.
+
+The workflow gates publication. Required checks for merging are configured
+separately in GitHub branch protection or repository rulesets.

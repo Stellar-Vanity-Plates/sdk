@@ -1,5 +1,5 @@
 import { StrKey } from "@colibri/core";
-import { VanityError } from "@/errors.ts";
+import { InvalidPlateAddressError, InvalidSuffixError } from "@/errors.ts";
 
 /** The two supported Stellar address types. */
 export type PlateKind = "account" | "contract";
@@ -14,10 +14,7 @@ export function isPlateAddress(address: string, kind?: PlateKind): boolean {
 /** Returns the address kind, throwing for invalid, muxed or secret addresses. */
 export function plateKind(address: string): PlateKind {
   if (!isPlateAddress(address)) {
-    throw new VanityError(
-      "VNTY_INVALID_ADDRESS",
-      "Expected a checksum-valid Stellar G or C address.",
-    );
+    throw new InvalidPlateAddressError();
   }
   return address.startsWith("G") ? "account" : "contract";
 }
@@ -25,10 +22,7 @@ export function plateKind(address: string): PlateKind {
 /** Normalizes a user-entered suffix to uppercase Stellar base32, 1–55 characters. */
 export function normalizeSuffix(suffix: string): string {
   if (typeof suffix !== "string" || !/^[a-z2-7]{1,55}$/i.test(suffix)) {
-    throw new VanityError(
-      "VNTY_INVALID_SUFFIX",
-      "Use 1–55 letters A–Z or digits 2–7, without spaces.",
-    );
+    throw new InvalidSuffixError();
   }
   return suffix.toUpperCase();
 }

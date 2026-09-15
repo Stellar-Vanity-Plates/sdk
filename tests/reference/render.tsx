@@ -7,7 +7,7 @@ import { ContractPlate } from "@reference/src/browser/contract-plates/ContractPl
 import { AccountPlate } from "@reference/src/browser/account-plates/AccountPlate.tsx";
 import { ClubhouseContext } from "@reference/src/browser/design-system/ClubhouseTheme.tsx";
 import { webFonts } from "@/rendering/vendor/web-fonts.ts";
-import type { PlateInput } from "@/rendering/model.ts";
+import type { ResolvedPlateInput as PlateInput } from "@/rendering/model.ts";
 let css = webFonts +
   `*{box-sizing:border-box}body{margin:0;background:transparent}html{--mono:"DM Mono",monospace}`;
 for (
@@ -36,10 +36,9 @@ for (
 css +=
   `html,body{margin:0;min-width:0;min-height:0;background:transparent!important}html{--mono:"DM Mono",monospace}`;
 function referenceMarkup(input: PlateInput): string {
-  const label = input.suffix ??
-    (input.suffixLength
-      ? input.address.slice(-input.suffixLength)
-      : `${input.address.slice(0, 6)}…${input.address.slice(-6)}`);
+  const label = input.suffixLength
+    ? input.address.slice(-input.suffixLength)
+    : `${input.address.slice(0, 6)}…${input.address.slice(-6)}`;
   const plate = input.address.startsWith("G")
     ? createElement(AccountPlate, { word: label, address: input.address })
     : createElement(

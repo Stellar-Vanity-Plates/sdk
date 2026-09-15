@@ -164,14 +164,15 @@ export function inspectModule(path: string, source: string): ModuleSyntax {
                 },
                 NewExpression(node) {
                   if (
-                    ["Error", "TypeError", "RangeError"].includes(
-                      member(node.callee),
-                    )
+                    ["Error", "TypeError", "RangeError", "VanityError"]
+                      .includes(
+                        member(node.callee),
+                      )
                   ) {
                     problem(
                       node,
                       "typed-errors",
-                      "Construct VanityError for SDK-owned failures.",
+                      "Construct a concrete SDK error class for SDK-owned failures.",
                     );
                   }
                 },

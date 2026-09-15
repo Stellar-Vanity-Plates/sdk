@@ -37,7 +37,7 @@ export function analyzeManifest(
     });
   for (
     const required of [
-      "mod.ts",
+      "index.ts",
       "deno.json",
       "README.md",
       "THIRD_PARTY_NOTICES.md",
@@ -74,7 +74,7 @@ export function analyzeManifest(
   }
   for (const include of config.publish.include) {
     if (
-      !/^(?:\.\/)?(?:src\/|mod\.ts|deno\.json|[A-Z][A-Z_]*\.md|LICENSE(?:\.txt)?)$/
+      !/^(?:\.\/)?(?:src\/|index\.ts|deno\.json|[A-Z][A-Z_]*\.md|LICENSE(?:\.txt)?)$/
         .test(include)
     ) {
       add(
@@ -97,23 +97,25 @@ export function analyzeManifest(
       );
     }
   }
-  if (config.exports["."] !== "./mod.ts") {
+  if (config.exports["."] !== "./index.ts") {
     add(
       "deno.json",
       "entrypoints",
-      "The core entrypoint must remain ./mod.ts.",
+      "The core entrypoint must remain ./index.ts.",
     );
   }
   for (const [subpath, target] of Object.entries(config.exports)) {
     const expected = subpath === "."
-      ? ["./mod.ts"]
+      ? ["./index.ts"]
+      : subpath === "./colibri"
+      ? ["./src/colibri.ts"]
       : subpath === "./png"
       ? ["./src/rendering/png.ts"]
       : subpath === "./png/server"
       ? ["./src/rendering/png-server.ts"]
       : [
-        `./src/${subpath.slice(2)}/mod.ts`,
-        `./src/${subpath.slice(2)}/mod.tsx`,
+        `./src/${subpath.slice(2)}/index.ts`,
+        `./src/${subpath.slice(2)}/index.tsx`,
       ];
     if (!expected.includes(target)) {
       add(
@@ -159,8 +161,17 @@ export function analyzeArchitecture(
     b.length - a.length
   );
   for (const [path, source] of files) {
-    const runtime = path === "mod.ts" || path.startsWith("src/");
+    const runtime = path === "index.ts" || path === "mod.ts" ||
+      path.startsWith("src/");
     if (!runtime || !/\.tsx?$/.test(path)) continue;
+    if (path === "mod.ts" || /\/mod\.tsx?$/.test(path)) {
+      add(
+        path,
+        "entrypoint-naming",
+        "Use index.ts or index.tsx as the canonical directory entry point.",
+      );
+      continue;
+    }
     if (!published(path)) {
       add(
         path,
@@ -189,11 +200,11 @@ export function analyzeArchitecture(
     for (const violation of syntax.problems) {
       add(path, violation.rule, violation.message, violation.line);
     }
-    if (area === "entry" && !syntax.barrel) {
+    if ((area === "entry" || area === "colibri") && !syntax.barrel) {
       add(
         path,
         "thin-barrels",
-        "mod.ts entrypoints must only re-export named APIs.",
+        "The package root and shared Colibri entrypoint must only re-export named APIs.",
       );
     }
     if (entrypoints.has(path) && !syntax.moduleDoc) {
@@ -239,7 +250,7 @@ export function analyzeArchitecture(
       }
       if (
         !published(resolved) ||
-        !(resolved === "mod.ts" || resolved.startsWith("src/")) ||
+        !(resolved === "index.ts" || resolved.startsWith("src/")) ||
         /\.test\.tsx?$/.test(resolved)
       ) {
         add(
@@ -250,7 +261,7 @@ export function analyzeArchitecture(
         );
       }
       const targetLayer = layer(resolved);
-      const entryArea = path === "mod.ts" ? "foundation" : path.split("/")[1];
+      const entryArea = path === "index.ts" ? "foundation" : path.split("/")[1];
       if (area === "entry" && targetLayer !== entryArea) {
         add(
           path,
@@ -339,6 +350,7 @@ export async function readRepository(root = "."): Promise<Map<string, string>> {
         (!path.startsWith("tests/") || /\.(?:tsx?|json)$/.test(name)) &&
         (path ||
           [
+            "index.ts",
             "mod.ts",
             "deno.json",
             "README.md",
