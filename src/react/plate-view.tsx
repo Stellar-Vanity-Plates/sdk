@@ -1,4 +1,4 @@
-/** Synchronous React plates. No network lookup or font assets. @module */
+/** Internal synchronous presentation; public consumers use Plate. */
 import { type CSSProperties, type ReactElement, useMemo } from "react";
 import {
   type PlatePresentation,
@@ -6,14 +6,13 @@ import {
 } from "@/rendering/markup.ts";
 import type { ResolvedPlateInput } from "@/rendering/model.ts";
 /** Properties for an offline or already resolved React plate. */
-export interface ResolvedPlateProps
-  extends ResolvedPlateInput, PlatePresentation {
+export interface PlateViewProps extends ResolvedPlateInput, PlatePresentation {
   /** Class on the outer container. */ className?: string;
   /** Layout and sizing styles. */ style?: CSSProperties;
   /** Indicates an enclosing lookup is pending. */ busy?: boolean;
 }
 /** Renders immediately on server and client. Install PlateStyles once in the document. */
-export function ResolvedPlate(
+export function PlateView(
   {
     address,
     suffixLength,
@@ -23,7 +22,7 @@ export function ResolvedPlate(
     className,
     style,
     busy = false,
-  }: ResolvedPlateProps,
+  }: PlateViewProps,
 ): ReactElement {
   const html = useMemo(
     () =>

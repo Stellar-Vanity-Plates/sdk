@@ -111,38 +111,133 @@ export function AccountBadge(
 }
 ```
 
-`AccountBadge` above is an application example wrapping `Plate`, not another SDK
-component. Pass `rpcUrl` or `networkConfig` to load settings automatically,
-`suffixLength` for a local count, or just `address` for abbreviation. SSR and
-pending lookups abbreviate; offline counts render immediately. Invalid addresses
-and lookup failures reach your application's React error boundary. React 18 is
-the verified adapter target. Deno SSR requires `--allow-env=NODE_ENV`. React and
-headless Chromium are optional entry points and stay outside core validation and
-farming imports.
+`AccountBadge` is an application wrapper around the single SDK `Plate`
+component. Pass `data={{ address, suffixLength }}` to render immediately and
+bypass all network options, or pass an address and let the SDK load and share
+its metadata. `data={{ address }}` explicitly selects the standard abbreviated
+display. The owner's configuration is never inferred from the address itself.
 
-### Resolved React, compact plates and inline labels
+### Shared React state and custom interfaces
 
-For local or already fetched data, use `ResolvedPlate` from `/react/local`. This
-entry point excludes network clients and font assets. It renders synchronously,
-including on the server, without cache warming or an asynchronous loading phase.
-Both React components accept `variant="display"` (the default),
-`variant="compact"` and `variant="picker"`; compact scales the screws for small
-plates, and picker simplifies the heading while retaining the full address.
-`inline` uses phrasing elements so a plate can sit inside a paragraph. Rarity,
-lettering, colors and insignia remain derived from the address in every variant.
+`Plate` uses `usePlate` internally. Both use TanStack Query: concurrent
+instances share an in-flight lookup, fresh cached data is available on the first
+render, and stale data remains visible during background refresh. Explicit
+`data` does not overwrite the shared on-chain record. Missing owner metadata is
+a successful, cacheable abbreviated result; RPC failures remain errors.
+
+Use `VanityProvider` to configure a network once. It creates a stable, isolated
+query client, or accepts your existing TanStack `queryClient`. No application
+fetching or plate-state management is required. Without either provider, browser
+components share one lazily created SDK client; pass `networkConfig` or `rpcUrl`
+directly in that case. An enclosing TanStack `QueryClientProvider` is also
+supported. With no network configuration, address/count inputs render locally
+and do not make requests. A component's network override replaces the inherited
+network source; its NFT collection can be overridden independently.
 
 <!-- deno-check -->
 
 ```tsx
-import { ResolvedPlate } from "@vanity-plates/sdk/react/local";
+import { Plate, usePlate, VanityProvider } from "@vanity-plates/sdk/react";
+import { NetworkConfig } from "@vanity-plates/sdk/colibri";
+
+const network = NetworkConfig.TestNet();
+
+export function Collection({ address }: { address: string }) {
+  return (
+    <VanityProvider network={network}>
+      <Plate address={address} animated />
+      <Plate address={address} variant="compact" />
+      <Plate data={{ address, suffixLength: 6 }} inline />
+      <ConfigurationStatus address={address} />
+    </VanityProvider>
+  );
+}
+
+function ConfigurationStatus({ address }: { address: string }) {
+  const { data, error, isPending, isFetching, refetch } = usePlate({ address });
+  if (isPending) return <span>Loading plate</span>;
+  if (error) return <span role="alert">{error.message}</span>;
+  return (
+    <button
+      disabled={isFetching}
+      onClick={() => {
+        void refetch().catch(() => {});
+      }}
+    >
+      {data?.suffixLength ?? "No ending configured"} · Refresh
+    </button>
+  );
+}
+```
+
+SDK-created clients use a 30-second freshness window and evict inactive browser
+entries after five minutes. Queries refetch on stale mounts, window focus and
+reconnection through TanStack's lifecycle. Automatic retries are disabled;
+`refetch()` rejects on failure. A supplied query client controls its own
+defaults. Cache keys include address, RPC endpoint, network passphrase when
+provided, and NFT collection override. Appearance options do not create
+duplicate lookups. A bare RPC URL is kept in a separate namespace from an
+explicit network config.
+
+For custom UI, `usePlate` returns `data`, `status`, `error`, `isPending`,
+`isFetching` and `refetch`. `Plate` forwards lookup failures to the nearest
+React error boundary. React 18 is the verified adapter target. Deno SSR requires
+`--allow-env=NODE_ENV`. React and TanStack stay outside core validation, farming
+and image-generation entrypoints.
+
+### Server rendering, prefetching and invalidation
+
+Create a client **per server request**, using `createPlateQueryClient()`, and
+pass it to `VanityProvider`. `plateQueryOptions` is the shared key/fetch
+definition for prefetching and TanStack hydration. SSR with explicit or
+prefetched data renders immediately; cold SSR abbreviates without fetching
+during render. Hydrate the same snapshot before the first client render. There
+is no process-wide server singleton. Browser cache sharing is scoped to the
+loaded SDK module instance; separate bundled SDK copies do not automatically
+share a cache.
+
+<!-- deno-check -->
+
+```ts
+import {
+  createPlateQueryClient,
+  plateQueryOptions,
+} from "@vanity-plates/sdk/react";
+import { NetworkConfig } from "@vanity-plates/sdk/colibri";
+
+export async function preparePlate(address: string) {
+  const queryClient = createPlateQueryClient();
+  const input = { address, networkConfig: NetworkConfig.TestNet() };
+  await queryClient.fetchQuery(plateQueryOptions(input));
+  return { queryClient, input }; // Pass this client to VanityProvider for this request.
+}
+```
+
+After changing an ending, invalidate its key on the **same** client used by your
+application, or call the mounted hook's `refetch`. Invalidation refreshes active
+observers. This is separate from submitting a protocol transaction; the SDK
+never automatically resubmits a write. Image exports and the web component
+retain their independent framework-free lookup behavior and do not share React's
+cache.
+
+### Compact plates and inline labels
+
+`Plate` accepts `variant="display"` (the default), `variant="compact"` and
+`variant="picker"`. Compact scales the screws; picker simplifies the heading
+while retaining the full address. `inline` uses phrasing elements suitable for a
+paragraph. Rarity, lettering, colors and insignia remain address-derived.
+
+<!-- deno-check -->
+
+```tsx
+import { Plate } from "@vanity-plates/sdk/react";
 
 export function PlateMention({ address }: { address: string }) {
   return (
     <p>
       Owned by{" "}
-      <ResolvedPlate
-        address={address}
-        suffixLength={6}
+      <Plate
+        data={{ address, suffixLength: 6 }}
         variant="compact"
         inline
         animated
@@ -666,8 +761,7 @@ All features belong to one SDK. Import the subpath for the capability you need:
 | `@vanity-plates/sdk/png`              | Browser PNG export                                                                |
 | `@vanity-plates/sdk/png/server`       | Local Chromium PNG export                                                         |
 | `@vanity-plates/sdk/web`              | `<vanity-plate>` registration                                                     |
-| `@vanity-plates/sdk/react`            | React `Plate` with optional network lookup, plus `ResolvedPlate`                  |
-| `@vanity-plates/sdk/react/local`      | Synchronous `ResolvedPlate`, without RPC or assets                                |
+| `@vanity-plates/sdk/react`            | `Plate`, `usePlate`, `VanityProvider`, query client/key/options helpers           |
 | `@vanity-plates/sdk/react/styles`     | Shared `PlateStyles` for SSR and browser documents                                |
 | `@vanity-plates/sdk/rendering/local`  | Synchronous HTML, model and appearance data                                       |
 | `@vanity-plates/sdk/rendering/styles` | Build-time font, artwork and variant CSS strings                                  |
@@ -783,8 +877,14 @@ their original Colibri classes. No lookup signs or submits a transaction.
 - React `Plate` no longer embeds CSS/fonts per instance. Mount `PlateStyles`
   **once**, or install the shared CSS at build time. Existing HTML/SVG/PNG
   exporters still embed their assets by default.
-- For previously resolved or local inputs, use `/react/local` or
-  `/rendering/local`. These avoid network dependencies and render immediately.
+- Use `Plate data={...}` for explicit display data and `Plate address={...}`
+  with a network/provider for automatic cached lookup. `usePlate` exposes the
+  same shared state for custom UI. The prerelease-only `ResolvedPlate` and
+  `/react/local` have been removed before publication. `/rendering/local`
+  remains the synchronous, framework-free HTML API.
+- React now uses TanStack Query 5.102.8. Query settings and SSR cache ownership
+  are documented above; legacy address/suffixLength props remain supported, with
+  network metadata taking precedence unless explicit `data` is supplied.
 - Default artwork and all 171 SVG fixtures are preserved. Compact/picker/inline
   are explicit presentation choices, not changes to address-derived traits.
 - Contract bindings now target the September 15 captured interfaces. Recheck
@@ -795,6 +895,8 @@ their original Colibri classes. No lookup signs or submits a transaction.
 Bundle reports measure complete minified browser JavaScript, separately in raw
 and gzip bytes, under pinned Deno 2.9.6. They exclude external source maps and
 shared CSS. Network-aware React and farming still need Colibri's full contract
-or signing graph; use resolved entry points for display-only pages, and let your
-bundler split optional network/farming code. A smaller entry bundle is not proof
+or signing graph. The React query function imports the network resolver lazily;
+code splitting can defer network-only chunks, but shared Colibri dependencies
+can still enter the initial bundle. Use `/rendering/local` for plain HTML
+consumers that need no React/query layer. A smaller entry bundle is not proof
 that the total application payload became smaller.

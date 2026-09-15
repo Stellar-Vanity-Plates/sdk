@@ -293,10 +293,15 @@ export map, builds complete single-file minified browser bundles with Deno
 why a public capability requires the increase. Shared asset size is reported
 separately and is not included in the resolved-renderer number.
 
-Keep `/rendering/local` and `/react/local` free of font assets, RPC clients and
-browser registration side effects. New examples must install CSS once. Public
-contract snapshots live in `tests/fixtures/contract-specs/<name>.json`, with
-dated provenance in `tests/fixtures/protocol-specs.json`. Regeneration reads
-these snapshots without fetching a moving deployment or importing the old
-generated bindings as its own source of truth. Raw snapshots and provenance are
-development fixtures; only the generated runtime specifications are published.
+Keep `/rendering/local` free of font assets, RPC clients and browser
+registration side effects. TanStack Query is allowed only in the React layer.
+Address-based `Plate` rendering must reuse `usePlate`, which owns neither
+transport nor a handwritten cache. Test synchronous cache hits, in-flight
+deduplication, explicit-data precedence, network/collection isolation,
+refresh/failure behavior and per-request SSR. New examples must install CSS
+once. Public contract snapshots live in
+`tests/fixtures/contract-specs/<name>.json`, with dated provenance in
+`tests/fixtures/protocol-specs.json`. Regeneration reads these snapshots without
+fetching a moving deployment or importing the old generated bindings as its own
+source of truth. Raw snapshots and provenance are development fixtures; only the
+generated runtime specifications are published.

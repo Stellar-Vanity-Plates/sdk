@@ -55,7 +55,7 @@ export const externals: Readonly<Record<string, readonly string[]>> = {
   png: [],
   server: ["playwright"],
   web: [],
-  react: ["react"],
+  react: ["react", "@tanstack/react-query"],
 };
 // Dependency upgrades remain possible; changing the package identity requires review.
 export const packageTargets: Readonly<Record<string, RegExp>> = {
@@ -66,6 +66,7 @@ export const packageTargets: Readonly<Record<string, RegExp>> = {
   "@colibri/identicon": /^jsr:@colibri\/identicon@[^/]+$/,
   "@stellar/stellar-sdk": /^npm:@stellar\/stellar-sdk@[^/]+$/,
   react: /^npm:react@[^/]+$/,
+  "@tanstack/react-query": /^npm:@tanstack\/react-query@[^/]+$/,
   "react/jsx-runtime": /^npm:react@[^/]+\/jsx-runtime$/,
   "@types/react": /^npm:@types\/react@[^/]+$/,
   playwright: /^npm:playwright@[^/]+$/,

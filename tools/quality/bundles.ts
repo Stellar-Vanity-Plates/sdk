@@ -15,13 +15,6 @@ export const bundleProbes = [
     gzip: 16000,
   },
   {
-    name: "resolved-react",
-    entry: "./react/local",
-    symbol: "ResolvedPlate",
-    raw: 60000,
-    gzip: 21000,
-  },
-  {
     name: "shared-css",
     entry: "./rendering/styles",
     symbol: "plateSharedCss",

@@ -20,8 +20,7 @@
     "./colibri": "./src/colibri.ts",
     "./rendering/local": "./src/rendering/local/index.ts",
     "./rendering/styles": "./src/rendering/styles/index.ts",
-    "./react/styles": "./src/react/styles/index.tsx",
-    "./react/local": "./src/react/local/index.tsx"
+    "./react/styles": "./src/react/styles/index.tsx"
   },
   "imports": {
     "@colibri/core": "jsr:@colibri/core@1.1.1",
@@ -55,7 +54,8 @@
     "happy-dom": "npm:happy-dom@20.14.5",
     "@colibri/core/strkey": "jsr:@colibri/core@1.1.1/strkey",
     "@colibri/core/errors": "jsr:@colibri/core@1.1.1/errors",
-    "@colibri/identicon/svg": "jsr:@colibri/identicon@1.1.0/svg"
+    "@colibri/identicon/svg": "jsr:@colibri/identicon@1.1.0/svg",
+    "@tanstack/react-query": "npm:@tanstack/react-query@5.102.8"
   },
   "compilerOptions": {
     "strict": true,

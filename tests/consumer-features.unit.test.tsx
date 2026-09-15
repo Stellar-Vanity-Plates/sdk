@@ -14,7 +14,6 @@ import {
   plateVariantCss,
 } from "@/rendering/styles/index.ts";
 import { PlateStyles } from "@/react/styles/index.tsx";
-import { ResolvedPlate } from "@/react/local/index.tsx";
 import { Plate } from "@/react/index.tsx";
 import {
   bytesToHex,
@@ -78,7 +77,7 @@ Deno.test("resolved renderers share exact palette/insignia and install fonts onc
       <PlateStyles />
       {Array.from(
         { length: 50 },
-        (_, i) => <ResolvedPlate key={i} {...input} />,
+        (_, i) => <Plate key={i} data={input} />,
       )}
     </>,
   );
@@ -108,7 +107,7 @@ Deno.test("resolved renderers share exact palette/insignia and install fonts onc
     const styled = await renderPlateHtml(input, { variant, inline: true });
     assert(styled.includes(plateVariantCss));
     const react = renderToStaticMarkup(
-      <ResolvedPlate {...input} variant={variant} inline animated />,
+      <Plate data={input} variant={variant} inline animated />,
     );
     assert(react.includes(html));
   }

@@ -4,7 +4,7 @@ import { StrKey } from "@colibri/core/strkey";
 import { createElement } from "react";
 // @deno-types="@types/react-dom/server"
 import { renderToStaticMarkup } from "react-dom/server";
-import { ResolvedPlate } from "@/react/local/index.tsx";
+import { Plate } from "@/react/index.tsx";
 import { PlateStyles } from "@/react/styles/index.tsx";
 import { renderResolvedPlateHtml } from "@/rendering/local/index.ts";
 import { plateSharedCss } from "@/rendering/styles/index.ts";
@@ -64,7 +64,7 @@ Deno.test("compact, picker and inline artwork share real browser styles across R
             frame(
               renderToStaticMarkup(createElement(PlateStyles)) +
                 renderToStaticMarkup(
-                  createElement(ResolvedPlate, { ...input, ...options }),
+                  createElement(Plate, { data: input, ...options }),
                 ),
             ),
           );

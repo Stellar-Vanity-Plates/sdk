@@ -7,7 +7,12 @@ import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import { NetworkConfig, StrKey } from "@colibri/core";
 import { Plate } from "@/react/index.tsx";
 import { NftClient } from "@/contracts/index.ts";
-import { settle } from "@tests/fixtures/dom.ts";
+import { settle as microtasks } from "@tests/fixtures/dom.ts";
+async function settle() {
+  await microtasks();
+  await new Promise((r) => setTimeout(r, 0));
+  await microtasks();
+}
 const address = StrKey.encodeContract(new Uint8Array(32));
 const network = NetworkConfig.TestNet();
 const html = (view: ReactTestRenderer) =>
@@ -49,7 +54,13 @@ describe("React display lifecycle", () => {
       );
       await act(async () => {
         view.update(
-          <Plate address={address} networkConfig={network} suffixLength={2} />,
+          <Plate
+            address={address}
+            networkConfig={NetworkConfig.TestNet({
+              rpcUrl: "https://two.test",
+            })}
+            suffixLength={2}
+          />,
         );
         await settle();
       });
@@ -66,7 +77,13 @@ describe("React display lifecycle", () => {
       assertEquals(html(view), resolved);
       await act(async () => {
         view.update(
-          <Plate address={address} networkConfig={network} suffixLength={4} />,
+          <Plate
+            address={address}
+            networkConfig={NetworkConfig.TestNet({
+              rpcUrl: "https://three.test",
+            })}
+            suffixLength={4}
+          />,
         );
         await settle();
       });
@@ -81,7 +98,14 @@ describe("React display lifecycle", () => {
       });
       assertEquals(html(view), offline);
       await act(async () => {
-        view.update(<Plate address={address} networkConfig={network} />);
+        view.update(
+          <Plate
+            address={address}
+            networkConfig={NetworkConfig.TestNet({
+              rpcUrl: "https://four.test",
+            })}
+          />,
+        );
         await settle();
       });
       await act(async () => {

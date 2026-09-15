@@ -84,7 +84,7 @@ Deno.test({
           });
         } else {
           assertEquals(body.method, "getLedgerEntries");
-          if (route.request().url().endsWith("/slow")) {
+          if (route.request().url().includes("/slow")) {
             pending.push(route);
             if (pending.length === 2) slowReady.resolve();
           } else if (route.request().url().endsWith("/error")) {
@@ -230,9 +230,12 @@ Deno.test({
       await page.evaluate((address) => {
         document.querySelector("#web")!.setAttribute(
           "rpc-url",
-          "https://rpc.example.test/slow",
+          "https://rpc.example.test/slow-unmount",
         );
-        lookupTest.react({ address, rpcUrl: "https://rpc.example.test/slow" });
+        lookupTest.react({
+          address,
+          rpcUrl: "https://rpc.example.test/slow-unmount",
+        });
       }, address);
       await slowReady.promise;
       await page.evaluate(() => {
