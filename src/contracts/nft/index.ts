@@ -826,6 +826,36 @@ export class Nft extends Contract {
   };
 
   /**
+   * Reserves a vanity address using a fixed fee credit and bounded VNTY
+   * payment.
+   *
+   * # Arguments
+   * * `e` - Execution environment.
+   * * `recipient` - Receives the reserved NFT and pays unless a payer is
+   * specified.
+   * * `contract_address` - Undeployed vanity address to reserve.
+   * * `suffix` - Validated plate ending.
+   * * `payment` - Expected fee, exact credit, maximum VNTY, and exclusive Unix
+   * deadline.
+   *
+   * # Errors
+   * Propagates reservation validation, occupied-address, authorization, and
+   * catalog errors.
+   * Treasury rejects expired payments, changed fees, exceeded limits,
+   * unavailable NAV,
+   * invalid shares, or failed maximum transfer/refund. Failure is atomic.
+   */
+  readonly reserveWithLimit: NftMethod<"reserve_with_limit"> = {
+    read: (methodArgs) =>
+      this.read({ method: ContractMethods.ReserveWithLimit, methodArgs }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.ReserveWithLimit,
+      }),
+  };
+
+  /**
    * Returns the newest token ever minted for a vanity contract address.
    *
    * Unlike `get_token_id`, this historical lookup also succeeds when the
@@ -1055,6 +1085,37 @@ export class Nft extends Contract {
   };
 
   /**
+   * Reserves a vanity address using a fixed fee credit and bounded VNTY
+   * payment.
+   *
+   * # Arguments
+   * * `e` - Execution environment.
+   * * `payer` - Authorizes and pays the fee.
+   * * `recipient` - Receives the reserved NFT and pays unless a payer is
+   * specified.
+   * * `contract_address` - Undeployed vanity address to reserve.
+   * * `suffix` - Validated plate ending.
+   * * `payment` - Expected fee, exact credit, maximum VNTY, and exclusive Unix
+   * deadline.
+   *
+   * # Errors
+   * Propagates reservation validation, occupied-address, authorization, and
+   * catalog errors.
+   * Treasury rejects expired payments, changed fees, exceeded limits,
+   * unavailable NAV,
+   * invalid shares, or failed maximum transfer/refund. Failure is atomic.
+   */
+  readonly reserveForWithLimit: NftMethod<"reserve_for_with_limit"> = {
+    read: (methodArgs) =>
+      this.read({ method: ContractMethods.ReserveForWithLimit, methodArgs }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.ReserveForWithLimit,
+      }),
+  };
+
+  /**
    * Reserves for another recipient while burning the payer's reward shares
    * toward the fee.
    *
@@ -1133,6 +1194,42 @@ export class Nft extends Contract {
       this.invoke({
         ...args,
         method: ContractMethods.SetReservationDuration,
+      }),
+  };
+
+  /**
+   * Reserves a vanity address using a fixed fee credit and bounded VNTY
+   * payment.
+   *
+   * # Arguments
+   * * `e` - Execution environment.
+   * * `recipient` - Receives the reserved NFT and pays unless a payer is
+   * specified.
+   * * `contract_address` - Undeployed vanity address to reserve.
+   * * `suffix` - Validated plate ending.
+   * * `catalog_price` - Administrator-approved premium, paid separately in the
+   * fee asset.
+   * * `payment` - Expected fee, exact credit, maximum VNTY, and exclusive Unix
+   * deadline.
+   * * `operator` - RBAC administrator coauthorizing the catalog price.
+   *
+   * # Errors
+   * Propagates reservation validation, occupied-address, authorization, and
+   * catalog errors.
+   * Treasury rejects expired payments, changed fees, exceeded limits,
+   * unavailable NAV,
+   * invalid shares, or failed maximum transfer/refund. Failure is atomic.
+   */
+  readonly reserveCatalogWithLimit: NftMethod<"reserve_catalog_with_limit"> = {
+    read: (methodArgs) =>
+      this.read({
+        method: ContractMethods.ReserveCatalogWithLimit,
+        methodArgs,
+      }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.ReserveCatalogWithLimit,
       }),
   };
 

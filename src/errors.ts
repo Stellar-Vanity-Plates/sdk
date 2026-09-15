@@ -1,4 +1,4 @@
-import { ColibriError } from "@colibri/core";
+import { ColibriError } from "@colibri/core/errors";
 
 /** Stable SDK-owned codes. Each numbered value identifies one concrete error class. */
 export enum VanityErrorCode {
@@ -61,6 +61,8 @@ export enum VanityErrorCode {
   INVALID_RPC_URL = "VNTY_030",
   /** The RPC network could not be identified. */
   RPC_NETWORK_DISCOVERY_FAILED = "VNTY_031",
+  /** Invalid or overflowing worker partition. */
+  INVALID_FARM_PARTITION = "VNTY_032",
 }
 
 /** Diagnostic metadata; validation inputs, seeds and salts are never captured. */
@@ -512,8 +514,23 @@ export class RpcNetworkDiscoveryError
     );
   }
 }
+/** Worker partitions must be disjoint and fit the 256-bit salt space. */
+export class InvalidFarmPartitionError
+  extends VanityError<VanityErrorCode.INVALID_FARM_PARTITION> {
+  /** Creates this failure with its stable code and recovery guidance. */
+  constructor() {
+    super(
+      VanityErrorCode.INVALID_FARM_PARTITION,
+      "farming",
+      "Invalid contract farming partition.",
+      "Use a positive safe worker count and an index in range, without salt overflow.",
+    );
+  }
+}
 /** Complete, immutable code-to-constructor registry for SDK-owned errors. */
 export const VANITY_ERRORS: {
+  readonly [VanityErrorCode.INVALID_FARM_PARTITION]:
+    typeof InvalidFarmPartitionError;
   readonly [VanityErrorCode.INVALID_PLATE_ADDRESS]:
     typeof InvalidPlateAddressError;
   readonly [VanityErrorCode.INVALID_SUFFIX]: typeof InvalidSuffixError;
@@ -564,6 +581,7 @@ export const VANITY_ERRORS: {
   readonly [VanityErrorCode.RPC_NETWORK_DISCOVERY_FAILED]:
     typeof RpcNetworkDiscoveryError;
 } = Object.freeze({
+  [VanityErrorCode.INVALID_FARM_PARTITION]: InvalidFarmPartitionError,
   [VanityErrorCode.MISSING_NFT_COLLECTION]: MissingNftCollectionError,
   [VanityErrorCode.CONFLICTING_NETWORK_SOURCE]: ConflictingNetworkSourceError,
   [VanityErrorCode.INVALID_RPC_URL]: InvalidRpcUrlError,

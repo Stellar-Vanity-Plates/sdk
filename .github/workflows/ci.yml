@@ -28,6 +28,7 @@ jobs:
       - run: deno task coverage:unit:report
       - run: deno task check:crap coverage/unit.lcov
       - run: deno task test:tooling
+      - run: deno task check:bundles
       - run: deno task check:consumers
       - name: Verify Colibri-generated bindings
         run: deno task check:generated

@@ -1,3 +1,4 @@
+import { PlateStyles } from "@/react/styles/index.tsx";
 import { registerVanityPlate } from "@/web/index.ts";
 import { renderPlateHtml, renderPlateSvg } from "@/rendering/index.ts";
 import { renderPlatePng } from "@/rendering/png.ts";
@@ -16,7 +17,14 @@ Object.assign(globalThis, {
   lookupTest: {
     react(props: PlateProps) {
       root ??= createRoot(document.querySelector("#react")!);
-      root.render(createElement(Plate, props));
+      root.render(
+        createElement(
+          "div",
+          null,
+          createElement(PlateStyles),
+          createElement(Plate, props),
+        ),
+      );
     },
     unmount() {
       root?.unmount();

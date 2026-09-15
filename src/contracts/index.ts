@@ -2,7 +2,6 @@
 export { createTreasuryAssetClients } from "@/contracts/assets.ts";
 export type { TreasuryAssetClients } from "@/contracts/assets.ts";
 import type { NetworkConfig } from "@colibri/core";
-import { type ClientOptions, ProtocolClient } from "@/contracts/client.ts";
 export { assertCompatibleSpec, ProtocolClient } from "@/contracts/client.ts";
 export type {
   ClientOptions,
@@ -11,105 +10,35 @@ export type {
   Spec,
 } from "@/contracts/client.ts";
 export * from "@/contracts/types.ts";
-import { Nft } from "@/contracts/nft/index.ts";
-import { NftSpec } from "@/contracts/nft/constants.ts";
-import type { NftMethods } from "@/contracts/types.ts";
 export { Nft } from "@/contracts/nft/index.ts";
 export { NftErrors, NftSpec } from "@/contracts/nft/constants.ts";
-/** SDK facade backed by the Colibri-generated nft client. */
-export class NftClient extends ProtocolClient<NftMethods> {
-  /** Generated client with typed method helpers, errors, events and Core pipelines. */
-  declare readonly contract: Nft;
-  /** Creates a client without issuing any network request. */
-  constructor(options: ClientOptions) {
-    super(
-      options,
-      NftSpec.entries.map((entry) => entry.toXdr("base64")),
-      (args) => new Nft(args),
-    );
-  }
-}
-import { Deployer } from "@/contracts/deployer/index.ts";
-import { DeployerSpec } from "@/contracts/deployer/constants.ts";
-import type { DeployerMethods } from "@/contracts/types.ts";
+export { NftClient } from "@/contracts/nft-client.ts";
+import { NftClient } from "@/contracts/nft-client.ts";
 export { Deployer } from "@/contracts/deployer/index.ts";
 export {
   DeployerErrors,
   DeployerSpec,
 } from "@/contracts/deployer/constants.ts";
-/** SDK facade backed by the Colibri-generated deployer client. */
-export class DeployerClient extends ProtocolClient<DeployerMethods> {
-  /** Generated client with typed method helpers, errors, events and Core pipelines. */
-  declare readonly contract: Deployer;
-  /** Creates a client without issuing any network request. */
-  constructor(options: ClientOptions) {
-    super(
-      options,
-      DeployerSpec.entries.map((entry) => entry.toXdr("base64")),
-      (args) => new Deployer(args),
-    );
-  }
-}
-import { Marketplace } from "@/contracts/marketplace/index.ts";
-import { MarketplaceSpec } from "@/contracts/marketplace/constants.ts";
-import type { MarketplaceMethods } from "@/contracts/types.ts";
+export { DeployerClient } from "@/contracts/deployer-client.ts";
+import { DeployerClient } from "@/contracts/deployer-client.ts";
 export { Marketplace } from "@/contracts/marketplace/index.ts";
 export {
   MarketplaceErrors,
   MarketplaceSpec,
 } from "@/contracts/marketplace/constants.ts";
-/** SDK facade backed by the Colibri-generated marketplace client. */
-export class MarketplaceClient extends ProtocolClient<MarketplaceMethods> {
-  /** Generated client with typed method helpers, errors, events and Core pipelines. */
-  declare readonly contract: Marketplace;
-  /** Creates a client without issuing any network request. */
-  constructor(options: ClientOptions) {
-    super(
-      options,
-      MarketplaceSpec.entries.map((entry) => entry.toXdr("base64")),
-      (args) => new Marketplace(args),
-    );
-  }
-}
-import { Treasury } from "@/contracts/treasury/index.ts";
-import { TreasurySpec } from "@/contracts/treasury/constants.ts";
-import type { TreasuryMethods } from "@/contracts/types.ts";
+export { MarketplaceClient } from "@/contracts/marketplace-client.ts";
+import { MarketplaceClient } from "@/contracts/marketplace-client.ts";
 export { Treasury } from "@/contracts/treasury/index.ts";
 export {
   TreasuryErrors,
   TreasurySpec,
 } from "@/contracts/treasury/constants.ts";
-/** SDK facade backed by the Colibri-generated treasury client. */
-export class TreasuryClient extends ProtocolClient<TreasuryMethods> {
-  /** Generated client with typed method helpers, errors, events and Core pipelines. */
-  declare readonly contract: Treasury;
-  /** Creates a client without issuing any network request. */
-  constructor(options: ClientOptions) {
-    super(
-      options,
-      TreasurySpec.entries.map((entry) => entry.toXdr("base64")),
-      (args) => new Treasury(args),
-    );
-  }
-}
-import { Rbac } from "@/contracts/rbac/index.ts";
-import { RbacSpec } from "@/contracts/rbac/constants.ts";
-import type { RbacMethods } from "@/contracts/types.ts";
+export { TreasuryClient } from "@/contracts/treasury-client.ts";
+import { TreasuryClient } from "@/contracts/treasury-client.ts";
 export { Rbac } from "@/contracts/rbac/index.ts";
 export { RbacErrors, RbacSpec } from "@/contracts/rbac/constants.ts";
-/** SDK facade backed by the Colibri-generated rbac client. */
-export class RbacClient extends ProtocolClient<RbacMethods> {
-  /** Generated client with typed method helpers, errors, events and Core pipelines. */
-  declare readonly contract: Rbac;
-  /** Creates a client without issuing any network request. */
-  constructor(options: ClientOptions) {
-    super(
-      options,
-      RbacSpec.entries.map((entry) => entry.toXdr("base64")),
-      (args) => new Rbac(args),
-    );
-  }
-}
+export { RbacClient } from "@/contracts/rbac-client.ts";
+import { RbacClient } from "@/contracts/rbac-client.ts";
 /** Addresses for one explicit protocol deployment. */
 export interface ProtocolAddresses {
   /** Vanity NFT contract. */ nft: string;

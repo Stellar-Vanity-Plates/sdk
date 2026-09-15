@@ -1,12 +1,7 @@
 import {
-  KNOWN_CONTRACT_ERROR_SIMULATION_FAILED,
-  NetworkConfig,
-} from "@colibri/core";
-import {
   loadAccountConfiguration,
   parseSuffixLength,
 } from "@/accounts/index.ts";
-import { NftClient } from "@/contracts/index.ts";
 import { MissingNftCollectionError } from "@/errors.ts";
 import { type NetworkOptions, resolveNetwork } from "@/network.ts";
 import { plateKind, validatePlate } from "@/validation.ts";
@@ -16,10 +11,10 @@ import type { ResolvedPlateInput } from "@/rendering/model.ts";
 export const NFT_CONTRACT_DEFAULTS: Readonly<
   Record<string, string | undefined>
 > = Object.freeze({
-  [NetworkConfig.TestNet().networkPassphrase]:
+  ["Test SDF Network ; September 2015"]:
     "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
   // Mainnet placeholder, requested until the deployment address is available.
-  [NetworkConfig.MainNet().networkPassphrase]: undefined,
+  ["Public Global Stellar Network ; September 2015"]: undefined,
 });
 
 /** Shared display input for UI components and HTML, SVG and PNG exports. */
@@ -51,6 +46,11 @@ export async function resolvePlateInput(
   const contractId = input.nftContractId ??
     NFT_CONTRACT_DEFAULTS[networkConfig.networkPassphrase];
   if (!contractId) throw new MissingNftCollectionError();
+  const [{ NftClient }, { KNOWN_CONTRACT_ERROR_SIMULATION_FAILED }] =
+    await Promise.all([
+      import("@/contracts/nft-client.ts"),
+      import("@colibri/core"),
+    ]);
   const nft = new NftClient({ networkConfig, contractId });
   try {
     const tokenId = await nft.read("get_latest_token_id", {

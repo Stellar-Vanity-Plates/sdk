@@ -40,11 +40,16 @@ export const dependencies: Readonly<Record<string, readonly string[]>> = {
 export const externals: Readonly<Record<string, readonly string[]>> = {
   entry: [],
   colibri: ["@colibri/core"],
-  foundation: ["@colibri/core"],
-  accounts: ["@colibri/core"],
+  foundation: ["@colibri/core", "@colibri/core/strkey", "@colibri/core/errors"],
+  accounts: ["@colibri/core", "@colibri/core/strkey"],
   farming: ["@colibri/core"],
   contracts: ["@colibri/core"],
-  rendering: ["@colibri/core", "@colibri/identicon"],
+  rendering: [
+    "@colibri/core",
+    "@colibri/core/strkey",
+    "@colibri/identicon",
+    "@colibri/identicon/svg",
+  ],
   lookup: ["@colibri/core"],
   ports: [],
   png: [],
@@ -54,6 +59,9 @@ export const externals: Readonly<Record<string, readonly string[]>> = {
 };
 // Dependency upgrades remain possible; changing the package identity requires review.
 export const packageTargets: Readonly<Record<string, RegExp>> = {
+  "@colibri/core/strkey": /^jsr:@colibri\/core@[^/]+\/strkey$/,
+  "@colibri/core/errors": /^jsr:@colibri\/core@[^/]+\/errors$/,
+  "@colibri/identicon/svg": /^jsr:@colibri\/identicon@[^/]+\/svg$/,
   "@colibri/core": /^jsr:@colibri\/core@[^/]+$/,
   "@colibri/identicon": /^jsr:@colibri\/identicon@[^/]+$/,
   "@stellar/stellar-sdk": /^npm:@stellar\/stellar-sdk@[^/]+$/,

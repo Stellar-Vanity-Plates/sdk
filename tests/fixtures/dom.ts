@@ -1,6 +1,8 @@
 import { Window } from "happy-dom";
 /** Installs an isolated DOM only for the lifetime of a unit test. */
-export function installDom() {
+export function installDom(
+  styles: "native" | "absent" | "legacy" | "no-shadow" = "native",
+) {
   const window = new Window({ url: "https://sdk.example.test" });
   const keys = [
     "document",
@@ -8,6 +10,8 @@ export function installDom() {
     "customElements",
     "CustomEvent",
     "Image",
+    "CSSStyleSheet",
+    "ShadowRoot",
   ] as const;
   const descriptors = keys.map((key) =>
     [key, Object.getOwnPropertyDescriptor(globalThis, key)] as const
@@ -16,6 +20,19 @@ export function installDom() {
     Object.defineProperty(globalThis, key, {
       configurable: true,
       value: window[key],
+    });
+  }
+  if (styles === "absent") Reflect.deleteProperty(globalThis, "CSSStyleSheet");
+  if (styles === "legacy") {
+    Object.defineProperty(globalThis, "CSSStyleSheet", {
+      configurable: true,
+      value: class {},
+    });
+  }
+  if (styles === "no-shadow") {
+    Object.defineProperty(globalThis, "ShadowRoot", {
+      configurable: true,
+      value: class {},
     });
   }
   return {

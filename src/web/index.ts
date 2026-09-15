@@ -1,8 +1,12 @@
 /** Framework-independent plate component. Safe to import during SSR. @module */
 import { type PlateInput, resolvePlateInput } from "@/rendering/resolve.ts";
-import { renderResolvedPlateHtml } from "@/rendering/html.ts";
+import { renderResolvedPlateHtml } from "@/rendering/markup.ts";
 import type { ResolvedPlateInput } from "@/rendering/model.ts";
-import { webFonts } from "@/rendering/vendor/web-fonts.ts";
+import {
+  plateArtworkCss,
+  plateFontCss,
+  plateVariantCss,
+} from "@/rendering/styles/index.ts";
 
 /** Registered element, accepting a Colibri network configuration as a property. */
 export interface VanityPlateElement extends HTMLElement {
@@ -14,7 +18,7 @@ export type VanityPlateConstructor = new () => VanityPlateElement;
 
 /**
  * Registers <vanity-plate>. Attributes: address, suffix-length, rpc-url,
- * nft-contract-id, animated. Alternatively assign the networkConfig property.
+ * nft-contract-id, animated, variant, inline. Alternatively assign the networkConfig property.
  * Network metadata takes precedence over the local count. Missing metadata abbreviates.
  * Pending lookups abbreviate; failures dispatch plate-error and retain that fallback.
  * No registration or DOM access occurs merely by importing this module.
@@ -25,11 +29,19 @@ export function registerVanityPlate(
   if (!document.querySelector("style[data-vanity-plate-fonts]")) {
     const fonts = document.createElement("style");
     fonts.dataset.vanityPlateFonts = "";
-    fonts.textContent = webFonts;
+    fonts.textContent = plateFontCss;
     document.head.append(fonts);
   }
   const existing = customElements.get(tagName);
   if (existing) return existing as VanityPlateConstructor;
+  const css =
+    `${plateArtworkCss}${plateVariantCss}:host{display:block;width:100%}.vnty-plate-root{width:100%}:host([inline]){display:inline-block;width:10em;vertical-align:middle}`;
+  const sheet = typeof CSSStyleSheet !== "undefined" &&
+      "replaceSync" in CSSStyleSheet.prototype &&
+      "adoptedStyleSheets" in ShadowRoot.prototype
+    ? new CSSStyleSheet()
+    : undefined;
+  sheet?.replaceSync(css);
   class PlateElement extends HTMLElement implements VanityPlateElement {
     static observedAttributes = [
       "address",
@@ -37,6 +49,8 @@ export function registerVanityPlate(
       "rpc-url",
       "nft-contract-id",
       "animated",
+      "variant",
+      "inline",
     ];
     private readonly root = this.attachShadow({ mode: "open" });
     private revision = 0;
@@ -64,10 +78,16 @@ export function registerVanityPlate(
       if (this.isConnected) void this.update();
     }
     private paint(input: ResolvedPlateInput): void {
-      this.root.innerHTML =
-        "<style>:host{display:block;width:100%}.vnty-plate-root{width:100%}</style>" +
+      if (sheet) this.root.adoptedStyleSheets = [sheet];
+      const value = this.getAttribute("variant");
+      const variant = value === "compact" || value === "picker"
+        ? value
+        : "display";
+      this.root.innerHTML = (sheet ? "" : `<style>${css}</style>`) +
         renderResolvedPlateHtml(input, {
           animated: this.hasAttribute("animated"),
+          inline: this.hasAttribute("inline"),
+          variant,
         });
     }
     private async update(): Promise<void> {

@@ -282,6 +282,35 @@ export type ConstructorInput = {
 };
 
 /**
+ * Purchases a listing using a fixed fee credit and bounded VNTY input.
+ *
+ * # Arguments
+ * * `e` - Execution environment.
+ * * `buyer` - Authorizes payment and receives the NFT.
+ * * `contract_address` - Listed vanity address.
+ * * `expected_price` - Expected fee-inclusive listing price.
+ * * `payment` - Expected protocol fee, exact credit, maximum VNTY, and
+ * exclusive Unix deadline.
+ *
+ * # Errors
+ * Propagates all buy validation, escrow, settlement, and NFT transfer
+ * errors;
+ * Treasury additionally rejects expired payments, changed fees, exceeded
+ * limits,
+ * unavailable NAV, invalid shares, or failed maximum transfer/refund.
+ * Failure is atomic.
+ */
+export type BuyWithLimitInput = {
+  buyer: SorobanType.Input.Address;
+  contract_address: SorobanType.Input.Address;
+  expected_price: SorobanType.Input.I128;
+  payment: VntyPaymentLimitArgs;
+};
+
+/** Decoded return value of buy_with_limit. */
+export type BuyWithLimitOutput = null;
+
+/**
  * Transfers an NFT into escrow and opens a sale at a fixed price.
  *
  * # Arguments
@@ -451,6 +480,31 @@ export type GetSellerSaleCountInput = {
 /** Decoded return value of get_seller_sale_count. */
 export type GetSellerSaleCountOutput = SorobanType.U32;
 
+/**
+ * Switches Testnet settlement after a matching Treasury migration.
+ *
+ * Requires Admin authorization, the Testnet network and a paused
+ * marketplace.
+ * Existing listings keep their prices, fees and escrow and settle in the new
+ * currency without relisting. Rejects non-SAC or incompatible assets.
+ *
+ * # Arguments
+ * * `e` - Contract environment.
+ * * `asset` - New settlement Stellar Asset Contract matching the Treasury.
+ * * `operator` - Authorized administrator.
+ *
+ * # Errors
+ * Rejects other networks, missing authorization, unpaused state, or an
+ * unchanged, incompatible or non-SAC settlement asset.
+ */
+export type MigrateTestnetSettlementInput = {
+  asset: SorobanType.Input.Address;
+  operator: SorobanType.Input.Address;
+};
+
+/** Decoded return value of migrate_testnet_settlement. */
+export type MigrateTestnetSettlementOutput = null;
+
 /** Callable ABI methods available through read and invoke; excludes __constructor. */
 export type MarketplaceMethodMap = {
   buy: {
@@ -489,6 +543,10 @@ export type MarketplaceMethodMap = {
     input: SetTreasuryInput;
     output: SetTreasuryOutput;
   };
+  buy_with_limit: {
+    input: BuyWithLimitInput;
+    output: BuyWithLimitOutput;
+  };
   place_for_sale: {
     input: PlaceForSaleInput;
     output: PlaceForSaleOutput;
@@ -508,6 +566,10 @@ export type MarketplaceMethodMap = {
   get_seller_sale_count: {
     input: GetSellerSaleCountInput;
     output: GetSellerSaleCountOutput;
+  };
+  migrate_testnet_settlement: {
+    input: MigrateTestnetSettlementInput;
+    output: MigrateTestnetSettlementOutput;
   };
 };
 
@@ -628,6 +690,37 @@ export const MarketplaceConfig: SorobanType.Factory<MarketplaceConfig> =
       "MarketplaceConfig",
     );
 
+/**
+ * Signed fee coverage intent. All amounts use their token's atomic units.
+ */
+export type VntyPaymentLimit = SorobanType.Custom<{
+  kind: "struct";
+  fields: {
+    /** Exclusive execution deadline in Unix seconds. */
+    deadline: SorobanType.U64;
+    /** Expected complete protocol fee; prevents an unapproved cash increase. */
+    fee_amount: SorobanType.I128;
+    /** Exact fee-asset credit purchased by burning VNTY. */
+    fee_credit: SorobanType.I128;
+    /**
+     * Maximum VNTY transferred temporarily, with unused shares refunded
+     * atomically.
+     */
+    max_shares: SorobanType.I128;
+  };
+}>;
+
+/** Raw or validated values accepted by the VntyPaymentLimit factory. */
+export type VntyPaymentLimitArgs = SorobanType.Input.Custom<VntyPaymentLimit>;
+
+/** Validate, encode and decode VntyPaymentLimit using its contract declaration. */
+export const VntyPaymentLimit: SorobanType.Factory<VntyPaymentLimit> =
+  SorobanType
+    .Custom.fromSpec<VntyPaymentLimit>(
+      () => MarketplaceSpec,
+      "VntyPaymentLimit",
+    );
+
 // -----------------------------------------------------------------------------
 // Events
 // -----------------------------------------------------------------------------
@@ -722,6 +815,21 @@ export type ImplementationChangedTopics = {
   operator: SorobanType.Input.Address;
 };
 
+/**
+ * Announces the Testnet settlement switch; historical listings retain their
+ * original currency.
+ */
+export type TestnetSettlementChanged = {
+  operator: SorobanType.Address;
+  previous_asset: SorobanType.Address;
+  new_asset: SorobanType.Address;
+};
+
+/** Indexed fields accepted by the TestnetSettlementChanged event filters. */
+export type TestnetSettlementChangedTopics = {
+  operator: SorobanType.Input.Address;
+};
+
 /** Event emitted when the contract is paused. */
 export type Paused = Record<string, never>;
 
@@ -759,6 +867,10 @@ export type MarketplaceEvents = ContractEventRegistry & {
   readonly ImplementationChanged: ContractEventDefinition<
     ImplementationChanged,
     ImplementationChangedTopics
+  >;
+  readonly TestnetSettlementChanged: ContractEventDefinition<
+    TestnetSettlementChanged,
+    TestnetSettlementChangedTopics
   >;
   readonly Paused: ContractEventDefinition<
     Paused,

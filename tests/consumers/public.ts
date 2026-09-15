@@ -1,3 +1,10 @@
+import {
+  createPlateAppearance,
+  renderResolvedPlateHtml,
+} from "@consumer/sdk/rendering/local";
+import { plateSharedCss } from "@consumer/sdk/rendering/styles";
+import { ResolvedPlate } from "@consumer/sdk/react/local";
+import { PlateStyles } from "@consumer/sdk/react/styles";
 // Preserved consumer of public subpaths. Aliases are generated from exports in
 // the isolated fixture config, never from repository-private source shortcuts.
 import {
@@ -188,3 +195,25 @@ function countOnlyInputs() {
   Plate({ address, suffix: "ABC" });
 }
 void countOnlyInputs;
+
+const localHtml = renderResolvedPlateHtml(plate, {
+  inline: true,
+  variant: "compact",
+});
+ensure(
+  localHtml.startsWith("<span") && !localHtml.includes("<div"),
+  "Inline markup is not phrasing content.",
+);
+ensure(!localHtml.includes("@font-face"), "Local renderer embeds assets.");
+ensure(
+  createPlateAppearance(address).identiconUrl.startsWith("data:image/svg+xml,"),
+  "Missing canonical insignia.",
+);
+const shared = renderToStaticMarkup(createElement(PlateStyles));
+ensure(shared.includes(plateSharedCss), "SSR corrupts the shared stylesheet.");
+ensure(
+  !renderToStaticMarkup(createElement(ResolvedPlate, plate)).includes(
+    "@font-face",
+  ),
+  "React duplicates fonts.",
+);

@@ -633,6 +633,31 @@ export class Treasury extends Contract {
   };
 
   /**
+   * Quotes the minimum VNTY needed for an exact fee credit at current guarded
+   * NAV.
+   *
+   * # Arguments
+   * * `e` - Execution environment.
+   * * `fee_credit` - Positive fee-asset credit to purchase with VNTY.
+   *
+   * # Returns
+   * Minimum VNTY in atomic units, rounded upward.
+   *
+   * # Errors
+   * Rejects invalid credit, unavailable NAV, overflow, or a burn exhausting
+   * supply.
+   */
+  readonly getFeeSharesQuote: TreasuryMethod<"get_fee_shares_quote"> = {
+    read: (methodArgs) =>
+      this.read({ method: ContractMethods.GetFeeSharesQuote, methodArgs }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.GetFeeSharesQuote,
+      }),
+  };
+
+  /**
    * Changes one configured StableBond strategy's pricing safety parameters.
    *
    * # Arguments
@@ -761,6 +786,71 @@ export class Treasury extends Contract {
       this.invoke({
         ...args,
         method: ContractMethods.AddStrategyDepositor,
+      }),
+  };
+
+  /**
+   * Collects a protocol fee with bounded VNTY spending and atomic change.
+   *
+   * # Arguments
+   * * `e` - Execution environment.
+   * * `payer` - Authorizes the fee, maximum VNTY transfer, and fixed cash
+   * remainder.
+   * * `amount` - Complete protocol fee in fee-asset atomic units.
+   * * `payment` - Expected fee, exact VNTY fee credit, maximum shares, and
+   * exclusive Unix deadline.
+   *
+   * # Returns
+   * Actual shares burned, exact fee credit, cash collected, and reward
+   * accounting.
+   *
+   * # Errors
+   * Rejects expired payments, changed fees, invalid coverage, exceeded share
+   * limits,
+   * unavailable NAV, final-share burns, issuer-created shares, pause, or
+   * missing authorization.
+   * Propagates token, strategy deposit, reward issuance, and accounting
+   * errors.
+   */
+  readonly collectFeeWithLimit: TreasuryMethod<"collect_fee_with_limit"> = {
+    read: (methodArgs) =>
+      this.read({ method: ContractMethods.CollectFeeWithLimit, methodArgs }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.CollectFeeWithLimit,
+      }),
+  };
+
+  /**
+   * Moves all Treasury backing into an empty replacement vault while paused.
+   *
+   * # Arguments
+   * * `e` - Contract execution environment.
+   * * `new_vault` - Empty single-USDC vault managed by this Treasury.
+   * * `allocations` - Complete target strategy set and buy-only weights.
+   * * `min_usdc` - Minimum measured USDC received from the old position.
+   * * `min_new_shares` - Minimum new dfTokens after deposit and initialization
+   * rounding.
+   * * `operator` - Current RBAC Treasurer authorizing the one-time backing
+   * movement.
+   *
+   * # Returns
+   * Actual old shares redeemed, USDC moved, and new shares received.
+   *
+   * # Errors
+   * Requires pause, zero escrowed VNTY, valid empty managed target, valid
+   * allocations,
+   * sufficient measured output, and successful dependency execution. Failure
+   * is atomic.
+   */
+  readonly migrateDefindexVault: TreasuryMethod<"migrate_defindex_vault"> = {
+    read: (methodArgs) =>
+      this.read({ method: ContractMethods.MigrateDefindexVault, methodArgs }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.MigrateDefindexVault,
       }),
   };
 
@@ -992,6 +1082,50 @@ export class Treasury extends Contract {
           method: ContractMethods.SetDefindexFeeReceiver,
         }),
     };
+
+  /**
+   * Replaces Testnet settlement and vault backing at an exact one-for-one
+   * exchange.
+   *
+   * Requires the Testnet network, Treasurer authorization, pause, zero claim
+   * escrow,
+   * an empty Treasury-managed vault and measured minimum proceeds/shares. The
+   * operator supplies the new SAC currency and receives the old currency.
+   * Existing
+   * VNTY supply, offsets and direct Treasury donations retain their
+   * denomination.
+   *
+   * # Arguments
+   * * `e` - Contract environment.
+   * * `new_vault` - Empty Treasury-managed replacement vault.
+   * * `allocations` - Complete replacement strategy weights.
+   * * `min_usdc` - Minimum measured old vault proceeds.
+   * * `min_new_shares` - Minimum measured new vault shares.
+   * * `operator` - Authorized Treasurer supplying the replacement currency.
+   * * `new_asset` - New seven-decimal Stellar Asset Contract.
+   *
+   * # Returns
+   * Measured old and new vault backing amounts.
+   *
+   * # Errors
+   * Rejects other networks, missing authorization, unpaused state, pending
+   * escrow,
+   * incompatible vaults/assets, insufficient exchange funds and unmet minima.
+   */
+  readonly migrateTestnetSettlement: TreasuryMethod<
+    "migrate_testnet_settlement"
+  > = {
+    read: (methodArgs) =>
+      this.read({
+        method: ContractMethods.MigrateTestnetSettlement,
+        methodArgs,
+      }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.MigrateTestnetSettlement,
+      }),
+  };
 
   /**
    * Removes one depositor Wasm hash from a configured StableBond strategy.

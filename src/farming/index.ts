@@ -5,6 +5,7 @@ import {
   InvalidAttemptLimitError,
   InvalidBatchSizeError,
   InvalidDeployerAddressError,
+  InvalidFarmPartitionError,
   InvalidSaltHexError,
   InvalidSaltLengthError,
   InvalidSaltStrideError,
@@ -154,17 +155,50 @@ export function deriveContractAddress(
   return calculateContractId(networkPassphrase, deployer, salt);
 }
 
-/** Searches deployment salts locally. A result proves derivation, not on-chain availability. */
+/** Serializable continuation. Contains private salt material: store locally and never log it. */
+export interface ContractFarmCheckpoint {
+  /** First candidate not yet checked. */ nextSaltHex: string;
+  /** Positive 256-bit step as hexadecimal. */ strideHex: string;
+  /** Deployer used for this search. */ deployer: string;
+  /** Network used for this search. */ networkPassphrase: string;
+  /** Normalized requested ending. */ suffix: string;
+}
+/** A bounded search result. Status found narrows match to a verified derivation. */
+export type ContractFarmBatch =
+  & FarmProgress
+  & {
+    /** First unchecked candidate; absent only when the entire partition is exhausted. */
+    checkpoint?: ContractFarmCheckpoint;
+  }
+  & ({
+    /** A matching candidate was found. */ status: "found";
+    /** Verified local derivation; does not establish on-chain availability. */ match:
+      ContractFarmResult;
+  } | {
+    /** Reached the attempt budget, salt boundary, or cancellation signal. */ status:
+      | "paused"
+      | "exhausted"
+      | "aborted";
+    /** No matching candidate was found. */ match?: never;
+  });
+/**
+ * Searches deployment salts locally. A result proves derivation, not availability.
+ * Compatibility API: returns undefined on exhaustion and rejects on cancellation.
+ */
 export async function farmContract(
   options: ContractFarmOptions,
 ): Promise<ContractFarmResult | undefined> {
-  const { suffix, max, batch } = controls(options);
+  const result = await farmContractBatch(options);
+  if (result.status === "aborted") throw new FarmAbortedError();
+  return result.match;
+}
+function contractSearchStart(
+  options: ContractFarmOptions,
+): { cursor: bigint; stride: bigint } {
   if (
     options.startSalt !== undefined &&
     !(options.startSalt instanceof Uint8Array)
-  ) {
-    throw new InvalidSaltLengthError();
-  }
+  ) throw new InvalidSaltLengthError();
   const seed = options.startSalt?.slice() ??
     crypto.getRandomValues(new Uint8Array(32));
   deriveContractAddress(options.networkPassphrase, options.deployer, seed);
@@ -173,12 +207,26 @@ export async function farmContract(
   if (typeof stride !== "bigint" || stride < 1n || stride >= maximum) {
     throw new InvalidSaltStrideError();
   }
-  let cursor = BigInt(`0x${bytesToHex(seed)}`);
+  const cursor = BigInt(`0x${bytesToHex(seed)}`);
   seed.fill(0);
+  return { cursor, stride };
+}
+/**
+ * Checks a bounded batch and returns a private checkpoint to resume without repeating candidates.
+ * Cancellation returns status aborted; invalid inputs still reject. No salt wraparound occurs.
+ */
+export async function farmContractBatch(
+  options: ContractFarmOptions,
+): Promise<ContractFarmBatch> {
+  const { suffix, max, batch } = controls({ ...options, signal: undefined });
+  const maximum = 1n << 256n;
+  const initial = contractSearchStart(options);
+  let cursor = initial.cursor;
+  const stride = initial.stride;
   const start = performance.now();
   let checked = 0;
-  while (checked < max && cursor < maximum) {
-    checkAbort(options.signal);
+  let match: ContractFarmResult | undefined;
+  while (checked < max && cursor < maximum && !options.signal?.aborted) {
     const salt = hexToSalt(cursor.toString(16).padStart(64, "0"));
     const address = deriveContractAddress(
       options.networkPassphrase,
@@ -186,26 +234,86 @@ export async function farmContract(
       salt,
     );
     checked++;
+    cursor += stride;
     if (address.endsWith(suffix)) {
-      return {
+      match = {
         address,
         suffix,
         salt,
         saltHex: bytesToHex(salt),
         deployer: options.deployer,
         networkPassphrase: options.networkPassphrase,
-        ...progress(options, checked, start),
+        checked,
+        elapsedMs: performance.now() - start,
       };
+      break;
     }
     salt.fill(0);
-    cursor += stride;
     if (checked % batch === 0) {
       progress(options, checked, start);
-      await yieldBatch(options);
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
     }
   }
-  progress(options, checked, start);
-  return undefined;
+  const report = {
+    ...progress(options, checked, start),
+    checkpoint: cursor >= maximum ? undefined : {
+      nextSaltHex: cursor.toString(16).padStart(64, "0"),
+      strideHex: stride.toString(16).padStart(64, "0"),
+      suffix,
+      deployer: options.deployer,
+      networkPassphrase: options.networkPassphrase,
+    },
+  };
+  if (match) return { status: "found", match, ...report };
+  const status = options.signal?.aborted
+    ? "aborted"
+    : cursor >= maximum
+    ? "exhausted"
+    : "paused";
+  return { status, ...report };
+}
+/** Resumes a saved checkpoint, preserving its network, deployer, ending and partition. */
+export async function resumeContractFarm(
+  checkpoint: ContractFarmCheckpoint,
+  options: Omit<FarmOptions, "suffix"> = {},
+): Promise<ContractFarmBatch> {
+  const stride = hexToSalt(checkpoint.strideHex);
+  return await farmContractBatch({
+    ...options,
+    suffix: checkpoint.suffix,
+    deployer: checkpoint.deployer,
+    networkPassphrase: checkpoint.networkPassphrase,
+    startSalt: hexToSalt(checkpoint.nextSaltHex),
+    stride: BigInt(`0x${bytesToHex(stride)}`),
+  });
+}
+/**
+ * Assigns disjoint candidates to workers: common start + worker index, stepping by worker count.
+ * Keep the same start and worker count when resuming. Returns a copy; never mutates the seed.
+ */
+export function createContractFarmPartition(
+  startSalt: Uint8Array,
+  workerIndex: number,
+  workerCount: number,
+): {
+  /** First salt assigned to this worker. */ startSalt:
+    Uint8Array; /** Candidate spacing. */
+  stride: bigint;
+} {
+  if (!(startSalt instanceof Uint8Array) || startSalt.length !== 32) {
+    throw new InvalidSaltLengthError();
+  }
+  if (
+    !Number.isSafeInteger(workerCount) || workerCount < 1 ||
+    !Number.isSafeInteger(workerIndex) || workerIndex < 0 ||
+    workerIndex >= workerCount
+  ) throw new InvalidFarmPartitionError();
+  const start = BigInt(`0x${bytesToHex(startSalt)}`) + BigInt(workerIndex);
+  if (start >= 1n << 256n) throw new InvalidFarmPartitionError();
+  return {
+    startSalt: hexToSalt(start.toString(16).padStart(64, "0")),
+    stride: BigInt(workerCount),
+  };
 }
 
 /** Decodes exactly 64 hexadecimal characters into a deployment salt. */

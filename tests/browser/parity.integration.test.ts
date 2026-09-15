@@ -1,3 +1,4 @@
+import { PlateStyles } from "@/react/styles/index.tsx";
 import {
   svgFixtureDirectory,
   svgFixtureFilename,
@@ -180,7 +181,8 @@ Deno.test({
             await page.setViewportSize(componentSize);
             await page.setContent(
               componentPage(
-                renderToStaticMarkup(createElement(Plate, input)),
+                renderToStaticMarkup(createElement(PlateStyles)) +
+                  renderToStaticMarkup(createElement(Plate, input)),
                 width,
               ),
             );

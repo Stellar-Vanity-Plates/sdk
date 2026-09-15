@@ -16,3 +16,12 @@ export {
   resolvePlateInput,
 } from "@/rendering/resolve.ts";
 export type { PlateInput } from "@/rendering/resolve.ts";
+
+export {
+  createPlateAppearance,
+  renderResolvedPlateHtml,
+} from "@/rendering/local/index.ts";
+export type {
+  PlateAppearance,
+  PlatePresentation,
+} from "@/rendering/local/index.ts";

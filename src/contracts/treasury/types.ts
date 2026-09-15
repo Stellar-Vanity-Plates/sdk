@@ -567,6 +567,28 @@ export type PreviewRedemptionInput = {
 export type PreviewRedemptionOutput = SorobanType.Vec<StrategyRedemption>;
 
 /**
+ * Quotes the minimum VNTY needed for an exact fee credit at current guarded
+ * NAV.
+ *
+ * # Arguments
+ * * `e` - Execution environment.
+ * * `fee_credit` - Positive fee-asset credit to purchase with VNTY.
+ *
+ * # Returns
+ * Minimum VNTY in atomic units, rounded upward.
+ *
+ * # Errors
+ * Rejects invalid credit, unavailable NAV, overflow, or a burn exhausting
+ * supply.
+ */
+export type GetFeeSharesQuoteInput = {
+  fee_credit: SorobanType.Input.I128;
+};
+
+/** Decoded return value of get_fee_shares_quote. */
+export type GetFeeSharesQuoteOutput = SorobanType.I128;
+
+/**
  * Changes one configured StableBond strategy's pricing safety parameters.
  *
  * # Arguments
@@ -693,6 +715,74 @@ export type AddStrategyDepositorInput = {
 
 /** Decoded return value of add_strategy_depositor. */
 export type AddStrategyDepositorOutput = null;
+
+/**
+ * Collects a protocol fee with bounded VNTY spending and atomic change.
+ *
+ * # Arguments
+ * * `e` - Execution environment.
+ * * `payer` - Authorizes the fee, maximum VNTY transfer, and fixed cash
+ * remainder.
+ * * `amount` - Complete protocol fee in fee-asset atomic units.
+ * * `payment` - Expected fee, exact VNTY fee credit, maximum shares, and
+ * exclusive Unix deadline.
+ *
+ * # Returns
+ * Actual shares burned, exact fee credit, cash collected, and reward
+ * accounting.
+ *
+ * # Errors
+ * Rejects expired payments, changed fees, invalid coverage, exceeded share
+ * limits,
+ * unavailable NAV, final-share burns, issuer-created shares, pause, or
+ * missing authorization.
+ * Propagates token, strategy deposit, reward issuance, and accounting
+ * errors.
+ */
+export type CollectFeeWithLimitInput = {
+  payer: SorobanType.Input.Address;
+  amount: SorobanType.Input.I128;
+  payment: VntyPaymentLimitArgs;
+};
+
+/** Decoded return value of collect_fee_with_limit. */
+export type CollectFeeWithLimitOutput = FeeReceipt;
+
+/**
+ * Moves all Treasury backing into an empty replacement vault while paused.
+ *
+ * # Arguments
+ * * `e` - Contract execution environment.
+ * * `new_vault` - Empty single-USDC vault managed by this Treasury.
+ * * `allocations` - Complete target strategy set and buy-only weights.
+ * * `min_usdc` - Minimum measured USDC received from the old position.
+ * * `min_new_shares` - Minimum new dfTokens after deposit and initialization
+ * rounding.
+ * * `operator` - Current RBAC Treasurer authorizing the one-time backing
+ * movement.
+ *
+ * # Returns
+ * Actual old shares redeemed, USDC moved, and new shares received.
+ *
+ * # Errors
+ * Requires pause, zero escrowed VNTY, valid empty managed target, valid
+ * allocations,
+ * sufficient measured output, and successful dependency execution. Failure
+ * is atomic.
+ */
+export type MigrateDefindexVaultInput = {
+  new_vault: SorobanType.Input.Address;
+  allocations: SorobanType.Input.Vec<
+    StrategyAllocationArgs,
+    StrategyAllocation
+  >;
+  min_usdc: SorobanType.Input.I128;
+  min_new_shares: SorobanType.Input.I128;
+  operator: SorobanType.Input.Address;
+};
+
+/** Decoded return value of migrate_defindex_vault. */
+export type MigrateDefindexVaultOutput = VaultMigrationReceipt;
 
 /**
  * Burns VNTY toward a fee and deposits only its uncovered cash remainder.
@@ -885,6 +975,50 @@ export type SetDefindexFeeReceiverInput = {
 export type SetDefindexFeeReceiverOutput = null;
 
 /**
+ * Replaces Testnet settlement and vault backing at an exact one-for-one
+ * exchange.
+ *
+ * Requires the Testnet network, Treasurer authorization, pause, zero claim
+ * escrow,
+ * an empty Treasury-managed vault and measured minimum proceeds/shares. The
+ * operator supplies the new SAC currency and receives the old currency.
+ * Existing
+ * VNTY supply, offsets and direct Treasury donations retain their
+ * denomination.
+ *
+ * # Arguments
+ * * `e` - Contract environment.
+ * * `new_vault` - Empty Treasury-managed replacement vault.
+ * * `allocations` - Complete replacement strategy weights.
+ * * `min_usdc` - Minimum measured old vault proceeds.
+ * * `min_new_shares` - Minimum measured new vault shares.
+ * * `operator` - Authorized Treasurer supplying the replacement currency.
+ * * `new_asset` - New seven-decimal Stellar Asset Contract.
+ *
+ * # Returns
+ * Measured old and new vault backing amounts.
+ *
+ * # Errors
+ * Rejects other networks, missing authorization, unpaused state, pending
+ * escrow,
+ * incompatible vaults/assets, insufficient exchange funds and unmet minima.
+ */
+export type MigrateTestnetSettlementInput = {
+  new_vault: SorobanType.Input.Address;
+  allocations: SorobanType.Input.Vec<
+    StrategyAllocationArgs,
+    StrategyAllocation
+  >;
+  min_usdc: SorobanType.Input.I128;
+  min_new_shares: SorobanType.Input.I128;
+  operator: SorobanType.Input.Address;
+  new_asset: SorobanType.Input.Address;
+};
+
+/** Decoded return value of migrate_testnet_settlement. */
+export type MigrateTestnetSettlementOutput = VaultMigrationReceipt;
+
+/**
  * Removes one depositor Wasm hash from a configured StableBond strategy.
  *
  * # Arguments
@@ -1036,6 +1170,10 @@ export type TreasuryMethodMap = {
     input: PreviewRedemptionInput;
     output: PreviewRedemptionOutput;
   };
+  get_fee_shares_quote: {
+    input: GetFeeSharesQuoteInput;
+    output: GetFeeSharesQuoteOutput;
+  };
   set_strategy_pricing: {
     input: SetStrategyPricingInput;
     output: SetStrategyPricingOutput;
@@ -1055,6 +1193,14 @@ export type TreasuryMethodMap = {
   add_strategy_depositor: {
     input: AddStrategyDepositorInput;
     output: AddStrategyDepositorOutput;
+  };
+  collect_fee_with_limit: {
+    input: CollectFeeWithLimitInput;
+    output: CollectFeeWithLimitOutput;
+  };
+  migrate_defindex_vault: {
+    input: MigrateDefindexVaultInput;
+    output: MigrateDefindexVaultOutput;
   };
   collect_fee_with_shares: {
     input: CollectFeeWithSharesInput;
@@ -1087,6 +1233,10 @@ export type TreasuryMethodMap = {
   set_defindex_fee_receiver: {
     input: SetDefindexFeeReceiverInput;
     output: SetDefindexFeeReceiverOutput;
+  };
+  migrate_testnet_settlement: {
+    input: MigrateTestnetSettlementInput;
+    output: MigrateTestnetSettlementOutput;
   };
   remove_strategy_allowed_hash: {
     input: RemoveStrategyAllowedHashInput;
@@ -1320,6 +1470,37 @@ export const TreasurySnapshot: SorobanType.Factory<TreasurySnapshot> =
       "TreasurySnapshot",
     );
 
+/**
+ * Signed fee coverage intent. All amounts use their token's atomic units.
+ */
+export type VntyPaymentLimit = SorobanType.Custom<{
+  kind: "struct";
+  fields: {
+    /** Exclusive execution deadline in Unix seconds. */
+    deadline: SorobanType.U64;
+    /** Expected complete protocol fee; prevents an unapproved cash increase. */
+    fee_amount: SorobanType.I128;
+    /** Exact fee-asset credit purchased by burning VNTY. */
+    fee_credit: SorobanType.I128;
+    /**
+     * Maximum VNTY transferred temporarily, with unused shares refunded
+     * atomically.
+     */
+    max_shares: SorobanType.I128;
+  };
+}>;
+
+/** Raw or validated values accepted by the VntyPaymentLimit factory. */
+export type VntyPaymentLimitArgs = SorobanType.Input.Custom<VntyPaymentLimit>;
+
+/** Validate, encode and decode VntyPaymentLimit using its contract declaration. */
+export const VntyPaymentLimit: SorobanType.Factory<VntyPaymentLimit> =
+  SorobanType
+    .Custom.fromSpec<VntyPaymentLimit>(
+      () => TreasurySpec,
+      "VntyPaymentLimit",
+    );
+
 /** The RedemptionReceipt type declared by the contract. */
 export type RedemptionReceipt = SorobanType.Custom<{
   kind: "struct";
@@ -1507,6 +1688,34 @@ export const AccountingParameters: SorobanType.Factory<AccountingParameters> =
       "AccountingParameters",
     );
 
+/**
+ * Measured backing movement; VNTY supply and accounting denomination remain
+ * unchanged.
+ */
+export type VaultMigrationReceipt = SorobanType.Custom<{
+  kind: "struct";
+  fields: {
+    new_vault: SorobanType.Address;
+    new_vault_shares: SorobanType.I128;
+    previous_vault: SorobanType.Address;
+    previous_vault_shares: SorobanType.I128;
+    usdc_moved: SorobanType.I128;
+  };
+}>;
+
+/** Raw or validated values accepted by the VaultMigrationReceipt factory. */
+export type VaultMigrationReceiptArgs = SorobanType.Input.Custom<
+  VaultMigrationReceipt
+>;
+
+/** Validate, encode and decode VaultMigrationReceipt using its contract declaration. */
+export const VaultMigrationReceipt: SorobanType.Factory<VaultMigrationReceipt> =
+  SorobanType
+    .Custom.fromSpec<VaultMigrationReceipt>(
+      () => TreasurySpec,
+      "VaultMigrationReceipt",
+    );
+
 // -----------------------------------------------------------------------------
 // Events
 // -----------------------------------------------------------------------------
@@ -1550,6 +1759,17 @@ export type SharesMinted = {
 export type SharesMintedTopics = {
   payer: SorobanType.Input.Address;
   beneficiary: SorobanType.Input.Address;
+};
+
+/** Fields emitted by VaultMigrated. */
+export type VaultMigrated = {
+  operator: SorobanType.Address;
+  receipt: VaultMigrationReceipt;
+};
+
+/** Indexed fields accepted by the VaultMigrated event filters. */
+export type VaultMigratedTopics = {
+  operator: SorobanType.Input.Address;
 };
 
 /** Fields emitted by FeeSplitChanged. */
@@ -1819,6 +2039,19 @@ export type StrategyAllocationsChangedTopics = {
   operator: SorobanType.Input.Address;
 };
 
+/** Records a Testnet-only one-for-one settlement replacement. */
+export type TestnetSettlementExchanged = {
+  operator: SorobanType.Address;
+  previous_asset: SorobanType.Address;
+  new_asset: SorobanType.Address;
+  amount: SorobanType.I128;
+};
+
+/** Indexed fields accepted by the TestnetSettlementExchanged event filters. */
+export type TestnetSettlementExchangedTopics = {
+  operator: SorobanType.Input.Address;
+};
+
 /** Fields emitted by StrategyDepositsPauseChanged. */
 export type StrategyDepositsPauseChanged = {
   operator: SorobanType.Address;
@@ -1868,6 +2101,10 @@ export type TreasuryEvents = ContractEventRegistry & {
   readonly SharesMinted: ContractEventDefinition<
     SharesMinted,
     SharesMintedTopics
+  >;
+  readonly VaultMigrated: ContractEventDefinition<
+    VaultMigrated,
+    VaultMigratedTopics
   >;
   readonly FeeSplitChanged: ContractEventDefinition<
     FeeSplitChanged,
@@ -1952,6 +2189,10 @@ export type TreasuryEvents = ContractEventRegistry & {
   readonly StrategyAllocationsChanged: ContractEventDefinition<
     StrategyAllocationsChanged,
     StrategyAllocationsChangedTopics
+  >;
+  readonly TestnetSettlementExchanged: ContractEventDefinition<
+    TestnetSettlementExchanged,
+    TestnetSettlementExchangedTopics
   >;
   readonly StrategyDepositsPauseChanged: ContractEventDefinition<
     StrategyDepositsPauseChanged,

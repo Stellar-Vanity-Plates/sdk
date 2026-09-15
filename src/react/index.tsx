@@ -8,10 +8,13 @@ import {
 } from "react";
 import { type PlateInput, resolvePlateInput } from "@/rendering/resolve.ts";
 import type { ResolvedPlateInput } from "@/rendering/model.ts";
-import { renderResolvedPlateHtml } from "@/rendering/html.ts";
+import type { PlatePresentation } from "@/rendering/markup.ts";
+import { ResolvedPlate } from "@/react/local/index.tsx";
+export { ResolvedPlate } from "@/react/local/index.tsx";
+export type { ResolvedPlateProps } from "@/react/local/index.tsx";
 
 /** React plate component properties. */
-export interface PlateProps extends PlateInput {
+export interface PlateProps extends PlateInput, PlatePresentation {
   /** Enables rarity animation, respecting reduced motion. */ animated?:
     boolean;
   /** Class on the outer container. */ className?: string;
@@ -19,6 +22,7 @@ export interface PlateProps extends PlateInput {
     CSSProperties;
 }
 /**
+ * Install PlateStyles once, or load CSS emitted by /rendering/styles.
  * Resolves account/NFT display metadata when a network is supplied.
  * SSR and pending lookups abbreviate; offline suffixLength renders immediately.
  * Lookup failures reach the nearest React error boundary. Stale results are ignored.
@@ -31,6 +35,8 @@ export function Plate(
     networkConfig,
     nftContractId,
     animated = false,
+    variant,
+    inline,
     className,
     style,
   }: PlateProps,
@@ -65,13 +71,15 @@ export function Plate(
   if (current && "error" in current) throw current.error;
   const display = current?.value ??
     { address, suffixLength: online ? undefined : suffixLength };
-  const html = renderResolvedPlateHtml(display, { animated });
   return (
-    <div
+    <ResolvedPlate
+      {...display}
+      animated={animated}
+      variant={variant}
+      inline={inline}
       className={className}
       style={style}
-      aria-busy={online && !current}
-      dangerouslySetInnerHTML={{ __html: html }}
+      busy={online && !current}
     />
   );
 }
