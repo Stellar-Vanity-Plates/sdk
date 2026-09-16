@@ -9,6 +9,7 @@ export function consumerConfiguration(config: {
   compilerOptions: Record<string, unknown>;
 }, artifactUrl?: string): {
   compilerOptions: Record<string, unknown>;
+  minimumDependencyAge: { age: string; exclude: string[] };
   imports: Record<string, string>;
   scopes?: Record<string, Record<string, string>>;
 } {
@@ -28,6 +29,13 @@ export function consumerConfiguration(config: {
   );
   return {
     compilerOptions: config.compilerOptions,
+    // Release checks must resolve the reviewed first-party packages immediately.
+    // Preserve Deno's one-day gate for all other dependencies; this configuration
+    // belongs only to the isolated test consumer, never the published manifest.
+    minimumDependencyAge: {
+      age: "P1D",
+      exclude: ["jsr:@colibri/core", "jsr:@vanity-plates/sdk"],
+    },
     imports: {
       // Consumers get Colibri through the SDK's curated export. There is no
       // direct Colibri alias and no test/tooling or source-checkout alias.

@@ -134,6 +134,12 @@ adapter imports. Compile-only assertions also protect contract argument/result
 types and required transaction configuration. Runtime checks deny network access
 and cannot launch a browser or submit transactions.
 
+The isolated consumer uses a one-day minimum dependency age. It allows the
+reviewed first-party packages `@colibri/core` and `@vanity-plates/sdk`
+immediately, so release checks can exercise freshly published versions. Every
+other dependency retains the one-day gate. These test-only exceptions do not
+alter the published manifest or a downstream application's resolver policy.
+
 The default command validates the unpublished Deno source package. After
 publication, `deno task check:consumers:published` runs the same checks against
 `jsr:@vanity-plates/sdk@<manifest-version>`, with no local SDK files or source

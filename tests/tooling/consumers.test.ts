@@ -4,6 +4,19 @@ import config from "@config" with { type: "json" };
 import { consumerConfiguration } from "@tools/quality/consumers.ts";
 
 describe("isolated consumer resolution", () => {
+  it("keeps the one-day dependency gate with only explicit release-package exceptions", () => {
+    for (const artifact of [undefined, "file:///isolated/package/"]) {
+      assertEquals(
+        consumerConfiguration(config, artifact).minimumDependencyAge,
+        {
+          age: "P1D",
+          exclude: ["jsr:@colibri/core", "jsr:@vanity-plates/sdk"],
+        },
+      );
+    }
+    assertFalse("minimumDependencyAge" in config);
+  });
+
   it("checks every published subpath through JSR without local package fallbacks", () => {
     const consumer = consumerConfiguration(config);
     assertFalse("scopes" in consumer);
