@@ -1,3 +1,4 @@
+import { reactActEnvironment } from "@tests/fixtures/react.ts";
 import {
   assert,
   assertEquals,
@@ -43,6 +44,7 @@ function claim(count = 5) {
 }
 
 Deno.test("React queries share one in-flight lookup, synchronously reuse it, and isolate explicit overrides", async () => {
+  using _actEnvironment = reactActEnvironment();
   const pending = Promise.withResolvers<number>();
   let count = 0;
   using _read = stub(
@@ -69,6 +71,7 @@ Deno.test("React queries share one in-flight lookup, synchronously reuse it, and
     view = create(screen());
     await flush();
   });
+  await act(flush);
   try {
     assertEquals(count, 1);
     assertEquals(client.getQueryData(plateQueryKey(input)), undefined);
@@ -107,6 +110,7 @@ Deno.test("React queries share one in-flight lookup, synchronously reuse it, and
 });
 
 Deno.test("usePlate exposes pending, successful absent metadata, refresh and errors without losing cached data", async () => {
+  using _actEnvironment = reactActEnvironment();
   let failure: Error | undefined;
   let empty = false;
   let count = 0;
@@ -192,6 +196,7 @@ Deno.test("usePlate exposes pending, successful absent metadata, refresh and err
 });
 
 Deno.test("provider defaults, component overrides and stable cache keys isolate network, address and collection", async () => {
+  using _actEnvironment = reactActEnvironment();
   const client = createPlateQueryClient();
   const alternate = NetworkConfig.MainNet({ rpcUrl: "https://alternate.test" });
   const a = plateQueryKey(input);
@@ -264,6 +269,7 @@ Deno.test("provider defaults, component overrides and stable cache keys isolate 
 });
 
 Deno.test("browser defaults are shared and provider-owned caches stay separate", async () => {
+  using _actEnvironment = reactActEnvironment();
   const descriptor = Object.getOwnPropertyDescriptor(globalThis, "window");
   Object.defineProperty(globalThis, "window", {
     configurable: true,
@@ -288,7 +294,10 @@ Deno.test("browser defaults are shared and provider-owned caches stay separate",
       await flush();
     });
     assertEquals(calls, 2);
-    const second = create(createElement(Plate, input));
+    let second!: ReactTestRenderer;
+    act(() => {
+      second = create(createElement(Plate, input));
+    });
     assert(words(second)[0].includes(label));
     act(() => second.unmount());
     await act(async () => {
@@ -310,6 +319,7 @@ Deno.test("browser defaults are shared and provider-owned caches stay separate",
 });
 
 Deno.test("stale metadata remains synchronous while one shared background refresh runs", async () => {
+  using _actEnvironment = reactActEnvironment();
   const client = createPlateQueryClient();
   client.setQueryData(plateQueryKey(input), { address, suffixLength: 5 }, {
     updatedAt: Date.now() - 31_000,
