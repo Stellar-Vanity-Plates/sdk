@@ -1,3 +1,4 @@
+import { reactActEnvironment } from "@tests/fixtures/react.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals, assertStrictEquals } from "@std/assert";
 import { stub } from "@std/testing/mock";
@@ -20,6 +21,7 @@ const html = (view: ReactTestRenderer) =>
 
 describe("React display lifecycle", () => {
   it("updates from abbreviation to metadata, returns offline, and ignores stale or unmounted results", async () => {
+    using _actEnvironment = reactActEnvironment();
     const pending: ReturnType<typeof Promise.withResolvers<number>>[] = [];
     using _read = stub(
       NftClient.prototype,
@@ -122,6 +124,7 @@ describe("React display lifecycle", () => {
     }
   });
   it("delivers current lookup failures to the nearest error boundary", async () => {
+    using _actEnvironment = reactActEnvironment();
     const cause = new Error("RPC offline");
     using _read = stub(
       NftClient.prototype,
@@ -155,11 +158,15 @@ describe("React display lifecycle", () => {
       );
       await settle();
     });
+    await act(settle);
     try {
       assertStrictEquals(caught[0], cause);
       assertEquals(caught.length, 1);
       assertEquals(view.root.findByType("span").children, ["Unavailable"]);
-      assertEquals(diagnostic.calls.length, 1);
+      assertEquals(
+        diagnostic.calls.some((call) => call.args.includes(cause)),
+        true,
+      );
     } finally {
       await act(async () => {
         view.unmount();

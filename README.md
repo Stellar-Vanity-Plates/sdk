@@ -770,10 +770,17 @@ All features belong to one SDK. Import the subpath for the capability you need:
 
 ### Using the source package
 
-This branch prepares `@vanity-plates/sdk` **0.2.0**, following the published
-0.1.0 release. Publication happens after the reviewed PR is merged and CI
+This branch prepares `@vanity-plates/sdk` **0.3.0**, following the published
+0.2.0 release. Publication happens after the reviewed PR is merged and CI
 passes. Deno **2.9.6** is the verified runtime; the current dependencies are
-Colibri Core **1.1.1** and Identicon **1.1.0**.
+Colibri Core **1.2+ within 1.x** and Identicon **1.1.0**.
+
+The React adapter now requires **React 19.1+ within 19.x**. Upgrade React DOM
+and its type packages together, and keep one resolved React instance. This is a
+breaking change for React 18 consumers; non-React subpaths remain independently
+importable. The same TanStack Query 5 client can be supplied to `VanityProvider`
+and Colibri React. Plates keep their existing query keys, rendering and metadata
+behavior. No React or Colibri transitive override is required.
 
 For a Deno application with a checkout at `./sdk`, add it as a workspace member
 in the application's `deno.json`:
