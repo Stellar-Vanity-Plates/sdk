@@ -25,3 +25,11 @@ export type {
   PlateAppearance,
   PlatePresentation,
 } from "@/rendering/local/index.ts";
+
+export {
+  PLATE_FINISHES,
+  PLATE_LETTERINGS,
+  PLATE_PALETTE,
+  PLATE_RARITIES,
+  PLATE_TRAIT_RECIPE,
+} from "@/rendering/recipe.ts";

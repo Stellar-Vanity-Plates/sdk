@@ -14,9 +14,9 @@ Deno.test("plate traits preserve the application byte rules for both address typ
       ], [7, "pole"]] as const
     ) {
       const bytes = new Uint8Array(32).fill(3),
-        offset = kind === "account" ? 14 : 5;
+        offset = 8;
       for (let i = 0; i < 7; i++) bytes[offset + i] = i < run ? 7 : 8;
-      bytes[kind === "account" ? 12 : 15] = 2;
+      bytes[7] = 2;
       const address = kind === "account"
         ? StrKey.encodeEd25519PublicKey(bytes)
         : StrKey.encodeContract(bytes);

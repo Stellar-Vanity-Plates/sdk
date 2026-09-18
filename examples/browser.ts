@@ -17,9 +17,8 @@ const fixtures: PlateInput[] = [{
 }];
 for (let i = 0; i < 4; i++) {
   const bytes = new Uint8Array(32).fill(40 + i);
-  bytes[12] = i;
-  bytes[13] = i;
-  bytes[15] = i;
+  bytes[6] = i;
+  bytes[7] = i;
   const address = i % 2 === 0
     ? StrKey.encodeContract(bytes)
     : StrKey.encodeEd25519PublicKey(bytes);

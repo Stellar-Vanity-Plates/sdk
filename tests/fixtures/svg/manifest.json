@@ -9,7 +9,7 @@
       "id": "account-badge-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "GAFTAVL2T7COSDRTLB62EAAAA4EAQCAIBAEBIOK6QOUM34QXHRQYMITV",
+        "address": "GAFTAVL2T7COSDBHJBUKQCAIBAEAQCAIBAEBIOK6QOUM34QXHRQYMOT5",
         "suffixLength": 5
       },
       "options": {},
@@ -19,14 +19,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "YMITV"
+        "label": "YMOT5"
       }
     },
     {
       "id": "account-badge-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "GALDWYEFVLH7IGJ6MOEK2AAAA4DQQCAIBAEB6RDJR2Z5R7JCI5WJCE5I",
+        "address": "GALDWYEFVLH7KGBHM6EKQCAIBADQQCAIBAEB6RDJR2Z5R7JCI5WJDUUE",
         "suffixLength": 5
       },
       "options": {},
@@ -36,14 +36,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "JCE5I"
+        "label": "JDUUE"
       }
     },
     {
       "id": "account-badge-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "GAQUM24QWXNP6JCJN2J3QAAAA4DQOCAIBAECUT3UTG7OGCBNKJ3ZYUHH",
+        "address": "GAQUM24QWXNP2JCHM6D2QCAIBADQOCAIBAECUT3UTG7OGCBNKJ3ZYR3Q",
         "suffixLength": 5
       },
       "options": {},
@@ -53,14 +53,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "ZYUHH"
+        "label": "ZYR3Q"
       }
     },
     {
       "id": "account-badge-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GAWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV",
+        "address": "GAWFC5U3YDSQSLCHM6D4OCAIBADQOBYIBAEDKWT7UTE64EZYLWBKPXMF",
         "suffixLength": 5
       },
       "options": {},
@@ -70,14 +70,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "KOOAV"
+        "label": "KPXMF"
       }
     },
     {
       "id": "account-badge-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "GBGXFF544EDCWUDVTK76IAAAA4DQOBYHA4DVM65AYXVA6NCZP2R4QFEI",
+        "address": "GBGXFF544EDCSUDHQ6T6OBYHA4DQOBYHA4DVM65AYXVA6NCZP2R4QMIY",
         "suffixLength": 5
       },
       "options": {},
@@ -87,14 +87,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "4QFEI"
+        "label": "4QMIY"
       }
     },
     {
       "id": "account-badge-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "GAREO3ERW3NQAJKKN6KLSAABA4EAQCAIBAECWUDVTK76ICJOKN4J2S75",
+        "address": "GAREO3ERW3NQEJCHNCEKQCAIBAEAQCAIBAECWUDVTK76ICJOKN4J3B3V",
         "suffixLength": 5
       },
       "options": {},
@@ -104,14 +104,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "J2S75"
+        "label": "J3B3V"
       }
     },
     {
       "id": "account-badge-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "GAWVE544YHTAWMCVPKP4IAABA4DQQCAIBAEDMW4AUXFO6FBZL2B2RE4T",
+        "address": "GAWVE544YHTAUMCHM6EMQCAIBADQQCAIBAEDMW4AUXFO6FBZL2B2Q3BO",
         "suffixLength": 5
       },
       "options": {},
@@ -121,14 +121,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "2RE4T"
+        "label": "2Q3BO"
       }
     },
     {
       "id": "account-badge-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "GA4F3AVHZTYRMO3AQWVM6AABA4DQOCAIBAEECZULWDK7UH2ENGHLHCHK",
+        "address": "GA4F3AVHZTYRMODHQ6T4QCAIBADQOCAIBAEECZULWDK7UH2ENGHLHUYE",
         "suffixLength": 5
       },
       "options": {},
@@ -138,14 +138,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "LHCHK"
+        "label": "LHUYE"
       }
     },
     {
       "id": "account-badge-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GBBWRDNS276CCRTLSC25UAABA4DQOBYIBAEEY4MWXPQAKKSPOSM35TPA",
+        "address": "GBBWRDNS276CERDHQ6T4OCAIBADQOBYIBAEEY4MWXPQAKKSPOSM34VUH",
         "suffixLength": 5
       },
       "options": {},
@@ -155,14 +155,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "35TPA"
+        "label": "34VUH"
       }
     },
     {
       "id": "account-badge-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "GBSITLWT7AOUEZ4MWHLPWAABA4DQOBYHA4DW3EVX3QASMS3QSW5N6K6C",
+        "address": "GBSITLWT7AOUEZEHU7D6OBYHA4DQOBYHA4DW3EVX3QASMS3QSW5N6IIZ",
         "suffixLength": 5
       },
       "options": {},
@@ -172,14 +172,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "N6K6C"
+        "label": "N6IIZ"
       }
     },
     {
       "id": "account-badge-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "GA4V5A5IZXZBOPDBQ2V5AAACA4EAQCAIBAEEEZ4MWHLPWICFNKH3IR3Y",
+        "address": "GA4V5A5IZXZBIPDHRCUMQCAIBAEAQCAIBAEEEZ4MWHLPWICFNKH3IHQP",
         "suffixLength": 5
       },
       "options": {},
@@ -189,14 +189,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "3IR3Y"
+        "label": "3IHQP"
       }
     },
     {
       "id": "account-badge-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "GBCGTDVT3D6SER3MSG3NWAACA4DQQCAIBAEE24UXXTQQMK2QOWNL7X4X",
+        "address": "GBCGTDVT3D6SARDHQ6UMQCAIBADQQCAIBAEE24UXXTQQMK2QOWNL64LB",
         "suffixLength": 5
       },
       "options": {},
@@ -206,14 +206,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "L7X4X"
+        "label": "L64LB"
       }
     },
     {
       "id": "account-badge-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "GBHXJGN64MEC2UTXTTA6MAACA4DQOCAIBAEFQ7NCY7WBCNS3QCS4UI7G",
+        "address": "GBHXJGN64MECYUDHQ7D6QCAIBADQOCAIBAEFQ7NCY7WBCNS3QCS4V6XJ",
         "suffixLength": 5
       },
       "options": {},
@@ -223,14 +223,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "4UI7G"
+        "label": "4V6XJ"
       }
     },
     {
       "id": "account-badge-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GBNH7JGJ5YJTQXMCU7GPCAACA4DQOBYIBAEGHCFN2L3RYQLGROYNK2NJ",
+        "address": "GBNH7JGJ5YJTQXEHU7D6OCAIBADQOBYIBAEGHCFN2L3RYQLGROYNLAB5",
         "suffixLength": 5
       },
       "options": {},
@@ -240,14 +240,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "NK2NJ"
+        "label": "NLAB5"
       }
     },
     {
       "id": "account-badge-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "GB52BRPKB42FS7VDZDWREAACA4DQOBYHA4DYJKOO6MMD2YUHVTI7NILH",
+        "address": "GB52BRPKB42FQ7FHY7TQOBYHA4DQOBYHA4DYJKOO6MMD2YUHVTI7MBII",
         "suffixLength": 5
       },
       "options": {},
@@ -257,14 +257,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "7NILH"
+        "label": "7MBII"
       }
     },
     {
       "id": "account-watermark-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "GA3FXAFFZLXRIOK6QOUM2AIAA4EAQCAIBAED6ZEJV3J7QHKCM6GLDCLO",
+        "address": "GA3FXAFFZLXRKOKHRCUMQCAIBAEAQCAIBAED6ZEJV3J7QHKCM6GLCZAB",
         "suffixLength": 5
       },
       "options": {},
@@ -274,14 +274,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "LDCLO"
+        "label": "LCZAB"
       }
     },
     {
       "id": "account-watermark-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "GBAWNC5Q2X5B6RDJR2Z5QAIAA4DQQCAIBAEEU34UXHPAGKCNOKL3Y6FH",
+        "address": "GBAWNC5Q2X5B2RLHQ6UMQCAIBADQQCAIBAEEU34UXHPAGKCNOKL3ZYQP",
         "suffixLength": 5
       },
       "options": {},
@@ -291,14 +291,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "3Y6FH"
+        "label": "3ZYQP"
       }
     },
     {
       "id": "account-watermark-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "GBGHDFV34ACSUT3UTG7OGAIAA4DQOCAIBAEFK6U7YTUQ4M2YPWRMPPRV",
+        "address": "GBGHDFV34ACSSTLHQ6T6QCAIBADQOCAIBAEFK6U7YTUQ4M2YPWRMPKQT",
         "suffixLength": 5
       },
       "options": {},
@@ -308,14 +308,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "MPPRV"
+        "label": "MPKQT"
       }
     },
     {
       "id": "account-watermark-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GBLXZIOG5MIDKWT7UTE64AIAA4DQOBYIBAEGBBNKZ72BSPTDRCW5FT5H",
+        "address": "GBLXZIOG5MIDKWLHU7D6OCAIBADQOBYIBAEGBBNKZ72BSPTDRCW5EOAP",
         "suffixLength": 5
       },
       "options": {},
@@ -325,14 +325,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "5FT5H"
+        "label": "5EOAP"
       }
     },
     {
       "id": "account-watermark-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "GB4J3QXHBQYVM65AYXVA6AIAA4DQOBYHA4DYDJWL6AKTUX4EVHHPH37L",
+        "address": "GB4J3QXHBQYVK6NHY7TQOBYHA4DQOBYHA4DYDJWL6AKTUX4EVHHPHYYX",
         "suffixLength": 5
       },
       "options": {},
@@ -342,14 +342,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "PH37L"
+        "label": "PHYYX"
       }
     },
     {
       "id": "account-watermark-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "GBGXFF544EDCWUDVTK76IAIBA4EAQCAIBAEFM65AYXVA6NCZP2R4QEXZ",
+        "address": "GBGXFF544EDCUULHRCUOQCAIBAEAQCAIBAEFM65AYXVA6NCZP2R4RQIH",
         "suffixLength": 5
       },
       "options": {},
@@ -359,14 +359,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "4QEXZ"
+        "label": "4RQIH"
       }
     },
     {
       "id": "account-watermark-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "GBMH3IWH5QITMW4AUXFO6AIBA4DQQCAIBAEGDBVL2D2RUP3ERGXNGQCE",
+        "address": "GBMH3IWH5QITMWMHU7EOQCAIBADQQCAIBAEGDBVL2D2RUP3ERGXNHFUV",
         "suffixLength": 5
       },
       "options": {},
@@ -376,14 +376,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "NGQCE"
+        "label": "NHFUV"
       }
     },
     {
       "id": "account-watermark-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "GBRYRLOS64OECZULWDK7UAIBA4DQOCAIBAEGZENW3MACKSTPSS454TGC",
+        "address": "GBRYRLOS64OEEZMHU7D6QCAIBADQOCAIBAEGZENW3MACKSTPSS454JQT",
         "suffixLength": 5
       },
       "options": {},
@@ -393,14 +393,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "54TGC"
+        "label": "54JQT"
       }
     },
     {
       "id": "account-watermark-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GBXJHOG5AITUY4MWXPQAKAIBA4DQOBYIBAEHPHGB4YFTAVL2T7COSMNA",
+        "address": "GBXJHOG5AITU44MHU7TQOCAIBADQOBYIBAEHPHGB4YFTAVL2T7COTN26",
         "suffixLength": 5
       },
       "options": {},
@@ -410,14 +410,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "OSMNA"
+        "label": "OTN26"
       }
     },
     {
       "id": "account-watermark-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "GCH3JWP6ENEG3EVX3QASMAIBA4DQOBYHA4DZRPPCA4WFC5U3YDSQUOPY",
+        "address": "GCH3JWP6ENEG5ENHY4DSOBYHA4DQOBYHA4DZRPPCA4WFC5U3YDSQVSPF",
         "suffixLength": 5
       },
       "options": {},
@@ -427,14 +427,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "QUOPY"
+        "label": "QVSPF"
       }
     },
     {
       "id": "account-watermark-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "GBSITLWT7AOUEZ4MWHLPWAICA4EAQCAIBAEG3EVX3QASMS3QSW5N6MQ7",
+        "address": "GBSITLWT7AOUAZMHVDEOQCAIBAEAQCAIBAEG3EVX3QASMS3QSW5N7MFK",
         "suffixLength": 5
       },
       "options": {},
@@ -444,14 +444,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "N6MQ7"
+        "label": "N7MFK"
       }
     },
     {
       "id": "account-watermark-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "GBXZJOO6AMUE24UXXTQQMAICA4DQQCAIBAEHRHOC44GDCVT3UDC6U2IH",
+        "address": "GBXZJOO6AMUEY4MHU7UAQCAIBADQQCAIBAEHRHOC44GDCVT3UDC6UPJX",
         "suffixLength": 5
       },
       "options": {},
@@ -461,14 +461,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "6U2IH"
+        "label": "6UPJX"
       }
     },
     {
       "id": "account-watermark-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "GB5J7RHJBYZVQ7NCY7WBCAICA4DQOCAIBAEIHKGN6ILTYYMGVPIPLRGM",
+        "address": "GB5J7RHJBYZVQ7NHY7TQQCAIBADQOCAIBAEIHKGN6ILTYYMGVPIPLXHO",
         "suffixLength": 5
       },
       "options": {},
@@ -478,14 +478,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "PLRGM"
+        "label": "PLXHO"
       }
     },
     {
       "id": "account-watermark-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GCC2VT7UDE7GHCFN2L3RYAICA4DQOBYIBAEI5M6Y7UREO3ERW3NQAQNK",
+        "address": "GCC2VT7UDE7GBCNHY7TQOCAIBADQOBYIBAEI5M6Y7UREO3ERW3NQA3Z3",
         "suffixLength": 5
       },
       "options": {},
@@ -495,14 +495,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "QAQNK"
+        "label": "QA3Z3"
       }
     },
     {
       "id": "account-watermark-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "GCTMX4AVHJPYJKOO6MMD2AICA4DQOBYHA4D27VHZDZBWRDNS276CC4PA",
+        "address": "GCTMX4AVHJPYJKOH44DSOBYHA4DQOBYHA4D27VHZDZBWRDNS276CCIHI",
         "suffixLength": 5
       },
       "options": {},
@@ -512,14 +512,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "CC4PA"
+        "label": "CCIHI"
       }
     },
     {
       "id": "account-sideband-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "GBQYNK6Q6UND6ZEJV3J7QAQAA4EAQCAIBAEGVD5U3H7CGSDNSK35ZL57",
+        "address": "GBQYNK6Q6UND2ZUHVDEOQCAIBAEAQCAIBAEGVD5U3H7CGSDNSK35YF5U",
         "suffixLength": 5
       },
       "options": {},
@@ -529,14 +529,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "5ZL57"
+        "label": "5YF5U"
       }
     },
     {
       "id": "account-sideband-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "GBWJDNW3AASUU34UXHPAGAQAA4DQQCAIBAEHLGV74QES4U3YTXBOPZQT",
+        "address": "GBWJDNW3AASUS3UHU7EAQCAIBADQQCAIBAEHLGV74QES4U3YTXBOO4PK",
         "suffixLength": 5
       },
       "options": {},
@@ -546,14 +546,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "OPZQT"
+        "label": "OO4PK"
       }
     },
     {
       "id": "account-sideband-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "GB3ZZQPGBMYFK6U7YTUQ4AQAA4DQOCAIBAEIBJOK54KDSXUDVDG7FW4L",
+        "address": "GB3ZZQPGBMYFK6UHY7TQQCAIBADQOCAIBAEIBJOK54KDSXUDVDG7FU3V",
         "suffixLength": 5
       },
       "options": {},
@@ -563,14 +563,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "7FW4L"
+        "label": "7FU3V"
       }
     },
     {
       "id": "account-sideband-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GCBKPTHRCY5WBBNKZ72BSAQAA4DQOBYIBAEIXMGV7IPUI2MOWPMP2FFA",
+        "address": "GCBKPTHRCY5WDBVHY7TQOCAIBADQOBYIBAEIXMGV7IPUI2MOWPMP2HCI",
         "suffixLength": 5
       },
       "options": {},
@@ -580,14 +580,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "P2FFA"
+        "label": "P2HCI"
       }
     },
     {
       "id": "account-sideband-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "GCR4R3ISG5OIDJWL6AKTUAQAA4DQOBYHA4D2ZUPWDNAGLCVP2T4R4Z76",
+        "address": "GCR4R3ISG5OIDJWH44DSOBYHA4DQOBYHA4D2ZUPWDNAGLCVP2T4R4VG5",
         "suffixLength": 5
       },
       "options": {},
@@ -597,14 +597,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "R4Z76"
+        "label": "R4VG5"
       }
     },
     {
       "id": "account-sideband-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "GB4J3QXHBQYVM65AYXVA6AQBA4EAQCAIBAEIDJWL6AKTUX4EVHHPHD7R",
+        "address": "GB4J3QXHBQYVM6VHZDUAQCAIBAEAQCAIBAEIDJWL6AKTUX4EVHHPG64D",
         "suffixLength": 5
       },
       "options": {},
@@ -614,14 +614,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "PHD7R"
+        "label": "PG64D"
       }
     },
     {
       "id": "account-sideband-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "GCB2RTPSC46GDBVL2D2RUAQBA4DQQCAIBAEIZMOW7MQEK2UPWTM74SA5",
+        "address": "GCB2RTPSC46GFBVHY7UAQCAIBADQQCAIBAEIZMOW7MQEK2UPWTM75IIT",
         "suffixLength": 5
       },
       "options": {},
@@ -631,14 +631,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "74SA5"
+        "label": "75IIT"
       }
     },
     {
       "id": "account-sideband-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "GCHLHWH5EJDWZENW3MACKAQBA4DQOCAIBAEJPPHBAYVVA5M2X7SATX26",
+        "address": "GCHLHWH5EJDW5EVHY4DSQCAIBADQOCAIBAEJPPHBAYVVA5M2X7SATJXW",
         "suffixLength": 5
       },
       "options": {},
@@ -648,14 +648,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "ATX26"
+        "label": "ATJXW"
       }
     },
     {
       "id": "account-sideband-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GCM35YYIFVJHPHGB4YFTAAQBA4DQOBYIBAEKFR7MCE3FXAFFZLXRIWDG",
+        "address": "GCM35YYIFVJHNHWH44DSOCAIBADQOBYIBAEKFR7MCE3FXAFFZLXRJO3R",
         "suffixLength": 5
       },
       "options": {},
@@ -665,14 +665,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "RIWDG"
+        "label": "RJO3R"
       }
     },
     {
       "id": "account-sideband-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "GC5N6BBJJZZZRPPCA4WFCAQBA4DQOBYHA4D4H2ANGJLXZIOG5MIDKQV6",
+        "address": "GC5N6BBJJZZZVPXHA4TUOBYHA4DQOBYHA4D4H2ANGJLXZIOG5MIDK7LO",
         "suffixLength": 5
       },
       "options": {},
@@ -682,14 +682,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "DKQV6"
+        "label": "DK7LO"
       }
     },
     {
       "id": "account-sideband-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "GCH3JWP6ENEG3EVX3QASMAQCA4EAQCAIBAEJRPPCA4WFC5U3YDSQURSO",
+        "address": "GCH3JWP6ENEGZEVHZAECQCAIBAEAQCAIBAEJRPPCA4WFC5U3YDSQUMG5",
         "suffixLength": 5
       },
       "options": {},
@@ -699,14 +699,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "QURSO"
+        "label": "QUMG5"
       }
     },
     {
       "id": "account-sideband-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "GCNL7ZAJFZJXRHOC44GDCAQCA4DQQCAIBAEKHSHNCI3VZANGZPYBLQOD",
+        "address": "GCNL7ZAJFZJXRHWH44ECQCAIBADQQCAIBAEKHSHNCI3VZANGZPYBKWR6",
         "suffixLength": 5
       },
       "options": {},
@@ -716,14 +716,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "BLQOD"
+        "label": "BKWR6"
       }
     },
     {
       "id": "account-sideband-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "GCS4V3YUHFPIHKGN6ILTYAQCA4DQOCAIBAEK5U7YDVBGPDFR235SALRA",
+        "address": "GCS4V3YUHFPIBKWH44DSQCAIBADQOCAIBAEK5U7YDVBGPDFR235SB77H",
         "suffixLength": 5
       },
       "options": {},
@@ -733,14 +733,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "SALRA"
+        "label": "SB77H"
       }
     },
     {
       "id": "account-sideband-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GCYNL6Q7IRUY5M6Y7UREOAQCA4DQOBYIBAELTXQDFBGXFF544EDCWRJO",
+        "address": "GCYNL6Q7IRUYZMWH44TUOCAIBADQOBYIBAELTXQDFBGXFF544EDCX54N",
         "suffixLength": 5
       },
       "options": {},
@@ -750,14 +750,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "CWRJO"
+        "label": "CX54N"
       }
     },
     {
       "id": "account-sideband-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "GDI7MG2AMWFK7VHZDZBWQAQCA4DQOBYHA4D5V7ZEJFXJHOG5AITUYHYO",
+        "address": "GDI7MG2AMWFKZVXHA5DWOBYHA4DQOBYHA4D5V7ZEJFXJHOG5AITUYG3C",
         "suffixLength": 5
       },
       "options": {},
@@ -767,14 +767,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "UYHYO"
+        "label": "UYG3C"
       }
     },
     {
       "id": "account-pattern-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "GCGLDVX3EBCWVD5U3H7CGAYAA4EAQCAIBAEJLOW7AQUU444YXXRAOFA4",
+        "address": "GCGLDVX3EBCWTD5HZDUCQCAIBAEAQCAIBAEJLOW7AQUU444YXXRAPL5G",
         "suffixLength": 5
       },
       "options": {},
@@ -784,14 +784,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "AOFA4"
+        "label": "APL5G"
       }
     },
     {
       "id": "account-pattern-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "GCL3ZYIGFNIHLGV74QES4AYAA4DQQCAIBAEKBRPKB42FS7VDZDWRE3ON",
+        "address": "GCL3ZYIGFNIHLG5H44ECQCAIBADQQCAIBAEKBRPKB42FS7VDZDWRF2AM",
         "suffixLength": 5
       },
       "options": {},
@@ -801,14 +801,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "RE3ON"
+        "label": "RF2AM"
       }
     },
     {
       "id": "account-pattern-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "GCRMP3ARGZNYBJOK54KDSAYAA4DQOCAIBAEKXUHVDI7WJCNO2P4B3PKF",
+        "address": "GCRMP3ARGZNYDJ6H44DSQCAIBADQOCAIBAEKXUHVDI7WJCNO2P4B2RA3",
         "suffixLength": 5
       },
       "options": {},
@@ -818,14 +818,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "B3PKF"
+        "label": "B2RA3"
       }
     },
     {
       "id": "account-pattern-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GCW5F5Y4IFTIXMGV7IPUIAYAA4DQOBYIBAELNWYAEVFG7FFZ3YBSQCMB",
+        "address": "GCW5F5Y4IFTITM6H44DUOCAIBADQOBYIBAELNWYAEVFG7FFZ3YBSQHQ7",
         "suffixLength": 5
       },
       "options": {},
@@ -835,14 +835,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "SQCMB"
+        "label": "SQHQ7"
       }
     },
     {
       "id": "account-pattern-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "GDHPGGB5MKD2ZUPWDNAGKAYAA4DQOBYHA4D5P7BBIZVZBNO274SESGDD",
+        "address": "GDHPGGB5MKD23U7HA5DWOBYHA4DQOBYHA4D5P7BBIZVZBNO274SESNWZ",
         "suffixLength": 5
       },
       "options": {},
@@ -852,14 +852,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "ESGDD"
+        "label": "ESNWZ"
       }
     },
     {
       "id": "account-pattern-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "GCR4R3ISG5OIDJWL6AKTUAYBA4EAQCAIBAEKZUPWDNAGLCVP2T4R4YMP",
+        "address": "GCR4R3ISG5OIFJ6H5AECQCAIBAEAQCAIBAEKZUPWDNAGLCVP2T4R5JGC",
         "suffixLength": 5
       },
       "options": {},
@@ -869,14 +869,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "R4YMP"
+        "label": "R5JGC"
       }
     },
     {
       "id": "account-pattern-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "GCXNH6A5IJTYZMOW7MQEKAYBA4DQQCAIBAELPXABEZFXBFN234CCTRNN",
+        "address": "GCXNH6A5IJTY5M6H44UEQCAIBADQQCAIBAELPXABEZFXBFN234CCSMJ2",
         "suffixLength": 5
       },
       "options": {},
@@ -886,14 +886,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "CTRNN"
+        "label": "CSMJ2"
       }
     },
     {
       "id": "account-pattern-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "GC454AZIJVZJPPHBAYVVAAYBA4DQOCAIBAEMFZYMGFLHXIGF5IHTJLTM",
+        "address": "GC454AZIJVZJNP7HA4TUQCAIBADQOCAIBAEMFZYMGFLHXIGF5IHTJPGN",
         "suffixLength": 5
       },
       "options": {},
@@ -903,14 +903,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "TJLTM"
+        "label": "TJPGN"
       }
     },
     {
       "id": "account-pattern-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GDCOSDRTLB62FR7MCE3FWAYBA4DQOBYIBAEM34QXHRQYNK6Q6UND6WRJ",
+        "address": "GDCOSDRTLB62FR7HA4TUOCAIBADQOBYIBAEM34QXHRQYNK6Q6UND6YX4",
         "suffixLength": 5
       },
       "options": {},
@@ -920,14 +920,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "D6WRJ"
+        "label": "D6YX4"
       }
     },
     {
       "id": "account-pattern-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "GDSQUL2UPGPMH2ANGJLXYAYBA4DQOBYHA4D64EZYLWBKPTHRCY5WBZDP",
+        "address": "GDSQUL2UPGPMF2YHE5DWOBYHA4DQOBYHA4D64EZYLWBKPTHRCY5WAHF2",
         "suffixLength": 5
       },
       "options": {},
@@ -937,14 +937,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "WBZDP"
+        "label": "WAHF2"
       }
     },
     {
       "id": "account-pattern-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "GC5N6BBJJZZZRPPCA4WFCAYCA4EAQCAIBAEMH2ANGJLXZIOG5MIDKW3D",
+        "address": "GC5N6BBJJZZZRP7HBAUEQCAIBAEAQCAIBAEMH2ANGJLXZIOG5MIDL3G5",
         "suffixLength": 5
       },
       "options": {},
@@ -954,14 +954,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "DKW3D"
+        "label": "DL3G5"
       }
     },
     {
       "id": "account-pattern-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "GDC6UDZULF7KHSHNCI3VYAYCA4DQQCAIBAEM54YYHVRIPLGR6YNUBVDS",
+        "address": "GDC6UDZULF7KBS7HA4UEQCAIBADQQCAIBAEM54YYHVRIPLGR6YNUBCEK",
         "suffixLength": 5
       },
       "options": {},
@@ -971,14 +971,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "UBVDS"
+        "label": "UBCEK"
       }
     },
     {
       "id": "account-pattern-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "GDIPKGR7MSE25U7YDVBGOAYCA4DQOCAIBAENT7RDJBWZFN64AETEWBI5",
+        "address": "GDIPKGR7MSE2ZU7HA5DWQCAIBADQOCAIBAENT7RDJBWZFN64AETEWRQI",
         "suffixLength": 5
       },
       "options": {},
@@ -988,14 +988,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "EWBI5"
+        "label": "EWRQI"
       }
     },
     {
       "id": "account-pattern-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "GDNQAJKKN6KLTXQDFBGXEAYCA4DQOBYIBAEOICJOKN4J3QXHBQYVMHTZ",
+        "address": "GDNQAJKKN6KLRXYHE5DWOCAIBADQOBYIBAEOICJOKN4J3QXHBQYVNCAY",
         "suffixLength": 5
       },
       "options": {},
@@ -1005,14 +1005,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "VMHTZ"
+        "label": "VNCAY"
       }
     },
     {
       "id": "account-pattern-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "GD6CCRTLSC25V7ZEJFXJGAYCA4DQOBYHA4DQKKSPOSM35YYIFVJHPE64",
+        "address": "GD6CCRTLSC25R7ZHI5TYOBYHA4DQOBYHA4DQKKSPOSM35YYIFVJHPFAB",
         "suffixLength": 5
       },
       "options": {},
@@ -1022,14 +1022,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "HPE64"
+        "label": "HPFAB"
       }
     },
     {
       "id": "contract-badge-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "CAFTAVL2T4DQQCAIBAEAQAHMCEAFXAFFZLXRIOK6QOUM34QXHRQYNVN6",
+        "address": "CAFTAVL2T4DQQCAHBAEAQCHIBAAFXAFFZLXRIOK6QOUM34QXHRQYNYUV",
         "suffixLength": 5
       },
       "options": {},
@@ -1039,14 +1039,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "YNVN6"
+        "label": "YNYUV"
       }
     },
     {
       "id": "contract-badge-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "CALDWYEFVIDQOCAIBAEAQAHXDQAGNC5Q2X5B6RDJR2Z5R7JCI5WJDYX3",
+        "address": "CALDWYEFVIDQICAHA4EAQCHIBAAGNC5Q2X5B6RDJR2Z5R7JCI5WJDZRE",
         "suffixLength": 5
       },
       "options": {},
@@ -1056,14 +1056,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "JDYX3"
+        "label": "JDZRE"
       }
     },
     {
       "id": "contract-badge-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "CAQUM24QWUDQOBYIBAEAQAACE4AHDFV34ACSUT3UTG7OGCBNKJ3ZZ5JL",
+        "address": "CAQUM24QWUDQIBAHA4DQQCAIFAAHDFV34ACSUT3UTG7OGCBNKJ3ZYGGQ",
         "suffixLength": 5
       },
       "options": {},
@@ -1073,14 +1073,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "ZZ5JL"
+        "label": "ZYGGQ"
       }
     },
     {
       "id": "contract-badge-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CAWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P",
+        "address": "CAWFC5U3YADQIBAHA4DQOCAIFAAHZIOG5MIDKWT7UTE64EZYLWBKOMFH",
         "suffixLength": 5
       },
       "options": {},
@@ -1090,14 +1090,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "KOU7P"
+        "label": "KOMFH"
       }
     },
     {
       "id": "contract-badge-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "CBGXFF544EDQOBYHA4DQOABOKMAJ3QXHBQYVM65AYXVA6NCZP2R4QV5V",
+        "address": "CBGXFF544EDQIBAHA4DQOBZHI4AJ3QXHBQYVM65AYXVA6NCZP2R4Q2K3",
         "suffixLength": 5
       },
       "options": {},
@@ -1107,14 +1107,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "4QV5V"
+        "label": "4Q2K3"
       }
     },
     {
       "id": "contract-badge-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "CAREO3ERWYDQQCAIBAEAQAIDFAAHFF544EDCWUDVTK76ICJOKN4J3UF4",
+        "address": "CAREO3ERWYDQSCAHBAEAQCAIFAAHFF544EDCWUDVTK76ICJOKN4J3NKX",
         "suffixLength": 5
       },
       "options": {},
@@ -1124,14 +1124,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "J3UF4"
+        "label": "J3NKX"
       }
     },
     {
       "id": "contract-badge-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "CAWVE544YEDQOCAIBAEAQAIOGMAH3IWH5QITMW4AUXFO6FBZL2B2RSMG",
+        "address": "CAWVE544YEDQKCAHA4EAQCAIFAAH3IWH5QITMW4AUXFO6FBZL2B2RWN7",
         "suffixLength": 5
       },
       "options": {},
@@ -1141,14 +1141,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "2RSMG"
+        "label": "2RWN7"
       }
     },
     {
       "id": "contract-badge-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "CA4F3AVHZQDQOBYIBAEAQAIZHYAIRLOS64OECZULWDK7UH2ENGHLHDUJ",
+        "address": "CA4F3AVHZQDQKBAHA4DQQCAIFAAIRLOS64OECZULWDK7UH2ENGHLG46K",
         "suffixLength": 5
       },
       "options": {},
@@ -1158,14 +1158,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "LHDUJ"
+        "label": "LG46K"
       }
     },
     {
       "id": "contract-badge-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CBBWRDNS24DQOBYHBAEAQAJEJEAJHOG5AITUY4MWXPQAKKSPOSM35S4W",
+        "address": "CBBWRDNS24DQKBAHA4DQOCBIJAAJHOG5AITUY4MWXPQAKKSPOSM35OIK",
         "suffixLength": 5
       },
       "options": {},
@@ -1175,14 +1175,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "35S4W"
+        "label": "35OIK"
       }
     },
     {
       "id": "contract-badge-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "CBSITLWT7ADQOBYHA4DQOAKFNIALJWP6ENEG3EVX3QASMS3QSW5N6MMX",
+        "address": "CBSITLWT7ADQKBAHA4DQOB2HM4ALJWP6ENEG3EVX3QASMS3QSW5N6QXR",
         "suffixLength": 5
       },
       "options": {},
@@ -1192,14 +1192,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "N6MMX"
+        "label": "N6QXR"
       }
     },
     {
       "id": "contract-badge-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "CA4V5A5IZUDQQCAIBAEAQAQ2H4AITLWT7AOUEZ4MWHLPWICFNKH3I65O",
+        "address": "CA4V5A5IZUDQUCAHBAEAQCAIFAAITLWT7AOUEZ4MWHLPWICFNKH3IH4D",
         "suffixLength": 5
       },
       "options": {},
@@ -1209,14 +1209,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "3I65O"
+        "label": "3IH4D"
       }
     },
     {
       "id": "contract-badge-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "CBCGTDVT3ADQOCAIBAEAQARFJIAJJOO6AMUE24UXXTQQMK2QOWNL7WXX",
+        "address": "CBCGTDVT3ADQMCAHA4EAQCBIJAAJJOO6AMUE24UXXTQQMK2QOWNL6ATF",
         "suffixLength": 5
       },
       "options": {},
@@ -1226,14 +1226,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "L7WXX"
+        "label": "L6ATF"
       }
     },
     {
       "id": "contract-badge-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "CBHXJGN64MDQOBYIBAEAQARQKUAJ7RHJBYZVQ7NCY7WBCNS3QCS4VTY6",
+        "address": "CBHXJGN64MDQMBAHA4DQQCBIJAAJ7RHJBYZVQ7NCY7WBCNS3QCS4UWKY",
         "suffixLength": 5
       },
       "options": {},
@@ -1243,14 +1243,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "4VTY6"
+        "label": "4UWKY"
       }
     },
     {
       "id": "contract-badge-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CBNH7JGJ5YDQOBYHBAEAQAR3MAAKVT7UDE7GHCFN2L3RYQLGROYNLZMM",
+        "address": "CBNH7JGJ5YDQMBAHA4DQOCBINAAKVT7UDE7GHCFN2L3RYQLGROYNLYRR",
         "suffixLength": 5
       },
       "options": {},
@@ -1260,14 +1260,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "NLZMM"
+        "label": "NLYRR"
       }
     },
     {
       "id": "contract-badge-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "CB52BRPKB4DQOBYHA4DQOAS4QEAMX4AVHJPYJKOO6MMD2YUHVTI7NV4J",
+        "address": "CB52BRPKB4DQMBAHA4DQOB2HQ4AMX4AVHJPYJKOO6MMD2YUHVTI7NEW2",
         "suffixLength": 5
       },
       "options": {},
@@ -1277,14 +1277,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "7NV4J"
+        "label": "7NEW2"
       }
     },
     {
       "id": "contract-badge-slab-standard",
       "coverage": "traits",
       "input": {
-        "address": "CBIHLGV74QDQQCAIBAEAQAZRKYAKBRPKB42FS7VDZDWREN24QGTMXWUK",
+        "address": "CBIHLGV74QDQWCAHBAEAQCBIJAAKBRPKB42FS7VDZDWREN24QGTMWDG5",
         "suffixLength": 5
       },
       "options": {},
@@ -1294,14 +1294,14 @@
         "lettering": "slab",
         "rarity": "standard",
         "configured": true,
-        "label": "MXWUK"
+        "label": "MWDG5"
       }
     },
     {
       "id": "contract-badge-slab-registered",
       "coverage": "traits",
       "input": {
-        "address": "CBNYBJOK54DQOCAIBAEAQAZ4MEAKXUHVDI7WJCNO2P4B2QTHRSY5MNFA",
+        "address": "CBNYBJOK54DQOCAHA4EAQCBINAAKXUHVDI7WJCNO2P4B2QTHRSY5MXZE",
         "suffixLength": 5
       },
       "options": {},
@@ -1311,14 +1311,14 @@
         "lettering": "slab",
         "rarity": "registered",
         "configured": true,
-        "label": "5MNFA"
+        "label": "5MXZE"
       }
     },
     {
       "id": "contract-badge-slab-foil",
       "coverage": "traits",
       "input": {
-        "address": "CBTIXMGV7IDQOBYIBAEAQA2HNQALNWYAEVFG7FFZ3YBSQTLSS66ODL3C",
+        "address": "CBTIXMGV7IDQOBAHA4DQQCCINAALNWYAEVFG7FFZ3YBSQTLSS66OCCCE",
         "suffixLength": 5
       },
       "options": {},
@@ -1328,14 +1328,14 @@
         "lettering": "slab",
         "rarity": "foil",
         "configured": true,
-        "label": "ODL3C"
+        "label": "OCCCE"
       }
     },
     {
       "id": "contract-badge-slab-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CBYZNO7AAUDQOBYHBAEAQA2SO4AMDZQLGBKXVH6E5EHDGWD5ULD6Z6TE",
+        "address": "CBYZNO7AAUDQOBAHA4DQOCCINAAMDZQLGBKXVH6E5EHDGWD5ULD6YJAM",
         "suffixLength": 5
       },
       "options": {},
@@ -1345,14 +1345,14 @@
         "lettering": "slab",
         "rarity": "aurora",
         "configured": true,
-        "label": "6Z6TE"
+        "label": "6YJAM"
       }
     },
     {
       "id": "contract-badge-slab-pole",
       "coverage": "traits",
       "input": {
-        "address": "CCJLPXABEYDQOBYHA4DQOA3TTAAOEBZMKF3JXQHFBIXVI6M6YPUA2R2Y",
+        "address": "CCJLPXABEYDQOBAHA4DQOB3HQ4AOEBZMKF3JXQHFBIXVI6M6YPUA2UGL",
         "suffixLength": 5
       },
       "options": {},
@@ -1362,14 +1362,14 @@
         "lettering": "slab",
         "rarity": "pole",
         "configured": true,
-        "label": "A2R2Y"
+        "label": "A2UGL"
       }
     },
     {
       "id": "contract-watermark-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "CA3FXAFFZIDQQCAIBAEAQAAXHQAYNK6Q6UND6ZEJV3J7QHKCM6GLD3E5",
+        "address": "CA3FXAFFZIDQQCIHBAEAQCAIFAAYNK6Q6UND6ZEJV3J7QHKCM6GLD5OQ",
         "suffixLength": 5
       },
       "options": {},
@@ -1379,14 +1379,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "LD3E5"
+        "label": "LD5OQ"
       }
     },
     {
       "id": "contract-watermark-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "CBAWNC5Q2UDQOCAIBAEAQABCI4AZDNW3AASUU34UXHPAGKCNOKL3YBMK",
+        "address": "CBAWNC5Q2UDQICIHA4EAQCBIJAAZDNW3AASUU34UXHPAGKCNOKL3YCVV",
         "suffixLength": 5
       },
       "options": {},
@@ -1396,14 +1396,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "3YBMK"
+        "label": "3YCVV"
       }
     },
     {
       "id": "contract-watermark-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "CBGHDFV34ADQOBYIBAEAQABNKIAZZQPGBMYFK6U7YTUQ4M2YPWRMO33G",
+        "address": "CBGHDFV34ADQIBIHA4DQQCBIJAAZZQPGBMYFK6U7YTUQ4M2YPWRMO7UA",
         "suffixLength": 5
       },
       "options": {},
@@ -1413,14 +1413,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "MO33G"
+        "label": "MO7UA"
       }
     },
     {
       "id": "contract-watermark-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CBLXZIOG5MDQOBYHBAEAQABYLUA2PTHRCY5WBBNKZ72BSPTDRCW5FFIT",
+        "address": "CBLXZIOG5MDQIBIHA4DQOCBIJAA2PTHRCY5WBBNKZ72BSPTDRCW5FJNZ",
         "suffixLength": 5
       },
       "options": {},
@@ -1430,14 +1430,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "5FFIT"
+        "label": "5FJNZ"
       }
     },
     {
       "id": "contract-watermark-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "CB4J3QXHBQDQOBYHA4DQOACZPYA4R3ISG5OIDJWL6AKTUX4EVHHPHX7G",
+        "address": "CB4J3QXHBQDQIBIHA4DQOB2HM4A4R3ISG5OIDJWL6AKTUX4EVHHPH3VW",
         "suffixLength": 5
       },
       "options": {},
@@ -1447,14 +1447,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "PHX7G"
+        "label": "PH3VW"
       }
     },
     {
       "id": "contract-watermark-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "CBGXFF544EDQQCAIBAEAQAJOKMAZ3QXHBQYVM65AYXVA6NCZP2R4QR4E",
+        "address": "CBGXFF544EDQSCIHBAEAQCBIJAAZ3QXHBQYVM65AYXVA6NCZP2R4QSRP",
         "suffixLength": 5
       },
       "options": {},
@@ -1464,14 +1464,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "4QR4E"
+        "label": "4QSRP"
       }
     },
     {
       "id": "contract-watermark-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "CBMH3IWH5QDQOCAIBAEAQAJZLYA2RTPSC46GDBVL2D2RUP3ERGXNGNTQ",
+        "address": "CBMH3IWH5QDQKCIHA4EAQCBIJAA2RTPSC46GDBVL2D2RUP3ERGXNGKPX",
         "suffixLength": 5
       },
       "options": {},
@@ -1481,14 +1481,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "NGNTQ"
+        "label": "NGKPX"
       }
     },
     {
       "id": "contract-watermark-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "CBRYRLOS64DQOBYIBAEAQAKENEA3HWH5EJDWZENW3MACKSTPSS455D6H",
+        "address": "CBRYRLOS64DQKBIHA4DQQCCINAA3HWH5EJDWZENW3MACKSTPSS455D7V",
         "suffixLength": 5
       },
       "options": {},
@@ -1498,14 +1498,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "55D6H"
+        "label": "55D7V"
       }
     },
     {
       "id": "contract-watermark-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CBXJHOG5AIDQOBYHBAEAQAKPOQA35YYIFVJHPHGB4YFTAVL2T7COTKQD",
+        "address": "CBXJHOG5AIDQKBIHA4DQOCCINAA35YYIFVJHPHGB4YFTAVL2T7COSVB3",
         "suffixLength": 5
       },
       "options": {},
@@ -1515,14 +1515,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "OTKQD"
+        "label": "OSVB3"
       }
     },
     {
       "id": "contract-watermark-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "CCH3JWP6EMDQOBYHA4DQOALQSUA56BBJJZZZRPPCA4WFC5U3YDSQVSGZ",
+        "address": "CCH3JWP6EMDQKBIHA4DQOB3HQ4A56BBJJZZZRPPCA4WFC5U3YDSQUF5P",
         "suffixLength": 5
       },
       "options": {},
@@ -1532,14 +1532,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "QVSGZ"
+        "label": "QUF5P"
       }
     },
     {
       "id": "contract-watermark-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "CBSITLWT7ADQQCAIBAEAQASFNIA3JWP6ENEG3EVX3QASMS3QSW5N6R6N",
+        "address": "CBSITLWT7ADQUCIHBAEAQCCINAA3JWP6ENEG3EVX3QASMS3QSW5N7AWN",
         "suffixLength": 5
       },
       "options": {},
@@ -1549,14 +1549,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "N6R6N"
+        "label": "N7AWN"
       }
     },
     {
       "id": "contract-watermark-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "CBXZJOO6AMDQOCAIBAEAQASQOUA37ZAJFZJXRHOC44GDCVT3UDC6UEHX",
+        "address": "CBXZJOO6AMDQMCIHA4EAQCCINAA37ZAJFZJXRHOC44GDCVT3UDC6UZDV",
         "suffixLength": 5
       },
       "options": {},
@@ -1566,14 +1566,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "6UEHX"
+        "label": "6UZDV"
       }
     },
     {
       "id": "contract-watermark-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "CB5J7RHJBYDQOBYIBAEAQAS3QAA4V3YUHFPIHKGN6ILTYYMGVPIPKLKN",
+        "address": "CB5J7RHJBYDQMBIHA4DQQCCIRAA4V3YUHFPIHKGN6ILTYYMGVPIPKWC6",
         "suffixLength": 5
       },
       "options": {},
@@ -1583,14 +1583,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "PKLKN"
+        "label": "PKWC6"
       }
     },
     {
       "id": "contract-watermark-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CCC2VT7UDEDQOBYHBAEAQATGRMA5L6Q7IRUY5M6Y7UREO3ERW3NQA4K5",
+        "address": "CCC2VT7UDEDQMBIHA4DQOCDIRAA5L6Q7IRUY5M6Y7UREO3ERW3NQBPDC",
         "suffixLength": 5
       },
       "options": {},
@@ -1600,14 +1600,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "QA4K5"
+        "label": "QBPDC"
       }
     },
     {
       "id": "contract-watermark-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "CCTMX4AVHIDQOBYHA4DQOAUHVQA7MG2AMWFK7VHZDZBWRDNS276CD6LM",
+        "address": "CCTMX4AVHIDQMBIHA4DQOB4HU4A7MG2AMWFK7VHZDZBWRDNS276CDESZ",
         "suffixLength": 5
       },
       "options": {},
@@ -1617,14 +1617,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "CD6LM"
+        "label": "CDESZ"
       }
     },
     {
       "id": "contract-watermark-slab-standard",
       "coverage": "traits",
       "input": {
-        "address": "CB52BRPKB4DQQCAIBAEAQA24QEA4X4AVHJPYJKOO6MMD2YUHVTI7NR5Y",
+        "address": "CB52BRPKB4DQWCIHBAEAQCCIRAA4X4AVHJPYJKOO6MMD2YUHVTI7NMNO",
         "suffixLength": 5
       },
       "options": {},
@@ -1634,14 +1634,14 @@
         "lettering": "slab",
         "rarity": "standard",
         "configured": true,
-        "label": "7NR5Y"
+        "label": "7NMNO"
       }
     },
     {
       "id": "contract-watermark-slab-registered",
       "coverage": "traits",
       "input": {
-        "address": "CCDKXUHVDIDQOCAIBAEAQA3HRQA5N6ZAIVVI7NGZ7YRUQ3MSW7OADD3D",
+        "address": "CCDKXUHVDIDQOCIHA4EAQCDIRAA5N6ZAIVVI7NGZ7YRUQ3MSW7OADSUB",
         "suffixLength": 5
       },
       "options": {},
@@ -1651,14 +1651,14 @@
         "lettering": "slab",
         "rarity": "registered",
         "configured": true,
-        "label": "ADD3D"
+        "label": "ADSUB"
       }
     },
     {
       "id": "contract-watermark-slab-foil",
       "coverage": "traits",
       "input": {
-        "address": "CCI3NWYAEUDQOBYIBAEAQA3SS4A6CBRLKB2ZVP7EBEXFG6E5YLTQYZNV",
+        "address": "CCI3NWYAEUDQOBIHA4DQQCDIRAA6CBRLKB2ZVP7EBEXFG6E5YLTQZSLT",
         "suffixLength": 5
       },
       "options": {},
@@ -1668,14 +1668,14 @@
         "lettering": "slab",
         "rarity": "foil",
         "configured": true,
-        "label": "QYZNV"
+        "label": "QZSLT"
       }
     },
     {
       "id": "contract-watermark-slab-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CCOMDZQLGADQOBYHBAEAQA35UIA6YEJWLOAKLSXPCQ4V5A5IZXZBOKNL",
+        "address": "CCOMDZQLGADQOBIHA4DQOCDIVAA6YEJWLOAKLSXPCQ4V5A5IZXZBOC66",
         "suffixLength": 5
       },
       "options": {},
@@ -1685,14 +1685,14 @@
         "lettering": "slab",
         "rarity": "aurora",
         "configured": true,
-        "label": "BOKNL"
+        "label": "BOC66"
       }
     },
     {
       "id": "contract-watermark-slab-pole",
       "coverage": "traits",
       "input": {
-        "address": "CC66EBZMKEDQOBYHA4DQOA46YMAQ2MSXPSQ4N2YQGVNH7JGJ5YJTQ2FX",
+        "address": "CC66EBZMKEDQOBIHA4DQOB4HY4AQ2MSXPSQ4N2YQGVNH7JGJ5YJTQF3E",
         "suffixLength": 5
       },
       "options": {},
@@ -1702,14 +1702,14 @@
         "lettering": "slab",
         "rarity": "pole",
         "configured": true,
-        "label": "TQ2FX"
+        "label": "TQF3E"
       }
     },
     {
       "id": "contract-sideband-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "CBQYNK6Q6UDQQCAIBAEAQACCM4BLDVX3EBCWVD5U3H7CGSDNSK35YSPH",
+        "address": "CBQYNK6Q6UDQQCQHBAEAQCCINABLDVX3EBCWVD5U3H7CGSDNSK35YM6B",
         "suffixLength": 5
       },
       "options": {},
@@ -1719,14 +1719,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "5YSPH"
+        "label": "5YM6B"
       }
     },
     {
       "id": "contract-sideband-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "CBWJDNW3AADQOCAIBAEAQACNOIBLZYIGFNIHLGV74QES4U3YTXBOOWWX",
+        "address": "CBWJDNW3AADQICQHA4EAQCCINABLZYIGFNIHLGV74QES4U3YTXBOPQL6",
         "suffixLength": 5
       },
       "options": {},
@@ -1736,14 +1736,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "OOWWX"
+        "label": "OPQL6"
       }
     },
     {
       "id": "contract-sideband-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "CB3ZZQPGBMDQOBYIBAEAQACYPUBMP3ARGZNYBJOK54KDSXUDVDG7E4P6",
+        "address": "CB3ZZQPGBMDQIBQHA4DQQCCINABMP3ARGZNYBJOK54KDSXUDVDG7EW3R",
         "suffixLength": 5
       },
       "options": {},
@@ -1753,14 +1753,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "7E4P6"
+        "label": "7EW3R"
       }
     },
     {
       "id": "contract-sideband-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CCBKPTHRCYDQOBYHBAEAQADDRABNF5Y4IFTIXMGV7IPUI2MOWPMP26TP",
+        "address": "CCBKPTHRCYDQIBQHA4DQOCDIRABNF5Y4IFTIXMGV7IPUI2MOWPMP3HBL",
         "suffixLength": 5
       },
       "options": {},
@@ -1770,14 +1770,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "P26TP"
+        "label": "P3HBL"
       }
     },
     {
       "id": "contract-sideband-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "CCR4R3ISG4DQOBYHA4DQOAEEVEBPGGB5MKD2ZUPWDNAGLCVP2T4R4Y57",
+        "address": "CCR4R3ISG4DQIBQHA4DQOB4HU4BPGGB5MKD2ZUPWDNAGLCVP2T4R5RYV",
         "suffixLength": 5
       },
       "options": {},
@@ -1787,14 +1787,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "R4Y57"
+        "label": "R5RYV"
       }
     },
     {
       "id": "contract-sideband-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "CB4J3QXHBQDQQCAIBAEAQAKZPYBMR3ISG5OIDJWL6AKTUX4EVHHPGC7W",
+        "address": "CB4J3QXHBQDQSCQHBAEAQCCINABMR3ISG5OIDJWL6AKTUX4EVHHPGYLI",
         "suffixLength": 5
       },
       "options": {},
@@ -1804,14 +1804,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "PGC7W"
+        "label": "PGYLI"
       }
     },
     {
       "id": "contract-sideband-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "CCB2RTPSC4DQOCAIBAEAQALEREBNH6A5IJTYZMOW7MQEK2UPWTM75ZSC",
+        "address": "CCB2RTPSC4DQKCQHA4EAQCDIRABNH6A5IJTYZMOW7MQEK2UPWTM743B7",
         "suffixLength": 5
       },
       "options": {},
@@ -1821,14 +1821,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "75ZSC"
+        "label": "743B7"
       }
     },
     {
       "id": "contract-sideband-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "CCHLHWH5EIDQOBYIBAEAQALPSQBN4AZIJVZJPPHBAYVVA5M2X7SATNBA",
+        "address": "CCHLHWH5EIDQKBQHA4DQQCDIRABN4AZIJVZJPPHBAYVVA5M2X7SASUB5",
         "suffixLength": 5
       },
       "options": {},
@@ -1838,14 +1838,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "ATNBA"
+        "label": "ASUB5"
       }
     },
     {
       "id": "contract-sideband-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CCM35YYIFUDQOBYHBAEAQAL2T4BOSDRTLB62FR7MCE3FXAFFZLXRJLIW",
+        "address": "CCM35YYIFUDQKBQHA4DQOCDIRABOSDRTLB62FR7MCE3FXAFFZLXRJT5X",
         "suffixLength": 5
       },
       "options": {},
@@ -1855,14 +1855,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "RJLIW"
+        "label": "RJT5X"
       }
     },
     {
       "id": "contract-sideband-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "CC5N6BBJJYDQOBYHA4DQOAM3YABAUL2UPGPMH2ANGJLXZIOG5MIDK6FB",
+        "address": "CC5N6BBJJYDQKBQHA4DQOB4HY4BAUL2UPGPMH2ANGJLXZIOG5MIDKLAJ",
         "suffixLength": 5
       },
       "options": {},
@@ -1872,14 +1872,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "DK6FB"
+        "label": "DKLAJ"
       }
     },
     {
       "id": "contract-sideband-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "CCH3JWP6EMDQQCAIBAEAQATQSUBN6BBJJZZZRPPCA4WFC5U3YDSQU6VC",
+        "address": "CCH3JWP6EMDQUCQHBAEAQCDIRABN6BBJJZZZRPPCA4WFC5U3YDSQU6ZZ",
         "suffixLength": 5
       },
       "options": {},
@@ -1889,14 +1889,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "QU6VC"
+        "label": "QU6ZZ"
       }
     },
     {
       "id": "contract-sideband-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "CCNL7ZAJFYDQOCAIBAEAQAT3UABOUDZULF7KHSHNCI3VZANGZPYBL4QR",
+        "address": "CCNL7ZAJFYDQMCQHA4EAQCDIVABOUDZULF7KHSHNCI3VZANGZPYBKDKN",
         "suffixLength": 5
       },
       "options": {},
@@ -1906,14 +1906,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "BL4QR"
+        "label": "BKDKN"
       }
     },
     {
       "id": "contract-sideband-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "CCS4V3YUHEDQOBYIBAEAQAUGVMBPKGR7MSE25U7YDVBGPDFR235SBNIC",
+        "address": "CCS4V3YUHEDQMBQHA4DQQCEIVABPKGR7MSE25U7YDVBGPDFR235SAYQY",
         "suffixLength": 5
       },
       "options": {},
@@ -1923,14 +1923,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "SBNIC"
+        "label": "SAYQY"
       }
     },
     {
       "id": "contract-sideband-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CCYNL6Q7IQDQOBYHBAEAQAURWYBAAJKKN6KLTXQDFBGXFF544EDCWKPI",
+        "address": "CCYNL6Q7IQDQMBQHA4DQOCEIVABAAJKKN6KLTXQDFBGXFF544EDCW7AQ",
         "suffixLength": 5
       },
       "options": {},
@@ -1940,14 +1940,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "CWKPI"
+        "label": "CW7AQ"
       }
     },
     {
       "id": "contract-sideband-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "CDI7MG2AMUDQOBYHA4DQOAVS24BCCRTLSC25V7ZEJFXJHOG5AITUZZU2",
+        "address": "CDI7MG2AMUDQMBQHA4DQOB5HY4BCCRTLSC25V7ZEJFXJHOG5AITUZ3WE",
         "suffixLength": 5
       },
       "options": {},
@@ -1957,14 +1957,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "UZZU2"
+        "label": "UZ3WE"
       }
     },
     {
       "id": "contract-sideband-slab-standard",
       "coverage": "traits",
       "input": {
-        "address": "CCTMX4AVHIDQQCAIBAEAQA4HVQBPMG2AMWFK7VHZDZBWRDNS276CCLL4",
+        "address": "CCTMX4AVHIDQWCQHBAEAQCEIVABPMG2AMWFK7VHZDZBWRDNS276CCHMH",
         "suffixLength": 5
       },
       "options": {},
@@ -1974,14 +1974,14 @@
         "lettering": "slab",
         "rarity": "standard",
         "configured": true,
-        "label": "CCLL4"
+        "label": "CCHMH"
       }
     },
     {
       "id": "contract-sideband-slab-registered",
       "coverage": "traits",
       "input": {
-        "address": "CCY5N6ZAIUDQOCAIBAEAQA4SW4BACJSLOCK3VXYEFFHHHGF54IDSZCOF",
+        "address": "CCY5N6ZAIUDQOCQHA4EAQCEIVABACJSLOCK3VXYEFFHHHGF54IDSZL2M",
         "suffixLength": 5
       },
       "options": {},
@@ -1991,14 +1991,14 @@
         "lettering": "slab",
         "rarity": "registered",
         "configured": true,
-        "label": "SZCOF"
+        "label": "SZL2M"
       }
     },
     {
       "id": "contract-sideband-slab-foil",
       "coverage": "traits",
       "input": {
-        "address": "CC6OCBRLKADQOBYIBAEAQA45YIBAYMKWPOQML2QPGRMX5I6I5UJDO2HC",
+        "address": "CC6OCBRLKADQOBQHA4DQQCEIZABAYMKWPOQML2QPGRMX5I6I5UJDOUFS",
         "suffixLength": 5
       },
       "options": {},
@@ -2008,14 +2008,14 @@
         "lettering": "slab",
         "rarity": "foil",
         "configured": true,
-        "label": "DO2HC"
+        "label": "DOUFS"
       }
     },
     {
       "id": "contract-sideband-slab-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CDD6YEJWLMDQOBYHBAEAQA5IZUBBOPDBQ2V5B5I2H5SITLWT7AOUEJH2",
+        "address": "CDD6YEJWLMDQOBQHA4DQOCFIZABBOPDBQ2V5B5I2H5SITLWT7AOUEPPG",
         "suffixLength": 5
       },
       "options": {},
@@ -2025,14 +2025,14 @@
         "lettering": "slab",
         "rarity": "aurora",
         "configured": true,
-        "label": "UEJH2"
+        "label": "UEPPG"
       }
     },
     {
       "id": "contract-sideband-slab-pole",
       "coverage": "traits",
       "input": {
-        "address": "CDUA2MSXPQDQOBYHA4DQOA6J5YBDQXMCU7GPCFR3MCC2VT7UDE7GGZ65",
+        "address": "CDUA2MSXPQDQOBQHA4DQOB6H44BDQXMCU7GPCFR3MCC2VT7UDE7GG7Z3",
         "suffixLength": 5
       },
       "options": {},
@@ -2042,14 +2042,14 @@
         "lettering": "slab",
         "rarity": "pole",
         "configured": true,
-        "label": "GGZ65"
+        "label": "GG7Z3"
       }
     },
     {
       "id": "contract-pattern-mono-standard",
       "coverage": "traits",
       "input": {
-        "address": "CCGLDVX3EADQQCAIBAEAQADNSIB5YAJGJNYJLOW7AQUU444YXXRAPAHB",
+        "address": "CCGLDVX3EADQQCYHBAEAQCDIRAB5YAJGJNYJLOW7AQUU444YXXRAOBW2",
         "suffixLength": 5
       },
       "options": {},
@@ -2059,14 +2059,14 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": true,
-        "label": "APAHB"
+        "label": "AOBW2"
       }
     },
     {
       "id": "contract-pattern-mono-registered",
       "coverage": "traits",
       "input": {
-        "address": "CCL3ZYIGFMDQOCAIBAEAQADYTUB6ODBRKZ52BRPKB42FS7VDZDWREUVM",
+        "address": "CCL3ZYIGFMDQICYHA4EAQCDIRAB6ODBRKZ52BRPKB42FS7VDZDWRFGXH",
         "suffixLength": 5
       },
       "options": {},
@@ -2076,14 +2076,14 @@
         "lettering": "mono",
         "rarity": "registered",
         "configured": true,
-        "label": "REUVM"
+        "label": "RFGXH"
       }
     },
     {
       "id": "contract-pattern-mono-foil",
       "coverage": "traits",
       "input": {
-        "address": "CCRMP3ARGYDQOBYIBAEAQAEDVAB7EFZ4MGDKXUHVDI7WJCNO2P4B3WQV",
+        "address": "CCRMP3ARGYDQIBYHA4DQQCEIVAB7EFZ4MGDKXUHVDI7WJCNO2P4B2TX7",
         "suffixLength": 5
       },
       "options": {},
@@ -2093,14 +2093,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": true,
-        "label": "B3WQV"
+        "label": "B2TX7"
       }
     },
     {
       "id": "contract-pattern-mono-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CCW5F5Y4IEDQOBYHBAEAQAEOWMB72ISHNSI3NWYAEVFG7FFZ3YBSQGSE",
+        "address": "CCW5F5Y4IEDQIBYHA4DQOCEIVAB72ISHNSI3NWYAEVFG7FFZ3YBSRFCA",
         "suffixLength": 5
       },
       "options": {},
@@ -2110,14 +2110,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": true,
-        "label": "SQGSE"
+        "label": "SRFCA"
       }
     },
     {
       "id": "contract-pattern-mono-pole",
       "coverage": "traits",
       "input": {
-        "address": "CDHPGGB5MIDQOBYHA4DQOAFP2QBR4Q3IRWZNP7BBIZVZBNO274SESNUZ",
+        "address": "CDHPGGB5MIDQIBYHA4DQOB5HY4BR4Q3IRWZNP7BBIZVZBNO274SESHUX",
         "suffixLength": 5
       },
       "options": {},
@@ -2127,14 +2127,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": true,
-        "label": "ESNUZ"
+        "label": "ESHUX"
       }
     },
     {
       "id": "contract-pattern-rally-standard",
       "coverage": "traits",
       "input": {
-        "address": "CCR4R3ISG4DQQCAIBAEAQAMEVEB7GGB5MKD2ZUPWDNAGLCVP2T4R444O",
+        "address": "CCR4R3ISG4DQSCYHBAEAQCEIVAB7GGB5MKD2ZUPWDNAGLCVP2T4R5ZDB",
         "suffixLength": 5
       },
       "options": {},
@@ -2144,14 +2144,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": true,
-        "label": "R444O"
+        "label": "R5ZDB"
       }
     },
     {
       "id": "contract-pattern-rally-registered",
       "coverage": "traits",
       "input": {
-        "address": "CCXNH6A5IIDQOCAIBAEAQAMPWQB74I2INWJLPXABEZFXBFN234CCTKFK",
+        "address": "CCXNH6A5IIDQKCYHA4EAQCEIVAB74I2INWJLPXABEZFXBFN234CCTLTT",
         "suffixLength": 5
       },
       "options": {},
@@ -2161,14 +2161,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": true,
-        "label": "CTKFK"
+        "label": "CTLTT"
       }
     },
     {
       "id": "contract-pattern-rally-foil",
       "coverage": "traits",
       "input": {
-        "address": "CC454AZIJUDQOBYIBAEAQAM2X4BQSLSTPCO4FZYMGFLHXIGF5IHTIF3M",
+        "address": "CC454AZIJUDQKBYHA4DQQCEIVABQSLSTPCO4FZYMGFLHXIGF5IHTIB3D",
         "suffixLength": 5
       },
       "options": {},
@@ -2178,14 +2178,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": true,
-        "label": "TIF3M"
+        "label": "TIB3D"
       }
     },
     {
       "id": "contract-pattern-rally-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CDCOSDRTLADQOBYHBAEAQANFZIBRIOK6QOUM34QXHRQYNK6Q6UND6326",
+        "address": "CDCOSDRTLADQKBYHA4DQOCFIZABRIOK6QOUM34QXHRQYNK6Q6UND7LGS",
         "suffixLength": 5
       },
       "options": {},
@@ -2195,14 +2195,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": true,
-        "label": "D6326"
+        "label": "D7LGS"
       }
     },
     {
       "id": "contract-pattern-rally-pole",
       "coverage": "traits",
       "input": {
-        "address": "CDSQUL2UPEDQOBYHA4DQOAOG5MBTKWT7UTE64EZYLWBKPTHRCY5WAQQ6",
+        "address": "CDSQUL2UPEDQKBYHA4DQOB6H44BTKWT7UTE64EZYLWBKPTHRCY5WBXBU",
         "suffixLength": 5
       },
       "options": {},
@@ -2212,14 +2212,14 @@
         "lettering": "rally",
         "rarity": "pole",
         "configured": true,
-        "label": "WAQQ6"
+        "label": "WBXBU"
       }
     },
     {
       "id": "contract-pattern-coach-standard",
       "coverage": "traits",
       "input": {
-        "address": "CC5N6BBJJYDQQCAIBAEAQAU3YABQUL2UPGPMH2ANGJLXZIOG5MIDKDX3",
+        "address": "CC5N6BBJJYDQUCYHBAEAQCEIZABQUL2UPGPMH2ANGJLXZIOG5MIDL3BV",
         "suffixLength": 5
       },
       "options": {},
@@ -2229,14 +2229,14 @@
         "lettering": "coach",
         "rarity": "standard",
         "configured": true,
-        "label": "DKDX3"
+        "label": "DL3BV"
       }
     },
     {
       "id": "contract-pattern-coach-registered",
       "coverage": "traits",
       "input": {
-        "address": "CDC6UDZULEDQOCAIBAEAQAVGZMBRKOS7QSU454YYHVRIPLGR6YNUA3JW",
+        "address": "CDC6UDZULEDQMCYHA4EAQCFIZABRKOS7QSU454YYHVRIPLGR6YNUAWHI",
         "suffixLength": 5
       },
       "options": {},
@@ -2246,14 +2246,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": true,
-        "label": "UA3JW"
+        "label": "UAWHI"
       }
     },
     {
       "id": "contract-pattern-coach-foil",
       "coverage": "traits",
       "input": {
-        "address": "CDIPKGR7MQDQOBYIBAEAQAVR2YBSARLKR62NT7RDJBWZFN64AETEXUBD",
+        "address": "CDIPKGR7MQDQMBYHA4DQQCFIZABSARLKR62NT7RDJBWZFN64AETEX53V",
         "suffixLength": 5
       },
       "options": {},
@@ -2263,14 +2263,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": true,
-        "label": "EXUBD"
+        "label": "EX53V"
       }
     },
     {
       "id": "contract-pattern-coach-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CDNQAJKKN4DQOBYHBAEAQAV44EBSWUDVTK76ICJOKN4J3QXHBQYVNZ3C",
+        "address": "CDNQAJKKN4DQMBYHA4DQOCFI5ABSWUDVTK76ICJOKN4J3QXHBQYVMEW3",
         "suffixLength": 5
       },
       "options": {},
@@ -2280,14 +2280,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": true,
-        "label": "VNZ3C"
+        "label": "VMEW3"
       }
     },
     {
       "id": "contract-pattern-coach-pole",
       "coverage": "traits",
       "input": {
-        "address": "CD6CCRTLSADQOBYHA4DQOAW5AIBUY4MWXPQAKKSPOSM35YYIFVJHOJTK",
+        "address": "CD6CCRTLSADQMBYHA4DQOB6HA4BUY4MWXPQAKKSPOSM35YYIFVJHPURJ",
         "suffixLength": 5
       },
       "options": {},
@@ -2297,14 +2297,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": true,
-        "label": "HOJTK"
+        "label": "HPURJ"
       }
     },
     {
       "id": "contract-pattern-slab-standard",
       "coverage": "traits",
       "input": {
-        "address": "CDI7MG2AMUDQQCAIBAEAQA5S24BSCRTLSC25V7ZEJFXJHOG5AITUZ5VL",
+        "address": "CDI7MG2AMUDQWCYHBAEAQCFIZABSCRTLSC25V7ZEJFXJHOG5AITUZTNQ",
         "suffixLength": 5
       },
       "options": {},
@@ -2314,14 +2314,14 @@
         "lettering": "slab",
         "rarity": "standard",
         "configured": true,
-        "label": "UZ5VL"
+        "label": "UZTNQ"
       }
     },
     {
       "id": "contract-pattern-slab-registered",
       "coverage": "traits",
       "input": {
-        "address": "CDOACJSLOADQOCAIBAEAQA554IBSYULWTPAOKCRPKR4Z5Q7IBUZFPBM6",
+        "address": "CDOACJSLOADQOCYHA4EAQCFI5ABSYULWTPAOKCRPKR4Z5Q7IBUZFOXYK",
         "suffixLength": 5
       },
       "options": {},
@@ -2331,14 +2331,14 @@
         "lettering": "slab",
         "rarity": "registered",
         "configured": true,
-        "label": "FPBM6"
+        "label": "FOXYK"
       }
     },
     {
       "id": "contract-pattern-slab-foil",
       "coverage": "traits",
       "input": {
-        "address": "CDTQYMKWPMDQOBYIBAEAQA6I5UBTOXEBU3F7AFJ2L6CKTTXTDA6WEZM7",
+        "address": "CDTQYMKWPMDQOBYHA4DQQCGI5ABTOXEBU3F7AFJ2L6CKTTXTDA6WEDRN",
         "suffixLength": 5
       },
       "options": {},
@@ -2348,14 +2348,14 @@
         "lettering": "slab",
         "rarity": "foil",
         "configured": true,
-        "label": "WEZM7"
+        "label": "WEDRN"
       }
     },
     {
       "id": "contract-pattern-slab-aurora",
       "coverage": "traits",
       "input": {
-        "address": "CDZBOPDBQYDQOBYHBAEAQA6T7ABUEZ4MWHLPWICFNKH3JWP6ENEG3WDD",
+        "address": "CDZBOPDBQYDQOBYHA4DQOCGI5ABUEZ4MWHLPWICFNKH3JWP6ENEG27Y2",
         "suffixLength": 5
       },
       "options": {},
@@ -2365,14 +2365,14 @@
         "lettering": "slab",
         "rarity": "aurora",
         "configured": true,
-        "label": "G3WDD"
+        "label": "G27Y2"
       }
     },
     {
       "id": "contract-pattern-slab-pole",
       "coverage": "traits",
       "input": {
-        "address": "CAJTQXMCU4DQOBYHA4DQOA7UDEBWHCFN2L3RYQLGROYNL6Q7IRUY57WZ",
+        "address": "CAJTQXMCU4DQOBYHA4DQOB7HA4BWHCFN2L3RYQLGROYNL6Q7IRUY4G2O",
         "suffixLength": 5
       },
       "options": {},
@@ -2382,14 +2382,14 @@
         "lettering": "slab",
         "rarity": "pole",
         "configured": true,
-        "label": "Y57WZ"
+        "label": "Y4G2O"
       }
     },
     {
       "id": "account-badge-rally-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GAFTAVL2T7COSDRTLB62EAAAA4EAQCAIBAEBIOK6QOUM34QXHRQYMITV"
+        "address": "GAFTAVL2T7COSDBHJBUKQCAIBAEAQCAIBAEBIOK6QOUM34QXHRQYMOT5"
       },
       "options": {},
       "expected": {
@@ -2398,14 +2398,14 @@
         "lettering": "rally",
         "rarity": "standard",
         "configured": false,
-        "label": "GAFTAV\u2026QYMITV"
+        "label": "GAFTAV…QYMOT5"
       }
     },
     {
       "id": "account-badge-coach-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GAWVE544YHTAWMCVPKP4IAABA4DQQCAIBAEDMW4AUXFO6FBZL2B2RE4T"
+        "address": "GAWVE544YHTAUMCHM6EMQCAIBADQQCAIBAEDMW4AUXFO6FBZL2B2Q3BO"
       },
       "options": {},
       "expected": {
@@ -2414,14 +2414,14 @@
         "lettering": "coach",
         "rarity": "registered",
         "configured": false,
-        "label": "GAWVE5\u2026B2RE4T"
+        "label": "GAWVE5…B2Q3BO"
       }
     },
     {
       "id": "account-badge-mono-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GBHXJGN64MEC2UTXTTA6MAACA4DQOCAIBAEFQ7NCY7WBCNS3QCS4UI7G"
+        "address": "GBHXJGN64MECYUDHQ7D6QCAIBADQOCAIBAEFQ7NCY7WBCNS3QCS4V6XJ"
       },
       "options": {},
       "expected": {
@@ -2430,14 +2430,14 @@
         "lettering": "mono",
         "rarity": "foil",
         "configured": false,
-        "label": "GBHXJG\u2026S4UI7G"
+        "label": "GBHXJG…S4V6XJ"
       }
     },
     {
       "id": "account-watermark-rally-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GBAWNC5Q2X5B6RDJR2Z5QAIAA4DQQCAIBAEEU34UXHPAGKCNOKL3Y6FH"
+        "address": "GBAWNC5Q2X5B2RLHQ6UMQCAIBADQQCAIBAEEU34UXHPAGKCNOKL3ZYQP"
       },
       "options": {},
       "expected": {
@@ -2446,14 +2446,14 @@
         "lettering": "rally",
         "rarity": "registered",
         "configured": false,
-        "label": "GBAWNC\u2026L3Y6FH"
+        "label": "GBAWNC…L3ZYQP"
       }
     },
     {
       "id": "account-watermark-coach-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GBRYRLOS64OECZULWDK7UAIBA4DQOCAIBAEGZENW3MACKSTPSS454TGC"
+        "address": "GBRYRLOS64OEEZMHU7D6QCAIBADQOCAIBAEGZENW3MACKSTPSS454JQT"
       },
       "options": {},
       "expected": {
@@ -2462,14 +2462,14 @@
         "lettering": "coach",
         "rarity": "foil",
         "configured": false,
-        "label": "GBRYRL\u2026454TGC"
+        "label": "GBRYRL…454JQT"
       }
     },
     {
       "id": "account-watermark-mono-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GCC2VT7UDE7GHCFN2L3RYAICA4DQOBYIBAEI5M6Y7UREO3ERW3NQAQNK"
+        "address": "GCC2VT7UDE7GBCNHY7TQOCAIBADQOBYIBAEI5M6Y7UREO3ERW3NQA3Z3"
       },
       "options": {},
       "expected": {
@@ -2478,14 +2478,14 @@
         "lettering": "mono",
         "rarity": "aurora",
         "configured": false,
-        "label": "GCC2VT\u2026NQAQNK"
+        "label": "GCC2VT…NQA3Z3"
       }
     },
     {
       "id": "account-sideband-rally-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GB3ZZQPGBMYFK6U7YTUQ4AQAA4DQOCAIBAEIBJOK54KDSXUDVDG7FW4L"
+        "address": "GB3ZZQPGBMYFK6UHY7TQQCAIBADQOCAIBAEIBJOK54KDSXUDVDG7FU3V"
       },
       "options": {},
       "expected": {
@@ -2494,14 +2494,14 @@
         "lettering": "rally",
         "rarity": "foil",
         "configured": false,
-        "label": "GB3ZZQ\u2026G7FW4L"
+        "label": "GB3ZZQ…G7FU3V"
       }
     },
     {
       "id": "account-sideband-coach-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GCM35YYIFVJHPHGB4YFTAAQBA4DQOBYIBAEKFR7MCE3FXAFFZLXRIWDG"
+        "address": "GCM35YYIFVJHNHWH44DSOCAIBADQOBYIBAEKFR7MCE3FXAFFZLXRJO3R"
       },
       "options": {},
       "expected": {
@@ -2510,14 +2510,14 @@
         "lettering": "coach",
         "rarity": "aurora",
         "configured": false,
-        "label": "GCM35Y\u2026XRIWDG"
+        "label": "GCM35Y…XRJO3R"
       }
     },
     {
       "id": "account-sideband-mono-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GDI7MG2AMWFK7VHZDZBWQAQCA4DQOBYHA4D5V7ZEJFXJHOG5AITUYHYO"
+        "address": "GDI7MG2AMWFKZVXHA5DWOBYHA4DQOBYHA4D5V7ZEJFXJHOG5AITUYG3C"
       },
       "options": {},
       "expected": {
@@ -2526,14 +2526,14 @@
         "lettering": "mono",
         "rarity": "pole",
         "configured": false,
-        "label": "GDI7MG\u2026TUYHYO"
+        "label": "GDI7MG…TUYG3C"
       }
     },
     {
       "id": "account-pattern-rally-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GCW5F5Y4IFTIXMGV7IPUIAYAA4DQOBYIBAELNWYAEVFG7FFZ3YBSQCMB"
+        "address": "GCW5F5Y4IFTITM6H44DUOCAIBADQOBYIBAELNWYAEVFG7FFZ3YBSQHQ7"
       },
       "options": {},
       "expected": {
@@ -2542,14 +2542,14 @@
         "lettering": "rally",
         "rarity": "aurora",
         "configured": false,
-        "label": "GCW5F5\u2026BSQCMB"
+        "label": "GCW5F5…BSQHQ7"
       }
     },
     {
       "id": "account-pattern-coach-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GDSQUL2UPGPMH2ANGJLXYAYBA4DQOBYHA4D64EZYLWBKPTHRCY5WBZDP"
+        "address": "GDSQUL2UPGPMF2YHE5DWOBYHA4DQOBYHA4D64EZYLWBKPTHRCY5WAHF2"
       },
       "options": {},
       "expected": {
@@ -2558,14 +2558,14 @@
         "lettering": "coach",
         "rarity": "pole",
         "configured": false,
-        "label": "GDSQUL\u20265WBZDP"
+        "label": "GDSQUL…5WAHF2"
       }
     },
     {
       "id": "account-pattern-mono-unconfigured",
       "coverage": "edge",
       "input": {
-        "address": "GC5N6BBJJZZZRPPCA4WFCAYCA4EAQCAIBAEMH2ANGJLXZIOG5MIDKW3D"
+        "address": "GC5N6BBJJZZZRP7HBAUEQCAIBAEAQCAIBAEMH2ANGJLXZIOG5MIDL3G5"
       },
       "options": {},
       "expected": {
@@ -2574,7 +2574,7 @@
         "lettering": "mono",
         "rarity": "standard",
         "configured": false,
-        "label": "GC5N6B\u2026IDKW3D"
+        "label": "GC5N6B…IDL3G5"
       }
     },
     {
@@ -2587,9 +2587,9 @@
       "options": {},
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "V"
       }
@@ -2604,9 +2604,9 @@
       "options": {},
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "AWFC5U3YDSQUL2UPGPMGAAAA4DQOBYIBAEDKWT7UTE64EZYLWBKOOAV"
       }
@@ -2621,9 +2621,9 @@
       "options": {},
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "KOOAV"
       }
@@ -2640,9 +2640,9 @@
       },
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "KOOAV"
       }
@@ -2659,9 +2659,9 @@
       },
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "KOOAV"
       }
@@ -2678,9 +2678,9 @@
       },
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "KOOAV"
       }
@@ -2697,9 +2697,9 @@
       },
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "KOOAV"
       }
@@ -2716,9 +2716,9 @@
       },
       "expected": {
         "kind": "account",
-        "finish": "badge",
-        "lettering": "rally",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "coach",
+        "rarity": "standard",
         "configured": true,
         "label": "KOOAV"
       }
@@ -2733,9 +2733,9 @@
       "options": {},
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "P"
       }
@@ -2750,9 +2750,9 @@
       "options": {},
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "AWFC5U3YADQOBYHBAEAQAANGIAHZIOG5MIDKWT7UTE64EZYLWBKOU7P"
       }
@@ -2767,9 +2767,9 @@
       "options": {},
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "KOU7P"
       }
@@ -2786,9 +2786,9 @@
       },
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "KOU7P"
       }
@@ -2805,9 +2805,9 @@
       },
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "KOU7P"
       }
@@ -2824,9 +2824,9 @@
       },
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "KOU7P"
       }
@@ -2843,9 +2843,9 @@
       },
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "KOU7P"
       }
@@ -2862,9 +2862,9 @@
       },
       "expected": {
         "kind": "contract",
-        "finish": "badge",
-        "lettering": "mono",
-        "rarity": "aurora",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
         "configured": true,
         "label": "KOU7P"
       }
@@ -2880,8 +2880,8 @@
       "expected": {
         "kind": "account",
         "finish": "sideband",
-        "lettering": "coach",
-        "rarity": "registered",
+        "lettering": "rally",
+        "rarity": "standard",
         "configured": true,
         "label": "74SA5"
       }
@@ -2897,10 +2897,10 @@
       "expected": {
         "kind": "account",
         "finish": "sideband",
-        "lettering": "coach",
-        "rarity": "registered",
+        "lettering": "rally",
+        "rarity": "standard",
         "configured": false,
-        "label": "GCB2RT\u2026M74SA5"
+        "label": "GCB2RT…M74SA5"
       }
     },
     {
@@ -2914,11 +2914,421 @@
       "expected": {
         "kind": "account",
         "finish": "sideband",
-        "lettering": "coach",
-        "rarity": "registered",
+        "lettering": "rally",
+        "rarity": "standard",
         "configured": false,
-        "label": "GCB2RT\u2026M74SA5"
+        "label": "GCB2RT…M74SA5"
+      }
+    },
+    {
+      "id": "account-badge-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GA4V5A5IZXZBOPDHRCUMQCAIBAEAQCAIBAEEEZ4MWHLPWICFNKH3JHHL",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "3JHHL"
+      }
+    },
+    {
+      "id": "account-badge-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GBCGTDVT3D6SGRDHQ6UMQCAIBADQQCAIBAEE24UXXTQQMK2QOWNL744F",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "L744F"
+      }
+    },
+    {
+      "id": "account-badge-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GBHXJGN64MEC6UDHQ7D6QCAIBADQOCAIBAEFQ7NCY7WBCNS3QCS4U6AN",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "4U6AN"
+      }
+    },
+    {
+      "id": "account-badge-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GBNH7JGJ5YJTWXEHU7D6OCAIBADQOBYIBAEGHCFN2L3RYQLGROYNKAWZ",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "NKAWZ"
+      }
+    },
+    {
+      "id": "account-badge-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GB52BRPKB42FW7FHY7TQOBYHA4DQOBYHA4DYJKOO6MMD2YUHVTI7NB7M",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "7NB7M"
+      }
+    },
+    {
+      "id": "account-watermark-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GBSITLWT7AOUGZMHVDEOQCAIBAEAQCAIBAEG3EVX3QASMS3QSW5N6MSO",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "N6MSO"
+      }
+    },
+    {
+      "id": "account-watermark-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GBXZJOO6AMUE64MHU7UAQCAIBADQQCAIBAEHRHOC44GDCVT3UDC6VP6T",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "6VP6T"
+      }
+    },
+    {
+      "id": "account-watermark-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GB5J7RHJBYZVW7NHY7TQQCAIBADQOCAIBAEIHKGN6ILTYYMGVPIPKXQK",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "PKXQK"
+      }
+    },
+    {
+      "id": "account-watermark-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GCC2VT7UDE7GHCNHY7TQOCAIBADQOBYIBAEI5M6Y7UREO3ERW3NQB3O7",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "QB3O7"
+      }
+    },
+    {
+      "id": "account-watermark-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GCTMX4AVHJPYPKOH44DSOBYHA4DQOBYHA4D27VHZDZBWRDNS276CDIQM",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "CDIQM"
+      }
+    },
+    {
+      "id": "account-sideband-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GCH3JWP6ENEG7EVHZAECQCAIBAEAQCAIBAEJRPPCA4WFC5U3YDSQVMRZ",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "QVMRZ"
+      }
+    },
+    {
+      "id": "account-sideband-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GCNL7ZAJFZJXXHWH44ECQCAIBADQQCAIBAEKHSHNCI3VZANGZPYBLWG2",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "BLWG2"
+      }
+    },
+    {
+      "id": "account-sideband-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GCS4V3YUHFPIHKWH44DSQCAIBADQOCAIBAEK5U7YDVBGPDFR235SA7ID",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "SA7ID"
+      }
+    },
+    {
+      "id": "account-sideband-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GCYNL6Q7IRUY7MWH44TUOCAIBADQOBYIBAELTXQDFBGXFF544EDCW5LJ",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "CW5LJ"
+      }
+    },
+    {
+      "id": "account-sideband-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GDI7MG2AMWFK7VXHA5DWOBYHA4DQOBYHA4D5V7ZEJFXJHOG5AITUZGMG",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "UZGMG"
+      }
+    },
+    {
+      "id": "account-pattern-slab-standard",
+      "coverage": "traits",
+      "input": {
+        "address": "GC5N6BBJJZZZXP7HBAUEQCAIBAEAQCAIBAEMH2ANGJLXZIOG5MIDK3RZ",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": true,
+        "label": "DK3RZ"
+      }
+    },
+    {
+      "id": "account-pattern-slab-registered",
+      "coverage": "traits",
+      "input": {
+        "address": "GDC6UDZULF7KHS7HA4UEQCAIBADQQCAIBAEM54YYHVRIPLGR6YNUACTO",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "registered",
+        "configured": true,
+        "label": "UACTO"
+      }
+    },
+    {
+      "id": "account-pattern-slab-foil",
+      "coverage": "traits",
+      "input": {
+        "address": "GDIPKGR7MSE27U7HA5DWQCAIBADQOCAIBAENT7RDJBWZFN64AETEXRHM",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": true,
+        "label": "EXRHM"
+      }
+    },
+    {
+      "id": "account-pattern-slab-aurora",
+      "coverage": "traits",
+      "input": {
+        "address": "GDNQAJKKN6KLXXYHE5DWOCAIBADQOBYIBAEOICJOKN4J3QXHBQYVMCX4",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": true,
+        "label": "VMCX4"
+      }
+    },
+    {
+      "id": "account-pattern-slab-pole",
+      "coverage": "traits",
+      "input": {
+        "address": "GD6CCRTLSC25X7ZHI5TYOBYHA4DQOBYHA4DQKKSPOSM35YYIFVJHOFXF",
+        "suffixLength": 5
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": true,
+        "label": "HOFXF"
+      }
+    },
+    {
+      "id": "account-badge-slab-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GBHXJGN64MEC6UDHQ7D6QCAIBADQOCAIBAEFQ7NCY7WBCNS3QCS4U6AN"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "badge",
+        "lettering": "slab",
+        "rarity": "foil",
+        "configured": false,
+        "label": "GBHXJG…S4U6AN"
+      }
+    },
+    {
+      "id": "account-watermark-slab-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GCC2VT7UDE7GHCNHY7TQOCAIBADQOBYIBAEI5M6Y7UREO3ERW3NQB3O7"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "watermark",
+        "lettering": "slab",
+        "rarity": "aurora",
+        "configured": false,
+        "label": "GCC2VT…NQB3O7"
+      }
+    },
+    {
+      "id": "account-sideband-slab-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GDI7MG2AMWFK7VXHA5DWOBYHA4DQOBYHA4D5V7ZEJFXJHOG5AITUZGMG"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "sideband",
+        "lettering": "slab",
+        "rarity": "pole",
+        "configured": false,
+        "label": "GDI7MG…TUZGMG"
+      }
+    },
+    {
+      "id": "account-pattern-slab-unconfigured",
+      "coverage": "edge",
+      "input": {
+        "address": "GC5N6BBJJZZZXP7HBAUEQCAIBAEAQCAIBAEMH2ANGJLXZIOG5MIDK3RZ"
+      },
+      "options": {},
+      "expected": {
+        "kind": "account",
+        "finish": "pattern",
+        "lettering": "slab",
+        "rarity": "standard",
+        "configured": false,
+        "label": "GC5N6B…IDK3RZ"
       }
     }
-  ]
+  ],
+  "recipeVersion": "svp-1",
+  "baselineRevision": {
+    "reason": "Approved pre-mainnet shared G/C recipe; Colibri hue, four fonts and finishes, bytes 9–15 rarity",
+    "date": "2026-09-18",
+    "reference": "../../reference/TRAIT_RECIPE.md"
+  }
 }

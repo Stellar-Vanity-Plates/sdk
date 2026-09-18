@@ -1,8 +1,14 @@
 import { StrKey } from "@colibri/core/strkey";
 import { parseSuffixLength } from "@/accounts/index.ts";
 import { abbreviateAddress, type PlateKind, plateKind } from "@/validation.ts";
+import {
+  PLATE_FINISHES,
+  PLATE_LETTERINGS,
+  PLATE_PALETTE,
+  PLATE_TRAIT_RECIPE,
+} from "@/rendering/recipe.ts";
 
-/** Plate rarity derived from address bytes, matching the web application's rules. */
+/** Plate rarity derived from the shared G/C identity recipe. */
 export type PlateRarity =
   | "standard"
   | "registered"
@@ -20,6 +26,8 @@ export interface ResolvedPlateInput {
 }
 /** Deterministic appearance and identity derived locally from a plate. */
 export interface PlateModel {
+  /** Stable recipe identifier; persisted derived traits must be recomputed when it changes. */ recipeVersion:
+    typeof PLATE_TRAIT_RECIPE.version;
   /** Full address, never replaced by its decorative label. */ address: string;
   /** Account or contract identity. */ kind: PlateKind;
   /** Configured ending or standard address abbreviation. */ label: string;
@@ -36,14 +44,8 @@ export interface PlateModel {
     | "slab";
   /** Address-derived text ink, in portable hexadecimal form. */ ink: string;
   /** Identicon stripe color. */ band: string;
-  /** Legacy contract pattern selector; the canonical Clubhouse finish suppresses it. */ pattern:
-    | "pinstripe"
-    | "microdot"
-    | "diagonal"
-    | "crosshatch"
-    | "horizontal"
-    | "guilloche";
-  /** Pattern spacing in SVG units. */ patternScale: number;
+  /** Colibri identicon hue in degrees, shared by the ink and insignia. */ hue:
+    number;
 }
 
 function color(h: number, s: number, l: number): string {
@@ -57,7 +59,7 @@ function color(h: number, s: number, l: number): string {
   };
   return `#${channel(0)}${channel(8)}${channel(4)}`;
 }
-/** Builds the same deterministic rarity, lettering and insignia selections as the application. */
+/** Builds the canonical deterministic rarity, lettering and insignia selections. */
 export function createPlateModel(input: ResolvedPlateInput): PlateModel {
   const kind = plateKind(input.address);
   const bytes = kind === "account"
@@ -70,10 +72,10 @@ export function createPlateModel(input: ResolvedPlateInput): PlateModel {
     ? abbreviateAddress(input.address)
     : input.address.slice(-count);
   const configured = count !== undefined;
-  const offset = kind === "account" ? 14 : 5;
+  const offset = PLATE_TRAIT_RECIPE.rarityFirstByte - 1;
   const symbols = Uint8Array.from(
-    bytes.slice(offset, offset + 7),
-    (b) => b & 31,
+    bytes.slice(offset, offset + PLATE_TRAIT_RECIPE.rarityByteCount),
+    (b) => b & PLATE_TRAIT_RECIPE.rarityMask,
   );
   const mismatch = symbols.findIndex((b) => b !== symbols[0]);
   const run = mismatch < 0 ? 7 : mismatch;
@@ -86,8 +88,14 @@ export function createPlateModel(input: ResolvedPlateInput): PlateModel {
     : run < 7
     ? "aurora"
     : "pole";
-  const band = color(bytes[1] / 255 * 360, 80, 23);
+  const hue = bytes[PLATE_TRAIT_RECIPE.hueByte - 1] / 255 * 360;
+  const band = color(
+    hue,
+    PLATE_PALETTE.inkSaturation,
+    PLATE_PALETTE.inkLightness,
+  );
   return {
+    recipeVersion: PLATE_TRAIT_RECIPE.version,
     address: input.address,
     kind,
     label,
@@ -98,26 +106,15 @@ export function createPlateModel(input: ResolvedPlateInput): PlateModel {
       symbols,
       (b) => "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[b],
     ).join(""),
-    finish: (["badge", "watermark", "sideband", "pattern"] as const)[
-      bytes[kind === "account" ? 12 : 15] % 4
-    ],
-    lettering: kind === "account"
-      ? (["rally", "coach", "mono"] as const)[bytes[13] % 3]
-      : (["mono", "rally", "coach", "slab"] as const)[bytes[12] % 4],
-    ink: kind === "account" ? band : color(
-      Math.round(((bytes[0] << 8) | bytes[1]) / 65535 * 359),
-      34 + bytes[3] % 9,
-      27 + bytes[4] % 7,
-    ),
+    finish: PLATE_FINISHES[
+      bytes[PLATE_TRAIT_RECIPE.finishByte - 1] & PLATE_TRAIT_RECIPE.finishMask
+    ].id,
+    lettering: PLATE_LETTERINGS[
+      bytes[PLATE_TRAIT_RECIPE.letteringByte - 1] &
+      PLATE_TRAIT_RECIPE.letteringMask
+    ].id,
+    ink: band,
     band,
-    pattern: ([
-      "pinstripe",
-      "microdot",
-      "diagonal",
-      "crosshatch",
-      "horizontal",
-      "guilloche",
-    ] as const)[bytes[2] % 6],
-    patternScale: 7 + bytes[4] % 5,
+    hue,
   };
 }

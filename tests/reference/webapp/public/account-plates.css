@@ -442,6 +442,14 @@
   font-size: min(10cqw, var(--account-word-limit));
 }
 
+/* svp-1 adds the same fourth lettering family for G and C plates. */
+.account-plate[data-account-lettering="slab"] .account-plate-word {
+  font-family: "Alfa Slab One", serif;
+  font-weight: 400;
+  font-size: min(9cqw, var(--account-word-limit));
+  letter-spacing: 0.025em;
+}
+
 .account-plate.is-compact {
   border-width: 2px;
   border-radius: 6px;

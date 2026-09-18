@@ -35,17 +35,18 @@ Deno.test("appearance matches independent webapp resolvers across 4096 determini
         account ? appearance!.rarity.signature : finish.traits.raritySignature,
       );
       const lettering = account
-        ? ({ stamped: "rally", script: "coach", mono: "mono" } as const)[
+        ? ({
+          stamped: "rally",
+          script: "coach",
+          mono: "mono",
+          slab: "slab",
+        } as const)[
           appearance!.lettering.id
         ]
         : finish.lettering.id === "registration"
         ? "mono"
         : finish.lettering.id;
       assertEquals(actual.lettering, lettering);
-      if (!account) {
-        assertEquals(actual.pattern, finish.traits.pattern);
-        assertEquals(actual.patternScale, finish.traits.patternScale);
-      }
     }
   }
 });

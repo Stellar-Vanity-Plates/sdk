@@ -165,10 +165,10 @@ dependency.
 
 ## Saved SVG baselines
 
-`tests/fixtures/svg/` holds 171 complete, self-contained SVGs and an explicit
-manifest of public addresses, inputs, options and expected traits. The 140 named
+`tests/fixtures/svg/` holds 195 complete, self-contained SVGs and an explicit
+manifest of public addresses, inputs, options and expected traits. The 160 named
 combinations cover every supported G/C × insignia finish × lettering × rarity
-combination. Another 31 cases cover unconfigured accounts, metadata, short/long
+combination. Another 35 cases cover unconfigured accounts, metadata, short/long
 and normalized labels, width boundaries, animations and custom accessible IDs.
 This is full coverage of the named visual combinations, not every possible
 address, color, width or animation time.
@@ -181,7 +181,7 @@ read-only access to fixtures and cannot update their expectations. Failure
 messages identify the case and first changed character without dumping embedded
 font data.
 
-The browser suite also compares all 140 saved visual combinations against the
+The browser suite also compares all 160 saved visual combinations against the
 independent webapp components, retaining the existing live-renderer and adapter
 comparisons. A baseline created from an incorrect renderer therefore still fails
 webapp parity.
@@ -210,11 +210,12 @@ with extracted app CSS and embedded canonical fonts. SVG wraps that composition
 in foreignObject; both PNG paths render that same composition in a browser. Keep
 the model pure.
 
-The independent app components and original styles under
-`tests/reference/webapp/` are a frozen reference, excluded from publication.
-`webapp.json` records the original commit and source hashes. Only import paths
-are adapted in its TS files. Never edit those fixtures merely to make a failing
-SDK test pass.
+The independent app components and styles under `tests/reference/webapp/` are a
+versioned reference, excluded from publication. The approved `svp-1` revision is
+documented in `tests/reference/TRAIT_RECIPE.md`; it retains independent
+selectors and does not import the SDK model or palette. `webapp.json` records
+the original commit and source hashes. Only import paths are adapted in its TS
+files. Never edit those fixtures merely to make a failing SDK test pass.
 
 Before releasing a rendering change, fetch the webapp's staging ref, then run:
 
@@ -222,32 +223,32 @@ Before releasing a rendering change, fetch the webapp's staging ref, then run:
 deno task check:webapp /path/to/webapp origin/staging --consumer
 ```
 
-Staging now consumes SDK 0.1.0 for its real-address artwork. The `--consumer`
-check pins those adapter, trait and stylesheet-build inputs in
+Staging consumes the published SDK for its real-address artwork. The
+`--consumer` check pins those adapter, trait and stylesheet-build inputs in
 `tests/reference/webapp-consumer.json`. A hash change requires reviewing the
 consumer integration; it cannot regenerate visual expectations. Without that
 flag, the command retains the original independent-source comparison against
 `webapp.json` (supply its original commit as the ref).
 
-Keep the frozen pre-SDK components for independent pixel comparisons. Replacing
-them with today's SDK-backed wrappers would make the test compare the SDK to
-itself. A deliberate future artwork change requires a separately reviewed,
-independent design reference and a complete parity run. Neither command updates
-fixtures automatically; both fail on missing or changed inputs.
+Keep the independent pre-SDK components for independent pixel comparisons.
+Replacing them with today's SDK-backed wrappers would make the test compare the
+SDK to itself. A deliberate future artwork change requires a separately
+reviewed, independent design reference and a complete parity run. Neither
+command updates fixtures automatically; both fail on missing or changed inputs.
 
-Visual tests require zero differing pixels against the original app components,
-using the same browser, platform and rendering path. They cover G/C, every
-finish, lettering and rarity, long/short labels, unconfigured accounts, two
-widths and all adapters. Compare DOM with DOM, SVG with independently wrapped
-original app markup, and Canvas with that same reference SVG drawn through
-Canvas. Browser rasterization can differ slightly between those paths even when
-the artwork is identical; this is not a reason to change the design or permit
-pixel tolerance.
+Visual tests require zero differing pixels against the versioned reference
+components, using the same browser, platform and rendering path. They cover G/C,
+every finish, lettering and rarity, long/short labels, unconfigured accounts,
+two widths and all adapters. Compare DOM with DOM, SVG with independently
+wrapped original app markup, and Canvas with that same reference SVG drawn
+through Canvas. Browser rasterization can differ slightly between those paths
+even when the artwork is identical; this is not a reason to change the design or
+permit pixel tolerance.
 
 Captures include a 32px transparent margin to verify the complete outer shadow.
-The independent SVG fixture uses all original styles and components, without
-calling SDK rendering helpers. A failure records differing coordinates and
-attaches both images to CI.
+The independent SVG fixture uses the versioned reference styles and components,
+without calling SDK rendering helpers. A failure records differing coordinates
+and attaches both images to CI.
 
 ## Releases
 
@@ -267,8 +268,8 @@ publication. Pull requests, feature branches and manual dispatch only run
 checks. To release:
 
 1. Set `version` in `deno.json` to the intended unpublished version and review
-   the public API and release changes. The next candidate is `0.2.0`; include
-   migration notes for React style installation.
+   the public API and release changes. The next candidate is `0.4.0`; include
+   the intentional pre-1.0 trait remapping and database migration notes.
 2. Run `deno task check:publish` locally and merge the reviewed change to `main`
    after CI passes. JSR must link `@vanity-plates/sdk` to this GitHub
    repository.

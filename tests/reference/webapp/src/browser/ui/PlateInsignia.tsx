@@ -25,7 +25,7 @@ export function derivePlateInsignia(address?: string) {
     : StrKey.decodeEd25519PublicKey(address);
   const hue = bytes[1] / 255 * 360;
   return {
-    finish: PLATE_INSIGNIA_FINISHES[bytes[contract ? 15 : 12] % 4],
+    finish: PLATE_INSIGNIA_FINISHES[bytes[7] & 3],
     icon: `data:image/svg+xml,${
       encodeURIComponent(new Identicon(address).toSvg(PLATE_IDENTICON_OPTIONS))
     }`,

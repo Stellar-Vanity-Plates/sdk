@@ -27,9 +27,7 @@ Deno.test("SVG fixture inventory covers every named visual combination and has n
   for (const kind of ["account", "contract"]) {
     for (const finish of ["badge", "watermark", "sideband", "pattern"]) {
       for (
-        const lettering of kind === "account"
-          ? ["rally", "coach", "mono"]
-          : ["mono", "rally", "coach", "slab"]
+        const lettering of ["mono", "rally", "coach", "slab"]
       ) {
         for (
           const rarity of ["standard", "registered", "foil", "aurora", "pole"]
@@ -91,7 +89,7 @@ Deno.test("SVG fixture inventory covers every named visual combination and has n
       return derived;
     }).sort(),
     ["badge", "watermark", "sideband", "pattern"].flatMap((finish) =>
-      ["rally", "coach", "mono"].map((lettering) =>
+      ["mono", "rally", "coach", "slab"].map((lettering) =>
         `account-${finish}-${lettering}-unconfigured`
       )
     ).sort(),
@@ -122,7 +120,7 @@ Deno.test("fresh SVG generation matches every saved baseline exactly, including 
     });
   }
   console.log(
-    `${svgFixtures.length} complete SVG files match byte-for-byte; 140 visual combinations and 31 display/export edge cases.`,
+    `${svgFixtures.length} complete SVG files match byte-for-byte; 160 visual combinations and 35 display/export edge cases.`,
   );
 });
 

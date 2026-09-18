@@ -80,15 +80,15 @@ function fixtures(): PlateInput[] {
   const values: PlateInput[] = [];
   for (const account of [false, true]) {
     for (let finish = 0; finish < 4; finish++) {
-      for (let font = 0; font < (account ? 3 : 4); font++) {
+      for (let font = 0; font < 4; font++) {
         for (const run of [1, 2, 3, 4, 7]) {
           const bytes = Uint8Array.from(
             { length: 32 },
             (_, i) => (i * 37 + finish * 43 + font * 23 + run * 11) % 256,
           );
-          bytes[account ? 12 : 15] = finish;
-          bytes[account ? 13 : 12] = font;
-          const offset = account ? 14 : 5;
+          bytes[7] = finish;
+          bytes[6] = font;
+          const offset = 8;
           for (let i = 0; i < 7; i++) {
             bytes[offset + i] = i < run ? 7 : 8;
           }
@@ -387,7 +387,7 @@ Deno.test({
 
 Deno.test({
   name:
-    "saved SVG baselines render like the independent webapp for all 140 visual combinations",
+    "saved SVG baselines render like the independent webapp for all 160 visual combinations",
   sanitizeOps: false,
   sanitizeResources: false,
   fn: async () => {

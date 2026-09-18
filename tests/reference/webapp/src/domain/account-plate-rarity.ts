@@ -11,7 +11,7 @@ export const ACCOUNT_PLATE_RARITIES = [
 export function deriveAccountPlateRarity(address: string) {
   if (!StrKey.isValidEd25519PublicKey(address)) return undefined;
   const symbols = Uint8Array.from(StrKey.decodeEd25519PublicKey(address))
-    .subarray(14, 21).map((
+    .subarray(8, 15).map((
       byte,
     ) => byte & 31);
   const mismatch = symbols.findIndex((symbol) => symbol !== symbols[0]);
