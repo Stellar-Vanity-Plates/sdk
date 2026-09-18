@@ -19,5 +19,17 @@
     "src/browser/design-system/clubhouse-styles.ts": "5119bcff520f02f688ce8d5cd6a5d5b173d3cf8a949f68e88d5f78888d52d279",
     "src/browser/design-system/clubhouse-themes.ts": "8b551581c9e25b007a77ef0b0894042c0e9a0b1574dce445538b8e6a60bffe00",
     "public/index.html": "c4408a6fb3c76eb5208e1b58d3ceb817233a55b8426429ceefad17c5c9a17c59"
+  },
+  "recipeRevision": {
+    "version": "svp-1",
+    "specification": "TRAIT_RECIPE.md",
+    "files": {
+      "src/browser/account-plates/plate-appearance.ts": "cbbef2ab750d3998bc08cc5910e3e7ea4754292e5187e345c189006df93aed36",
+      "src/browser/ui/PlateInsignia.tsx": "b1f4a44a26cc5d05c213f1d0c42069ab6b8d466d2d182a327a0a213eac38179f",
+      "src/domain/account-plate-rarity.ts": "beabb8c49fe873bb21ffb7f088cfbab0f95adeea54370482e742d9afe215c7a9",
+      "src/domain/contract-plate-traits.ts": "3b441d0b148dba0f6475ad51072ad8ba5040108b3fa6192a50d5f1032549bec8",
+      "src/browser/contract-plates/plate-finishes.ts": "fde4a16d7284c88cda0a2fdf1248128286164f095000644b9c83e7fd8d8ea17c",
+      "public/account-plates.css": "28555618e834e7c5ea027a44ce54e874e96781c01db7b1d2bab82ae16d9e1555"
+    }
   }
 }

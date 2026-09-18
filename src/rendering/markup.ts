@@ -1,5 +1,4 @@
 /** Synchronous resolved artwork without styles or network lookup. @module */
-import { StrKey } from "@colibri/core/strkey";
 import {
   createPlateModel,
   type ResolvedPlateInput,
@@ -36,9 +35,6 @@ export function renderResolvedPlateHtml(
 ): string {
   const model = createPlateModel(input);
   const account = model.kind === "account";
-  const bytes = account
-    ? StrKey.decodeEd25519PublicKey(model.address)
-    : StrKey.decodeContract(model.address);
   const appearance = createPlateAppearance(model.address);
   const icon = appearance.identiconUrl, ink = appearance.ink;
   const variables = `--account-icon:url(&quot;${
@@ -56,13 +52,20 @@ export function renderResolvedPlateHtml(
   const tag = options.inline ? "span" : "div";
   let content: string;
   if (account) {
-    const lettering = ["stamped", "script", "mono"][bytes[13] % 3];
+    const lettering = {
+      mono: "mono",
+      rally: "stamped",
+      coach: "script",
+      slab: "slab",
+    }[model.lettering];
     content =
       `<${tag} class="account-plate-container"><${tag} class="account-plate" data-account-finish="${model.finish}" data-account-lettering="${lettering}" data-account-rarity="${model.rarity}" style="${variables}--account-word-limit:${
         66 / model.label.length
       }cqw" role="img" aria-label="${description}">${insignia}<${tag} class="account-plate-face" aria-hidden="true"><span class="account-plate-label">STELLAR ACCOUNT PLATE</span><strong class="account-plate-word">${label}</strong><span class="account-plate-address">${address}</span></${tag}>${screws}</${tag}></${tag}>`;
   } else {
-    const lettering = ["registration", "rally", "coach", "slab"][bytes[12] % 4];
+    const lettering = model.lettering === "mono"
+      ? "registration"
+      : model.lettering;
     const longWord = model.label.length > 8
       ? ` style="font-size:${
         Math.max(11, Math.min(36, 760 / model.label.length))

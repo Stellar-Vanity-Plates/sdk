@@ -75,11 +75,10 @@ export function deriveContractPlateTraits(
   if (!address || !StrKey.isValidContract(address)) return DEFAULT_TRAITS;
 
   const bytes = Uint8Array.from(StrKey.decodeContract(address));
-  const hueSeed = (bytes[0] << 8) | bytes[1];
-  const hue = Math.round((hueSeed / 65_535) * 359);
-  const saturation = 34 + (bytes[3] % 9);
-  const lightness = 27 + (bytes[4] % 7);
-  const raritySymbols = bytes.slice(5, 12).map((value) => value & 31);
+  const hue = bytes[1] / 255 * 360;
+  const saturation = 80;
+  const lightness = 23;
+  const raritySymbols = bytes.slice(8, 15).map((value) => value & 31);
   const rarityRunLength = matchingPrefixLength(raritySymbols);
   const rarity = rarityFromRunLength(rarityRunLength);
 

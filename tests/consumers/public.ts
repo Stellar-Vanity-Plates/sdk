@@ -1,5 +1,6 @@
 import {
   createPlateAppearance,
+  PLATE_TRAIT_RECIPE as localRecipe,
   renderResolvedPlateHtml,
 } from "@consumer/sdk/rendering/local";
 import { plateSharedCss } from "@consumer/sdk/rendering/styles";
@@ -32,6 +33,11 @@ import {
 } from "@consumer/sdk/contracts";
 import {
   createPlateModel,
+  PLATE_FINISHES,
+  PLATE_LETTERINGS,
+  PLATE_PALETTE,
+  PLATE_RARITIES,
+  PLATE_TRAIT_RECIPE,
   renderPlateHtml,
   renderPlateSvg,
 } from "@consumer/sdk/rendering";
@@ -121,6 +127,21 @@ ensure(
 ensure(
   createPlateModel(plate).label === address.slice(-plate.suffixLength),
   "Public plate model changed.",
+);
+ensure(
+  PLATE_TRAIT_RECIPE === localRecipe &&
+    createPlateModel(plate).recipeVersion === "svp-1" &&
+    PLATE_TRAIT_RECIPE.rarityFirstByte === 9 &&
+    PLATE_LETTERINGS.length === 4 && PLATE_FINISHES.length === 4 &&
+    PLATE_RARITIES.length === 5 && PLATE_PALETTE.inkSaturation === 80,
+  "Canonical recipe definitions are missing from public rendering subpaths.",
+);
+ensure(
+  Object.isFrozen(PLATE_TRAIT_RECIPE) &&
+    PLATE_LETTERINGS.every(Object.isFrozen) &&
+    PLATE_FINISHES.every(Object.isFrozen) &&
+    PLATE_RARITIES.every(Object.isFrozen),
+  "Consumers can mutate the shared trait definitions.",
 );
 ensure(
   (await renderPlateHtml(plate)).includes(address),

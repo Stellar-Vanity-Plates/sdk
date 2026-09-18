@@ -181,7 +181,7 @@ explicit network config.
 
 For custom UI, `usePlate` returns `data`, `status`, `error`, `isPending`,
 `isFetching` and `refetch`. `Plate` forwards lookup failures to the nearest
-React error boundary. React 18 is the verified adapter target. Deno SSR requires
+React error boundary. React 19 is the verified adapter target. Deno SSR requires
 `--allow-env=NODE_ENV`. React and TanStack stay outside core validation, farming
 and image-generation entrypoints.
 
@@ -323,6 +323,66 @@ const css = plateSharedCss;
 HTML/SVG/PNG exports remain self-contained. Use
 `renderPlateHtml(input, { includeStyles: false })` with host-provided CSS when
 network resolution is desired without repeated embedded assets.
+
+## Shared G/C trait recipe
+
+Recipe `svp-1` uses the same decoded 32-byte identity for both address types.
+Byte positions here are **one-based payload positions**, excluding the version
+byte and checksum. G and C encodings of identical identity bytes have identical
+traits, colors and identicons; only their semantic labels and addresses differ.
+
+| Output                | Source                                             | Selection                                                 |
+| --------------------- | -------------------------------------------------- | --------------------------------------------------------- |
+| Ink and identicon hue | Colibri hue, payload byte 2                        | One common hue; ink uses 80% saturation and 23% lightness |
+| Identicon pixels      | Colibri matrix, bytes 3–5 and upper four bits of 6 | Existing mirrored 7×7 pattern                             |
+| Lettering             | Byte 7, lowest two bits                            | Registration, Rally condensed, Coach script, Garage slab  |
+| Finish                | Byte 8, lowest two bits                            | Club badge, Ghost paint, Touring stripe, Signature weave  |
+| Rarity                | Bytes 9–15, lowest five bits of **each** byte      | Seven separate Base32 symbols; not a packed bit stream    |
+
+Bytes 1–6 are reserved for the identicon. Bytes 7 and 8 belong exclusively to
+lettering and finish; their upper six bits are reserved. Rarity ignores the
+upper three bits of each of its seven bytes. Ink and insignia intentionally
+share hue. No font, finish or rarity choice depends on that hue or icon pixels.
+The four font and finish choices each occupy 64 of 256 possible byte values.
+
+Rarity compares the opening run of equal symbols: length 1 is Standard, 2
+Registered, 3 Foil, 4–6 Aurora, and 7 Pole Position. Under independent uniform
+symbols, Registered-or-better is 1 in 32, Foil-or-better 1 in 1,024,
+Aurora-or-better 1 in 32,768, and Pole Position 1 in 1,073,741,824. These are
+threshold odds, not exclusive category frequencies. Tests verify checksum
+conditioning for catalog endings of 4–12 characters under uniform payloads; that
+model is not a formal proof for Ed25519 key distributions or arbitrary long
+endings. Changing `suffixLength` never changes identity-derived traits.
+
+The SDK exports `PLATE_TRAIT_RECIPE`, `PLATE_LETTERINGS`, `PLATE_FINISHES`,
+`PLATE_RARITIES`, and `PLATE_PALETTE` from `/rendering` and `/rendering/local`.
+Use those definitions for selectors, labels and documentation. `PlateModel`
+includes `recipeVersion` and `hue` (degrees). All renderer adapters use this
+model; they do not have independent G/C selectors.
+
+### Migrating from 0.3.0 to 0.4.0
+
+This pre-1.0 release intentionally changes existing G/C appearances. G plates
+gain Garage slab; C ink follows the identicon hue. Fonts, finishes and rarity
+are recomputed using the shared positions above. Addresses, ownership, suffix
+configuration, contract interfaces and rarity thresholds are unchanged.
+
+- Upgrade every renderer, generated stylesheet, trait selector and farmer or
+  pricing implementation that derives rarity together. Rebuild saved images and
+  display caches rather than continuing to serve old artwork.
+- Recompute persisted derived traits from full addresses, including stored
+  generated columns, expression indexes and rarity-based catalog
+  classifications. Updating a database function alone does not refresh
+  previously stored values. Keep the configured pricing rules and recorded
+  transactions intact.
+- The obsolete, unrendered `PlateModel.pattern` and `patternScale` fields are
+  removed. Use `finish` for the identicon presentation and its existing matrix
+  for the artwork. There is no new independent texture or paint selector.
+- Regenerated SVG fixtures cover 160 visual combinations and 35 edge cases.
+  Featured sample addresses may no longer have the rarity they previously had.
+- Pin the SDK version and store `recipeVersion` with persisted appearance
+  caches. `svp-1` is fixed; future remappings require a new recipe identifier.
+  Consumers do not need to choose a recipe or manage appearance state.
 
 ## Validate addresses and suffixes
 
@@ -733,8 +793,8 @@ repeated inline SVGs.
 
 Fonts and image data are embedded. A custom CSP needs inline styles and `data:`
 in `font-src` and `img-src`; no Wasm execution is needed. The web component
-registers embedded fonts once in the document. Legacy pattern traits remain
-available in the model but are not painted where the app suppresses them.
+registers embedded fonts once in the document. The shared recipe exposes ink,
+lettering, rarity and identicon finish.
 
 ### Longer farming searches
 
@@ -770,8 +830,8 @@ All features belong to one SDK. Import the subpath for the capability you need:
 
 ### Using the source package
 
-This branch prepares `@vanity-plates/sdk` **0.3.0**, following the published
-0.2.0 release. Publication happens after the reviewed PR is merged and CI
+This branch prepares `@vanity-plates/sdk` **0.4.0**, following the published
+0.3.0 release. Publication happens after the reviewed PR is merged and CI
 passes. Deno **2.9.6** is the verified runtime; the current dependencies are
 Colibri Core **1.2+ within 1.x** and Identicon **1.1.0**.
 
@@ -779,8 +839,9 @@ The React adapter now requires **React 19.1+ within 19.x**. Upgrade React DOM
 and its type packages together, and keep one resolved React instance. This is a
 breaking change for React 18 consumers; non-React subpaths remain independently
 importable. The same TanStack Query 5 client can be supplied to `VanityProvider`
-and Colibri React. Plates keep their existing query keys, rendering and metadata
-behavior. No React or Colibri transitive override is required.
+and Colibri React. Plates keep their existing query keys and metadata behavior;
+0.4.0 intentionally changes address-derived artwork. No React or Colibri
+transitive override is required.
 
 For a Deno application with a checkout at `./sdk`, add it as a workspace member
 in the application's `deno.json`:
@@ -866,13 +927,13 @@ their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ### Display input migration
 
-The unpublished display API now uses `suffixLength` instead of `suffix`. Update
-web attributes from `suffix="PLATES"` to `suffix-length="6"` for local
-rendering, or supply an RPC/network configuration for lookup. Await
-`renderPlateHtml` and `renderPlateSvg`, as with PNG exports. Farming, suffix
-validation and generated contract ABI fields still use actual suffix strings.
-`VNTY_013` and `VNTY_014` are retired; their obsolete suffix-based error classes
-were removed and those numbers are not reused.
+The display API uses `suffixLength` instead of `suffix`. Update web attributes
+from `suffix="PLATES"` to `suffix-length="6"` for local rendering, or supply an
+RPC/network configuration for lookup. Await `renderPlateHtml` and
+`renderPlateSvg`, as with PNG exports. Farming, suffix validation and generated
+contract ABI fields still use actual suffix strings. `VNTY_013` and `VNTY_014`
+are retired; their obsolete suffix-based error classes were removed and those
+numbers are not reused.
 
 Lookup configuration errors are `MissingNftCollectionError` (`VNTY_028`),
 `ConflictingNetworkSourceError` (`VNTY_029`), `InvalidRpcUrlError` (`VNTY_030`)

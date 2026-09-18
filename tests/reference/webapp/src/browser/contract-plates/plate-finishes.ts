@@ -67,7 +67,7 @@ export function derivePlateFinish(address?: string) {
   const source = deriveContractPlateTraitSource(address);
   const bytes = source?.bytes.map((byte) => Number.parseInt(byte.slice(2), 16));
   const lettering =
-    PLATE_LETTERING[(bytes?.[12] ?? 0) % PLATE_LETTERING.length];
+    PLATE_LETTERING[(bytes?.[6] ?? 0) & 3];
   const alternatePattern = (bytes?.[13] ?? 0) % 2 === 1;
   const paint = PLATE_PAINTS[(bytes?.[14] ?? 0) % PLATE_PAINTS.length];
   const pattern = PLATE_PATTERN_FINISHES.find(([id]) => id === traits.pattern)!;
@@ -107,7 +107,7 @@ export function describeContractPlateFinishes(address: string) {
       value: finish.lettering.label,
       explanation: `${finish.lettering.note} ${
         source
-          ? "Selected by address byte 13."
+          ? "Selected by the lowest two bits of identity byte 7."
           : "Canonical fallback until a valid address exists."
       }`,
     },
@@ -122,7 +122,7 @@ export function describeContractPlateFinishes(address: string) {
       label: "Identicon finish",
       value: insignia?.finish.label ?? "Awaiting address",
       explanation: source
-        ? "Colibri generates the identicon from the contract ID. Payload byte 16 selects Club badge, Ghost paint, Touring stripe, or Signature weave. Foil follows the identicon shape using this plate’s existing rarity."
+        ? "Colibri generates the identicon from the contract ID. Payload byte 8 selects Club badge, Ghost paint, Touring stripe, or Signature weave. Foil follows the identicon shape using this plate’s existing rarity."
         : "The identicon appears once a valid contract address exists.",
     },
   ];

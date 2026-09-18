@@ -2,6 +2,7 @@
 import { StrKey } from "@colibri/core/strkey";
 import { identiconSvg } from "@colibri/identicon/svg";
 import { plateKind } from "@/validation.ts";
+import { PLATE_PALETTE, PLATE_TRAIT_RECIPE } from "@/rendering/recipe.ts";
 /** Exact CSS colors and identicon used by the canonical plate artwork. */
 export interface PlateAppearance {
   /** Text and foil base color, in CSS HSL notation. */ ink: string;
@@ -18,8 +19,9 @@ export function createPlateAppearance(address: string): PlateAppearance {
   const bytes = account
     ? StrKey.decodeEd25519PublicKey(address)
     : StrKey.decodeContract(address);
-  const hue = bytes[1] / 255 * 360;
-  const band = `hsl(${hue} 80% 23%)`;
+  const hue = bytes[PLATE_TRAIT_RECIPE.hueByte - 1] / 255 * 360;
+  const band =
+    `hsl(${hue} ${PLATE_PALETTE.inkSaturation}% ${PLATE_PALETTE.inkLightness}%)`;
   const svg = identiconSvg(address, {
     size: 224,
     padding: 14,
@@ -27,14 +29,12 @@ export function createPlateAppearance(address: string): PlateAppearance {
     value: .55,
   });
   return {
-    ink: account
-      ? band
-      : `hsl(${Math.round(((bytes[0] << 8) | bytes[1]) / 65535 * 359)} ${
-        34 + bytes[3] % 9
-      }% ${27 + bytes[4] % 7}%)`,
+    ink: band,
     band,
-    bandHighlight: `hsl(${hue} 80% 32%)`,
-    badge: `hsl(${hue} 35% 93%)`,
+    bandHighlight:
+      `hsl(${hue} ${PLATE_PALETTE.inkSaturation}% ${PLATE_PALETTE.highlightLightness}%)`,
+    badge:
+      `hsl(${hue} ${PLATE_PALETTE.badgeSaturation}% ${PLATE_PALETTE.badgeLightness}%)`,
     identiconSvg: svg,
     identiconUrl: `data:image/svg+xml,${encodeURIComponent(svg)}`,
   };

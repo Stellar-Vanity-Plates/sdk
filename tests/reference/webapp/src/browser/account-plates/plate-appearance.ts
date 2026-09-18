@@ -7,9 +7,10 @@ export {
 } from "@reference/src/browser/ui/PlateInsignia.tsx";
 
 export const ACCOUNT_PLATE_LETTERING = [
-  { id: "stamped", label: "Stamped lettering" },
+  { id: "mono", label: "Registration" },
+  { id: "stamped", label: "Rally condensed" },
   { id: "script", label: "Coach script" },
-  { id: "mono", label: "Registration mono" },
+  { id: "slab", label: "Garage slab" },
 ] as const;
 
 export function deriveAccountPlateAppearance(address: string) {
@@ -19,6 +20,6 @@ export function deriveAccountPlateAppearance(address: string) {
     ...derivePlateInsignia(address)!,
     rarity: deriveAccountPlateRarity(address)!,
     lettering:
-      ACCOUNT_PLATE_LETTERING[bytes[13] % ACCOUNT_PLATE_LETTERING.length],
+      ACCOUNT_PLATE_LETTERING[bytes[6] & 3],
   };
 }
