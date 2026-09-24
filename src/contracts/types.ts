@@ -6,10 +6,8 @@ export type NftMethods = MethodMap<NftMethodMap>;
 export {
   CatalogConfig,
   MintReservation,
+  Plate,
   ReservationConfig,
-  VanityClaim,
-  VanityClaimRecord,
-  VanityClaimStatus,
   VntyPaymentLimit,
 } from "@/contracts/nft/types.ts";
 import type { DeployerMethodMap } from "@/contracts/deployer/types.ts";

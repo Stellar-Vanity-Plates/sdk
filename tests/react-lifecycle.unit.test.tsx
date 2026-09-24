@@ -26,16 +26,14 @@ describe("React display lifecycle", () => {
     using _read = stub(
       NftClient.prototype,
       "read",
-      ((method: string) => {
-        if (method === "get_claim") {
-          return Promise.resolve({
-            contract_address: address,
-            suffix: address.slice(-5),
-          });
-        }
+      (() => {
         const request = Promise.withResolvers<number>();
         pending.push(request);
-        return request.promise;
+        return request.promise.then(() => ({
+          controller: address,
+          character_count: 5,
+          salt: undefined,
+        }));
       }) as NftClient["read"],
     );
     let view!: ReactTestRenderer;

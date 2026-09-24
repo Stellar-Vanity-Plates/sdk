@@ -1,5 +1,4 @@
 {
-  "checkedAt": "2026-09-15T16:08:58.362Z",
   "network": "testnet",
   "contracts": [
     {
@@ -16,33 +15,27 @@
         "upgrade",
         "get_rbac",
         "owner_of",
-        "set_word",
         "transfer",
-        "burn_from",
-        "get_claim",
+        "get_plate",
         "token_uri",
         "reserve_for",
         "get_approved",
         "get_base_uri",
         "get_deployer",
-        "get_token_id",
         "set_base_uri",
         "set_treasury",
         "transfer_from",
         "approve_for_all",
         "get_reservation",
         "reserve_catalog",
-        "get_claim_record",
         "get_catalog_config",
         "reserve_with_limit",
-        "get_latest_token_id",
         "is_approved_for_all",
         "reserve_with_shares",
+        "set_character_count",
         "set_reservation_fee",
         "get_predicted_address",
-        "migrate_configuration",
         "get_reservation_config",
-        "migrate_catalog_config",
         "reserve_for_with_limit",
         "reserve_for_with_shares",
         "set_catalog_beneficiary",
@@ -50,7 +43,8 @@
         "reserve_catalog_with_limit",
         "reserve_catalog_with_shares"
       ],
-      "specSha256": "f3f821da31b63b3600c42fe7c54ef598f0cdc2af14d240bf46397389e839b876"
+      "specSha256": "98bb2874a0b29d0fb8ee04262a1ab3d9f5adec33d0d46d03b49cc1546d6e6efb",
+      "wasmSha256": "5300c5b71331c509859830b4192155ecd929d3a04175f0893a2ef1f18b27fac3"
     },
     {
       "name": "deployer",
@@ -63,7 +57,8 @@
         "get_rbac",
         "get_predicted_address"
       ],
-      "specSha256": "64ceacbb00dbcfd9412fea84b170a3c3a40eb739971bcd2609ab6eca0cca0f37"
+      "specSha256": "a4bcac9f38b08c6b0e6a88fd9a45202ae1b2d4bb7babf712e0c12f44d5f32baa",
+      "wasmSha256": "4970c78644cbc33a69b920671bddfd6a83dc3ba7aacbe7cde96d64f1b46e5622"
     },
     {
       "name": "marketplace",
@@ -83,10 +78,10 @@
         "buy_with_shares",
         "set_protocol_fee",
         "get_sales_by_seller",
-        "get_seller_sale_count",
-        "migrate_testnet_settlement"
+        "get_seller_sale_count"
       ],
-      "specSha256": "57155eea50c2be96ab31976f64f7acd89ae54e2ba30c35ef2ccf24b84bf0b218"
+      "specSha256": "29e25f8f2f36d5b9c423b624e1ae9aab7c66f10199cfeac7955151626cb2ff7e",
+      "wasmSha256": "71ac7623d2e4f142df6b1daf84400619c200b8c16f5b6e4ebb81666375701f30"
     },
     {
       "name": "treasury",
@@ -133,11 +128,11 @@
         "get_accounting_parameters",
         "remove_strategy_depositor",
         "set_defindex_fee_receiver",
-        "migrate_testnet_settlement",
         "remove_strategy_allowed_hash",
         "set_strategy_deposits_paused"
       ],
-      "specSha256": "89fa8abccf08ceee33544de33d7e783b72fa6b577d2aea489fc79bae25f61d93"
+      "specSha256": "5dffc350c60596938b48b1792d8c146f05bad254ed1033543f59cce70c19dd43",
+      "wasmSha256": "5d6a029f8da65fdecd480c93a51947ed1061b2981e0729b88c2d23d3d9aeec40"
     },
     {
       "name": "rbac",
@@ -146,7 +141,6 @@
         "upgrade",
         "get_role",
         "has_role",
-        "set_minter",
         "accept_admin",
         "cancel_admin",
         "require_role",
@@ -155,7 +149,11 @@
         "set_treasurer",
         "set_rebalancer"
       ],
-      "specSha256": "ef1dd2caba964632a4f40074e74104cccd26a22df161da05810a03ec5cf0fee2"
+      "specSha256": "a1f48ee261bfa8be57753ac4878f004a42c9d05ecc0975468a4020684620f0d9",
+      "wasmSha256": "36df2af84b1b103065d4b029293a5b99bab3fd574a1abb8f03a52806d73cfe72"
     }
-  ]
+  ],
+  "source": "Canonical Wasms reproduced in two clean pinned Docker builds; live ABI compatibility is verified by test:testnet after deployment.",
+  "sourceCommit": "0609a1cf732f33416687d4796ebf439535f7f22e",
+  "sourceSha256": "e2143ce18dd974d6125f5183589bb1e61453f4417df742f55fa4f3d17dd8fe02"
 }

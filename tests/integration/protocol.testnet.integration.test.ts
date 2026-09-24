@@ -12,13 +12,9 @@ describe("deployed Testnet NFT protocol", () => {
   it("validates the live ABI and reads the retained UPBEAT claim", async () => {
     const client = new NftClient({ networkConfig, contractId });
     await client.ready();
-    const token = await client.read("get_latest_token_id", {
-      contract_address: address,
-    });
-    const claim = await client.read("get_claim", { token_id: token });
-    assertEquals(claim.contract_address, address);
-    assertEquals(claim.suffix, "UPBEAT");
-    assertEquals(claim.salt.length, 32);
+    const plate = await client.getPlate(address);
+    assertEquals(plate.character_count, 6);
+    assertEquals(plate.salt?.length, 32);
     assert((await client.read("name", {})).length > 0);
   });
   it("resolves the chain configuration over an explicit local count", async () => {

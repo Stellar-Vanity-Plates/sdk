@@ -54,7 +54,7 @@ Deno.test("public failure conditions retain distinct classes and stable numbered
     [() => sdk.plateKind("bad"), sdk.InvalidPlateAddressError, "VNTY_001"],
     [() => sdk.normalizeSuffix("0"), sdk.InvalidSuffixError, "VNTY_002"],
     [() => accountDisplay(address), sdk.InvalidAccountAddressError, "VNTY_003"],
-    [() => encodeSuffixLength(56), sdk.InvalidSuffixLengthError, "VNTY_004"],
+    [() => encodeSuffixLength(57), sdk.InvalidSuffixLengthError, "VNTY_004"],
     [
       () => farmAccount({ suffix: "A", maxAttempts: Infinity }),
       sdk.InvalidAttemptLimitError,

@@ -35,18 +35,18 @@ Use the same input rules across the web component, React and image exports:
 | Only `suffixLength`         | Show that many characters from the end of the address, locally. |
 | Neither                     | Use the standard first-six/last-six abbreviation.               |
 
-The count is optional and accepts integers from 1 to 55. Invalid counts also
+The count is optional and accepts integers from 1 to 56. Invalid counts also
 abbreviate. Display APIs accept counts, never a custom word. When a network is
 provided, on-chain metadata takes precedence over `suffixLength`; absent or
 invalid metadata abbreviates. Lookup failures remain errors.
 
 G addresses use `config.svp.gchar`. C addresses use the NFT collection's
-`get_latest_token_id` and `get_claim`, retaining display information after NFT
-redemption/deployment. This lookup identifies a recorded claim; it does not
-prove current ownership. The SDK selects the collection by network passphrase
-and accepts an `nftContractId` override. Testnet has a bundled collection;
-**Mainnet is a placeholder for now** and needs an override for C-plate lookup.
-Account lookups work on either network without an NFT collection.
+`get_plate`, retaining display information after NFT redemption/deployment. This
+lookup identifies a recorded claim; it does not prove current ownership. The SDK
+selects the collection by network passphrase and accepts an `nftContractId`
+override. Testnet has a bundled collection; **Mainnet is a placeholder for now**
+and needs an override for C-plate lookup. Account lookups work on either network
+without an NFT collection.
 
 Provide either `rpcUrl` or `networkConfig`, not both. With a URL, the SDK
 discovers the network via RPC `getNetwork`; it does not infer the network from
@@ -406,7 +406,7 @@ console.log(validatePlate(address, suffix, "contract")); // true
 console.log(abbreviateAddress(address)); // CC45XY…PLATES
 ```
 
-Suffixes use 1–55 Stellar Base32 characters: letters A–Z and digits 2–7.
+Suffixes use 1–56 Stellar Base32 characters: letters A–Z and digits 2–7.
 Validation checks the address and its ending; it does not establish ownership.
 
 ## Read account display settings
@@ -437,7 +437,7 @@ first-six/last-six abbreviation; RPC errors propagate to the caller.
 For offline use, `accountDisplay` builds the same presentation model from a
 known suffix length. `parseSuffixLength`, `decodeHorizonSuffixLength` and
 `encodeSuffixLength` handle RPC bytes, Horizon Base64 and decimal UTF-8
-metadata. Valid lengths are integers from 1 to 55. Encoding prepares data
+metadata. Valid lengths are integers from 1 to 56. Encoding prepares data
 without submitting a ManageData write.
 
 ## Find vanity addresses
@@ -561,7 +561,7 @@ the contract address supplied by your application:
 import { NftClient } from "@vanity-plates/sdk/contracts";
 import { NetworkConfig } from "@vanity-plates/sdk/colibri";
 
-export async function readPlateOwner(contractId: string, tokenId: number) {
+export async function readPlateOwner(contractId: string, tokenId: bigint) {
   const nft = new NftClient({
     networkConfig: NetworkConfig.TestNet(),
     contractId,
@@ -616,7 +616,7 @@ try {
 | `VNTY_001` | `InvalidPlateAddressError`            | Expected a checksum-valid Stellar G or C address.             |
 | `VNTY_002` | `InvalidSuffixError`                  | Invalid vanity suffix.                                        |
 | `VNTY_003` | `InvalidAccountAddressError`          | Account display requires a valid G address.                   |
-| `VNTY_004` | `InvalidSuffixLengthError`            | The displayed suffix length must be an integer from 1 to 55.  |
+| `VNTY_004` | `InvalidSuffixLengthError`            | The displayed suffix length must be an integer from 1 to 56.  |
 | `VNTY_005` | `InvalidAttemptLimitError`            | The attempt limit must be a nonnegative safe integer.         |
 | `VNTY_006` | `InvalidBatchSizeError`               | The batch size must be an integer from 1 to 4096.             |
 | `VNTY_007` | `FarmAbortedError`                    | The address search was cancelled.                             |
@@ -643,6 +643,7 @@ try {
 | `VNTY_030` | `InvalidRpcUrlError`                  | RPC URL is not absolute HTTP(S).                              |
 | `VNTY_031` | `RpcNetworkDiscoveryError`            | RPC network discovery failed.                                 |
 | `VNTY_032` | `InvalidFarmPartitionError`           | Invalid or overflowing worker partition.                      |
+| `VNTY_033` | `InvalidTokenIdError`                 | Token ID is not an unsigned 256-bit integer.                  |
 
 Codes identify distinct conditions and are not reassigned. The registry maps
 each code to its concrete constructor, for example
@@ -830,18 +831,16 @@ All features belong to one SDK. Import the subpath for the capability you need:
 
 ### Using the source package
 
-This branch prepares `@vanity-plates/sdk` **0.4.0**, following the published
-0.3.0 release. Publication happens after the reviewed PR is merged and CI
-passes. Deno **2.9.6** is the verified runtime; the current dependencies are
-Colibri Core **1.2+ within 1.x** and Identicon **1.1.0**.
+This release prepares `@vanity-plates/sdk` **0.5.0**. It is a breaking update
+for the address-native NFT ABI: token IDs and balances are U256, plate lookup
+uses one permanent address record, and display metadata is a count from 1–56.
+Generated NFT, Deployer, Marketplace, RBAC and Treasury bindings follow the
+matching contract release. Upgrade the contracts and migrate existing Testnet
+records before switching a consumer to this version.
 
-The React adapter now requires **React 19.1+ within 19.x**. Upgrade React DOM
-and its type packages together, and keep one resolved React instance. This is a
-breaking change for React 18 consumers; non-React subpaths remain independently
-importable. The same TanStack Query 5 client can be supplied to `VanityProvider`
-and Colibri React. Plates keep their existing query keys and metadata behavior;
-0.4.0 intentionally changes address-derived artwork. No React or Colibri
-transitive override is required.
+The React adapter requires React 19.1+ within 19.x and supports a shared
+TanStack Query 5 client with Colibri React. Upgrade React DOM and its types
+together, keeping one resolved React instance.
 
 For a Deno application with a checkout at `./sdk`, add it as a workspace member
 in the application's `deno.json`:
@@ -881,11 +880,11 @@ SDK's shared Colibri exports.
 
 `deno task generate` regenerates the three binding files from the captured
 `tests/fixtures/contract-specs/<name>.json`; `check:generated` verifies all
-fifteen files without writing. The specs were captured from public Testnet
-contracts on **2026-09-15**; public contract IDs and hashes are recorded in
-`tests/fixtures/protocol-specs.json`. Regeneration does not refresh them from
-the network. `examples/testnet.json` is a dated deployment fixture; supply
-explicit addresses for your deployment.
+fifteen files without writing. The specs are extracted from the matching
+reproducible contract release; public contract IDs and release Wasm hashes are
+recorded in `tests/fixtures/protocol-specs.json`. Regeneration does not refresh
+them from the network. `examples/testnet.json` is a dated deployment fixture;
+supply explicit addresses for your deployment.
 
 ### Checks and contributing
 
@@ -968,3 +967,43 @@ code splitting can defer network-only chunks, but shared Colibri dependencies
 can still enter the initial bundle. Use `/rendering/local` for plain HTML
 consumers that need no React/query layer. A smaller entry bundle is not proof
 that the total application payload became smaller.
+
+## Address-native NFTs (0.5)
+
+Every represented C address has one permanent plate record. `get_plate` returns
+its controller, `character_count` (1–56), and optional original salt. If the
+controller equals that C address, the record describes a deployed contract and
+has no live NFT owner. A self-registered pre-existing contract has no salt.
+Consumed addresses can never be minted again.
+
+<!-- deno-check -->
+
+```ts
+import {
+  addressToTokenId,
+  NftClient,
+  tokenIdToAddress,
+} from "@vanity-plates/sdk/contracts";
+import { NetworkConfig } from "@colibri/core";
+const nft = new NftClient({
+  networkConfig: NetworkConfig.TestNet(),
+  contractId: "CC45XY6XSNTTBRJGJOKK27NE5DUWUTGFQSWHXC2QPND5Z7J3M3PLATES",
+});
+const address = "CDBTZHETZ3Q55ZRQERCW4SVR3KCGZSGQ3WWSTJ2GDO4JH3KKNYUPBEAT";
+const plate = await nft.getPlate(address);
+const tokenId = addressToTokenId(address); // local, lossless bigint
+console.log(plate.character_count, tokenIdToAddress(tokenId));
+```
+
+This is a breaking ABI update: token IDs and balances are U256 (`bigint`). Store
+IDs as decimal strings when using JSON; never convert them to JavaScript
+numbers. `get_plate` replaces the numeric lookup/claim/history chain.
+`set_character_count` replaces `set_word`; the current controller authorizes it.
+Generic burn-by-operator is absent: consumption requires the configured
+Deployer, or the holder can burn when the represented contract is already
+deployed.
+
+When minting a farmed address, derive it locally with `deriveContractAddress`,
+confirm its reservation transaction, and only then simulate or submit `mint`
+with the salt. `get_predicted_address` is a public on-chain convenience and must
+not receive an unreserved secret salt through RPC.

@@ -2,7 +2,9 @@
 export function layer(path: string): string | undefined {
   if (path === "src/colibri.ts") return "colibri";
   if (path === "index.ts") return "entry";
-  if (/^src\/(errors|validation|network)\.ts$/.test(path)) return "foundation";
+  if (/^src\/(errors|validation|network|token-id)\.ts$/.test(path)) {
+    return "foundation";
+  }
   for (const area of ["accounts", "farming", "contracts", "web", "react"]) {
     if (path.startsWith(`src/${area}/`)) return area;
   }

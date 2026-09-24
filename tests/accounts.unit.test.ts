@@ -12,11 +12,11 @@ const address = StrKey.encodeEd25519PublicKey(
   new Uint8Array(32),
 ) as `G${string}`;
 Deno.test("metadata accepts only canonical decimal values and uses a consistent fallback", () => {
-  for (const value of ["0", "56", "03", "3 ", "-1", "NaN", "", "1.5"]) {
+  for (const value of ["0", "57", "03", "3 ", "-1", "NaN", "", "1.5"]) {
     assertEquals(parseSuffixLength(value), undefined);
   }
   assertEquals(parseSuffixLength(new Uint8Array([255])), undefined);
-  assertEquals(parseSuffixLength(encodeSuffixLength(55)), 55);
+  assertEquals(parseSuffixLength(encodeSuffixLength(56)), 56);
   assertEquals(decodeHorizonSuffixLength("Mw=="), 3);
   assertEquals(decodeHorizonSuffixLength("Mw"), undefined);
   assertEquals(accountDisplay(address, 3).label, address.slice(-3));

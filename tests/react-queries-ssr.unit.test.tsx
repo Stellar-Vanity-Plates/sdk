@@ -17,7 +17,7 @@ const network = NetworkConfig.TestNet();
 const input = { address, networkConfig: network };
 const label = address.slice(-5);
 function claim() {
-  return { contract_address: address, suffix: label };
+  return { controller: address, character_count: 5, salt: undefined };
 }
 
 Deno.test("SSR reuses prefetched/hydrated cache without fetching and owns isolated request caches", async () => {
@@ -25,9 +25,9 @@ Deno.test("SSR reuses prefetched/hydrated cache without fetching and owns isolat
   using _read = stub(
     NftClient.prototype,
     "read",
-    ((method: string) =>
+    (() =>
       Promise.resolve(
-        method === "get_latest_token_id" ? 1 : claim(),
+        claim(),
       )) as NftClient["read"],
   );
   await client.prefetchQuery(plateQueryOptions(input));

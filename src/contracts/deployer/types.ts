@@ -47,7 +47,7 @@ import type { SorobanType } from "@colibri/core";
  * constructor arguments.
  */
 export type DeployInput = {
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
   wasm_hash: SorobanType.Input.BytesN<32>;
   constructor_args: SorobanType.Input.Vec<
     SorobanType.Input.Val,
@@ -288,14 +288,14 @@ export type NftLinkedTopics = {
 /** Fields emitted by ContractDeployed. */
 export type ContractDeployed = {
   owner: SorobanType.Address;
-  token_id: SorobanType.U32;
+  token_id: SorobanType.U256;
   contract_address: SorobanType.Address;
 };
 
 /** Indexed fields accepted by the ContractDeployed event filters. */
 export type ContractDeployedTopics = {
   owner: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
 };
 
 /** Event definitions bound to this client, with typed decoding and filters. */

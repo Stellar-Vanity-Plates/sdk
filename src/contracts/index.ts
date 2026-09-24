@@ -77,3 +77,5 @@ export function createProtocolClients(
     rbac: new RbacClient({ networkConfig, contractId: addresses.rbac }),
   };
 }
+
+export { addressToTokenId, tokenIdToAddress } from "@/token-id.ts";

@@ -493,38 +493,6 @@ export class Marketplace extends Contract {
       }),
   };
 
-  /**
-   * Switches Testnet settlement after a matching Treasury migration.
-   *
-   * Requires Admin authorization, the Testnet network and a paused
-   * marketplace.
-   * Existing listings keep their prices, fees and escrow and settle in the new
-   * currency without relisting. Rejects non-SAC or incompatible assets.
-   *
-   * # Arguments
-   * * `e` - Contract environment.
-   * * `asset` - New settlement Stellar Asset Contract matching the Treasury.
-   * * `operator` - Authorized administrator.
-   *
-   * # Errors
-   * Rejects other networks, missing authorization, unpaused state, or an
-   * unchanged, incompatible or non-SAC settlement asset.
-   */
-  readonly migrateTestnetSettlement: MarketplaceMethod<
-    "migrate_testnet_settlement"
-  > = {
-    read: (methodArgs) =>
-      this.read({
-        method: ContractMethods.MigrateTestnetSettlement,
-        methodArgs,
-      }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.MigrateTestnetSettlement,
-      }),
-  };
-
   /** Install a fresh spec and the prepared error map alongside existing plugins. */
   constructor(
     { errors = MarketplaceErrors, ...args }: MarketplaceConstructorArgs,

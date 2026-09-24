@@ -2,3 +2,5 @@
 export * from "@/errors.ts";
 export * from "@/validation.ts";
 export type { NetworkOptions } from "@/network.ts";
+
+export { addressToTokenId, tokenIdToAddress } from "@/token-id.ts";

@@ -11,7 +11,7 @@ import {
 /** ManageData key used by the current Vanity Plates application. */
 export const ACCOUNT_SUFFIX_DATA_KEY = "config.svp.gchar";
 
-/** Decodes the application's decimal UTF-8 suffix length, 1–55, with no whitespace or leading zeros. */
+/** Decodes the application's decimal UTF-8 suffix length, 1–56, with no whitespace or leading zeros. */
 export function parseSuffixLength(
   value: string | Uint8Array,
 ): number | undefined {
@@ -25,7 +25,7 @@ export function parseSuffixLength(
   }
   if (!/^[1-9]\d?$/.test(text)) return undefined;
   const count = Number(text);
-  return count <= 55 ? count : undefined;
+  return count <= 56 ? count : undefined;
 }
 
 /** Reads a canonical Base64 Horizon ManageData value; RPC values are already bytes. */

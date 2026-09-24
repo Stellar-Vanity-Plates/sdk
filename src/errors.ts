@@ -8,7 +8,7 @@ export enum VanityErrorCode {
   INVALID_SUFFIX = "VNTY_002",
   /** Account display requires a valid G address. */
   INVALID_ACCOUNT_ADDRESS = "VNTY_003",
-  /** The displayed suffix length must be an integer from 1 to 55. */
+  /** The displayed suffix length must be an integer from 1 to 56. */
   INVALID_SUFFIX_LENGTH = "VNTY_004",
   /** The attempt limit must be a nonnegative safe integer. */
   INVALID_ATTEMPT_LIMIT = "VNTY_005",
@@ -63,6 +63,8 @@ export enum VanityErrorCode {
   RPC_NETWORK_DISCOVERY_FAILED = "VNTY_031",
   /** Invalid or overflowing worker partition. */
   INVALID_FARM_PARTITION = "VNTY_032",
+  /** Token IDs must be unsigned 256-bit integers. */
+  INVALID_TOKEN_ID = "VNTY_033",
 }
 
 /** Diagnostic metadata; validation inputs, seeds and salts are never captured. */
@@ -130,7 +132,7 @@ export class InvalidSuffixError
       VanityErrorCode.INVALID_SUFFIX,
       "validation",
       "Invalid vanity suffix.",
-      "Use 1–55 letters A–Z or digits 2–7, without spaces.",
+      "Use 1–56 letters A–Z or digits 2–7, without spaces.",
     );
   }
 }
@@ -149,7 +151,7 @@ export class InvalidAccountAddressError
   }
 }
 
-/** The displayed suffix length must be an integer from 1 to 55. */
+/** The displayed suffix length must be an integer from 1 to 56. */
 export class InvalidSuffixLengthError
   extends VanityError<VanityErrorCode.INVALID_SUFFIX_LENGTH> {
   /** Creates this failure with its stable code and recovery guidance. */
@@ -157,7 +159,7 @@ export class InvalidSuffixLengthError
     super(
       VanityErrorCode.INVALID_SUFFIX_LENGTH,
       "accounts",
-      "The displayed suffix length must be an integer from 1 to 55.",
+      "The displayed suffix length must be an integer from 1 to 56.",
       "Choose a supported suffix length before encoding ManageData.",
     );
   }
@@ -527,8 +529,22 @@ export class InvalidFarmPartitionError
     );
   }
 }
+/** A token identifier must fit the complete contract hash without precision loss. */
+export class InvalidTokenIdError
+  extends VanityError<VanityErrorCode.INVALID_TOKEN_ID> {
+  /** Creates the stable token ID validation failure. */
+  constructor() {
+    super(
+      VanityErrorCode.INVALID_TOKEN_ID,
+      "contracts",
+      "Invalid NFT token ID.",
+      "Use a bigint between zero and 2^256 - 1, or convert a C address with addressToTokenId.",
+    );
+  }
+}
 /** Complete, immutable code-to-constructor registry for SDK-owned errors. */
 export const VANITY_ERRORS: {
+  readonly [VanityErrorCode.INVALID_TOKEN_ID]: typeof InvalidTokenIdError;
   readonly [VanityErrorCode.INVALID_FARM_PARTITION]:
     typeof InvalidFarmPartitionError;
   readonly [VanityErrorCode.INVALID_PLATE_ADDRESS]:
@@ -581,6 +597,7 @@ export const VANITY_ERRORS: {
   readonly [VanityErrorCode.RPC_NETWORK_DISCOVERY_FAILED]:
     typeof RpcNetworkDiscoveryError;
 } = Object.freeze({
+  [VanityErrorCode.INVALID_TOKEN_ID]: InvalidTokenIdError,
   [VanityErrorCode.INVALID_FARM_PARTITION]: InvalidFarmPartitionError,
   [VanityErrorCode.MISSING_NFT_COLLECTION]: MissingNftCollectionError,
   [VanityErrorCode.CONFLICTING_NETWORK_SOURCE]: ConflictingNetworkSourceError,

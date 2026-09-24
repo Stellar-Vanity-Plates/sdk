@@ -4,7 +4,7 @@ import {
 } from "@/accounts/index.ts";
 import { MissingNftCollectionError } from "@/errors.ts";
 import { type NetworkOptions, resolveNetwork } from "@/network.ts";
-import { plateKind, validatePlate } from "@/validation.ts";
+import { plateKind } from "@/validation.ts";
 import type { ResolvedPlateInput } from "@/rendering/model.ts";
 
 /** Bundled collection defaults by network passphrase. Override per input with nftContractId. */
@@ -25,7 +25,7 @@ export interface PlateInput extends ResolvedPlateInput, NetworkOptions {
 
 /**
  * Network configuration takes precedence over the local suffixLength.
- * G addresses read config.svp.gchar; C addresses read the collection's latest retained NFT claim.
+ * G addresses read config.svp.gchar; C addresses read the collection's permanent plate record.
  * Missing/invalid metadata abbreviates. RPC and unexpected contract failures reject.
  * Without a network this is a local count-only input. Never signs or submits.
  */
@@ -53,21 +53,17 @@ export async function resolvePlateInput(
     ]);
   const nft = new NftClient({ networkConfig, contractId });
   try {
-    const tokenId = await nft.read("get_latest_token_id", {
+    const plate = await nft.read("get_plate", {
       contract_address: input.address,
     });
-    const claim = await nft.read("get_claim", { token_id: tokenId });
-    const suffixLength = claim.contract_address === input.address &&
-        validatePlate(input.address, claim.suffix, "contract")
-      ? parseSuffixLength(String(claim.suffix.length))
-      : undefined;
+    const suffixLength = parseSuffixLength(String(plate.character_count));
     return { address: input.address, suffixLength };
   } catch (error) {
     if (error instanceof KNOWN_CONTRACT_ERROR_SIMULATION_FAILED) {
       const match = error.meta.data.match;
-      // Missing retained history or claim; never swallow unrelated or nested failures.
+      // Missing plate; never swallow unrelated or nested failures.
       if (
-        [2007, 2008].includes(match.code) && match.contractId === contractId &&
+        match.code === 2007 && match.contractId === contractId &&
         match.issuedFrom === "root-invocation"
       ) {
         return { address: input.address };

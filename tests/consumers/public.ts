@@ -175,9 +175,11 @@ try {
 // This function is never called; no ledger read or invocation is submitted.
 export function verifyContractTypes(client: NftClient): void {
   const name: Promise<string> = client.read("name", {});
-  const mint: Promise<number> = client.read("mint", { salt });
+  const mint: Promise<bigint> = client.read("mint", { salt });
   const generatedName: Promise<string> = client.contract.name.read();
-  const owner: Promise<string> = client.contract.ownerOf.read({ token_id: 42 });
+  const owner: Promise<string> = client.contract.ownerOf.read({
+    token_id: 42n,
+  });
   const config: TransactionConfig = {
     source: account,
     fee: "100",
@@ -188,9 +190,9 @@ export function verifyContractTypes(client: NftClient): void {
     methodArgs: { salt },
     config,
   });
-  const mintedId: Promise<number | undefined> = mintReceipt.then((result) =>
-    result.value
-  );
+  const mintedId: Promise<bigint | number | undefined> = mintReceipt.then((
+    result,
+  ) => result.value);
   void generatedName;
   void owner;
   void mintedId;
