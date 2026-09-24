@@ -658,7 +658,7 @@ export class Treasury extends Contract {
   };
 
   /**
-   * Changes one configured StableBond strategy's pricing safety parameters.
+   * Changes one configured DeFindex strategy's pricing safety parameters.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -686,7 +686,7 @@ export class Treasury extends Contract {
   };
 
   /**
-   * Changes one configured StableBond strategy's total-value cap.
+   * Changes one configured DeFindex strategy's total-value cap.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -712,7 +712,7 @@ export class Treasury extends Contract {
   };
 
   /**
-   * Accepts keeper authority for one configured StableBond strategy.
+   * Accepts keeper authority for one configured DeFindex strategy.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -764,7 +764,7 @@ export class Treasury extends Contract {
   };
 
   /**
-   * Allows one depositor on a configured StableBond strategy.
+   * Allows one depositor on a configured DeFindex strategy.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -839,8 +839,8 @@ export class Treasury extends Contract {
    * Actual old shares redeemed, USDC moved, and new shares received.
    *
    * # Errors
-   * Requires pause, zero escrowed VNTY, valid empty managed target, valid
-   * allocations,
+   * Requires pause, zero pending redemption liabilities, a valid empty managed
+   * target and allocations,
    * sufficient measured output, and successful dependency execution. Failure
    * is atomic.
    */
@@ -940,7 +940,7 @@ export class Treasury extends Contract {
     };
 
   /**
-   * Changes one configured StableBond strategy's per-deposit cap.
+   * Changes one configured DeFindex strategy's per-deposit cap.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -966,7 +966,7 @@ export class Treasury extends Contract {
   };
 
   /**
-   * Allows one depositor Wasm hash on a configured StableBond strategy.
+   * Allows one depositor Wasm hash on a configured DeFindex strategy.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -1024,7 +1024,7 @@ export class Treasury extends Contract {
   };
 
   /**
-   * Removes one depositor from a configured StableBond strategy.
+   * Removes one depositor from a configured DeFindex strategy.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -1084,51 +1084,7 @@ export class Treasury extends Contract {
     };
 
   /**
-   * Replaces Testnet settlement and vault backing at an exact one-for-one
-   * exchange.
-   *
-   * Requires the Testnet network, Treasurer authorization, pause, zero claim
-   * escrow,
-   * an empty Treasury-managed vault and measured minimum proceeds/shares. The
-   * operator supplies the new SAC currency and receives the old currency.
-   * Existing
-   * VNTY supply, offsets and direct Treasury donations retain their
-   * denomination.
-   *
-   * # Arguments
-   * * `e` - Contract environment.
-   * * `new_vault` - Empty Treasury-managed replacement vault.
-   * * `allocations` - Complete replacement strategy weights.
-   * * `min_usdc` - Minimum measured old vault proceeds.
-   * * `min_new_shares` - Minimum measured new vault shares.
-   * * `operator` - Authorized Treasurer supplying the replacement currency.
-   * * `new_asset` - New seven-decimal Stellar Asset Contract.
-   *
-   * # Returns
-   * Measured old and new vault backing amounts.
-   *
-   * # Errors
-   * Rejects other networks, missing authorization, unpaused state, pending
-   * escrow,
-   * incompatible vaults/assets, insufficient exchange funds and unmet minima.
-   */
-  readonly migrateTestnetSettlement: TreasuryMethod<
-    "migrate_testnet_settlement"
-  > = {
-    read: (methodArgs) =>
-      this.read({
-        method: ContractMethods.MigrateTestnetSettlement,
-        methodArgs,
-      }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.MigrateTestnetSettlement,
-      }),
-  };
-
-  /**
-   * Removes one depositor Wasm hash from a configured StableBond strategy.
+   * Removes one depositor Wasm hash from a configured DeFindex strategy.
    *
    * # Arguments
    * * `e` - Contract execution environment.
@@ -1159,7 +1115,7 @@ export class Treasury extends Contract {
   };
 
   /**
-   * Changes whether one configured StableBond strategy accepts deposits.
+   * Changes whether one configured DeFindex strategy accepts deposits.
    *
    * # Arguments
    * * `e` - Contract execution environment.

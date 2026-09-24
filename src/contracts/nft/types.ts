@@ -18,26 +18,24 @@ import { NftSpec } from "@/contracts/nft/constants.ts";
 // -----------------------------------------------------------------------------
 
 /**
- * Burns an owned vanity plate NFT and releases its address for future
- * minting.
+ * Consumes a holder-authorized NFT only through the configured deployer or
+ * when its represented contract is already deployed.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `from` - Current owner authorizing the burn.
- * * `token_id` - Token being burned.
+ * * `from` - Address participating in this operation.
+ * * `token_id` - Full contract hash as an unsigned big-endian ID.
+ *
+ * # Returns
+ * Nothing on success.
  *
  * # Errors
- *
- * * Fails when `from` does not authorize the invocation.
- * * Propagates standard NFT errors when the token does not exist or `from`
- * is not its owner.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type BurnInput = {
   from: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
 };
 
 /** Decoded return value of burn. */
@@ -54,7 +52,8 @@ export type BurnOutput = null;
  *
  * # Returns
  *
- * The sequential token ID minted to the reservation recipient.
+ * The full contract hash as a U256 token ID minted to the reservation
+ * recipient.
  *
  * # Errors
  *
@@ -77,14 +76,20 @@ export type MintInput = {
 };
 
 /** Decoded return value of mint. */
-export type MintOutput = SorobanType.U32;
+export type MintOutput = SorobanType.U256;
 
 /**
- * Returns the token collection name.
+ * Returns the collection name.
  *
  * # Arguments
+ * * `e` - Contract execution environment.
  *
- * * `e` - Access to the Soroban environment.
+ * # Returns
+ * The requested value.
+ *
+ * # Errors
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type NameInput = Record<string, never>;
 
@@ -92,11 +97,17 @@ export type NameInput = Record<string, never>;
 export type NameOutput = SorobanType.String;
 
 /**
- * Returns the token collection symbol.
+ * Returns the collection symbol.
  *
  * # Arguments
+ * * `e` - Contract execution environment.
  *
- * * `e` - Access to the Soroban environment.
+ * # Returns
+ * The requested value.
+ *
+ * # Errors
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type SymbolInput = Record<string, never>;
 
@@ -104,29 +115,28 @@ export type SymbolInput = Record<string, never>;
 export type SymbolOutput = SorobanType.String;
 
 /**
- * Approves a token spender while renewing its vanity claim and address
- * index.
+ * Grants or revokes a token approval with owner or collection operator
+ * authorization.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `approver` - Owner or authorized operator approving the spender.
- * * `approved` - Address receiving approval.
- * * `token_id` - Token covered by the approval.
- * * `live_until_ledger` - Approval expiration ledger, or zero to revoke
- * approval.
+ * * `approver` - Address participating in this operation.
+ * * `approved` - Address participating in this operation.
+ * * `token_id` - Full contract hash as an unsigned big-endian ID.
+ * * `live_until_ledger` - Inclusive expiry; zero revokes and larger than
+ * network maximum is invalid.
+ *
+ * # Returns
+ * Nothing on success.
  *
  * # Errors
- *
- * * Fails when `approver` does not authorize the invocation.
- * * Propagates standard NFT ownership, approval, and expiration errors.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type ApproveInput = {
   approver: SorobanType.Input.Address;
   approved: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
   live_until_ledger: SorobanType.Input.U32;
 };
 
@@ -134,19 +144,25 @@ export type ApproveInput = {
 export type ApproveOutput = null;
 
 /**
- * Returns the number of tokens owned by `account`.
+ * Returns the number of live NFTs held by an address, or zero.
  *
  * # Arguments
+ * * `e` - Contract execution environment.
+ * * `owner` - Address participating in this operation.
  *
- * * `e` - Access to the Soroban environment.
- * * `account` - The address for which the balance is being queried.
+ * # Returns
+ * The requested value.
+ *
+ * # Errors
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type BalanceInput = {
-  account: SorobanType.Input.Address;
+  owner: SorobanType.Input.Address;
 };
 
 /** Decoded return value of balance. */
-export type BalanceOutput = SorobanType.U32;
+export type BalanceOutput = SorobanType.U256;
 
 /**
  * Reserves a vanity contract address for the paying recipient.
@@ -233,169 +249,91 @@ export type GetRbacInput = Record<string, never>;
 export type GetRbacOutput = SorobanType.Address;
 
 /**
- * Returns a token owner while renewing its vanity claim and address index.
+ * Returns the owner of a live NFT; consumed and unregistered IDs fail.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `token_id` - Token whose owner is requested.
+ * * `token_id` - Full contract hash as an unsigned big-endian ID.
  *
  * # Returns
- *
- * The current owner of `token_id`.
+ * The requested value.
  *
  * # Errors
- *
- * * Propagates standard NFT errors when `token_id` does not exist.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type OwnerOfInput = {
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
 };
 
 /** Decoded return value of owner_of. */
 export type OwnerOfOutput = SorobanType.Address;
 
 /**
- * Changes the descriptive suffix associated with a claimed address.
+ * Transfers a live NFT with owner authorization; its represented address
+ * cannot receive it.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `contract_address` - Claimed vanity contract address being updated.
- * * `word` - New suffix that must match `contract_address`.
- * * `operator` - Current NFT owner authorizing the update.
+ * * `from` - Address participating in this operation.
+ * * `to` - Address participating in this operation.
+ * * `token_id` - Full contract hash as an unsigned big-endian ID.
+ *
+ * # Returns
+ * Nothing on success.
  *
  * # Errors
- *
- * * Fails when `operator` does not authorize the invocation.
- * * Fails with `VanityPlateNftError::TokenForAddressNotFound` when it is not
- * claimed.
- * * Fails with `VanityPlateNftError::IncorrectOwner` when `operator` is not
- * the owner.
- * * Fails with `VanityPlateNftError::InvalidSuffixLength`,
- * `VanityPlateNftError::InvalidSuffixCharacter`, or
- * `VanityPlateNftError::SuffixMismatch` when `word` is invalid or does not
- * match.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
- */
-export type SetWordInput = {
-  contract_address: SorobanType.Input.Address;
-  word: SorobanType.Input.String;
-  operator: SorobanType.Input.Address;
-};
-
-/** Decoded return value of set_word. */
-export type SetWordOutput = null;
-
-/**
- * Transfers an owned token while renewing its vanity claim and address
- * index.
- *
- * # Arguments
- *
- * * `e` - Contract execution environment.
- * * `from` - Current owner authorizing the transfer.
- * * `to` - Address receiving the token.
- * * `token_id` - Token being transferred.
- *
- * # Errors
- *
- * * Fails when `from` does not authorize the invocation.
- * * Propagates standard NFT ownership and balance errors.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type TransferInput = {
   from: SorobanType.Input.Address;
   to: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
 };
 
 /** Decoded return value of transfer. */
 export type TransferOutput = null;
 
 /**
- * Burns a vanity plate NFT through an approved spender and releases its
- * address.
+ * Returns the single retained record for a contract address, even after
+ * consumption.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `spender` - Approved address authorizing the burn.
- * * `from` - Current token owner.
- * * `token_id` - Token being burned.
- *
- * # Errors
- *
- * * Fails when `spender` does not authorize the invocation.
- * * Propagates standard NFT errors when the token does not exist, `from` is
- * not its owner,
- * or `spender` lacks sufficient approval.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
- */
-export type BurnFromInput = {
-  spender: SorobanType.Input.Address;
-  from: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
-};
-
-/** Decoded return value of burn_from. */
-export type BurnFromOutput = null;
-
-/**
- * Returns the immutable address and salt plus the latest descriptive suffix
- * for a token.
- *
- * # Arguments
- *
- * * `e` - Contract execution environment.
- * * `token_id` - Token whose vanity claim is requested.
+ * * `contract_address` - Address participating in this operation.
  *
  * # Returns
- *
- * The vanity claim associated with `token_id`, including after the NFT is
- * burned.
+ * The requested value.
  *
  * # Errors
- *
- * Fails with `VanityPlateNftError::ClaimNotFound` when the token was never
- * minted or its
- * persistent history expired.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
-export type GetClaimInput = {
-  token_id: SorobanType.Input.U32;
+export type GetPlateInput = {
+  contract_address: SorobanType.Input.Address;
 };
 
-/** Decoded return value of get_claim. */
-export type GetClaimOutput = VanityClaim;
+/** Decoded return value of get_plate. */
+export type GetPlateOutput = Plate;
 
 /**
- * Returns the metadata URI for an existing vanity plate NFT.
- *
- * The URI is the collection base URI followed by the claimed contract
- * address.
+ * Returns the base URI plus contract address for a live NFT; fails after
+ * consumption.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `token_id` - Token whose metadata URI is requested.
+ * * `token_id` - Full contract hash as an unsigned big-endian ID.
  *
  * # Returns
- *
- * The token URI, or an empty string when the collection base URI is empty.
+ * The requested value.
  *
  * # Errors
- *
- * * Propagates standard NFT errors when `token_id` does not exist.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type TokenUriInput = {
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
 };
 
 /** Decoded return value of token_uri. */
@@ -441,20 +379,21 @@ export type ReserveForInput = {
 export type ReserveForOutput = null;
 
 /**
- * Returns the account approved for the token with `token_id`.
+ * Returns a live token approval, or None; fails for absent or consumed NFTs.
  *
  * # Arguments
+ * * `e` - Contract execution environment.
+ * * `token_id` - Full contract hash as an unsigned big-endian ID.
  *
- * * `e` - Access to the Soroban environment.
- * * `token_id` - Token ID as a number.
+ * # Returns
+ * The requested value.
  *
  * # Errors
- *
- * * [`NonFungibleTokenError::NonExistentToken`] - If the token does not
- * exist.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type GetApprovedInput = {
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
 };
 
 /** Decoded return value of get_approved. */
@@ -500,31 +439,6 @@ export type GetDeployerInput = Record<string, never>;
 
 /** Decoded return value of get_deployer. */
 export type GetDeployerOutput = SorobanType.Address;
-
-/**
- * Returns the token ID representing a vanity contract address.
- *
- * # Arguments
- *
- * * `e` - Contract execution environment.
- * * `contract_address` - Claimed vanity contract address.
- *
- * # Returns
- *
- * The token ID associated with `contract_address`.
- *
- * # Errors
- *
- * * Fails with `VanityPlateNftError::TokenForAddressNotFound` when it is not
- * claimed.
- * * Propagates the NFT owner error when ownership storage is unavailable.
- */
-export type GetTokenIdInput = {
-  contract_address: SorobanType.Input.Address;
-};
-
-/** Decoded return value of get_token_id. */
-export type GetTokenIdOutput = SorobanType.U32;
 
 /**
  * Replaces the base URI used by existing and future token metadata URIs.
@@ -616,57 +530,50 @@ export type ConstructorInput = {
 };
 
 /**
- * Transfers an approved token while renewing its vanity claim and address
- * index.
+ * Transfers a live NFT with owner, token approval, or collection operator
+ * authorization.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `spender` - Approved address authorizing the transfer.
- * * `from` - Current token owner.
- * * `to` - Address receiving the token.
- * * `token_id` - Token being transferred.
+ * * `spender` - Address participating in this operation.
+ * * `from` - Address participating in this operation.
+ * * `to` - Address participating in this operation.
+ * * `token_id` - Full contract hash as an unsigned big-endian ID.
+ *
+ * # Returns
+ * Nothing on success.
  *
  * # Errors
- *
- * * Fails when `spender` does not authorize the invocation.
- * * Propagates standard NFT approval, ownership, and balance errors.
- * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
- * inconsistent.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type TransferFromInput = {
   spender: SorobanType.Input.Address;
   from: SorobanType.Input.Address;
   to: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
+  token_id: SorobanType.Input.U256;
 };
 
 /** Decoded return value of transfer_from. */
 export type TransferFromOutput = null;
 
 /**
- * Approve or remove `operator` as an operator for the owner.
- *
- * Operators can call `transfer_from()` for any token held by `owner`,
- * and call `approve()` on behalf of `owner`.
+ * Grants or revokes collection-wide operator approval with owner
+ * authorization.
  *
  * # Arguments
+ * * `e` - Contract execution environment.
+ * * `owner` - Address participating in this operation.
+ * * `operator` - Address participating in this operation.
+ * * `live_until_ledger` - Inclusive expiry; zero revokes and larger than
+ * network maximum is invalid.
  *
- * * `e` - Access to Soroban environment.
- * * `owner` - The address holding the tokens.
- * * `operator` - Account to add to the set of authorized operators.
- * * `live_until_ledger` - The ledger number at which the allowance
- * expires. If `live_until_ledger` is `0`, the approval is revoked.
+ * # Returns
+ * Nothing on success.
  *
  * # Errors
- *
- * * [`NonFungibleTokenError::InvalidLiveUntilLedger`] - If the ledger
- * number is less than the current ledger number.
- *
- * # Events
- *
- * * topics - `["approve_for_all", from: Address]`
- * * data - `[operator: Address, live_until_ledger: u32]`
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type ApproveForAllInput = {
   owner: SorobanType.Input.Address;
@@ -735,32 +642,6 @@ export type ReserveCatalogInput = {
 export type ReserveCatalogOutput = null;
 
 /**
- * Returns a durable vanity claim together with its active or burned status.
- *
- * # Arguments
- *
- * * `e` - Contract execution environment.
- * * `token_id` - Token whose current lifecycle status is requested.
- *
- * # Returns
- *
- * The immutable claim data and whether the NFT remains active or has been
- * burned.
- *
- * # Errors
- *
- * Fails with `VanityPlateNftError::ClaimNotFound` when the token was never
- * minted or its
- * persistent history expired.
- */
-export type GetClaimRecordInput = {
-  token_id: SorobanType.Input.U32;
-};
-
-/** Decoded return value of get_claim_record. */
-export type GetClaimRecordOutput = VanityClaimRecord;
-
-/**
  * Returns the beneficiary receiving administrator-approved catalog prices.
  *
  * # Arguments
@@ -811,43 +692,20 @@ export type ReserveWithLimitInput = {
 export type ReserveWithLimitOutput = null;
 
 /**
- * Returns the newest token ever minted for a vanity contract address.
- *
- * Unlike `get_token_id`, this historical lookup also succeeds when the
- * newest NFT was
- * burned. If the same undeployed address is minted again, it returns that
- * replacement token.
+ * Returns whether the operator permission remains valid through the current
+ * ledger.
  *
  * # Arguments
- *
  * * `e` - Contract execution environment.
- * * `contract_address` - Vanity contract address to inspect.
+ * * `owner` - Address participating in this operation.
+ * * `operator` - Address participating in this operation.
  *
  * # Returns
- *
- * The most recently minted token ID for the address.
+ * The requested value.
  *
  * # Errors
- *
- * Fails with `VanityPlateNftError::TokenForAddressNotFound` when no retained
- * history exists.
- */
-export type GetLatestTokenIdInput = {
-  contract_address: SorobanType.Input.Address;
-};
-
-/** Decoded return value of get_latest_token_id. */
-export type GetLatestTokenIdOutput = SorobanType.U32;
-
-/**
- * Returns whether the `operator` is allowed to manage all the assets of
- * `owner`.
- *
- * # Arguments
- *
- * * `e` - Access to the Soroban environment.
- * * `owner` - Account of the token's owner.
- * * `operator` - Account to be checked.
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
  */
 export type IsApprovedForAllInput = {
   owner: SorobanType.Input.Address;
@@ -885,6 +743,30 @@ export type ReserveWithSharesInput = {
 
 /** Decoded return value of reserve_with_shares. */
 export type ReserveWithSharesOutput = null;
+
+/**
+ * Sets 1..=56 highlighted characters with controller authorization; deployed
+ * unregistered contracts can self-register.
+ *
+ * # Arguments
+ * * `e` - Contract execution environment.
+ * * `contract_address` - Address participating in this operation.
+ * * `character_count` - Number of trailing characters, from one through 56.
+ *
+ * # Returns
+ * Nothing on success.
+ *
+ * # Errors
+ * Fails on missing required state, invalid input, or missing required
+ * authorization.
+ */
+export type SetCharacterCountInput = {
+  contract_address: SorobanType.Input.Address;
+  character_count: SorobanType.Input.U32;
+};
+
+/** Decoded return value of set_character_count. */
+export type SetCharacterCountOutput = null;
 
 /**
  * Changes the fee charged when creating a reservation.
@@ -937,42 +819,6 @@ export type GetPredictedAddressInput = {
 export type GetPredictedAddressOutput = SorobanType.Address;
 
 /**
- * Initializes reservation and catalog configuration after upgrading
- * compatible legacy state.
- *
- * # Arguments
- *
- * * `e` - Contract execution environment.
- * * `reservation_config` - Treasury, reservation fee, and duration to
- * initialize.
- * * `catalog_config` - Beneficiary receiving administrator-approved catalog
- * prices.
- * * `operator` - RBAC administrator authorizing the one-time migration.
- *
- * # Errors
- *
- * * Fails with `VanityPlateNftError::ReservationConfigAlreadySet` if
- * reservations exist.
- * * Fails with `VanityPlateNftError::CatalogConfigAlreadySet` if catalog
- * settings exist.
- * * Fails with `VanityPlateNftError::InvalidTreasury` for incompatible
- * treasury governance.
- * * Fails with `VanityPlateNftError::InvalidReservationFee` for a negative
- * fee.
- * * Fails with `VanityPlateNftError::InvalidReservationDuration` for an
- * invalid duration.
- * * Propagates authorization, RBAC, and treasury-interface errors.
- */
-export type MigrateConfigurationInput = {
-  reservation_config: ReservationConfigArgs;
-  catalog_config: CatalogConfigArgs;
-  operator: SorobanType.Input.Address;
-};
-
-/** Decoded return value of migrate_configuration. */
-export type MigrateConfigurationOutput = null;
-
-/**
  * Returns the current reservation fee and duration configuration.
  *
  * # Arguments
@@ -992,34 +838,6 @@ export type GetReservationConfigInput = Record<string, never>;
 
 /** Decoded return value of get_reservation_config. */
 export type GetReservationConfigOutput = ReservationConfig;
-
-/**
- * Initializes catalog configuration after upgrading a pre-catalog
- * deployment.
- *
- * # Arguments
- *
- * * `e` - Contract execution environment.
- * * `catalog_config` - Beneficiary receiving administrator-approved catalog
- * prices.
- * * `operator` - RBAC administrator authorizing the migration.
- *
- * # Errors
- *
- * * Fails with `VanityPlateNftError::CatalogConfigAlreadySet` after
- * initialization.
- * * Fails with `VanityPlateNftError::ReservationConfigNotFound` when
- * reservations were not
- * initialized and the complete configuration migration is required instead.
- * * Propagates authorization and role errors from the RBAC contract.
- */
-export type MigrateCatalogConfigInput = {
-  catalog_config: CatalogConfigArgs;
-  operator: SorobanType.Input.Address;
-};
-
-/** Decoded return value of migrate_catalog_config. */
-export type MigrateCatalogConfigOutput = null;
 
 /**
  * Reserves a vanity address using a fixed fee credit and bounded VNTY
@@ -1244,21 +1062,13 @@ export type NftMethodMap = {
     input: OwnerOfInput;
     output: OwnerOfOutput;
   };
-  set_word: {
-    input: SetWordInput;
-    output: SetWordOutput;
-  };
   transfer: {
     input: TransferInput;
     output: TransferOutput;
   };
-  burn_from: {
-    input: BurnFromInput;
-    output: BurnFromOutput;
-  };
-  get_claim: {
-    input: GetClaimInput;
-    output: GetClaimOutput;
+  get_plate: {
+    input: GetPlateInput;
+    output: GetPlateOutput;
   };
   token_uri: {
     input: TokenUriInput;
@@ -1279,10 +1089,6 @@ export type NftMethodMap = {
   get_deployer: {
     input: GetDeployerInput;
     output: GetDeployerOutput;
-  };
-  get_token_id: {
-    input: GetTokenIdInput;
-    output: GetTokenIdOutput;
   };
   set_base_uri: {
     input: SetBaseUriInput;
@@ -1308,10 +1114,6 @@ export type NftMethodMap = {
     input: ReserveCatalogInput;
     output: ReserveCatalogOutput;
   };
-  get_claim_record: {
-    input: GetClaimRecordInput;
-    output: GetClaimRecordOutput;
-  };
   get_catalog_config: {
     input: GetCatalogConfigInput;
     output: GetCatalogConfigOutput;
@@ -1319,10 +1121,6 @@ export type NftMethodMap = {
   reserve_with_limit: {
     input: ReserveWithLimitInput;
     output: ReserveWithLimitOutput;
-  };
-  get_latest_token_id: {
-    input: GetLatestTokenIdInput;
-    output: GetLatestTokenIdOutput;
   };
   is_approved_for_all: {
     input: IsApprovedForAllInput;
@@ -1332,6 +1130,10 @@ export type NftMethodMap = {
     input: ReserveWithSharesInput;
     output: ReserveWithSharesOutput;
   };
+  set_character_count: {
+    input: SetCharacterCountInput;
+    output: SetCharacterCountOutput;
+  };
   set_reservation_fee: {
     input: SetReservationFeeInput;
     output: SetReservationFeeOutput;
@@ -1340,17 +1142,9 @@ export type NftMethodMap = {
     input: GetPredictedAddressInput;
     output: GetPredictedAddressOutput;
   };
-  migrate_configuration: {
-    input: MigrateConfigurationInput;
-    output: MigrateConfigurationOutput;
-  };
   get_reservation_config: {
     input: GetReservationConfigInput;
     output: GetReservationConfigOutput;
-  };
-  migrate_catalog_config: {
-    input: MigrateCatalogConfigInput;
-    output: MigrateCatalogConfigOutput;
   };
   reserve_for_with_limit: {
     input: ReserveForWithLimitInput;
@@ -1428,24 +1222,59 @@ export type NftMethod<Method extends keyof NftMethodMap> = {
 // Contract types
 // -----------------------------------------------------------------------------
 
-/** The VanityClaim type declared by the contract. */
-export type VanityClaim = SorobanType.Custom<{
+/**
+ * Signed fee coverage intent. All amounts use their token's atomic units.
+ */
+export type VntyPaymentLimit = SorobanType.Custom<{
   kind: "struct";
   fields: {
-    contract_address: SorobanType.Address;
-    salt: SorobanType.BytesN<32>;
-    suffix: SorobanType.String;
+    /** Exclusive execution deadline in Unix seconds. */
+    deadline: SorobanType.U64;
+    /** Expected complete protocol fee; prevents an unapproved cash increase. */
+    fee_amount: SorobanType.I128;
+    /** Exact fee-asset credit purchased by burning VNTY. */
+    fee_credit: SorobanType.I128;
+    /**
+     * Maximum VNTY transferred temporarily, with unused shares refunded
+     * atomically.
+     */
+    max_shares: SorobanType.I128;
   };
 }>;
 
-/** Raw or validated values accepted by the VanityClaim factory. */
-export type VanityClaimArgs = SorobanType.Input.Custom<VanityClaim>;
+/** Raw or validated values accepted by the VntyPaymentLimit factory. */
+export type VntyPaymentLimitArgs = SorobanType.Input.Custom<VntyPaymentLimit>;
 
-/** Validate, encode and decode VanityClaim using its contract declaration. */
-export const VanityClaim: SorobanType.Factory<VanityClaim> = SorobanType
-  .Custom.fromSpec<VanityClaim>(
+/** Validate, encode and decode VntyPaymentLimit using its contract declaration. */
+export const VntyPaymentLimit: SorobanType.Factory<VntyPaymentLimit> =
+  SorobanType
+    .Custom.fromSpec<VntyPaymentLimit>(
+      () => NftSpec,
+      "VntyPaymentLimit",
+    );
+
+/**
+ * One permanent record per represented contract address.
+ * `controller == address` means consumed or self-registered; there is no
+ * live NFT.
+ */
+export type Plate = SorobanType.Custom<{
+  kind: "struct";
+  fields: {
+    character_count: SorobanType.U32;
+    controller: SorobanType.Address;
+    salt: SorobanType.Option<SorobanType.BytesN<32>>;
+  };
+}>;
+
+/** Raw or validated values accepted by the Plate factory. */
+export type PlateArgs = SorobanType.Input.Custom<Plate>;
+
+/** Validate, encode and decode Plate using its contract declaration. */
+export const Plate: SorobanType.Factory<Plate> = SorobanType
+  .Custom.fromSpec<Plate>(
     () => NftSpec,
-    "VanityClaim",
+    "Plate",
   );
 
 /** The CatalogConfig type declared by the contract. */
@@ -1510,81 +1339,70 @@ export const ReservationConfig: SorobanType.Factory<ReservationConfig> =
       "ReservationConfig",
     );
 
-/** The VanityClaimRecord type declared by the contract. */
-export type VanityClaimRecord = SorobanType.Custom<{
-  kind: "struct";
-  fields: {
-    claim: VanityClaim;
-    status: VanityClaimStatus;
-  };
-}>;
-
-/** Raw or validated values accepted by the VanityClaimRecord factory. */
-export type VanityClaimRecordArgs = SorobanType.Input.Custom<VanityClaimRecord>;
-
-/** Validate, encode and decode VanityClaimRecord using its contract declaration. */
-export const VanityClaimRecord: SorobanType.Factory<VanityClaimRecord> =
-  SorobanType
-    .Custom.fromSpec<VanityClaimRecord>(
-      () => NftSpec,
-      "VanityClaimRecord",
-    );
-
-/** The VanityClaimStatus type declared by the contract. */
-export type VanityClaimStatus = SorobanType.Custom<{
-  kind: "enum";
-  encoding: "tagged";
-  variants: {
-    Active: SorobanType.Void;
-    Burned: SorobanType.Void;
-  };
-}>;
-
-/** Raw or validated values accepted by the VanityClaimStatus factory. */
-export type VanityClaimStatusArgs = SorobanType.Input.Custom<VanityClaimStatus>;
-
-/** Validate, encode and decode VanityClaimStatus using its contract declaration. */
-export const VanityClaimStatus: SorobanType.Factory<VanityClaimStatus> =
-  SorobanType
-    .Custom.fromSpec<VanityClaimStatus>(
-      () => NftSpec,
-      "VanityClaimStatus",
-    );
-
-/**
- * Signed fee coverage intent. All amounts use their token's atomic units.
- */
-export type VntyPaymentLimit = SorobanType.Custom<{
-  kind: "struct";
-  fields: {
-    /** Exclusive execution deadline in Unix seconds. */
-    deadline: SorobanType.U64;
-    /** Expected complete protocol fee; prevents an unapproved cash increase. */
-    fee_amount: SorobanType.I128;
-    /** Exact fee-asset credit purchased by burning VNTY. */
-    fee_credit: SorobanType.I128;
-    /**
-     * Maximum VNTY transferred temporarily, with unused shares refunded
-     * atomically.
-     */
-    max_shares: SorobanType.I128;
-  };
-}>;
-
-/** Raw or validated values accepted by the VntyPaymentLimit factory. */
-export type VntyPaymentLimitArgs = SorobanType.Input.Custom<VntyPaymentLimit>;
-
-/** Validate, encode and decode VntyPaymentLimit using its contract declaration. */
-export const VntyPaymentLimit: SorobanType.Factory<VntyPaymentLimit> =
-  SorobanType
-    .Custom.fromSpec<VntyPaymentLimit>(
-      () => NftSpec,
-      "VntyPaymentLimit",
-    );
-
 // -----------------------------------------------------------------------------
 // Events
 // -----------------------------------------------------------------------------
+
+/** Fields emitted by Burn. */
+export type Burn = {
+  from: SorobanType.Address;
+  token_id: SorobanType.U256;
+};
+
+/** Indexed fields accepted by the Burn event filters. */
+export type BurnTopics = {
+  from: SorobanType.Input.Address;
+};
+
+/** Fields emitted by Mint. */
+export type Mint = {
+  to: SorobanType.Address;
+  token_id: SorobanType.U256;
+};
+
+/** Indexed fields accepted by the Mint event filters. */
+export type MintTopics = {
+  to: SorobanType.Input.Address;
+};
+
+/** Fields emitted by Approve. */
+export type Approve = {
+  owner: SorobanType.Address;
+  token_id: SorobanType.U256;
+  approved: SorobanType.Address;
+  live_until_ledger: SorobanType.U32;
+};
+
+/** Indexed fields accepted by the Approve event filters. */
+export type ApproveTopics = {
+  owner: SorobanType.Input.Address;
+  token_id: SorobanType.Input.U256;
+};
+
+/** Fields emitted by Transfer. */
+export type Transfer = {
+  from: SorobanType.Address;
+  to: SorobanType.Address;
+  token_id: SorobanType.U256;
+};
+
+/** Indexed fields accepted by the Transfer event filters. */
+export type TransferTopics = {
+  from: SorobanType.Input.Address;
+  to: SorobanType.Input.Address;
+};
+
+/** Fields emitted by ApproveForAll. */
+export type ApproveForAll = {
+  owner: SorobanType.Address;
+  operator: SorobanType.Address;
+  live_until_ledger: SorobanType.U32;
+};
+
+/** Indexed fields accepted by the ApproveForAll event filters. */
+export type ApproveForAllTopics = {
+  owner: SorobanType.Input.Address;
+};
 
 /** Fields emitted by TreasuryChanged. */
 export type TreasuryChanged = {
@@ -1596,22 +1414,6 @@ export type TreasuryChanged = {
 /** Indexed fields accepted by the TreasuryChanged event filters. */
 export type TreasuryChangedTopics = {
   operator: SorobanType.Input.Address;
-};
-
-/** Fields emitted by ClaimWordChanged. */
-export type ClaimWordChanged = {
-  contract_address: SorobanType.Address;
-  token_id: SorobanType.U32;
-  owner: SorobanType.Address;
-  previous_word: SorobanType.String;
-  new_word: SorobanType.String;
-};
-
-/** Indexed fields accepted by the ClaimWordChanged event filters. */
-export type ClaimWordChangedTopics = {
-  contract_address: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
-  owner: SorobanType.Input.Address;
 };
 
 /** Fields emitted by ReservationCreated. */
@@ -1632,6 +1434,19 @@ export type ReservationCreatedTopics = {
   recipient: SorobanType.Input.Address;
 };
 
+/** Fields emitted by CharacterCountChanged. */
+export type CharacterCountChanged = {
+  contract_address: SorobanType.Address;
+  controller: SorobanType.Address;
+  character_count: SorobanType.U32;
+};
+
+/** Indexed fields accepted by the CharacterCountChanged event filters. */
+export type CharacterCountChangedTopics = {
+  contract_address: SorobanType.Input.Address;
+  controller: SorobanType.Input.Address;
+};
+
 /** Fields emitted by CatalogReservationCreated. */
 export type CatalogReservationCreated = {
   contract_address: SorobanType.Address;
@@ -1648,85 +1463,8 @@ export type CatalogReservationCreatedTopics = {
   recipient: SorobanType.Input.Address;
 };
 
-/** Event emitted when a token is burned. */
-export type Burn = {
-  from: SorobanType.Address;
-  token_id: SorobanType.U32;
-};
-
-/** Indexed fields accepted by the Burn event filters. */
-export type BurnTopics = {
-  from: SorobanType.Input.Address;
-};
-
-/** Event emitted when a token is minted. */
-export type Mint = {
-  to: SorobanType.Address;
-  token_id: SorobanType.U32;
-};
-
-/** Indexed fields accepted by the Mint event filters. */
-export type MintTopics = {
-  to: SorobanType.Input.Address;
-};
-
-/** Event emitted when an approval is granted. */
-export type Approve = {
-  approver: SorobanType.Address;
-  token_id: SorobanType.U32;
-  approved: SorobanType.Address;
-  live_until_ledger: SorobanType.U32;
-};
-
-/** Indexed fields accepted by the Approve event filters. */
-export type ApproveTopics = {
-  approver: SorobanType.Input.Address;
-  token_id: SorobanType.Input.U32;
-};
-
-/** Event emitted when a token is transferred. */
-export type Transfer = {
-  from: SorobanType.Address;
-  to: SorobanType.Address;
-  token_id: SorobanType.U32;
-};
-
-/** Indexed fields accepted by the Transfer event filters. */
-export type TransferTopics = {
-  from: SorobanType.Input.Address;
-  to: SorobanType.Input.Address;
-};
-
-/** Event emitted when approval for all tokens is granted. */
-export type ApproveForAll = {
-  owner: SorobanType.Address;
-  operator: SorobanType.Address;
-  live_until_ledger: SorobanType.U32;
-};
-
-/** Indexed fields accepted by the ApproveForAll event filters. */
-export type ApproveForAllTopics = {
-  owner: SorobanType.Input.Address;
-};
-
 /** Event definitions bound to this client, with typed decoding and filters. */
 export type NftEvents = ContractEventRegistry & {
-  readonly TreasuryChanged: ContractEventDefinition<
-    TreasuryChanged,
-    TreasuryChangedTopics
-  >;
-  readonly ClaimWordChanged: ContractEventDefinition<
-    ClaimWordChanged,
-    ClaimWordChangedTopics
-  >;
-  readonly ReservationCreated: ContractEventDefinition<
-    ReservationCreated,
-    ReservationCreatedTopics
-  >;
-  readonly CatalogReservationCreated: ContractEventDefinition<
-    CatalogReservationCreated,
-    CatalogReservationCreatedTopics
-  >;
   readonly Burn: ContractEventDefinition<
     Burn,
     BurnTopics
@@ -1746,6 +1484,22 @@ export type NftEvents = ContractEventRegistry & {
   readonly ApproveForAll: ContractEventDefinition<
     ApproveForAll,
     ApproveForAllTopics
+  >;
+  readonly TreasuryChanged: ContractEventDefinition<
+    TreasuryChanged,
+    TreasuryChangedTopics
+  >;
+  readonly ReservationCreated: ContractEventDefinition<
+    ReservationCreated,
+    ReservationCreatedTopics
+  >;
+  readonly CharacterCountChanged: ContractEventDefinition<
+    CharacterCountChanged,
+    CharacterCountChangedTopics
+  >;
+  readonly CatalogReservationCreated: ContractEventDefinition<
+    CatalogReservationCreated,
+    CatalogReservationCreatedTopics
   >;
 };
 

@@ -40,7 +40,7 @@ function words(view: ReactTestRenderer): string[] {
     .map((n) => n.props.dangerouslySetInnerHTML.__html);
 }
 function claim(count = 5) {
-  return { contract_address: address, suffix: address.slice(-count) };
+  return { controller: address, character_count: count, salt: undefined };
 }
 
 Deno.test("React queries share one in-flight lookup, synchronously reuse it, and isolate explicit overrides", async () => {
@@ -50,11 +50,9 @@ Deno.test("React queries share one in-flight lookup, synchronously reuse it, and
   using _read = stub(
     NftClient.prototype,
     "read",
-    ((method: string) => {
+    (() => {
       count++;
-      return method === "get_latest_token_id"
-        ? pending.promise
-        : Promise.resolve(claim());
+      return pending.promise.then(() => claim());
     }) as NftClient["read"],
   );
   const client = createPlateQueryClient();
@@ -79,7 +77,7 @@ Deno.test("React queries share one in-flight lookup, synchronously reuse it, and
       pending.resolve(4);
       await flush();
     });
-    assertEquals(count, 2);
+    assertEquals(count, 1);
     assertEquals(client.getQueryData(plateQueryKey(input)), {
       address,
       suffixLength: 5,
@@ -93,7 +91,7 @@ Deno.test("React queries share one in-flight lookup, synchronously reuse it, and
       view.root.findAll((n) => n.props["aria-busy"] === true).length,
       0,
     );
-    assertEquals(count, 2);
+    assertEquals(count, 1);
     assertEquals(client.getQueryData(plateQueryKey(input)), {
       address,
       suffixLength: 5,
@@ -102,7 +100,7 @@ Deno.test("React queries share one in-flight lookup, synchronously reuse it, and
       await client.invalidateQueries({ queryKey: plateQueryKey(input) });
       await flush();
     });
-    assertEquals(count, 4, "One refresh shared across all subscribers");
+    assertEquals(count, 2, "One refresh shared across all subscribers");
   } finally {
     act(() => view.unmount());
     client.clear();
@@ -117,11 +115,11 @@ Deno.test("usePlate exposes pending, successful absent metadata, refresh and err
   using _read = stub(
     NftClient.prototype,
     "read",
-    ((method: string) => {
+    (() => {
       count++;
       if (failure) return Promise.reject(failure);
       return Promise.resolve(
-        method === "get_latest_token_id" ? 1 : claim(empty ? 0 : 5),
+        claim(empty ? 0 : 5),
       );
     }) as NftClient["read"],
   );
@@ -225,9 +223,9 @@ Deno.test("provider defaults, component overrides and stable cache keys isolate 
   using _read = stub(
     NftClient.prototype,
     "read",
-    (function (this: NftClient, method: string) {
+    (function (this: NftClient) {
       calls.push(this.contract.getContractId());
-      return Promise.resolve(method === "get_latest_token_id" ? 1 : claim());
+      return Promise.resolve(claim());
     }) as NftClient["read"],
   );
   let view!: ReactTestRenderer;
@@ -246,8 +244,8 @@ Deno.test("provider defaults, component overrides and stable cache keys isolate 
     await flush();
   });
   try {
-    assertEquals(calls.length, 6);
-    assertEquals(calls.filter((x) => x === other).length, 2);
+    assertEquals(calls.length, 3);
+    assertEquals(calls.filter((x) => x === other).length, 1);
     assertEquals(
       client.getQueryData(plateQueryKey({ ...input, nftContractId: address })),
       { address, suffixLength: 5 },
@@ -281,9 +279,9 @@ Deno.test("browser defaults are shared and provider-owned caches stay separate",
   using _read = stub(
     NftClient.prototype,
     "read",
-    ((method: string) => {
+    (() => {
       calls++;
-      return Promise.resolve(method === "get_latest_token_id" ? 1 : claim());
+      return Promise.resolve(claim());
     }) as NftClient["read"],
   );
   try {
@@ -293,7 +291,7 @@ Deno.test("browser defaults are shared and provider-owned caches stay separate",
       view = create(createElement(Plate, input));
       await flush();
     });
-    assertEquals(calls, 2);
+    assertEquals(calls, 1);
     let second!: ReactTestRenderer;
     act(() => {
       second = create(createElement(Plate, input));
@@ -308,7 +306,7 @@ Deno.test("browser defaults are shared and provider-owned caches stay separate",
       );
       await flush();
     });
-    assertEquals(calls, 4, "A provider creates an isolated scope by default");
+    assertEquals(calls, 2, "A provider creates an isolated scope by default");
     act(() => view.unmount());
   } finally {
     if (view) act(() => view.unmount());
@@ -329,11 +327,9 @@ Deno.test("stale metadata remains synchronous while one shared background refres
   using _read = stub(
     NftClient.prototype,
     "read",
-    ((method: string) => {
+    (() => {
       calls++;
-      return method === "get_latest_token_id"
-        ? pending.promise
-        : Promise.resolve(claim(6));
+      return pending.promise.then(() => claim(6));
     }) as NftClient["read"],
   );
   let state!: UsePlateResult;
@@ -363,7 +359,7 @@ Deno.test("stale metadata remains synchronous while one shared background refres
     });
     assertEquals(state.data, { address, suffixLength: 6 });
     assertEquals(state.isFetching, false);
-    assertEquals(calls, 2);
+    assertEquals(calls, 1);
   } finally {
     act(() => view.unmount());
     client.clear();

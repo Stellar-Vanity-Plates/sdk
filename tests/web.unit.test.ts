@@ -54,11 +54,9 @@ describe("vanity-plate custom element", () => {
     using _read = stub(
       NftClient.prototype,
       "read",
-      ((method: string) =>
+      (() =>
         state.failure ? Promise.reject(state.failure) : Promise.resolve(
-          method === "get_latest_token_id"
-            ? 1
-            : { contract_address: address, suffix: address.slice(-5) },
+          { controller: address, character_count: 5, salt: undefined },
         )) as NftClient["read"],
     );
     const el = new Element();
@@ -96,16 +94,14 @@ describe("vanity-plate custom element", () => {
     using _read = stub(
       NftClient.prototype,
       "read",
-      ((method: string) => {
-        if (method === "get_claim") {
-          return Promise.resolve({
-            contract_address: address,
-            suffix: address.slice(-4),
-          });
-        }
+      (() => {
         const request = Promise.withResolvers<number>();
         requests.push(request);
-        return request.promise;
+        return request.promise.then(() => ({
+          controller: address,
+          character_count: 4,
+          salt: undefined,
+        }));
       }) as NftClient["read"],
     );
     const el = new Element();

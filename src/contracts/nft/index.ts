@@ -31,22 +31,20 @@ export * from "@/contracts/nft/types.ts";
 /** Simulate or invoke callable functions declared in the embedded contract spec. */
 export class Nft extends Contract {
   /**
-   * Burns an owned vanity plate NFT and releases its address for future
-   * minting.
+   * Consumes a holder-authorized NFT only through the configured deployer or
+   * when its represented contract is already deployed.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `from` - Current owner authorizing the burn.
-   * * `token_id` - Token being burned.
+   * * `from` - Address participating in this operation.
+   * * `token_id` - Full contract hash as an unsigned big-endian ID.
+   *
+   * # Returns
+   * Nothing on success.
    *
    * # Errors
-   *
-   * * Fails when `from` does not authorize the invocation.
-   * * Propagates standard NFT errors when the token does not exist or `from`
-   * is not its owner.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly burn: NftMethod<"burn"> = {
     read: (methodArgs) =>
@@ -69,7 +67,8 @@ export class Nft extends Contract {
    *
    * # Returns
    *
-   * The sequential token ID minted to the reservation recipient.
+   * The full contract hash as a U256 token ID minted to the reservation
+   * recipient.
    *
    * # Errors
    *
@@ -98,11 +97,17 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns the token collection name.
+   * Returns the collection name.
    *
    * # Arguments
+   * * `e` - Contract execution environment.
    *
-   * * `e` - Access to the Soroban environment.
+   * # Returns
+   * The requested value.
+   *
+   * # Errors
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly name: NftMethod<"name"> = {
     read: (methodArgs) =>
@@ -115,11 +120,17 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns the token collection symbol.
+   * Returns the collection symbol.
    *
    * # Arguments
+   * * `e` - Contract execution environment.
    *
-   * * `e` - Access to the Soroban environment.
+   * # Returns
+   * The requested value.
+   *
+   * # Errors
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly symbol: NftMethod<"symbol"> = {
     read: (methodArgs) =>
@@ -132,24 +143,23 @@ export class Nft extends Contract {
   };
 
   /**
-   * Approves a token spender while renewing its vanity claim and address
-   * index.
+   * Grants or revokes a token approval with owner or collection operator
+   * authorization.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `approver` - Owner or authorized operator approving the spender.
-   * * `approved` - Address receiving approval.
-   * * `token_id` - Token covered by the approval.
-   * * `live_until_ledger` - Approval expiration ledger, or zero to revoke
-   * approval.
+   * * `approver` - Address participating in this operation.
+   * * `approved` - Address participating in this operation.
+   * * `token_id` - Full contract hash as an unsigned big-endian ID.
+   * * `live_until_ledger` - Inclusive expiry; zero revokes and larger than
+   * network maximum is invalid.
+   *
+   * # Returns
+   * Nothing on success.
    *
    * # Errors
-   *
-   * * Fails when `approver` does not authorize the invocation.
-   * * Propagates standard NFT ownership, approval, and expiration errors.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly approve: NftMethod<"approve"> = {
     read: (methodArgs) =>
@@ -162,12 +172,18 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns the number of tokens owned by `account`.
+   * Returns the number of live NFTs held by an address, or zero.
    *
    * # Arguments
+   * * `e` - Contract execution environment.
+   * * `owner` - Address participating in this operation.
    *
-   * * `e` - Access to the Soroban environment.
-   * * `account` - The address for which the balance is being queried.
+   * # Returns
+   * The requested value.
+   *
+   * # Errors
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly balance: NftMethod<"balance"> = {
     read: (methodArgs) =>
@@ -272,22 +288,18 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns a token owner while renewing its vanity claim and address index.
+   * Returns the owner of a live NFT; consumed and unregistered IDs fail.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `token_id` - Token whose owner is requested.
+   * * `token_id` - Full contract hash as an unsigned big-endian ID.
    *
    * # Returns
-   *
-   * The current owner of `token_id`.
+   * The requested value.
    *
    * # Errors
-   *
-   * * Propagates standard NFT errors when `token_id` does not exist.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly ownerOf: NftMethod<"owner_of"> = {
     read: (methodArgs) =>
@@ -300,56 +312,21 @@ export class Nft extends Contract {
   };
 
   /**
-   * Changes the descriptive suffix associated with a claimed address.
+   * Transfers a live NFT with owner authorization; its represented address
+   * cannot receive it.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `contract_address` - Claimed vanity contract address being updated.
-   * * `word` - New suffix that must match `contract_address`.
-   * * `operator` - Current NFT owner authorizing the update.
+   * * `from` - Address participating in this operation.
+   * * `to` - Address participating in this operation.
+   * * `token_id` - Full contract hash as an unsigned big-endian ID.
+   *
+   * # Returns
+   * Nothing on success.
    *
    * # Errors
-   *
-   * * Fails when `operator` does not authorize the invocation.
-   * * Fails with `VanityPlateNftError::TokenForAddressNotFound` when it is not
-   * claimed.
-   * * Fails with `VanityPlateNftError::IncorrectOwner` when `operator` is not
-   * the owner.
-   * * Fails with `VanityPlateNftError::InvalidSuffixLength`,
-   * `VanityPlateNftError::InvalidSuffixCharacter`, or
-   * `VanityPlateNftError::SuffixMismatch` when `word` is invalid or does not
-   * match.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
-   */
-  readonly setWord: NftMethod<"set_word"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.SetWord, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.SetWord,
-      }),
-  };
-
-  /**
-   * Transfers an owned token while renewing its vanity claim and address
-   * index.
-   *
-   * # Arguments
-   *
-   * * `e` - Contract execution environment.
-   * * `from` - Current owner authorizing the transfer.
-   * * `to` - Address receiving the token.
-   * * `token_id` - Token being transferred.
-   *
-   * # Errors
-   *
-   * * Fails when `from` does not authorize the invocation.
-   * * Propagates standard NFT ownership and balance errors.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly transfer: NftMethod<"transfer"> = {
     read: (methodArgs) =>
@@ -362,85 +339,44 @@ export class Nft extends Contract {
   };
 
   /**
-   * Burns a vanity plate NFT through an approved spender and releases its
-   * address.
+   * Returns the single retained record for a contract address, even after
+   * consumption.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `spender` - Approved address authorizing the burn.
-   * * `from` - Current token owner.
-   * * `token_id` - Token being burned.
+   * * `contract_address` - Address participating in this operation.
+   *
+   * # Returns
+   * The requested value.
    *
    * # Errors
-   *
-   * * Fails when `spender` does not authorize the invocation.
-   * * Propagates standard NFT errors when the token does not exist, `from` is
-   * not its owner,
-   * or `spender` lacks sufficient approval.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
-  readonly burnFrom: NftMethod<"burn_from"> = {
+  readonly getPlate: NftMethod<"get_plate"> = {
     read: (methodArgs) =>
-      this.read({ method: ContractMethods.BurnFrom, methodArgs }),
+      this.read({ method: ContractMethods.GetPlate, methodArgs }),
     invoke: (args) =>
       this.invoke({
         ...args,
-        method: ContractMethods.BurnFrom,
+        method: ContractMethods.GetPlate,
       }),
   };
 
   /**
-   * Returns the immutable address and salt plus the latest descriptive suffix
-   * for a token.
+   * Returns the base URI plus contract address for a live NFT; fails after
+   * consumption.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `token_id` - Token whose vanity claim is requested.
+   * * `token_id` - Full contract hash as an unsigned big-endian ID.
    *
    * # Returns
-   *
-   * The vanity claim associated with `token_id`, including after the NFT is
-   * burned.
+   * The requested value.
    *
    * # Errors
-   *
-   * Fails with `VanityPlateNftError::ClaimNotFound` when the token was never
-   * minted or its
-   * persistent history expired.
-   */
-  readonly getClaim: NftMethod<"get_claim"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.GetClaim, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.GetClaim,
-      }),
-  };
-
-  /**
-   * Returns the metadata URI for an existing vanity plate NFT.
-   *
-   * The URI is the collection base URI followed by the claimed contract
-   * address.
-   *
-   * # Arguments
-   *
-   * * `e` - Contract execution environment.
-   * * `token_id` - Token whose metadata URI is requested.
-   *
-   * # Returns
-   *
-   * The token URI, or an empty string when the collection base URI is empty.
-   *
-   * # Errors
-   *
-   * * Propagates standard NFT errors when `token_id` does not exist.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly tokenUri: NftMethod<"token_uri"> = {
     read: (methodArgs) =>
@@ -492,17 +428,18 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns the account approved for the token with `token_id`.
+   * Returns a live token approval, or None; fails for absent or consumed NFTs.
    *
    * # Arguments
+   * * `e` - Contract execution environment.
+   * * `token_id` - Full contract hash as an unsigned big-endian ID.
    *
-   * * `e` - Access to the Soroban environment.
-   * * `token_id` - Token ID as a number.
+   * # Returns
+   * The requested value.
    *
    * # Errors
-   *
-   * * [`NonFungibleTokenError::NonExistentToken`] - If the token does not
-   * exist.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly getApproved: NftMethod<"get_approved"> = {
     read: (methodArgs) =>
@@ -566,34 +503,6 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns the token ID representing a vanity contract address.
-   *
-   * # Arguments
-   *
-   * * `e` - Contract execution environment.
-   * * `contract_address` - Claimed vanity contract address.
-   *
-   * # Returns
-   *
-   * The token ID associated with `contract_address`.
-   *
-   * # Errors
-   *
-   * * Fails with `VanityPlateNftError::TokenForAddressNotFound` when it is not
-   * claimed.
-   * * Propagates the NFT owner error when ownership storage is unavailable.
-   */
-  readonly getTokenId: NftMethod<"get_token_id"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.GetTokenId, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.GetTokenId,
-      }),
-  };
-
-  /**
    * Replaces the base URI used by existing and future token metadata URIs.
    *
    * # Arguments
@@ -650,23 +559,22 @@ export class Nft extends Contract {
   };
 
   /**
-   * Transfers an approved token while renewing its vanity claim and address
-   * index.
+   * Transfers a live NFT with owner, token approval, or collection operator
+   * authorization.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `spender` - Approved address authorizing the transfer.
-   * * `from` - Current token owner.
-   * * `to` - Address receiving the token.
-   * * `token_id` - Token being transferred.
+   * * `spender` - Address participating in this operation.
+   * * `from` - Address participating in this operation.
+   * * `to` - Address participating in this operation.
+   * * `token_id` - Full contract hash as an unsigned big-endian ID.
+   *
+   * # Returns
+   * Nothing on success.
    *
    * # Errors
-   *
-   * * Fails when `spender` does not authorize the invocation.
-   * * Propagates standard NFT approval, ownership, and balance errors.
-   * * Fails with `VanityPlateNftError::ClaimNotFound` when claim storage is
-   * inconsistent.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly transferFrom: NftMethod<"transfer_from"> = {
     read: (methodArgs) =>
@@ -679,28 +587,22 @@ export class Nft extends Contract {
   };
 
   /**
-   * Approve or remove `operator` as an operator for the owner.
-   *
-   * Operators can call `transfer_from()` for any token held by `owner`,
-   * and call `approve()` on behalf of `owner`.
+   * Grants or revokes collection-wide operator approval with owner
+   * authorization.
    *
    * # Arguments
+   * * `e` - Contract execution environment.
+   * * `owner` - Address participating in this operation.
+   * * `operator` - Address participating in this operation.
+   * * `live_until_ledger` - Inclusive expiry; zero revokes and larger than
+   * network maximum is invalid.
    *
-   * * `e` - Access to Soroban environment.
-   * * `owner` - The address holding the tokens.
-   * * `operator` - Account to add to the set of authorized operators.
-   * * `live_until_ledger` - The ledger number at which the allowance
-   * expires. If `live_until_ledger` is `0`, the approval is revoked.
+   * # Returns
+   * Nothing on success.
    *
    * # Errors
-   *
-   * * [`NonFungibleTokenError::InvalidLiveUntilLedger`] - If the ledger
-   * number is less than the current ledger number.
-   *
-   * # Events
-   *
-   * * topics - `["approve_for_all", from: Address]`
-   * * data - `[operator: Address, live_until_ledger: u32]`
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly approveForAll: NftMethod<"approve_for_all"> = {
     read: (methodArgs) =>
@@ -772,35 +674,6 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns a durable vanity claim together with its active or burned status.
-   *
-   * # Arguments
-   *
-   * * `e` - Contract execution environment.
-   * * `token_id` - Token whose current lifecycle status is requested.
-   *
-   * # Returns
-   *
-   * The immutable claim data and whether the NFT remains active or has been
-   * burned.
-   *
-   * # Errors
-   *
-   * Fails with `VanityPlateNftError::ClaimNotFound` when the token was never
-   * minted or its
-   * persistent history expired.
-   */
-  readonly getClaimRecord: NftMethod<"get_claim_record"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.GetClaimRecord, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.GetClaimRecord,
-      }),
-  };
-
-  /**
    * Returns the beneficiary receiving administrator-approved catalog prices.
    *
    * # Arguments
@@ -856,46 +729,20 @@ export class Nft extends Contract {
   };
 
   /**
-   * Returns the newest token ever minted for a vanity contract address.
-   *
-   * Unlike `get_token_id`, this historical lookup also succeeds when the
-   * newest NFT was
-   * burned. If the same undeployed address is minted again, it returns that
-   * replacement token.
+   * Returns whether the operator permission remains valid through the current
+   * ledger.
    *
    * # Arguments
-   *
    * * `e` - Contract execution environment.
-   * * `contract_address` - Vanity contract address to inspect.
+   * * `owner` - Address participating in this operation.
+   * * `operator` - Address participating in this operation.
    *
    * # Returns
-   *
-   * The most recently minted token ID for the address.
+   * The requested value.
    *
    * # Errors
-   *
-   * Fails with `VanityPlateNftError::TokenForAddressNotFound` when no retained
-   * history exists.
-   */
-  readonly getLatestTokenId: NftMethod<"get_latest_token_id"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.GetLatestTokenId, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.GetLatestTokenId,
-      }),
-  };
-
-  /**
-   * Returns whether the `operator` is allowed to manage all the assets of
-   * `owner`.
-   *
-   * # Arguments
-   *
-   * * `e` - Access to the Soroban environment.
-   * * `owner` - Account of the token's owner.
-   * * `operator` - Account to be checked.
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
    */
   readonly isApprovedForAll: NftMethod<"is_approved_for_all"> = {
     read: (methodArgs) =>
@@ -933,6 +780,32 @@ export class Nft extends Contract {
       this.invoke({
         ...args,
         method: ContractMethods.ReserveWithShares,
+      }),
+  };
+
+  /**
+   * Sets 1..=56 highlighted characters with controller authorization; deployed
+   * unregistered contracts can self-register.
+   *
+   * # Arguments
+   * * `e` - Contract execution environment.
+   * * `contract_address` - Address participating in this operation.
+   * * `character_count` - Number of trailing characters, from one through 56.
+   *
+   * # Returns
+   * Nothing on success.
+   *
+   * # Errors
+   * Fails on missing required state, invalid input, or missing required
+   * authorization.
+   */
+  readonly setCharacterCount: NftMethod<"set_character_count"> = {
+    read: (methodArgs) =>
+      this.read({ method: ContractMethods.SetCharacterCount, methodArgs }),
+    invoke: (args) =>
+      this.invoke({
+        ...args,
+        method: ContractMethods.SetCharacterCount,
       }),
   };
 
@@ -992,43 +865,6 @@ export class Nft extends Contract {
   };
 
   /**
-   * Initializes reservation and catalog configuration after upgrading
-   * compatible legacy state.
-   *
-   * # Arguments
-   *
-   * * `e` - Contract execution environment.
-   * * `reservation_config` - Treasury, reservation fee, and duration to
-   * initialize.
-   * * `catalog_config` - Beneficiary receiving administrator-approved catalog
-   * prices.
-   * * `operator` - RBAC administrator authorizing the one-time migration.
-   *
-   * # Errors
-   *
-   * * Fails with `VanityPlateNftError::ReservationConfigAlreadySet` if
-   * reservations exist.
-   * * Fails with `VanityPlateNftError::CatalogConfigAlreadySet` if catalog
-   * settings exist.
-   * * Fails with `VanityPlateNftError::InvalidTreasury` for incompatible
-   * treasury governance.
-   * * Fails with `VanityPlateNftError::InvalidReservationFee` for a negative
-   * fee.
-   * * Fails with `VanityPlateNftError::InvalidReservationDuration` for an
-   * invalid duration.
-   * * Propagates authorization, RBAC, and treasury-interface errors.
-   */
-  readonly migrateConfiguration: NftMethod<"migrate_configuration"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.MigrateConfiguration, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.MigrateConfiguration,
-      }),
-  };
-
-  /**
    * Returns the current reservation fee and duration configuration.
    *
    * # Arguments
@@ -1051,36 +887,6 @@ export class Nft extends Contract {
       this.invoke({
         ...args,
         method: ContractMethods.GetReservationConfig,
-      }),
-  };
-
-  /**
-   * Initializes catalog configuration after upgrading a pre-catalog
-   * deployment.
-   *
-   * # Arguments
-   *
-   * * `e` - Contract execution environment.
-   * * `catalog_config` - Beneficiary receiving administrator-approved catalog
-   * prices.
-   * * `operator` - RBAC administrator authorizing the migration.
-   *
-   * # Errors
-   *
-   * * Fails with `VanityPlateNftError::CatalogConfigAlreadySet` after
-   * initialization.
-   * * Fails with `VanityPlateNftError::ReservationConfigNotFound` when
-   * reservations were not
-   * initialized and the complete configuration migration is required instead.
-   * * Propagates authorization and role errors from the RBAC contract.
-   */
-  readonly migrateCatalogConfig: NftMethod<"migrate_catalog_config"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.MigrateCatalogConfig, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.MigrateCatalogConfig,
       }),
   };
 

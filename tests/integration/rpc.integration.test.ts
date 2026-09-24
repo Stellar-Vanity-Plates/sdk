@@ -119,9 +119,9 @@ describe("RPC transport integration", () => {
   it("runs generated NFT reads through the complete Colibri pipeline and serialized simulation RPC", async () => {
     const calls: { method: string; contract: string; args: string[] }[] = [];
     const claim = {
-      contract_address: contract,
+      controller: contract,
       salt: new Uint8Array(32),
-      suffix: contract.slice(-5),
+      character_count: 5,
     };
     let fail = false;
     await using server = rpcServer(({ method, params }) => {
@@ -151,7 +151,7 @@ describe("RPC transport integration", () => {
           events: [],
         };
       }
-      const result = name === "get_latest_token_id" ? 42 : claim;
+      const result = claim;
       const value = NftSpec.nativeToScVal(
         result,
         NftSpec.getFunc(name).outputs[0],
@@ -173,24 +173,18 @@ describe("RPC transport integration", () => {
       contractConfig: { contractId: contract },
     });
     assertEquals(
-      await nft.getLatestTokenId.read({ contract_address: contract }),
-      42,
+      await nft.getPlate.read({ contract_address: contract }),
+      claim,
     );
-    assertEquals(await nft.getClaim.read({ token_id: 42 }), claim);
-    assertEquals(calls, [
-      {
-        method: "get_latest_token_id",
-        contract,
-        args: [new Address(contract).toScVal().toXDR("base64")],
-      },
-      {
-        method: "get_claim",
-        contract,
-        args: [xdr.ScVal.scvU32(42).toXDR("base64")],
-      },
-    ]);
+    assertEquals(calls, [{
+      method: "get_plate",
+      contract,
+      args: [new Address(contract).toScVal().toXDR("base64")],
+    }]);
     fail = true;
-    await assertRejects(() => nft.getClaim.read({ token_id: 42 }));
-    assertEquals(calls.length, 3);
+    await assertRejects(() =>
+      nft.getPlate.read({ contract_address: contract })
+    );
+    assertEquals(calls.length, 2);
   });
 });

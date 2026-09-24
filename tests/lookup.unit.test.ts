@@ -38,11 +38,13 @@ Deno.test("display inputs use counts or abbreviation for both address kinds, wit
   };
   try {
     for (const address of [account, contract]) {
-      for (const suffixLength of [undefined, 0, 56, NaN, -1, 1.5, 1, 6, 55]) {
+      for (
+        const suffixLength of [undefined, 0, 57, NaN, -1, 1.5, 1, 6, 55, 56]
+      ) {
         const input = { address, suffixLength };
         const model = createPlateModel(await resolvePlateInput(input));
         const configured = suffixLength === 1 || suffixLength === 6 ||
-          suffixLength === 55;
+          suffixLength === 55 || suffixLength === 56;
         assertEquals(model.configured, configured);
         assertEquals(
           model.label,
@@ -140,18 +142,17 @@ Deno.test("RPC/account lookup decodes the standard metadata, has priority over l
   }
 });
 
-Deno.test("contract display uses retained claims, network defaults and explicit overrides", async () => {
+Deno.test("contract display uses permanent plate records, network defaults and explicit overrides", async () => {
   const read = NftClient.prototype.read;
   const calls: unknown[] = [];
-  let suffix = contract.slice(-5);
-  let claimAddress: string = contract;
+  let characterCount = 5;
   NftClient.prototype.read = function (this: NftClient, method, args) {
     calls.push([this.contract.getContractId(), method, args]);
-    return Promise.resolve(
-      method === "get_latest_token_id"
-        ? 42
-        : { contract_address: claimAddress, suffix, salt: new Uint8Array(32) },
-    );
+    return Promise.resolve({
+      controller: contract,
+      character_count: characterCount,
+      salt: undefined,
+    });
   } as typeof read;
   try {
     const input = {
@@ -161,9 +162,9 @@ Deno.test("contract display uses retained claims, network defaults and explicit 
     };
     assertEquals((await resolvePlateInput(input)).suffixLength, 5);
     const collection = NFT_CONTRACT_DEFAULTS[testnet.networkPassphrase];
-    assertEquals(calls, [[collection, "get_latest_token_id", {
+    assertEquals(calls, [[collection, "get_plate", {
       contract_address: contract,
-    }], [collection, "get_claim", { token_id: 42 }]]);
+    }]]);
     calls.length = 0;
     assertEquals(
       (await resolvePlateInput({
@@ -174,17 +175,18 @@ Deno.test("contract display uses retained claims, network defaults and explicit 
       5,
     );
     assertEquals((calls[0] as unknown[])[0], contract);
-    suffix = "ZZZZ";
-    assertEquals((await resolvePlateInput(input)).suffixLength, undefined);
-    suffix = contract.slice(-5);
-    claimAddress = account;
-    assertEquals((await resolvePlateInput(input)).suffixLength, undefined);
+    for (const count of [0, 57, 1.5]) {
+      characterCount = count;
+      assertEquals((await resolvePlateInput(input)).suffixLength, undefined);
+    }
+    characterCount = 56;
+    assertEquals((await resolvePlateInput(input)).suffixLength, 56);
   } finally {
     NftClient.prototype.read = read;
   }
 });
 
-Deno.test("only missing claims from the selected collection become fallback; other failures retain identity", async () => {
+Deno.test("only missing plates from the selected collection become fallback; other failures retain identity", async () => {
   const read = NftClient.prototype.read;
   const collection = NFT_CONTRACT_DEFAULTS[testnet.networkPassphrase]!;
   const input = { address: contract, networkConfig: testnet };
@@ -200,7 +202,7 @@ Deno.test("only missing claims from the selected collection become fallback; oth
           );
           NftClient.prototype.read = () => Promise.reject(failure);
           if (
-            [2007, 2008].includes(code) && contractId === collection &&
+            code === 2007 && contractId === collection &&
             issuedFrom === "root-invocation"
           ) {
             assertEquals(

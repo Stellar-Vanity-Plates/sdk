@@ -21,7 +21,7 @@ export type PlateFinish = "badge" | "watermark" | "sideband" | "pattern";
 export interface ResolvedPlateInput {
   /** Complete checksum-valid G or C address. */
   address: string;
-  /** Number of ending characters to show, 1–55. Missing/invalid counts abbreviate. */
+  /** Number of ending characters to show, 1–56. Missing/invalid counts abbreviate. */
   suffixLength?: number;
 }
 /** Deterministic appearance and identity derived locally from a plate. */

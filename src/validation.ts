@@ -19,9 +19,9 @@ export function plateKind(address: string): PlateKind {
   return address.startsWith("G") ? "account" : "contract";
 }
 
-/** Normalizes a user-entered suffix to uppercase Stellar base32, 1–55 characters. */
+/** Normalizes a user-entered suffix to uppercase Stellar base32, 1–56 characters. */
 export function normalizeSuffix(suffix: string): string {
-  if (typeof suffix !== "string" || !/^[a-z2-7]{1,55}$/i.test(suffix)) {
+  if (typeof suffix !== "string" || !/^[a-z2-7]{1,56}$/i.test(suffix)) {
     throw new InvalidSuffixError();
   }
   return suffix.toUpperCase();
@@ -34,7 +34,7 @@ export function validatePlate(
   kind?: PlateKind,
 ): boolean {
   return isPlateAddress(address, kind) && typeof suffix === "string" &&
-    /^[A-Z2-7]{1,55}$/.test(suffix) && address.endsWith(suffix);
+    /^[A-Z2-7]{1,56}$/.test(suffix) && address.endsWith(suffix);
 }
 
 /** The standard unconfigured display: first six characters, ellipsis, last six. */

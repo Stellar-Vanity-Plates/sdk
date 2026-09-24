@@ -480,31 +480,6 @@ export type GetSellerSaleCountInput = {
 /** Decoded return value of get_seller_sale_count. */
 export type GetSellerSaleCountOutput = SorobanType.U32;
 
-/**
- * Switches Testnet settlement after a matching Treasury migration.
- *
- * Requires Admin authorization, the Testnet network and a paused
- * marketplace.
- * Existing listings keep their prices, fees and escrow and settle in the new
- * currency without relisting. Rejects non-SAC or incompatible assets.
- *
- * # Arguments
- * * `e` - Contract environment.
- * * `asset` - New settlement Stellar Asset Contract matching the Treasury.
- * * `operator` - Authorized administrator.
- *
- * # Errors
- * Rejects other networks, missing authorization, unpaused state, or an
- * unchanged, incompatible or non-SAC settlement asset.
- */
-export type MigrateTestnetSettlementInput = {
-  asset: SorobanType.Input.Address;
-  operator: SorobanType.Input.Address;
-};
-
-/** Decoded return value of migrate_testnet_settlement. */
-export type MigrateTestnetSettlementOutput = null;
-
 /** Callable ABI methods available through read and invoke; excludes __constructor. */
 export type MarketplaceMethodMap = {
   buy: {
@@ -567,10 +542,6 @@ export type MarketplaceMethodMap = {
     input: GetSellerSaleCountInput;
     output: GetSellerSaleCountOutput;
   };
-  migrate_testnet_settlement: {
-    input: MigrateTestnetSettlementInput;
-    output: MigrateTestnetSettlementOutput;
-  };
 };
 
 /** Method names mapped to their accepted arguments. */
@@ -632,7 +603,7 @@ export type Listing = SorobanType.Custom<{
     fee_bps: SorobanType.U32;
     price: SorobanType.I128;
     seller: SorobanType.Address;
-    token_id: SorobanType.U32;
+    token_id: SorobanType.U256;
     word: SorobanType.String;
   };
 }>;
@@ -729,7 +700,7 @@ export const VntyPaymentLimit: SorobanType.Factory<VntyPaymentLimit> =
 export type SalePlaced = {
   contract_address: SorobanType.Address;
   seller: SorobanType.Address;
-  token_id: SorobanType.U32;
+  token_id: SorobanType.U256;
   word: SorobanType.String;
   price: SorobanType.I128;
   fee_bps: SorobanType.U32;
@@ -745,7 +716,7 @@ export type SalePlacedTopics = {
 export type SaleCancelled = {
   contract_address: SorobanType.Address;
   seller: SorobanType.Address;
-  token_id: SorobanType.U32;
+  token_id: SorobanType.U256;
   word: SorobanType.String;
   price: SorobanType.I128;
   fee_bps: SorobanType.U32;
@@ -762,7 +733,7 @@ export type SaleCompleted = {
   contract_address: SorobanType.Address;
   seller: SorobanType.Address;
   buyer: SorobanType.Address;
-  token_id: SorobanType.U32;
+  token_id: SorobanType.U256;
   word: SorobanType.String;
   price: SorobanType.I128;
   fee_bps: SorobanType.U32;
@@ -815,21 +786,6 @@ export type ImplementationChangedTopics = {
   operator: SorobanType.Input.Address;
 };
 
-/**
- * Announces the Testnet settlement switch; historical listings retain their
- * original currency.
- */
-export type TestnetSettlementChanged = {
-  operator: SorobanType.Address;
-  previous_asset: SorobanType.Address;
-  new_asset: SorobanType.Address;
-};
-
-/** Indexed fields accepted by the TestnetSettlementChanged event filters. */
-export type TestnetSettlementChangedTopics = {
-  operator: SorobanType.Input.Address;
-};
-
 /** Event emitted when the contract is paused. */
 export type Paused = Record<string, never>;
 
@@ -867,10 +823,6 @@ export type MarketplaceEvents = ContractEventRegistry & {
   readonly ImplementationChanged: ContractEventDefinition<
     ImplementationChanged,
     ImplementationChangedTopics
-  >;
-  readonly TestnetSettlementChanged: ContractEventDefinition<
-    TestnetSettlementChanged,
-    TestnetSettlementChangedTopics
   >;
   readonly Paused: ContractEventDefinition<
     Paused,

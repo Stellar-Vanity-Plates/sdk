@@ -94,31 +94,6 @@ export type HasRoleInput = {
 export type HasRoleOutput = SorobanType.Bool;
 
 /**
- * Replaces the address assigned to the minter role.
- *
- * # Arguments
- *
- * * `e` - Contract execution environment.
- * * `new_minter` - Address assigned as the new minter.
- * * `operator` - Current administrator authorizing the update.
- *
- * # Errors
- *
- * * Fails when `operator` does not authorize the invocation.
- * * Fails with `RbacError::RoleNotFound` when the administrator role is
- * unavailable.
- * * Fails with `RbacError::Unauthorized` when `operator` is not the
- * administrator.
- */
-export type SetMinterInput = {
-  new_minter: SorobanType.Input.Address;
-  operator: SorobanType.Input.Address;
-};
-
-/** Decoded return value of set_minter. */
-export type SetMinterOutput = null;
-
-/**
  * Accepts an active administrator proposal for the proposed address.
  *
  * # Arguments
@@ -215,14 +190,13 @@ export type SetUpgraderInput = {
 export type SetUpgraderOutput = null;
 
 /**
- * Initializes the protocol administrator, minter, treasurer, and upgrader
- * assignments.
+ * Initializes Admin, Treasurer and Upgrader, with Treasurer also holding
+ * Rebalancer.
  *
  * # Arguments
  *
  * * `e` - Contract execution environment.
- * * `admin` - Address assigned to the administrator role.
- * * `minter` - Address assigned to the minter role.
+ * * `admin` - Highest authority, allowed to reassign every operational role.
  * * `treasurer` - Address assigned to the treasurer role.
  * * `upgrader` - Address assigned to the upgrader role.
  *
@@ -232,7 +206,6 @@ export type SetUpgraderOutput = null;
  */
 export type ConstructorInput = {
   admin: SorobanType.Input.Address;
-  minter: SorobanType.Input.Address;
   treasurer: SorobanType.Input.Address;
   upgrader: SorobanType.Input.Address;
 };
@@ -326,10 +299,6 @@ export type RbacMethodMap = {
     input: HasRoleInput;
     output: HasRoleOutput;
   };
-  set_minter: {
-    input: SetMinterInput;
-    output: SetMinterOutput;
-  };
   accept_admin: {
     input: AcceptAdminInput;
     output: AcceptAdminOutput;
@@ -415,8 +384,8 @@ export type Role = SorobanType.Custom<{
   kind: "enum";
   encoding: "tagged";
   variants: {
+    /** Highest authority; may reassign all operational roles. */
     Admin: SorobanType.Void;
-    Minter: SorobanType.Void;
     Treasurer: SorobanType.Void;
     Rebalancer: SorobanType.Void;
     Upgrader: SorobanType.Void;

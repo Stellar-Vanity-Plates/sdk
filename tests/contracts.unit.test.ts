@@ -18,9 +18,9 @@ import {
   NftClient,
   NftErrors,
   NftSpec,
+  Plate,
   Rbac,
   Treasury,
-  VanityClaim,
 } from "@/contracts/index.ts";
 import config from "@examples/testnet.json" with { type: "json" };
 const network = NetworkConfig.TestNet();
@@ -41,9 +41,12 @@ Deno.test("clients encode real ABI values and enforce an explicit Colibri invoca
   assertEquals(Object.keys(clients).length, 5);
   const client = clients.nft;
   const args = client.contract.getSpec().funcArgsToScVals("owner_of", {
-    token_id: 42,
+    token_id: 42n,
   });
-  assertEquals(args[0].toXdr("base64"), xdr.ScVal.scvU32(42).toXdr("base64"));
+  assertEquals(
+    args[0].toXdr("base64"),
+    SorobanType.U256.from(42n).toScVal().toXdr("base64"),
+  );
   let initialized = 0, reads = 0, writes = 0;
   client.contract.loadSpecFromNetwork = () => {
     initialized++;
@@ -53,7 +56,7 @@ Deno.test("clients encode real ABI values and enforce an explicit Colibri invoca
   contract.read = ({ method, methodArgs }) => {
     reads++;
     assertEquals(method, "owner_of");
-    assertEquals(methodArgs, { token_id: 42 });
+    assertEquals(methodArgs, { token_id: 42n });
     return Promise.resolve(config.contracts.deployer);
   };
   const tx: TransactionConfig = {
@@ -69,12 +72,12 @@ Deno.test("clients encode real ABI values and enforce an explicit Colibri invoca
     assertEquals(methodArgs, {
       from: config.contracts.deployer,
       to: config.contracts.marketplace,
-      token_id: 42,
+      token_id: 42n,
     });
     return Promise.reject(new Error("submission deliberately intercepted"));
   };
   assertEquals(
-    await client.read("owner_of", { token_id: 42 }),
+    await client.read("owner_of", { token_id: 42n }),
     config.contracts.deployer,
   );
   assertEquals(writes, 0);
@@ -83,7 +86,7 @@ Deno.test("clients encode real ABI values and enforce an explicit Colibri invoca
       client.invoke("transfer", {
         from: config.contracts.deployer,
         to: config.contracts.marketplace,
-        token_id: 42,
+        token_id: 42n,
       }, { config: tx }),
     Error,
     "deliberately intercepted",
@@ -107,16 +110,16 @@ Deno.test("facades own all five generated clients and expose ABI errors and even
     ),
   );
   assertEquals(
-    clients.nft.contract.events.ClaimWordChanged.toEventFilter()
+    clients.nft.contract.events.CharacterCountChanged.toEventFilter()
       .toRawEventFilter().contractIds,
     [config.contracts.nft],
   );
-  const claim = VanityClaim.from({
-    contract_address: config.contracts.nft,
+  const claim = Plate.from({
+    controller: config.contracts.nft,
     salt: new Uint8Array(32),
-    suffix: "ABC",
+    character_count: 3,
   });
-  assertEquals(VanityClaim.fromScVal(claim.toScVal()).value, claim.value);
+  assertEquals(Plate.fromScVal(claim.toScVal()).value, claim.value);
 });
 
 Deno.test("generated methods decode real ScVals and retain submission metadata without resubmitting on decode failure", async () => {
@@ -127,30 +130,31 @@ Deno.test("generated methods decode real ScVals and retain submission metadata w
   // Replace the owned pipelines at the offline test boundary. Convee's real
   // callable facade has immutable methods and is not monkey-patched.
   const readPipeline = {
-    run: (): Promise<xdr.ScVal> => Promise.resolve(xdr.ScVal.scvU32(42)),
+    run: (): Promise<xdr.ScVal> =>
+      Promise.resolve(SorobanType.U256.from(42n).toScVal()),
   };
   Object.defineProperty(client.contract, "readPipe", { value: readPipeline });
   assertEquals(
-    await client.contract.balance.read({ account: config.contracts.nft }),
-    42,
+    await client.contract.balance.read({ owner: config.contracts.nft }),
+    42n,
   );
   // Wrapped arguments use Colibri's validated encoding path.
   readPipeline.run = () => Promise.resolve(xdr.ScVal.scvString("Plate"));
   const { read } = client.contract.name;
   assertEquals(await read(), "Plate");
-  readPipeline.run = () => Promise.resolve(xdr.ScVal.scvU32(7));
+  readPipeline.run = () => Promise.resolve(SorobanType.U256.from(7n).toScVal());
   assertEquals(
     await client.contract.mint.read({
       salt: SorobanType.BytesN(32).from(new Uint8Array(32)),
     }),
-    7,
+    7n,
   );
   let submissions = 0;
   const receipt: Awaited<ReturnType<Contract["invoke"]>> = {
     hash: "synthetic-receipt",
     ledger: 1,
     createdAt: 0,
-    returnValue: xdr.ScVal.scvU32(7),
+    returnValue: SorobanType.U256.from(7n).toScVal(),
     response: {} as Awaited<ReturnType<Contract["invoke"]>>["response"],
   };
   const tx: TransactionConfig = {
@@ -173,9 +177,9 @@ Deno.test("generated methods decode real ScVals and retain submission metadata w
     methodArgs: { salt: new Uint8Array(32) },
     config: tx,
   });
-  assertEquals(result.value, 7);
+  assertEquals(result.value, 7n);
   assertEquals(result.hash, receipt.hash);
-  receipt.returnValue = xdr.ScVal.scvString("invalid u32");
+  receipt.returnValue = xdr.ScVal.scvString("invalid u256");
   const error = await assertRejects(() =>
     client.contract.mint.invoke({
       methodArgs: { salt: new Uint8Array(32) },
@@ -211,12 +215,12 @@ Deno.test("SDK compatibility failures block calls and failed initialization can 
     return Promise.resolve(config.contracts.nft);
   };
   await assertRejects(
-    () => client.read("owner_of", { token_id: 42 }),
+    () => client.read("owner_of", { token_id: 42n }),
     IncompatibleContractSpecError,
   );
   assertEquals(calls, 0);
   assertEquals(
-    await client.read("owner_of", { token_id: 42 }),
+    await client.read("owner_of", { token_id: 42n }),
     config.contracts.nft,
   );
   assertEquals(loads, 2);

@@ -114,33 +114,6 @@ export class Rbac extends Contract {
   };
 
   /**
-   * Replaces the address assigned to the minter role.
-   *
-   * # Arguments
-   *
-   * * `e` - Contract execution environment.
-   * * `new_minter` - Address assigned as the new minter.
-   * * `operator` - Current administrator authorizing the update.
-   *
-   * # Errors
-   *
-   * * Fails when `operator` does not authorize the invocation.
-   * * Fails with `RbacError::RoleNotFound` when the administrator role is
-   * unavailable.
-   * * Fails with `RbacError::Unauthorized` when `operator` is not the
-   * administrator.
-   */
-  readonly setMinter: RbacMethod<"set_minter"> = {
-    read: (methodArgs) =>
-      this.read({ method: ContractMethods.SetMinter, methodArgs }),
-    invoke: (args) =>
-      this.invoke({
-        ...args,
-        method: ContractMethods.SetMinter,
-      }),
-  };
-
-  /**
    * Accepts an active administrator proposal for the proposed address.
    *
    * # Arguments
